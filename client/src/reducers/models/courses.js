@@ -1,4 +1,4 @@
-import { FETCH_COURSES } from '../actions/types';
+import { FETCH_COURSES } from '../../actions/types';
 
 const INITIAL_STATE = [];
 

@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_ROLES, FETCH_COURSES, FETCH_COMPS } from './types';
+import {
+  FETCH_USER,
+  FETCH_ROLES,
+  FETCH_COURSES,
+  FETCH_COMPS,
+  FETCH_USER_ROLES
+} from './types';
 
 export const fetchUser = userId => async dispatch => {
   const res = await axios.get(`/api/users/${userId}`);
@@ -9,6 +15,10 @@ export const fetchUser = userId => async dispatch => {
 export const fetchRoles = () => async dispatch => {
   const res = await axios.get('/api/roles');
   dispatch({ type: FETCH_ROLES, payload: res.data });
+};
+
+export const fetchUserRoles = roles => async dispatch => {
+  dispatch({ type: FETCH_USER_ROLES, payload: roles });
 };
 
 export const fetchCourses = () => async dispatch => {

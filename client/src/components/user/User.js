@@ -3,19 +3,12 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import _ from 'lodash';
 
+import UserRoles from './UserRoles';
+
 class User extends Component {
-  componentDidMount() {
+  componentWillMount() {
     const userId = this.props.match.params.id;
     this.props.fetchUser(userId);
-  }
-  renderRoles() {
-    return this.props.userRoles.map(role => {
-      return (
-        <li className="collection-item" key={role.roleId}>
-          {role.rolename}
-        </li>
-      );
-    });
   }
 
   renderCourses() {
@@ -49,10 +42,7 @@ class User extends Component {
               </div>
               <div className="row">
                 <div className="col s6 l5">
-                  <ul className="collection with-header blue-grey-text text-darken-1">
-                    <li className="collection-header">Roles</li>
-                    {this.renderRoles()}
-                  </ul>
+                  <UserRoles uroles={[1]} />
                 </div>
                 <div className="col s6 l5">
                   <ul className="collection with-header blue-grey-text text-darken-1">
@@ -77,10 +67,9 @@ class User extends Component {
   }
 }
 
-function mapStateToProps({ user, roles, courses, comps }) {
+function mapStateToProps({ user, courses, comps }) {
   return {
     user,
-    userRoles: _.filter(roles, x => _.includes(user.roles, x.roleId)),
     userCourses: _.filter(courses, x =>
       _.includes(_.map(user.courses, 'courseId'), x.courseId)
     ),

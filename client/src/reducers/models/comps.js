@@ -1,4 +1,4 @@
-import { FETCH_COMPS } from '../actions/types';
+import { FETCH_COMPS } from '../../actions/types';
 
 const INITIAL_STATE = [];
 

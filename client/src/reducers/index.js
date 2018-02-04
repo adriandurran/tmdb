@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import userReducer from './authUser';
-import rolesReducer from './roles';
-import compsReducer from './comps';
-import coursesReducer from './courses';
+import userReducer from './users/authUser';
+import rolesReducer from './models/roles';
+import compsReducer from './models/comps';
+import coursesReducer from './models/courses';
 
 export default combineReducers({
   user: userReducer,

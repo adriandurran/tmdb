@@ -11,7 +11,10 @@ class Header extends Component {
           </Link>
           <ul id="nav-mobile" className="right">
             <li>
-              <Link to={'/users/1'} className="waves-effect waves-light btn">
+              <Link
+                to={'/users/1'}
+                className="blue-grey darken-1 waves-effect waves-light btn"
+              >
                 Login
               </Link>
             </li>
