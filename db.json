@@ -1,6 +1,88 @@
 {
   "users": [
-    { "id": 1, "firstname": "John", "lastname": "Doe" },
+    {
+      "id": 1,
+      "firstname": "John",
+      "lastname": "Doe",
+      "courses": [
+        {
+          "courseId": 0,
+          "passDate": "01/01/2018"
+        },
+        {
+          "courseId": 2,
+          "passDate": "01/01/2016"
+        }
+      ],
+      "roles": [1]
+    },
     { "id": 2, "firstname": "Christopher", "lastname": "Robin" }
+  ],
+  "courses": [
+    {
+      "courseId": 0,
+      "coursename": "Microsoft Exchange Server 2012",
+      "validity": 12
+    },
+    {
+      "courseId": 1,
+      "coursename": "Microsoft Active Directory 2014",
+      "validity": 18
+    },
+    {
+      "courseId": 2,
+      "coursename": "Microsoft Sharepoint Server 2003",
+      "validity": 12
+    },
+    {
+      "courseId": 3,
+      "coursename": "Linux Essentials",
+      "validity": 6
+    },
+    {
+      "courseId": 4,
+      "coursename": "Mongo Database Admin v3",
+      "validity": 12
+    }
+  ],
+  "competentcies": [
+    {
+      "compId": 0,
+      "compname": "Best in class",
+      "courseIds": [1, 2, 3, 4]
+    },
+    {
+      "compId": 1,
+      "compname": "Best CV",
+      "courseIds": [2]
+    },
+    {
+      "compId": 2,
+      "compname": "Network Admin",
+      "courseIds": [3, 4]
+    },
+    {
+      "compId": 3,
+      "compname": "MS Analyst",
+      "courseIds": [1]
+    }
+  ],
+  "roles": [
+    { "roleId": 0, "rolename": "Database Administrator", "compIds": [2, 3] },
+    {
+      "roleId": 1,
+      "rolename": "Service Desk Analyst",
+      "compIds": [1, 3]
+    },
+    {
+      "roleId": 2,
+      "rolename": "Network Support",
+      "compIds": [3]
+    },
+    {
+      "roleId": 3,
+      "rolename": "Super Admin",
+      "compIds": [0]
+    }
   ]
 }

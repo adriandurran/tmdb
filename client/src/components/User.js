@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-
-import { fetchUser } from '../actions';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class User extends Component {
   componentDidMount() {
     const userId = this.props.match.params.id;
-    console.log(userId);
-    const user = fetchUser(userId);
+    this.props.fetchUser(userId);
   }
   render() {
-    return <div>Hello {this.props.user}</div>;
+    return <div>Hello {this.props.user.firstname}</div>;
   }
 }
 
-export default User;
+function mapStateToProps({ user }) {
+  return { user };
+}
+
+export default connect(mapStateToProps, actions)(User);
