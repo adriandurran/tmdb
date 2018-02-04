@@ -14,9 +14,13 @@
           "passDate": "01/01/2016"
         }
       ],
-      "roles": [1]
+      "roles": [1, 2]
     },
-    { "id": 2, "firstname": "Christopher", "lastname": "Robin" }
+    {
+      "id": 2,
+      "firstname": "Christopher",
+      "lastname": "Robin"
+    }
   ],
   "courses": [
     {
@@ -68,7 +72,11 @@
     }
   ],
   "roles": [
-    { "roleId": 0, "rolename": "Database Administrator", "compIds": [2, 3] },
+    {
+      "roleId": 0,
+      "rolename": "Database Administrator",
+      "compIds": [2, 3]
+    },
     {
       "roleId": 1,
       "rolename": "Service Desk Analyst",
