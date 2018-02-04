@@ -11,6 +11,8 @@ import User from './user/User';
 class App extends Component {
   componentDidMount() {
     this.props.fetchRoles(); //this needs to change when we add authentication
+    this.props.fetchCourses(); //this needs to change when we add authentication
+    this.props.fetchComps(); //this needs to change when we add authentication
   }
 
   render() {
