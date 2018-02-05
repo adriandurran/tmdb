@@ -9,6 +9,8 @@ class UserRoles extends Component {
     this.props.fetchUserRoles(this.props.uroles);
   }
 
+  componentDidUpdate() {}
+
   renderRoles() {
     return this.props.userRolly.map(urole => {
       return (

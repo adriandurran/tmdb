@@ -42,7 +42,7 @@ class User extends Component {
               </div>
               <div className="row">
                 <div className="col s6 l5">
-                  <UserRoles uroles={[1]} />
+                  <UserRoles uroles={[1, 3]} />
                 </div>
                 <div className="col s6 l5">
                   <ul className="collection with-header blue-grey-text text-darken-1">
