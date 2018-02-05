@@ -8,13 +8,13 @@
   "license": "MIT",
   "scripts": {
     "client": "npm run start --prefix client",
-    "dev":
-      "concurrently \"json-server --watch db.json --routes routes.json --port 3050\" \"npm run client\""
+    "dev": "concurrently \"json-server --watch db.json --routes routes.json --port 3050\" \"npm run client\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
     "eslint": "^4.17.0",
     "faker": "^4.1.0",
+    "json-server": "^0.12.1",
     "redux-devtools-extension": "^2.13.2"
   },
   "dependencies": {
