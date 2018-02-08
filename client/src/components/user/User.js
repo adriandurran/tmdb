@@ -6,7 +6,7 @@ import _ from 'lodash';
 import UserRoles from './UserRoles';
 
 class User extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const userId = this.props.match.params.id;
     this.props.fetchUser(userId);
   }
@@ -42,7 +42,7 @@ class User extends Component {
               </div>
               <div className="row">
                 <div className="col s6 l5">
-                  <UserRoles uroles={[1, 3]} />
+                   <UserRoles uroles={this.props.user.roles} />
                 </div>
                 <div className="col s6 l5">
                   <ul className="collection with-header blue-grey-text text-darken-1">

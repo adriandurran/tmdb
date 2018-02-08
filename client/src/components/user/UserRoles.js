@@ -4,9 +4,10 @@ import * as actions from '../../actions';
 import _ from 'lodash';
 
 class UserRoles extends Component {
-  constructor(props) {
-    super(props);
-    this.props.fetchUserRoles(this.props.uroles);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.uroles !== nextProps.uroles) {
+      this.props.fetchUserRoles(nextProps.uroles);  
+    }
   }
 
   componentDidUpdate() {}
