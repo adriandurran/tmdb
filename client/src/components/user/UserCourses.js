@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import * as actions from '../../actions';
 
 class UserCourses extends Component {
   renderCourses() {
@@ -39,4 +38,4 @@ function mapStateToProps({ courses }, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, actions)(UserCourses);
+export default connect(mapStateToProps)(UserCourses);

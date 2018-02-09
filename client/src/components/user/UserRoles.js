@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
 import _ from 'lodash';
 
 class UserRoles extends Component {
@@ -32,4 +31,4 @@ function mapStateToProps({ roles }, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, actions)(UserRoles);
+export default connect(mapStateToProps)(UserRoles);
