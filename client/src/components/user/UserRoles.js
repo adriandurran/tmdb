@@ -4,13 +4,6 @@ import * as actions from '../../actions';
 import _ from 'lodash';
 
 class UserRoles extends Component {
-  constructor(props) {
-    super(props);
-    this.props.fetchUserRoles(this.props.uroles);
-  }
-
-  componentDidUpdate() {}
-
   renderRoles() {
     return this.props.userRolly.map(urole => {
       return (
@@ -31,10 +24,10 @@ class UserRoles extends Component {
   }
 }
 
-function mapStateToProps({ roles }) {
+function mapStateToProps({ roles }, ownProps) {
   return {
     userRolly: _.filter(roles.fullRoles, x =>
-      _.includes(roles.userRoles, x.roleId)
+      _.includes(ownProps.uroles, x.roleId)
     )
   };
 }
