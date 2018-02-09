@@ -4,17 +4,6 @@ import * as actions from '../../actions';
 import _ from 'lodash';
 
 class UserRoles extends Component {
-<<<<<<< HEAD
-=======
-  componentWillReceiveProps(nextProps) {
-    if (this.props.uroles !== nextProps.uroles) {
-      this.props.fetchUserRoles(nextProps.uroles);  
-    }
-  }
-
-  componentDidUpdate() {}
-
->>>>>>> ad8e800780fa1fe134256048e7a7055e26db8436
   renderRoles() {
     return this.props.userRolly.map(urole => {
       return (

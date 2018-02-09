@@ -12,19 +12,6 @@ class User extends Component {
     this.props.fetchUser(userId);
   }
 
-<<<<<<< HEAD
-=======
-  renderCourses() {
-    return this.props.userCourses.map(course => {
-      return (
-        <li className={"collection-item" + (course.missing ? " red" : "")} key={course.courseId}>
-          {course.coursename}
-        </li>
-      );
-    });
-  }
-
->>>>>>> ad8e800780fa1fe134256048e7a7055e26db8436
   renderComps() {
     return this.props.userComps.map(comp => {
       return (
@@ -47,11 +34,7 @@ class User extends Component {
               </div>
               <div className="row">
                 <div className="col s6 l5">
-<<<<<<< HEAD
                   <UserRoles uroles={user.roles} />
-=======
-                   <UserRoles uroles={this.props.user.roles} />
->>>>>>> ad8e800780fa1fe134256048e7a7055e26db8436
                 </div>
                 <div className="col s6 l5">
                   <ul className="collection with-header blue-grey-text text-darken-1">
@@ -73,26 +56,11 @@ class User extends Component {
   }
 }
 
-<<<<<<< HEAD
 function mapStateToProps({ user, comps }) {
   return {
     user,
 
     userComps: _.filter(comps, x => _.isEqual(comps.courseIds, user.courseIds))
-=======
-function mapStateToProps({ user, courses, comps, roles }) {
-  roles = roles.fullRoles ? roles.fullRoles : []
-  const userRoleCompIds = user.roles ? _.flatten(roles.filter(role => user.roles.includes(role.roleId)).map(role => role.compIds)) : [];
-  const userRoleCompCourseIds = _.flatten(comps.filter(comp => userRoleCompIds.includes(comp.compId)).map(comp => comp.courseIds))
-  const userCourseIds = user.courses ? user.courses.map(({courseId}) => courseId) : [];
-  return {
-    user,
-    userCourses: courses.filter(course => {
-      course.missing = userRoleCompCourseIds.includes(course.courseId) && !userCourseIds.includes(course.courseId)
-      return userRoleCompCourseIds.includes(course.courseId) || userCourseIds.includes(course.courseId)
-    }),
-    userComps: comps.filter(comp => userRoleCompIds.includes(comp.compId))
->>>>>>> ad8e800780fa1fe134256048e7a7055e26db8436
   };
 }
 
