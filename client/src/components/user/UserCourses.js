@@ -28,8 +28,15 @@ class UserCourses extends Component {
 function mapStateToProps({ courses }, ownProps) {
   // need to create a filter......then union
   //   work in progress
+  //   ****** do not change this *****
 
-  return { userCoursesFull: _.unionBy(ownProps.ucourses, courses, 'courseId') };
+  return {
+    userCoursesFull: _.filter(courses, x =>
+      _.includes(_.map(ownProps.ucourses, 'courseId'), x.courseId)
+    )
+
+    // _.unionBy(userCourses, ownProps.ucourses, 'courseId')
+  };
 }
 
 export default connect(mapStateToProps, actions)(UserCourses);
