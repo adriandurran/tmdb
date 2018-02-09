@@ -14,7 +14,7 @@ class User extends Component {
   renderCourses() {
     return this.props.userCourses.map(course => {
       return (
-        <li className="collection-item" key={course.courseId}>
+        <li className={"collection-item" + (course.missing ? " red" : "")} key={course.courseId}>
           {course.coursename}
         </li>
       );
@@ -67,13 +67,18 @@ class User extends Component {
   }
 }
 
-function mapStateToProps({ user, courses, comps }) {
+function mapStateToProps({ user, courses, comps, roles }) {
+  roles = roles.fullRoles ? roles.fullRoles : []
+  const userRoleCompIds = user.roles ? _.flatten(roles.filter(role => user.roles.includes(role.roleId)).map(role => role.compIds)) : [];
+  const userRoleCompCourseIds = _.flatten(comps.filter(comp => userRoleCompIds.includes(comp.compId)).map(comp => comp.courseIds))
+  const userCourseIds = user.courses ? user.courses.map(({courseId}) => courseId) : [];
   return {
     user,
-    userCourses: _.filter(courses, x =>
-      _.includes(_.map(user.courses, 'courseId'), x.courseId)
-    ),
-    userComps: _.filter(comps, x => _.isEqual(comps.courseIds, user.courseIds))
+    userCourses: courses.filter(course => {
+      course.missing = userRoleCompCourseIds.includes(course.courseId) && !userCourseIds.includes(course.courseId)
+      return userRoleCompCourseIds.includes(course.courseId) || userCourseIds.includes(course.courseId)
+    }),
+    userComps: comps.filter(comp => userRoleCompIds.includes(comp.compId))
   };
 }
 
