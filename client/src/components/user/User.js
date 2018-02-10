@@ -5,21 +5,12 @@ import _ from 'lodash';
 
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
+import UserComps from './UserComps';
 
 class User extends Component {
   componentDidMount() {
     const userId = this.props.match.params.id;
     this.props.fetchUser(userId);
-  }
-
-  renderComps() {
-    return this.props.userComps.map(comp => {
-      return (
-        <li className="collection-item" key={comp.compId}>
-          {comp.compname}
-        </li>
-      );
-    });
   }
 
   render() {
@@ -37,10 +28,7 @@ class User extends Component {
                   <UserRoles uroles={user.roles} />
                 </div>
                 <div className="col s6 l5">
-                  <ul className="collection with-header blue-grey-text text-darken-1">
-                    <li className="collection-header">Competencies</li>
-                    {this.renderComps()}
-                  </ul>
+                  <UserComps ucomps={user.courses} />
                 </div>
               </div>
               <div className="row">
@@ -56,12 +44,8 @@ class User extends Component {
   }
 }
 
-function mapStateToProps({ user, comps }) {
-  return {
-    user,
-
-    userComps: _.filter(comps, x => _.isEqual(comps.courseIds, user.courseIds))
-  };
+function mapStateToProps({ user }) {
+  return { user };
 }
 
 export default connect(mapStateToProps, actions)(User);
