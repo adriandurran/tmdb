@@ -7,11 +7,6 @@ import {
   FETCH_USER_ROLES
 } from './types';
 
-export const fetchUser = userId => async dispatch => {
-  const res = await axios.get(`/api/users/${userId}`);
-  dispatch({ type: FETCH_USER, payload: res.data });
-};
-
 export const fetchRoles = () => async dispatch => {
   const res = await axios.get('/api/roles');
   dispatch({ type: FETCH_ROLES, payload: res.data });

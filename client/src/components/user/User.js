@@ -1,39 +1,53 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import _ from 'lodash';
 
-import UserRoles from './UserRoles';
+import { fetchUser } from '../../actions/auth';
+import { selectUserName, selectUserRoleNames } from '../../reducers';
+
+// import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
-import UserComps from './UserComps';
+// import UserComps from './UserComps';
 
 class User extends Component {
   componentDidMount() {
     const userId = this.props.match.params.id;
-    this.props.fetchUser(userId);
+    const { fetchUser } = this.props;
+    fetchUser(userId);
+  }
+
+  renderRoles(roles) {
+    return roles.map(role => {
+      return (
+        <li className="collection-item" key={role.roleId}>
+          {role.rolename}
+        </li>
+      );
+    });
   }
 
   render() {
-    const { user } = this.props;
+    const { authUser, userName, userRoles } = this.props;
     return (
       <div className="row">
         <div className="col s12 l10 offset-l1">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
-              <div>
-                {user.firstname} {user.lastname}
-              </div>
+              <div>{userName}</div>
               <div className="row">
                 <div className="col s6 l5">
-                  <UserRoles uroles={user.roles} />
+                  <ul className="collection with-header blue-grey-text text-darken-1">
+                    <li className="collection-header">Roles</li>
+                    {this.renderRoles(userRoles)}
+                  </ul>
+                  {/* <UserRoles uroles={authUser.roles} /> */}
                 </div>
                 <div className="col s6 l5">
-                  <UserComps ucomps={user.courses} />
+                  {/* <UserComps ucomps={authUser.courses} /> */}
                 </div>
               </div>
               <div className="row">
                 <div className="col s12">
-                  <UserCourses ucourses={user.courses} />
+                  <UserCourses ucourses={authUser.courses} />
                 </div>
               </div>
             </div>
@@ -44,8 +58,15 @@ class User extends Component {
   }
 }
 
-function mapStateToProps({ user }) {
-  return { user };
-}
+const mapStateToProps = state => {
+  const { auth, roles } = state;
+  return {
+    authUser: state.auth.user,
+    userName: selectUserName(state),
+    userRoles: selectUserRoleNames(state)
+  };
+};
 
-export default connect(mapStateToProps, actions)(User);
+const mapDispatchToProps = { fetchUser };
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);
