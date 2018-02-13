@@ -8,7 +8,7 @@ class UserCourses extends Component {
       return (
         <li className="collection-item" key={course.courseId}>
           {course.coursename}, Valid for: {course.validity} months, Pass date:{' '}
-          {course.passDate}
+          {course.passDate.toLocaleDateString()}
         </li>
       );
     });
