@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 import { selectUserCourseNames } from '../../reducers';
 
 class UserCourses extends Component {
@@ -7,8 +8,11 @@ class UserCourses extends Component {
     return courses.map(course => {
       return (
         <li className="collection-item" key={course.courseId}>
-          {course.coursename}, Valid for: {course.validity} months, Pass date:{' '}
-          {course.passDate.toLocaleDateString()}
+          {course.coursename}, Passed <Moment fromNow>{course.passDate}</Moment>,{' '}
+          Expires:{' '}
+          <Moment format="D MMM YYYY" add={{ months: course.validity }}>
+            {course.passDate}
+          </Moment>
         </li>
       );
     });
