@@ -1,34 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { selectUserRoleNames } from '../../reducers';
 
 class UserRoles extends Component {
-  renderRoles() {
-    return this.props.userRolly.map(urole => {
+  renderRoles(roles) {
+    return roles.map(role => {
       return (
-        <li className="collection-item" key={urole.roleId}>
-          {urole.rolename}
+        <li className="collection-item" key={role.roleId}>
+          {role.rolename}
         </li>
       );
     });
   }
 
   render() {
+    const { userRoles } = this.props;
     return (
       <ul className="collection with-header blue-grey-text text-darken-1">
         <li className="collection-header">Roles</li>
-        {this.renderRoles()}
+        {this.renderRoles(userRoles)}
       </ul>
     );
   }
 }
 
-function mapStateToProps({ roles }, ownProps) {
+const mapStateToProps = state => {
+  const { roles } = state;
   return {
-    userRolly: _.filter(roles.fullRoles, x =>
-      _.includes(ownProps.uroles, x.roleId)
-    )
+    userRoles: selectUserRoleNames(state)
   };
-}
+};
 
 export default connect(mapStateToProps)(UserRoles);

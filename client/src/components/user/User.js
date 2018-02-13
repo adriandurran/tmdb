@@ -4,25 +4,14 @@ import { connect } from 'react-redux';
 import { fetchUser } from '../../actions/auth';
 import { selectUserName, selectUserRoleNames } from '../../reducers';
 
-// import UserRoles from './UserRoles';
+import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
-// import UserComps from './UserComps';
 
 class User extends Component {
   componentDidMount() {
     const userId = this.props.match.params.id;
     const { fetchUser } = this.props;
     fetchUser(userId);
-  }
-
-  renderRoles(roles) {
-    return roles.map(role => {
-      return (
-        <li className="collection-item" key={role.roleId}>
-          {role.rolename}
-        </li>
-      );
-    });
   }
 
   render() {
@@ -35,11 +24,7 @@ class User extends Component {
               <div>{userName}</div>
               <div className="row">
                 <div className="col s6 l5">
-                  <ul className="collection with-header blue-grey-text text-darken-1">
-                    <li className="collection-header">Roles</li>
-                    {this.renderRoles(userRoles)}
-                  </ul>
-                  {/* <UserRoles uroles={authUser.roles} /> */}
+                  <UserRoles />
                 </div>
                 <div className="col s6 l5">
                   {/* <UserComps ucomps={authUser.courses} /> */}
@@ -59,11 +44,10 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-  const { auth, roles } = state;
+  const { auth } = state;
   return {
     authUser: state.auth.user,
-    userName: selectUserName(state),
-    userRoles: selectUserRoleNames(state)
+    userName: selectUserName(state)
   };
 };
 
