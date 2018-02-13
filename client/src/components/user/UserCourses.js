@@ -10,7 +10,7 @@ class UserCourses extends Component {
         <li className="collection-item" key={course.courseId}>
           {course.coursename}, Passed <Moment fromNow>{course.passDate}</Moment>,{' '}
           Expires:{' '}
-          <Moment format="D MMM YYYY" add={{ months: course.validity }}>
+          <Moment format="DD MMM YYYY" add={{ months: course.validity }}>
             {course.passDate}
           </Moment>
         </li>
