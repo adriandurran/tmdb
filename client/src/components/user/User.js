@@ -15,7 +15,7 @@ class User extends Component {
   }
 
   render() {
-    const { authUser, userName } = this.props;
+    const { userName } = this.props;
     return (
       <div className="row">
         <div className="col s12 l10 offset-l1">
@@ -32,7 +32,7 @@ class User extends Component {
               </div>
               <div className="row">
                 <div className="col s12">
-                  <UserCourses ucourses={authUser.courses} />
+                  <UserCourses />
                 </div>
               </div>
             </div>
