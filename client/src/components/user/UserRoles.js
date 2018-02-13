@@ -25,7 +25,6 @@ class UserRoles extends Component {
 }
 
 const mapStateToProps = state => {
-  const { roles } = state;
   return {
     userRoles: selectUserRoleNames(state)
   };

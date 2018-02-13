@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchUser } from '../../actions/auth';
-import { selectUserName, selectUserRoleNames } from '../../reducers';
+import { selectUserName } from '../../reducers';
 
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
@@ -15,7 +15,7 @@ class User extends Component {
   }
 
   render() {
-    const { authUser, userName, userRoles } = this.props;
+    const { authUser, userName } = this.props;
     return (
       <div className="row">
         <div className="col s12 l10 offset-l1">
@@ -44,7 +44,6 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-  const { auth } = state;
   return {
     authUser: state.auth.user,
     userName: selectUserName(state)
