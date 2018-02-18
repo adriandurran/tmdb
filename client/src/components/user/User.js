@@ -9,9 +9,9 @@ import UserCourses from './UserCourses';
 
 class User extends Component {
   componentDidMount() {
-    const userId = this.props.match.params.id;
+    const empId = this.props.match.params.id;
     const { fetchUser } = this.props;
-    fetchUser(userId);
+    fetchUser(empId);
   }
 
   render() {
