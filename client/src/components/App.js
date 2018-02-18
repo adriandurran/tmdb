@@ -6,6 +6,8 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
+import LoginUser from './auth/login';
+import RegisterUser from './auth/register';
 import User from './user/User';
 
 class App extends Component {
@@ -23,6 +25,8 @@ class App extends Component {
             <Header />
             <div className="container">
               <Route exact path="/" component={Landing} />
+              <Route exact path="/auth/login" component={LoginUser} />
+              <Route exact path="/auth/register" component={RegisterUser} />
               <Route exact path="/users/:id" component={User} />
             </div>
           </div>
