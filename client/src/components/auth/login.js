@@ -56,6 +56,21 @@ class LoginUser extends Component {
   }
 }
 
+function validate(values) {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = `You must provide and email address`;
+  }
+
+  if (!values.pwd) {
+    errors.pwd = 'You must enter a password';
+  }
+
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   form: 'loginForm'
 })(LoginUser);
