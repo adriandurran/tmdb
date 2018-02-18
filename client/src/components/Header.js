@@ -12,10 +12,18 @@ class Header extends Component {
           <ul id="nav-mobile" className="right">
             <li>
               <Link
-                to={'/users/1'}
+                to={'/auth/login'}
                 className="blue-grey darken-1 waves-effect waves-light btn"
               >
                 Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={'/auth/register'}
+                className="blue-grey darken-1 waves-effect waves-light btn"
+              >
+                Register
               </Link>
             </li>
           </ul>
