@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as reduxForm } from 'redux-form';
 
 import authReducer from './users/authUser';
 import rolesReducer from './models/roles';
@@ -9,7 +10,8 @@ const reducer = combineReducers({
   auth: authReducer,
   roles: rolesReducer,
   comps: compsReducer,
-  courses: coursesReducer
+  courses: coursesReducer,
+  form: reduxForm
 });
 
 export default reducer;
