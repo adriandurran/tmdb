@@ -15,13 +15,11 @@ class User extends Component {
   }
 
   render() {
-    const { userName } = this.props;
     return (
       <div className="row">
-        <div className="col s12 l10 offset-l1">
+        <div className="col s12">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
-              <div>{userName}</div>
               <div className="row">
                 <div className="col s6 l5">
                   <UserRoles />
