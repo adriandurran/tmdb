@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { selectUserName } from '../reducers/selectors';
 
 class Header extends Component {
   render() {
@@ -33,4 +36,11 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    authUser: state.auth.user,
+    userName: selectUserName(state)
+  };
+};
+
+export default connect(mapStateToProps)(Header);
