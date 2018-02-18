@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectUserRoleNames } from '../../reducers';
+import { selectUserRoleNames } from '../../reducers/selectors';
 
 class UserRoles extends Component {
   renderRoles(roles) {

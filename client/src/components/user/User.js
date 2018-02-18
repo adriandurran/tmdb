@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchUser } from '../../actions/auth';
-import { selectUserName } from '../../reducers';
+import { selectUserName } from '../../reducers/selectors';
 
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
