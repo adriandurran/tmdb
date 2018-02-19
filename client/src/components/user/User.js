@@ -6,6 +6,7 @@ import { selectUserName } from '../../reducers/selectors';
 
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
+import UserCourseAdder from './UserCourseAdder';
 
 class User extends Component {
   componentDidMount() {
@@ -31,6 +32,11 @@ class User extends Component {
               <div className="row">
                 <div className="col s12">
                   <UserCourses />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col s12">
+                  <UserCourseAdder />
                 </div>
               </div>
             </div>

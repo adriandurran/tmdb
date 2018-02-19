@@ -1,4 +1,4 @@
-import { FETCH_USER } from '../../actions/types';
+import { FETCH_USER, ADD_PASS } from '../../actions/types';
 
 const auth = (state = { user: {} }, action) => {
   switch (action.type) {
@@ -6,6 +6,11 @@ const auth = (state = { user: {} }, action) => {
       return {
         user: action.payload || false
       };
+    case ADD_PASS:
+      const copy = Object.assign({}, state);
+      copy.user.courses = copy.courses.slice(0);
+      copy.user.courses.push({courseId: action.courseId, passDate: action.passDate});
+      return copy;
     default:
       return state;
   }
