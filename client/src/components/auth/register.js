@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { reduxForm, Field } from 'redux-form';
 
 class RegisterUser extends Component {
   render() {
@@ -6,4 +7,6 @@ class RegisterUser extends Component {
   }
 }
 
-export default RegisterUser;
+export default reduxForm({
+  form: 'registerForm'
+})(RegisterUser);

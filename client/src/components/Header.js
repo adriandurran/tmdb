@@ -9,24 +9,24 @@ class Header extends Component {
   renderHeader() {
     const { authUser, userName } = this.props;
 
-    if (!authUser.verified || '') {
-      return (
-        <div>
-          <li style={{ margin: '0 10px' }}>
-            <i className="material-icons left">person_outline</i>
-            Awaiting account verification
-          </li>
-          <li>
-            <a
-              href="http://raf.mod.uk"
-              className="blue-grey darken-1 waves-effect waves-light btn"
-            >
-              Logout
-            </a>
-          </li>
-        </div>
-      );
-    }
+    // if (!authUser.verified || '') {
+    //   return (
+    //     <div>
+    //       <li style={{ margin: '0 10px' }}>
+    //         <i className="material-icons left">person_outline</i>
+    //         Awaiting account verification
+    //       </li>
+    //       <li>
+    //         <a
+    //           href="http://raf.mod.uk"
+    //           className="blue-grey darken-1 waves-effect waves-light btn"
+    //         >
+    //           Logout
+    //         </a>
+    //       </li>
+    //     </div>
+    //   );
+    // }
 
     if (_.isEmpty(authUser, true)) {
       return (
