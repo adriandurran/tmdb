@@ -4,6 +4,7 @@
       "id": 1,
       "firstname": "John",
       "lastname": "Doe",
+      "email": "john.doe@doe.com",
       "verified": true,
       "courses": [
         {
@@ -33,6 +34,7 @@
       "id": 2,
       "firstname": "Christopher",
       "lastname": "Robin",
+      "email": "chris.robin@robin.com",
       "verified": false
     }
   ],
