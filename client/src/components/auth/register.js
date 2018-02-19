@@ -2,29 +2,60 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 
-import RegisterField from './registerField';
-
-const FIELDS = [
-  { name: 'firstname', placeholder: 'First name' },
-  { name: 'lastname', placeholder: 'Last name' },
-  { name: 'empId', placeholder: 'Employee number' },
-  { name: 'email', placeholder: 'Email address' },
-  { name: 'pwd', placeholder: 'Password' }
-];
-
 class RegisterUser extends Component {
   renderRegFields() {
-    return _.map(FIELDS, ({ name, placeholder }) => {
-      return (
-        <Field
-          component={RegisterField}
-          type="text"
-          placeholder={placeholder}
-          name={name}
-          key={name}
-        />
-      );
-    });
+    return (
+      <div>
+        <div className="row">
+          <div className="col s6">
+            <Field
+              component="input"
+              type="text"
+              placeholder="First name"
+              name="firstname"
+            />
+          </div>
+          <div className="col s6">
+            <Field
+              component="input"
+              type="text"
+              placeholder="Last name"
+              name="lastname"
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s12">
+            <Field
+              component="input"
+              type="text"
+              placeholder="Email address"
+              name="email"
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s6">
+            <Field
+              component="input"
+              type="text"
+              placeholder="Employee number"
+              name="empId"
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s12">
+            <Field
+              component="input"
+              type="password"
+              placeholder="Password"
+              name="pwd"
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   render() {
