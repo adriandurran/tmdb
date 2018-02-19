@@ -50,14 +50,21 @@ class Header extends Component {
         </div>
       );
     } else {
-      return (
-        <div>
+      let testComp = authUser.verified ? (
+        <div className="left">
           <li>
             <a href="#!">Courses</a>
           </li>
           <li>
             <a href="#!">Competencies</a>
           </li>
+        </div>
+      ) : (
+        <div />
+      );
+      return (
+        <div>
+          {testComp}
           <li>
             <a href="#!">Help</a>
           </li>
