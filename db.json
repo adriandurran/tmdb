@@ -4,6 +4,7 @@
       "id": 1,
       "firstname": "John",
       "lastname": "Doe",
+      "verified": true,
       "courses": [
         {
           "courseId": 0,
@@ -31,7 +32,8 @@
     {
       "id": 2,
       "firstname": "Christopher",
-      "lastname": "Robin"
+      "lastname": "Robin",
+      "verified": false
     }
   ],
   "courses": [
