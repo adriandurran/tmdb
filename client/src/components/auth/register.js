@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import _ from 'lodash';
+
+import { registerUser } from '../../actions/auth';
+import RegisterField from './registerField';
 
 class RegisterUser extends Component {
   renderRegFields() {
@@ -9,17 +11,17 @@ class RegisterUser extends Component {
         <div className="row">
           <div className="col s6">
             <Field
-              component="input"
+              component={RegisterField}
               type="text"
-              placeholder="First name"
               name="firstname"
+              label="First name"
             />
           </div>
           <div className="col s6">
             <Field
-              component="input"
+              component={RegisterField}
               type="text"
-              placeholder="Last name"
+              label="Last name"
               name="lastname"
             />
           </div>
@@ -27,9 +29,9 @@ class RegisterUser extends Component {
         <div className="row">
           <div className="col s12">
             <Field
-              component="input"
+              component={RegisterField}
               type="text"
-              placeholder="Email address"
+              label="Email address"
               name="email"
             />
           </div>
@@ -37,9 +39,9 @@ class RegisterUser extends Component {
         <div className="row">
           <div className="col s6">
             <Field
-              component="input"
+              component={RegisterField}
               type="text"
-              placeholder="Employee number"
+              label="Employee number"
               name="empId"
             />
           </div>
@@ -47,9 +49,9 @@ class RegisterUser extends Component {
         <div className="row">
           <div className="col s12">
             <Field
-              component="input"
+              component={RegisterField}
               type="password"
-              placeholder="Password"
+              label="Password"
               name="pwd"
             />
           </div>
@@ -58,15 +60,20 @@ class RegisterUser extends Component {
     );
   }
 
+  submitUser(values) {
+    console.log(values);
+    registerUser(values);
+  }
+
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, onSubmit } = this.props;
     return (
       <div>
         <div className="row" style={{ marginTop: '20px' }}>
           <div className="s12">
             <div className="card-panel grey lighten-1">
               <h4 className="white-text center-align">Register</h4>
-              <form onSubmit={handleSubmit(values => console.log(values))}>
+              <form onSubmit={handleSubmit(values => this.submitUser(values))}>
                 {this.renderRegFields()}
                 <div className="row">
                   <button
@@ -86,6 +93,38 @@ class RegisterUser extends Component {
   }
 }
 
+function validate(values) {
+  const errors = {};
+
+  if (!values.firstname) {
+    errors.firstname = 'Required';
+  }
+  if (!values.lastname) {
+    errors.lastname = 'Required';
+  }
+
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  if (!values.empId) {
+    errors.empId = 'Required';
+  }
+
+  // if (!values.pwd) {
+  //   errors.pwd = 'Required';
+  // } else if (values.pwd.length < 8) {
+  //   errors.pwd = 'Password must be 8 to 25 characters';
+  // } else if (values.pwd.length > 25) {
+  //   errors.pwd = 'Password must be more 8 to 25 characters';
+  // }
+
+  return errors;
+}
+
 export default reduxForm({
-  form: 'registerForm'
+  form: 'registerForm',
+  validate
 })(RegisterUser);
