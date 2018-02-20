@@ -62,7 +62,6 @@ class RegisterUser extends Component {
   }
 
   submitNewUser(values, dispatch) {
-    console.log(values);
     this.props.submitUser(values);
   }
 
