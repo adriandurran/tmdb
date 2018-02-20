@@ -7,7 +7,6 @@ export const fetchUser = empId => async dispatch => {
 };
 
 export const submitUser = values => async dispatch => {
-  console.log(values);
   const { firstname, lastname, email, empId } = values;
   const newUser = {
     id: empId,
@@ -17,5 +16,4 @@ export const submitUser = values => async dispatch => {
     verified: false
   };
   const res = await axios.post(`/api/users`, newUser);
-  dispatch(console.log(res));
 };
