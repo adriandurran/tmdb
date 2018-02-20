@@ -41,16 +41,17 @@
       "verified": false
     },
     {
-      "headers": {
-        "Content-Type": "Application/json"
-      },
-      "id": 3
-    },
-    {
       "firstname": "john",
       "lastname": "donoooo",
       "email": "yaya@yaaa.com",
       "id": 3433
+    },
+    {
+      "id": "33445",
+      "firstname": "ggdxfxgfxg",
+      "lastname": "bhjkjjh",
+      "email": "szfdzfdd@yyuuu.com",
+      "verified": false
     }
   ],
   "courses": [

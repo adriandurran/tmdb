@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 
-import { registerUser } from '../../actions/auth';
+import { submitUser } from '../../actions/auth';
 import RegisterField from './registerField';
 
 class RegisterUser extends Component {
@@ -60,24 +61,26 @@ class RegisterUser extends Component {
     );
   }
 
-  submitUser(values) {
+  submitNewUser(values, dispatch) {
     console.log(values);
-    registerUser(values);
+    this.props.submitUser(values);
   }
 
   render() {
-    const { handleSubmit, submitting, pristine, onSubmit } = this.props;
+    const { handleSubmit, submitting } = this.props;
     return (
       <div>
         <div className="row" style={{ marginTop: '20px' }}>
           <div className="s12">
             <div className="card-panel grey lighten-1">
               <h4 className="white-text center-align">Register</h4>
-              <form onSubmit={handleSubmit(values => this.submitUser(values))}>
+              <form
+                onSubmit={handleSubmit(values => this.submitNewUser(values))}
+              >
                 {this.renderRegFields()}
                 <div className="row">
                   <button
-                    disabled={pristine || submitting}
+                    disabled={submitting}
                     className="waves-effect waves-light btn right blue-grey darken-1"
                     type="submit"
                   >
@@ -123,6 +126,16 @@ function validate(values) {
 
   return errors;
 }
+
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = {
+  submitUser
+};
+
+RegisterUser = connect(mapStateToProps, mapDispatchToProps)(RegisterUser);
 
 export default reduxForm({
   form: 'registerForm',

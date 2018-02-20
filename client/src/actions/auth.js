@@ -6,7 +6,7 @@ export const fetchUser = empId => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const registerUser = values => async dispatch => {
+export const submitUser = values => async dispatch => {
   console.log(values);
   const { firstname, lastname, email, empId } = values;
   const newUser = {
