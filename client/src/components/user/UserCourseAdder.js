@@ -17,13 +17,15 @@ class UserCourseAdder extends Component {
   }
 
   handleSubmit(event) {
-    this.props.dispatch(addPass(this.state.course, this.state.passDate));
+    this.props.dispatch(
+      this.props.addPass(this.state.course, this.state.passDate)
+    );
     event.preventDefault();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authUser !== this.props.authUser) {
-      this.props.dispatch(saveUser(nextProps.authUser));
+      this.props.dispatch(this.props.saveUser(nextProps.authUser));
     }
   }
 
@@ -74,6 +76,8 @@ class UserCourseAdder extends Component {
   }
 }
 
+const mapDispatchToProps = { addPass, saveUser };
+
 const mapStateToProps = state => {
   return {
     authUser: state.auth.user,
@@ -81,4 +85,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(UserCourseAdder);
+export default connect(mapStateToProps, mapDispatchToProps)(UserCourseAdder);
