@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addPass } from '../../actions';
+import { addPass, saveUser } from '../../actions';
 
 class UserCourseAdder extends Component {
 
@@ -18,10 +18,16 @@ class UserCourseAdder extends Component {
   }
 
   handleSubmit(event) {
-    addPass(this.state);
-    console.log(this.props.authUser.id, this.state.course, this.state.passDate);
+    this.props.dispatch(addPass(this.state.course, this.state.passDate));
     event.preventDefault();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authUser !== this.props.authUser) {
+      this.props.dispatch(saveUser(nextProps.authUser));
+    }
+  }
+
 
   selectCourse(course) {
     return (
@@ -43,7 +49,7 @@ class UserCourseAdder extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
           <select name="course" value={this.state.course} onChange={this.handleChange}>
-            {/* <option value="" disabled>Add course</option> */}
+            <option value="" disabled>Add course</option>
             {/* {this.renderCourses(this.props.courses)} */}
             {this.props.courses.map(this.selectCourse)}
           </select>

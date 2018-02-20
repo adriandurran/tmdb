@@ -7,9 +7,9 @@ const auth = (state = { user: {} }, action) => {
         user: action.payload || false
       };
     case ADD_PASS:
-      const copy = Object.assign({}, state);
-      copy.user.courses = copy.courses.slice(0);
-      copy.user.courses.push({courseId: action.courseId, passDate: action.passDate});
+      const copy = {user: Object.assign({}, state.user)};
+      copy.user.courses = state.user.courses.slice(0);
+      copy.user.courses.push({courseId: parseInt(action.courseId, 10), passDate: action.passDate});
       return copy;
     default:
       return state;
