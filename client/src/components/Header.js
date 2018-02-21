@@ -1,63 +1,87 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 import { selectUserName } from '../reducers/selectors';
 
 class Header extends Component {
   renderHeader() {
     const { authUser, userName } = this.props;
-    switch (authUser) {
-      case null:
-        return;
 
-      case false:
-        return (
-          <div>
-            <li>
-              <Link
-                to={'/auth/login'}
-                className="blue-grey darken-1 waves-effect waves-light btn"
-              >
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={'/auth/register'}
-                className="blue-grey darken-1 waves-effect waves-light btn"
-              >
-                Register
-              </Link>
-            </li>
-          </div>
-        );
-      default:
-        return (
-          <div>
-            <li>
-              <a href="#!">Courses</a>
-            </li>
-            <li>
-              <a href="#!">Competencies</a>
-            </li>
-            <li>
-              <a href="#!">Help</a>
-            </li>
-            <li style={{ margin: '0 10px' }}>
-              <i className="material-icons left">person</i>
-              {userName}
-            </li>
-            <li>
-              <a
-                href="http://raf.mod.uk"
-                className="blue-grey darken-1 waves-effect waves-light btn"
-              >
-                Logout
-              </a>
-            </li>
-          </div>
-        );
+    // if (!authUser.verified || '') {
+    //   return (
+    //     <div>
+    //       <li style={{ margin: '0 10px' }}>
+    //         <i className="material-icons left">person_outline</i>
+    //         Awaiting account verification
+    //       </li>
+    //       <li>
+    //         <a
+    //           href="http://raf.mod.uk"
+    //           className="blue-grey darken-1 waves-effect waves-light btn"
+    //         >
+    //           Logout
+    //         </a>
+    //       </li>
+    //     </div>
+    //   );
+    // }
+
+    if (_.isEmpty(authUser, true)) {
+      return (
+        <div>
+          <li>
+            <Link
+              to={'/auth/login'}
+              className="blue-grey darken-1 waves-effect waves-light btn"
+            >
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={'/auth/register'}
+              className="blue-grey darken-1 waves-effect waves-light btn"
+            >
+              Register
+            </Link>
+          </li>
+        </div>
+      );
+    } else {
+      let testComp = authUser.verified ? (
+        <div className="left">
+          <li>
+            <a href="#!">Courses</a>
+          </li>
+          <li>
+            <a href="#!">Competencies</a>
+          </li>
+        </div>
+      ) : (
+        <div />
+      );
+      return (
+        <div>
+          {testComp}
+          <li>
+            <a href="#!">Help</a>
+          </li>
+          <li style={{ margin: '0 10px' }}>
+            <i className="material-icons left">person</i>
+            {userName}
+          </li>
+          <li>
+            <a
+              href="http://raf.mod.uk"
+              className="blue-grey darken-1 waves-effect waves-light btn"
+            >
+              Logout
+            </a>
+          </li>
+        </div>
+      );
     }
   }
 
