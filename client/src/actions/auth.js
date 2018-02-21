@@ -16,4 +16,5 @@ export const submitUser = values => async dispatch => {
     verified: false
   };
   const res = await axios.post(`/api/users`, newUser);
+  return res.data;
 };
