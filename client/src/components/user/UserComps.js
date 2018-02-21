@@ -12,6 +12,7 @@ function mapStateToProps({ comps, courses }, ownProps) {
   // some things to think about....if the user has the courses for a  competency....but one of his courses
   // has expired...do we show the competency? Do we highlight this to the user in some way?
   // I think we need to tie the courses and competencies together in a clearly understandable way
+  // added this to a pr and seperate branch
 }
 
 export default connect(mapStateToProps)(UserComps);
