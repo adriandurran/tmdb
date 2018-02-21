@@ -17,15 +17,13 @@ class UserCourseAdder extends Component {
   }
 
   handleSubmit(event) {
-    this.props.dispatch(
-      this.props.addPass(this.state.course, this.state.passDate)
-    );
+    this.props.addPass(this.state.course, this.state.passDate);
     event.preventDefault();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authUser !== this.props.authUser) {
-      this.props.dispatch(this.props.saveUser(nextProps.authUser));
+      this.props.saveUser(nextProps.authUser);
     }
   }
 
