@@ -9,7 +9,6 @@ import {
 } from './types';
 
 export const fetchRoles = () => async dispatch => {
-  console.log('fetchRoles');
   const res = await axios.get('/api/roles');
   dispatch({ type: FETCH_ROLES, payload: res.data });
 };
