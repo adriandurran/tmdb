@@ -16,7 +16,19 @@ class CourseSelector extends Component {
   render() {
     return (
       <div>
-        <select>{this.renderOptions()}</select>
+        <div className="row">
+          <div className="col s12">
+            <div className="card blue-grey darken-1">
+              <div className="row">
+                <div className="col s6">
+                  <select className="browser-default">
+                    {this.renderOptions()}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

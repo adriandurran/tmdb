@@ -9,6 +9,7 @@ import Landing from './Landing';
 import LoginUser from './auth/login';
 import RegisterUser from './auth/register';
 import User from './user/User';
+import CourseSelector from './model/courses';
 
 class App extends Component {
   componentDidMount() {
@@ -28,6 +29,7 @@ class App extends Component {
               <Route exact path="/auth/login" component={LoginUser} />
               <Route exact path="/auth/register" component={RegisterUser} />
               <Route exact path="/users/:id" component={User} />
+              <Route exact path="/courses" component={CourseSelector} />
             </div>
           </div>
         </BrowserRouter>
