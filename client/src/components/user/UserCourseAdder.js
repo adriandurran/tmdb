@@ -64,7 +64,7 @@ class UserCourseAdder extends Component {
           Passed date:
           <input
             name="passDate"
-            type="text"
+            type="date"
             value={this.state.passDate}
             onChange={this.handleChange}
           />
