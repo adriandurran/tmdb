@@ -53,7 +53,7 @@ class Header extends Component {
       let testComp = authUser.verified ? (
         <div className="left">
           <li>
-            <a href="#!">Courses</a>
+            <Link to={'/courses'}>Courses</Link>
           </li>
           <li>
             <a href="#!">Competencies</a>

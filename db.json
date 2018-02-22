@@ -28,7 +28,10 @@
           "passDate": "2017-01-01"
         }
       ],
-      "roles": [3, 4]
+      "roles": [
+        3,
+        4
+      ]
     },
     {
       "id": 2,
@@ -62,6 +65,41 @@
       "firstname": "test2",
       "lastname": "test3",
       "email": "test2@test3.com",
+      "verified": false
+    },
+    {
+      "id": "24567",
+      "firstname": "testr",
+      "lastname": "rturn",
+      "email": "test@return.com",
+      "verified": false
+    },
+    {
+      "id": "9999",
+      "firstname": "testreu",
+      "lastname": "testteee",
+      "email": "asasda@iadsasd.com",
+      "verified": false
+    },
+    {
+      "id": "787878",
+      "firstname": "jow",
+      "lastname": "shmow",
+      "email": "shmow@joe.com",
+      "verified": false
+    },
+    {
+      "id": "222111",
+      "firstname": "jonny",
+      "lastname": "shakes",
+      "email": "shakes@shakes.com",
+      "verified": false
+    },
+    {
+      "id": "9009",
+      "firstname": "snow",
+      "lastname": "flake",
+      "email": "snow@flake.com",
       "verified": false
     }
   ],
@@ -108,8 +146,7 @@
     },
     {
       "courseId": 8,
-      "coursename":
-        "Installation, Storage, and computer with Windows Server 2016",
+      "coursename": "Installation, Storage, and computer with Windows Server 2016",
       "validity": 12
     },
     {
@@ -127,59 +164,92 @@
     {
       "compId": 0,
       "compname": "Best in class",
-      "courseIds": [1, 2, 3, 4]
+      "courseIds": [
+        1,
+        2,
+        3,
+        4
+      ]
     },
     {
       "compId": 1,
       "compname": "Best CV",
-      "courseIds": [2]
+      "courseIds": [
+        2
+      ]
     },
     {
       "compId": 2,
       "compname": "Network Admin",
-      "courseIds": [3, 4]
+      "courseIds": [
+        3,
+        4
+      ]
     },
     {
       "compId": 3,
       "compname": "Microsoft Analyst",
-      "courseIds": [0, 2]
+      "courseIds": [
+        0,
+        2
+      ]
     },
     {
       "compId": 4,
       "compname": "MSCE Messaging",
-      "courseIds": [0, 6, 7]
+      "courseIds": [
+        0,
+        6,
+        7
+      ]
     },
     {
       "compId": 5,
       "compname": "MSCA Windows Server 2016",
-      "courseIds": [8, 9, 10]
+      "courseIds": [
+        8,
+        9,
+        10
+      ]
     }
   ],
   "roles": [
     {
       "roleId": 0,
       "rolename": "Database Administrator",
-      "compIds": [2, 3]
+      "compIds": [
+        2,
+        3
+      ]
     },
     {
       "roleId": 1,
       "rolename": "Service Desk Analyst",
-      "compIds": [1, 3]
+      "compIds": [
+        1,
+        3
+      ]
     },
     {
       "roleId": 2,
       "rolename": "Network Support",
-      "compIds": [3]
+      "compIds": [
+        3
+      ]
     },
     {
       "roleId": 3,
       "rolename": "Exchange Admin",
-      "compIds": [4]
+      "compIds": [
+        4
+      ]
     },
     {
       "roleId": 4,
       "rolename": "Windows Server Admin",
-      "compIds": [5]
+      "compIds": [
+        5
+      ]
     }
   ]
 }
