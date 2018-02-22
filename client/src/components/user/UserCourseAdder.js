@@ -52,6 +52,7 @@ class UserCourseAdder extends Component {
           name="course"
           value={this.state.course}
           onChange={this.handleChange}
+          className="browser-default"
         >
           <option value="" disabled>
             Add course
