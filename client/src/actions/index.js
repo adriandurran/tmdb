@@ -27,11 +27,13 @@ export const fetchComps = () => async dispatch => {
   dispatch({ type: FETCH_COMPS, payload: res.data });
 };
 
-export const addPass = (courseId, passDate) => ({
-  type: ADD_PASS,
-  courseId: courseId,
-  passDate: passDate
-});
+export const addPass = ({courseId, passDate}) => {
+  return {
+    type: ADD_PASS,
+    courseId: courseId,
+    passDate: passDate
+  };
+}
 
 export const saveUser = user => async dispatch => {
   const res = await axios.put(`/api/users/${user.id}`, user);

@@ -1,24 +1,46 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
 
 import { addPass, saveUser } from '../../actions';
 
+function selectCourse(course) {
+  return (
+    <option key={course.courseId} value={course.courseId}>
+      {course.coursename}
+    </option>
+  );
+}
+
+let AddCourseForm = props => {
+  const { handleSubmit } = props
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <Field name="courseId" component="select" placeholder="Course" className="browser-default">
+          {props.courses.map(selectCourse)}
+        </Field>
+      </div>
+      <div>
+        <Field name="passDate" component="input" type="date" placeholder="Passed date" />
+      </div>
+      <button type="submit">Add</button>
+    </form>
+  )
+}
+
+AddCourseForm = reduxForm({
+  form: 'addCourse'
+})(AddCourseForm)
+
 class UserCourseAdder extends Component {
   constructor(props) {
     super(props);
-    this.state = { course: '', passDate: '' };
-
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    this.props.addPass(this.state.course, this.state.passDate);
-    event.preventDefault();
+  handleSubmit(values) {
+    this.props.addPass(values);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,51 +49,8 @@ class UserCourseAdder extends Component {
     }
   }
 
-  selectCourse(course) {
-    return (
-      <option key={course.courseId} value={course.courseId}>
-        {course.coursename}
-      </option>
-    );
-  }
-
-  renderCourses(courses) {
-    return courses.map(course => {
-      return (
-        <option key={course.courseId} value={course.courseId}>
-          {course.coursename}
-        </option>
-      );
-    });
-  }
-
   render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <select
-          name="course"
-          value={this.state.course}
-          onChange={this.handleChange}
-          className="browser-default"
-        >
-          <option value="" disabled>
-            Add course
-          </option>
-          {/* {this.renderCourses(this.props.courses)} */}
-          {this.props.courses.map(this.selectCourse)}
-        </select>
-        <label>
-          Passed date:
-          <input
-            name="passDate"
-            type="date"
-            value={this.state.passDate}
-            onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" value="Add" />
-      </form>
-    );
+    return <AddCourseForm onSubmit={this.handleSubmit} courses={this.props.courses} />
   }
 }
 
