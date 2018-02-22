@@ -27,7 +27,7 @@ export const fetchComps = () => async dispatch => {
   dispatch({ type: FETCH_COMPS, payload: res.data });
 };
 
-export const addPass = (courseId, passDate) => ({
+export const addPass = ({courseId, passDate}) => ({
   type: ADD_PASS,
   courseId: courseId,
   passDate: passDate
