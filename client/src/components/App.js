@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
 
-import * as actions from '../actions';
+import { fetchRoles, fetchCourses, fetchComps } from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
@@ -11,26 +13,44 @@ import RegisterUser from './auth/register';
 import User from './user/User';
 import CourseSelector from './model/courses';
 
+import withRoot from '../withRoot';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+
+  control: {
+    padding: theme.spacing.unit * 2
+  }
+});
+
 class App extends Component {
   componentDidMount() {
-    this.props.fetchRoles(); //this needs to change when we add authentication
-    this.props.fetchCourses(); //this needs to change when we add authentication
-    this.props.fetchComps(); //this needs to change when we add authentication
+    const { fetchRoles, fetchCourses, fetchComps } = this.props;
+    fetchRoles(); //this needs to change when we add authentication
+    fetchCourses(); //this needs to change when we add authentication
+    fetchComps(); //this needs to change when we add authentication
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <BrowserRouter>
           <div>
             <Header />
-            <div className="container">
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/auth/login" component={LoginUser} />
-              <Route exact path="/auth/register" component={RegisterUser} />
-              <Route exact path="/users/:id" component={User} />
-              <Route exact path="/courses" component={CourseSelector} />
-            </div>
+            <Grid container className={classes.root} spacing={24}>
+              <Grid item md={1} lg={2} />
+              <Grid item xs={12} md={10} lg={8}>
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/auth/login" component={LoginUser} />
+                <Route exact path="/auth/register" component={RegisterUser} />
+                <Route exact path="/users/:id" component={User} />
+                <Route exact path="/courses" component={CourseSelector} />
+              </Grid>
+              <Grid item md={1} lg={2} />
+            </Grid>
           </div>
         </BrowserRouter>
       </div>
@@ -38,4 +58,12 @@ class App extends Component {
   }
 }
 
-export default connect(null, actions)(App);
+const mapDispatchToProps = {
+  fetchRoles,
+  fetchCourses,
+  fetchComps
+};
+
+App = withStyles(styles)(App);
+
+export default withRoot(connect(null, mapDispatchToProps)(App));
