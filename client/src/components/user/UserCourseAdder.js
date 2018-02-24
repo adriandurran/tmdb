@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
+import Grid from 'material-ui/Grid';
+import TextField from 'material-ui/TextField'
+import Button from 'material-ui/Button';
 
 import { patchUserCourses } from '../../actions';
+
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 function selectCourse(course) {
   return (
@@ -12,20 +18,31 @@ function selectCourse(course) {
   );
 }
 
+const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
+  <TextField helperText={label}
+    {...input}
+    {...custom}
+  />
+)
+
 let AddCourseForm = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, classes } = props
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <Field name="courseId" component="select" placeholder="Course"
-          className="browser-default" parse={value => parseInt(value, 10)}>
-            {props.courses.map(selectCourse)}
-        </Field>
-      </div>
-      <div>
-        <Field name="passDate" component="input" type="date" placeholder="Passed date" />
-      </div>
-      <button type="submit">Add</button>
+      <Grid container>
+        <Grid item xs={6}>
+          <Field name="courseId" component="select" placeholder="Course"
+            className="browser-default" parse={value => parseInt(value, 10)}>
+              {props.courses.map(selectCourse)}
+          </Field>
+        </Grid>
+        <Grid item xs>
+          <Field name="passDate" component={renderTextField} label="Passed date" type="date" />
+        </Grid>
+        <Grid item xs>
+          <Button type="submit" variant="raised">Add</Button>
+        </Grid>
+      </Grid>
     </form>
   )
 }
