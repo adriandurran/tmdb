@@ -14,16 +14,7 @@ import User from './user/User';
 import CourseSelector from './model/courses';
 
 import withRoot from '../withRoot';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-
-  control: {
-    padding: theme.spacing.unit * 2
-  }
-});
+import rootStyles from '../styles/rootStyle';
 
 class App extends Component {
   componentDidMount() {
@@ -40,7 +31,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Grid container className={classes.root} spacing={24}>
+            <Grid container className={classes.grid} spacing={24}>
               <Grid item md={1} lg={2} />
               <Grid item xs={12} md={10} lg={8}>
                 <Route exact path="/" component={Landing} />
@@ -64,6 +55,6 @@ const mapDispatchToProps = {
   fetchComps
 };
 
-App = withStyles(styles)(App);
+App = withStyles(rootStyles)(App);
 
 export default withRoot(connect(null, mapDispatchToProps)(App));

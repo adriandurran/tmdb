@@ -10,7 +10,7 @@ const Landing = props => {
   const { classes } = props;
   return (
     <div>
-      <Card>
+      <Card raised>
         <CardContent className={classes.card}>
           <h2>Training Management Database</h2>
           Manage your Training Needs

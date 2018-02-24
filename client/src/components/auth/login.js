@@ -2,42 +2,51 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 
+import rootStyles from '../../styles/rootStyle';
+import withRoot from '../../withRoot';
+import { withStyles } from 'material-ui/styles';
+
+import Card, { CardContent, CardHeader } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
+
 // use redux form
 // will mock the actuall login process until set up with a db
 // so for dev only the submit button will just link to user 1
 
-class LoginUser extends Component {
-  renderFields() {
-    return (
-      <div className="row">
-        <div className="col s6">
-          <Field
-            type="email"
-            name="email"
-            component="input"
-            placeholder="email address"
-          />
-        </div>
-        <div className="col s6">
-          <Field
-            type="password"
-            name="pwd"
-            component="input"
-            placeholder="password"
-          />
-        </div>
-      </div>
-    );
-  }
+const renderTextField = ({
+  input,
+  label,
+  meta: { touched, error },
+  ...custom
+}) => <TextField required error={touched && error} {...input} {...custom} />;
 
+class LoginUser extends Component {
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, classes } = this.props;
     return (
-      <div className="row" style={{ marginTop: '20px' }}>
-        <div className="col s12 m10 offset-m1">
-          <div className="card-panel grey lighten-1">
+      <div>
+        <Card raised className={classes.card}>
+          <CardContent>
+            <CardHeader>
+              <Typography className={classes.title}>Login</Typography>
+            </CardHeader>
             <form onSubmit={handleSubmit(values => console.log(values))}>
-              {this.renderFields()}
+              <Field
+                name="email"
+                label="Email address"
+                type="email"
+                component={renderTextField}
+                className={classes.textField}
+              />
+              <Field
+                name="password"
+                label="Email address"
+                type="password"
+                component={renderTextField}
+                className={classes.textField}
+              />
               <div className="row">
                 <Link
                   to={'/users/1'}
@@ -49,8 +58,8 @@ class LoginUser extends Component {
                 </Link>
               </div>
             </form>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -70,7 +79,11 @@ function validate(values) {
   return errors;
 }
 
-export default reduxForm({
-  validate,
-  form: 'loginForm'
-})(LoginUser);
+LoginUser = withStyles(rootStyles)(LoginUser);
+
+export default withRoot(
+  reduxForm({
+    validate,
+    form: 'loginForm'
+  })(LoginUser)
+);
