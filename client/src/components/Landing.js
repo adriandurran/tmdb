@@ -1,18 +1,23 @@
 import React from 'react';
+import Card, { CardContent } from 'material-ui/Card';
 
-const Landing = () => {
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import withRoot from '../withRoot';
+import rootStyles from '../styles/rootStyle';
+
+const Landing = props => {
+  const { classes } = props;
   return (
-    <div className="row">
-      <div className="col s12 m8 offset-m2">
-        <div className="card-panel blue-grey darken-1 center-align">
-          <span className="white-text">
-            <h2>Training Management Database</h2>
-            Manage your Training Needs
-          </span>
-        </div>
-      </div>
+    <div>
+      <Card raised>
+        <CardContent className={classes.card}>
+          <h2>Training Management Database</h2>
+          Manage your Training Needs
+        </CardContent>
+      </Card>
     </div>
   );
 };
 
-export default Landing;
+export default withRoot(withStyles(rootStyles)(Landing));
