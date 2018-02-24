@@ -5,9 +5,9 @@ import { selectUserCourseNames } from '../../reducers/selectors';
 
 class UserCourses extends Component {
   renderCourses(courses) {
-    return courses.map(course => {
+    return courses.map((course, index) => {
       return (
-        <li className="collection-item" key={course.courseId}>
+        <li className="collection-item" key={index}>
           {course.coursename}, Passed <Moment fromNow>{course.passDate}</Moment>,{' '}
           Expires:{' '}
           <Moment format="DD MMM YYYY" add={{ months: course.validity }}>

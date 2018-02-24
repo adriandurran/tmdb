@@ -23,11 +23,11 @@ export const selectUserCourseNames = createSelector(
   selectUserCourses,
   selectCourses,
   (userCourses, coursesList) => {
-    const filteredList = _.filter(coursesList, x =>
-      _.includes(_.map(userCourses, 'courseId'), x.courseId)
+    const filteredList = _.filter(userCourses, x =>
+      _.includes(_.map(coursesList, 'courseId'), x.courseId)
     );
     return _.map(filteredList, obj => {
-      return _.assign(obj, _.find(userCourses, { courseId: obj.courseId }));
+      return _.assign(obj, _.find(coursesList, { courseId: obj.courseId }));
     });
   }
 );
