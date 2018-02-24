@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
 
-import { addPass, saveUser } from '../../actions';
+import { patchUserCourses } from '../../actions';
 
 function selectCourse(course) {
   return (
@@ -17,8 +17,9 @@ let AddCourseForm = props => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <Field name="courseId" component="select" placeholder="Course" className="browser-default">
-          {props.courses.map(selectCourse)}
+        <Field name="courseId" component="select" placeholder="Course"
+          className="browser-default" parse={value => parseInt(value, 10)}>
+            {props.courses.map(selectCourse)}
         </Field>
       </div>
       <div>
@@ -39,14 +40,10 @@ class UserCourseAdder extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(values) {
-    this.props.addPass(values);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.authUser !== this.props.authUser) {
-      this.props.saveUser(nextProps.authUser);
-    }
+  handleSubmit({courseId, passDate}) {
+    const courses = this.props.authUser.courses.concat(
+      [{courseId: courseId, passDate: passDate}]);
+    this.props.patchUserCourses(this.props.authUser, courses);
   }
 
   render() {
@@ -54,7 +51,7 @@ class UserCourseAdder extends Component {
   }
 }
 
-const mapDispatchToProps = { addPass, saveUser };
+const mapDispatchToProps = { patchUserCourses };
 
 const mapStateToProps = state => {
   return {
