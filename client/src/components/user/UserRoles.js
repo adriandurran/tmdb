@@ -2,24 +2,27 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectUserRoleNames } from '../../reducers/selectors';
 
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+
 class UserRoles extends Component {
   renderRoles(roles) {
     return roles.map(role => {
       return (
-        <li className="collection-item" key={role.roleId}>
-          {role.rolename}
-        </li>
+        <ListItem>
+          <ListItemText primary={role.rolename} />
+        </ListItem>
       );
     });
   }
 
   render() {
-    const { userRoles } = this.props;
     return (
-      <ul className="collection with-header blue-grey-text text-darken-1">
-        <li className="collection-header">Roles</li>
-        {this.renderRoles(userRoles)}
-      </ul>
+      <div>
+        <h3>Roles</h3>
+        <List>
+          {this.renderRoles(this.props.userRoles)}
+        </List>
+      </div>
     );
   }
 }
