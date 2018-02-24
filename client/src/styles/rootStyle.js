@@ -1,13 +1,17 @@
 const rootStyles = theme => ({
   root: {
-    textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20
-  },
-  grid: {
     flexGrow: 1
   },
+
+  flex: {
+    flex: 1
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20
+  },
   card: {
-    marginTop: theme.spacing.unit * 10,
+    marginTop: theme.spacing.unit * 15,
     textAlign: 'center',
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main

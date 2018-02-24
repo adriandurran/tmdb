@@ -3,84 +3,138 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
+import { withStyles } from 'material-ui/styles';
+import rootStyles from '../styles/rootStyle';
+import withRoot from '../withRoot';
+
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
+import Person from 'material-ui-icons/Person';
+import Button from 'material-ui/Button';
+
+import Menu, { MenuItem } from 'material-ui/Menu';
+
 import { selectUserName } from '../reducers/selectors';
 
 class Header extends Component {
+  state = { anchorEl: null };
+
   renderHeader() {
-    const { authUser, userName } = this.props;
+    const { authUser, userName, classes } = this.props;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
     if (_.isEmpty(authUser, true)) {
       return (
         <div>
-          <li>
-            <Link
-              to={'/auth/login'}
-              className="blue-grey darken-1 waves-effect waves-light btn"
-            >
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={'/auth/register'}
-              className="blue-grey darken-1 waves-effect waves-light btn"
-            >
-              Register
-            </Link>
-          </li>
+          <Button
+            component={Link}
+            to={'/auth/login'}
+            className={classes.menuButton}
+          >
+            Login
+          </Button>
+          <Button
+            color="inherit"
+            component={Link}
+            to={'/auth/register'}
+            className={classes.menuButton}
+          >
+            Register
+          </Button>
         </div>
       );
     } else {
-      let testComp = authUser.verified ? (
-        <div className="left">
-          <li>
-            <Link to={'/courses'}>Courses</Link>
-          </li>
-          <li>
-            <a href="#!">Competencies</a>
-          </li>
-        </div>
-      ) : (
-        <div />
-      );
       return (
         <div>
-          {testComp}
-          <li>
-            <a href="#!">Help</a>
-          </li>
-          <li style={{ margin: '0 10px' }}>
-            <i className="material-icons left">person</i>
-            {userName}
-          </li>
-          <li>
-            <a
-              href="http://raf.mod.uk"
-              className="blue-grey darken-1 waves-effect waves-light btn"
-            >
-              Logout
-            </a>
-          </li>
+          <Button
+            component={Link}
+            to={'/courses'}
+            className={classes.menuButton}
+          >
+            Courses
+          </Button>
+          <Button
+            component={Link}
+            to={'/competencies'}
+            className={classes.menuButton}
+          >
+            Competencies
+          </Button>
+          <IconButton
+            aria-owns={open ? 'menu-user' : null}
+            aria-haspopup="true"
+            onClick={this.handleMenu}
+            color="inherit"
+          >
+            <Person />
+          </IconButton>
+          {/* <Typography variant="body2">{userName}</Typography> */}
+
+          <Menu
+            id="menu-user"
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={open}
+            onClose={this.handleClose}
+          >
+            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+            <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+          </Menu>
         </div>
       );
     }
   }
 
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    // temp will logout
+    this.setState({ anchorEl: null });
+  };
+
+  handleProfile = () => {
+    // temp will send to profile details
+    this.setState({ anchorEl: null });
+  };
+
   render() {
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
+    const { classes } = this.props;
     return (
-      <nav>
-        <div className="nav-wrapper grey darken-2">
-          <Link to={'/'} className="brand-logo" style={{ margin: '0 20px' }}>
+      <AppBar>
+        <Toolbar>
+          <IconButton
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="Menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="title"
+            color="inherit"
+            className={classes.flex}
+            // component={Link}
+            // to={'/'}
+          >
             TMDB
-          </Link>
-          <ul id="nav-mobile" className="right">
-            {this.renderHeader()}
-          </ul>
-        </div>
-      </nav>
+          </Typography>
+          {this.renderHeader()}
+        </Toolbar>
+      </AppBar>
     );
   }
 }
+
+Header = withStyles(rootStyles)(Header);
 
 const mapStateToProps = state => {
   return {
@@ -89,4 +143,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default withRoot(connect(mapStateToProps)(Header));
