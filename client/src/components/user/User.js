@@ -46,8 +46,9 @@ class User extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <Card raised>
+      <Card raised className={classes.card}>
         <CardContent>
           <CardHeader>
             <Typography>User</Typography>
@@ -55,9 +56,8 @@ class User extends Component {
           {this.renderEmpInfo()}
         </CardContent>
       </Card>
-    )
+    );
   }
-
 }
 
 const mapStateToProps = state => {
@@ -69,4 +69,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = { fetchUser };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRoot(withStyles(rootStyles)(User)));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRoot(withStyles(rootStyles)(User))
+);
