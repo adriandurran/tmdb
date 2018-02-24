@@ -27,7 +27,6 @@ export const fetchComps = () => async dispatch => {
 };
 
 export const patchUserCourses = (user, courses) => async dispatch => {
-  console.log(courses);
   const res = await axios.patch(`/api/users/${user.id}`, {courses: courses});
   dispatch({ type: FETCH_USER, payload: res.data });
 };
