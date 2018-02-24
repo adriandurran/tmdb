@@ -36,9 +36,10 @@ class LoginUser extends Component {
               <Typography className={classes.title}>Login</Typography>
             </CardHeader>
             <form onSubmit={handleSubmit(values => console.log(values))}>
-              <Grid container spacing={24}>
+              <Grid container spacing={8}>
                 <Grid item xs={5}>
                   <Field
+                    required
                     name="email"
                     label="Email address"
                     type="email"
@@ -47,6 +48,7 @@ class LoginUser extends Component {
                 </Grid>
                 <Grid item xs={5}>
                   <Field
+                    required
                     name="password"
                     label="Password"
                     type="password"
@@ -54,14 +56,14 @@ class LoginUser extends Component {
                   />
                 </Grid>
                 <Grid item xs={2}>
-                  <Link
-                    to={'/users/1'}
-                    type="submit"
+                  <Button
+                    variant="raised"
                     disabled={pristine || submitting}
-                    className="waves-effect waves-light btn right blue-grey darken-1"
+                    component={Link}
+                    to={'/users/1'}
                   >
                     Login
-                  </Link>
+                  </Button>
                 </Grid>
               </Grid>
             </form>
@@ -72,25 +74,28 @@ class LoginUser extends Component {
   }
 }
 
-function validate(values) {
+const validate = values => {
   const errors = {};
-
-  if (!values.email) {
-    errors.email = `You must provide and email address`;
+  const requiredFields = ['email', 'password'];
+  requiredFields.forEach(field => {
+    if (!values[field]) {
+      errors[field] = 'Required';
+    }
+  });
+  if (
+    values.email &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+  ) {
+    errors.email = 'Invalid email address';
   }
-
-  if (!values.pwd) {
-    errors.pwd = 'You must enter a password';
-  }
-
   return errors;
-}
+};
 
 LoginUser = withStyles(rootStyles)(LoginUser);
 
 export default withRoot(
   reduxForm({
-    validate,
+    // validate,
     form: 'loginForm'
   })(LoginUser)
 );
