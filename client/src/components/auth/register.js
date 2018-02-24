@@ -64,7 +64,7 @@ class RegisterUser extends Component {
   submitNewUser(values, dispatch) {
     const { submitUser, history } = this.props;
     submitUser(values).then(result => {
-      console.log(result);
+      // console.log(result);
       history.push(`/users/${result.id}`);
     });
   }

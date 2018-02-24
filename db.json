@@ -38,7 +38,17 @@
       "firstname": "Christopher",
       "lastname": "Robin",
       "email": "chris.robin@robin.com",
-      "verified": false
+      "verified": false,
+      "courses": [
+        {
+          "courseId": 0,
+          "passDate": "2018-01-01"
+        },
+        {
+          "courseId": 7,
+          "passDate": "2018-02-25"
+        }
+      ]
     },
     {
       "firstname": "john",
@@ -100,6 +110,13 @@
       "firstname": "snow",
       "lastname": "flake",
       "email": "snow@flake.com",
+      "verified": false
+    },
+    {
+      "id": "01911",
+      "firstname": "hahoooooa",
+      "lastname": "asdasdsdcsadvc",
+      "email": "sadasd@adraim.com",
       "verified": false
     }
   ],

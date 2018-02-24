@@ -4,18 +4,7 @@ import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import withRoot from '../withRoot';
-
-const styles = theme => ({
-  root: {
-    textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20
-  },
-  card: {
-    marginTop: theme.spacing.unit * 10,
-    textAlign: 'center',
-    color: theme.palette.primary.light
-  }
-});
+import rootStyles from '../styles/rootStyle';
 
 const Landing = props => {
   const { classes } = props;
@@ -31,4 +20,4 @@ const Landing = props => {
   );
 };
 
-export default withRoot(withStyles(styles)(Landing));
+export default withRoot(withStyles(rootStyles)(Landing));
