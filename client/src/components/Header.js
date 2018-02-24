@@ -19,6 +19,10 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 
 import { selectUserName } from '../reducers/selectors';
 
+const styles = theme => ({
+  root: theme.typography.button
+});
+
 class Header extends Component {
   state = { anchorEl: null };
 
@@ -121,9 +125,9 @@ class Header extends Component {
           <Typography
             variant="title"
             color="inherit"
-            className={classes.flex}
-            // component={Link}
-            // to={'/'}
+            className={classes.appbarTitle}
+            component={Link}
+            to={'/'}
           >
             TMDB
           </Typography>

@@ -36,10 +36,10 @@ class LoginUser extends Component {
               <Typography className={classes.title}>Login</Typography>
             </CardHeader>
             <form onSubmit={handleSubmit(values => console.log(values))}>
-              <Grid container spacing={8}>
+              <Grid container spacing={16}>
                 <Grid item xs={5}>
                   <Field
-                    required
+                    // required
                     name="email"
                     label="Email address"
                     type="email"
@@ -48,7 +48,6 @@ class LoginUser extends Component {
                 </Grid>
                 <Grid item xs={5}>
                   <Field
-                    required
                     name="password"
                     label="Password"
                     type="password"

@@ -11,8 +11,8 @@ const rootStyles = theme => ({
     marginRight: 20
   },
   card: {
-    marginTop: theme.spacing.unit * 15,
-    textAlign: 'center',
+    marginTop: theme.spacing.unit * 10,
+    marginBottom: theme.spacing.unit * 10,
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main
   },
@@ -21,10 +21,9 @@ const rootStyles = theme => ({
     marginRight: theme.spacing.unit,
     width: 200
   },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-    color: theme.palette.text.secondary
+  appbarTitle: {
+    textDecoration: 'none',
+    flex: 1
   }
 });
 
