@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { fetchUser } from '../../actions/auth';
 import { selectUserName } from '../../reducers/selectors';
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../withRoot';
+
+import { withStyles, withTheme } from 'material-ui/styles';
 import rootStyles from '../../styles/rootStyle';
 import Grid from 'material-ui/Grid';
 import Card, { CardContent, CardHeader } from 'material-ui/Card';
@@ -69,6 +69,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = { fetchUser };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRoot(withStyles(rootStyles)(User))
-);
+User = withStyles(rootStyles)(User);
+User = withTheme()(User);
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -7,8 +7,7 @@
   "license": "MIT",
   "scripts": {
     "client": "npm run start --prefix client",
-    "dev":
-      "concurrently \"json-server --watch db.json --routes routes.json --port 3050\" \"env HOST=localhost npm run client\""
+    "dev": "concurrently \"json-server --watch db.json --routes routes.json --port 3050\" \"env HOST=localhost npm run client\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1",

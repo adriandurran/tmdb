@@ -12,9 +12,9 @@ const rootStyles = theme => ({
   },
   card: {
     marginTop: theme.spacing.unit * 10,
-    marginBottom: theme.spacing.unit * 10,
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main
+    marginBottom: theme.spacing.unit * 10
+    // color: theme.palette.primary.contrastText,
+    // backgroundColor: theme.palette.primary.main
   },
   textField: {
     marginLeft: theme.spacing.unit,
