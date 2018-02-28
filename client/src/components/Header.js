@@ -19,10 +19,6 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 
 import { selectUserName } from '../reducers/selectors';
 
-const styles = theme => ({
-  root: theme.typography.button
-});
-
 class Header extends Component {
   state = { anchorEl: null };
 

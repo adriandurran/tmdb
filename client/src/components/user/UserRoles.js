@@ -4,7 +4,7 @@ import { selectUserRoleNames } from '../../reducers/selectors';
 
 // import { withStyles } from 'material-ui/styles';
 // import { withTheme } from 'material-ui/styles';
-// import withRoot from '../../withRoot';
+import withRoot from '../../withRoot';
 // import rootStyles from '../../styles/rootStyle';
 
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
@@ -39,4 +39,4 @@ const mapStateToProps = state => {
 // UserRoles = withStyles(rootStyles)(UserRoles);
 // UserRoles = withTheme()(UserRoles);
 
-export default connect(mapStateToProps)(UserRoles);
+export default withRoot(connect(mapStateToProps)(UserRoles));
