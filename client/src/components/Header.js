@@ -121,9 +121,9 @@ class Header extends Component {
           <Typography
             variant="title"
             color="inherit"
-            className={classes.flex}
-            // component={Link}
-            // to={'/'}
+            className={classes.appbarTitle}
+            component={Link}
+            to={'/'}
           >
             TMDB
           </Typography>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import Reboot from 'material-ui/Reboot';
+import indigo from 'material-ui/colors/indigo';
+import pink from 'material-ui/colors/pink';
+import red from 'material-ui/colors/red';
 
 const theme = createMuiTheme({
   palette: {
@@ -14,7 +17,7 @@ const theme = createMuiTheme({
       light: '#8f9bff',
       main: '#536dfe',
       dark: '#0043ca',
-      contrastText: '#000'
+      contrastText: '#FFF'
     }
   }
 });
