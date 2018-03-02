@@ -7,8 +7,7 @@ import Button from 'material-ui/Button';
 
 import { patchUserCourses } from '../../actions';
 
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import IntegrationDownshift from './IntegrationDownshift';
 
 function selectCourse(course) {
   return (
@@ -25,16 +24,21 @@ const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) 
   />
 )
 
+const renderAutoSuggest = ({ input, label, meta: { touched, error }, ...custom }) => (
+  <IntegrationDownshift placeholder={label} {...custom} />
+)
+
+
 let AddCourseForm = props => {
   const { handleSubmit, classes } = props
   return (
     <form onSubmit={handleSubmit}>
       <Grid container>
         <Grid item xs={6}>
-          <Field name="courseId" component="select" placeholder="Course"
-            className="browser-default" parse={value => parseInt(value, 10)}>
-              {props.courses.map(selectCourse)}
-          </Field>
+          {/* <IntegrationDownshift suggestions={props.courses.map(course => ({ label: course.coursename }))} /> */}
+          <Field name="courseId" component={renderAutoSuggest} label="Course"
+            suggestions={props.courses.map(course => ({ label: course.coursename, value: course.courseId }))} />
+            {/* parse={value => parseInt(value, 10)} /> */}
         </Grid>
         <Grid item xs>
           <Field name="passDate" component={renderTextField} label="Passed date" type="date" />
