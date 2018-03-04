@@ -89,12 +89,16 @@ class UserCourses extends Component {
               <TableCell>Expires</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{this.renderCourses()}</TableBody>
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 49 * emptyRows }}>
-              <TableCell colSpan={3} />
-            </TableRow>
-          )}
+
+          <TableBody>
+            {this.renderCourses()}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 49 * emptyRows }}>
+                <TableCell colSpan={3} />
+              </TableRow>
+            )}
+          </TableBody>
+
           <TableFooter>
             <TableRow>
               <TablePagination
