@@ -10,9 +10,69 @@ import Table, {
   TableSortLabel,
   TablePagination
 } from 'material-ui/Table';
+import Toolbar from 'material-ui/Toolbar';
+import Tooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 
 import { selectUserCourseNames } from '../../reducers/selectors';
+
+const columnData = [
+  { id: 'course', numeric: false, disablePadding: false, label: 'Course Name' },
+  { id: 'pass', numeric: false, disablePadding: false, label: 'Passed' },
+  { id: 'expire', numeric: false, disablePadding: false, label: 'Expires' }
+];
+
+class EnhancedTableHead extends Component {
+  createSortHandler = property => event => {
+    this.props.onRequestSort(event, property);
+  };
+
+  render() {
+    const { order, orderBy } = this.props;
+
+    return (
+      <TableHead>
+        <TableRow>
+          {columnData.map(column => {
+            return (
+              <TableCell
+                key={column.id}
+                numeric={column.numeric}
+                padding={column.disablePadding ? 'none' : 'default'}
+                sortDirection={orderBy === column.id ? order : false}
+              >
+                <Tooltip
+                  title="Sort"
+                  placement={column.numeric ? 'bottom-end' : 'bottom-start'}
+                  enterDelay={300}
+                >
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={order}
+                    onClick={this.createSortHandler(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+            );
+          }, this)}
+        </TableRow>
+      </TableHead>
+    );
+  }
+}
+
+let EnhancedTableToolbar = () => {
+  return (
+    <Toolbar>
+      <div style={{ flex: '0 0 auto' }}>
+        <Typography variant="title">Courses</Typography>
+      </div>
+    </Toolbar>
+  );
+};
 
 class UserCourses extends Component {
   constructor(props, context) {
@@ -53,7 +113,7 @@ class UserCourses extends Component {
   };
 
   renderCourses() {
-    const { data, rowsPerPage, page, order, orderBy } = this.state;
+    const { data, rowsPerPage, page } = this.state;
 
     return data
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -81,39 +141,40 @@ class UserCourses extends Component {
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Course Name</TableCell>
-              <TableCell>Passed</TableCell>
-              <TableCell>Expires</TableCell>
-            </TableRow>
-          </TableHead>
+        <EnhancedTableToolbar />
+        <div>
+          <Table>
+            <EnhancedTableHead
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={this.handleRequestSort}
+            />
 
-          <TableBody>
-            {this.renderCourses()}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 49 * emptyRows }}>
-                <TableCell colSpan={3} />
+            <TableBody>
+              {this.renderCourses()}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={3} />
+                </TableRow>
+              )}
+            </TableBody>
+
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={3}
+                  count={data.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  backIconButtonProps={{ 'aria-label': 'Previous Page' }}
+                  nextIconButtonProps={{ 'aria-label': 'Next Page' }}
+                  onChangePage={this.handleChangePage}
+                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                />
               </TableRow>
-            )}
-          </TableBody>
-
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={3}
-                count={data.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                backIconButtonProps={{ 'aria-label': 'Previous Page' }}
-                nextIconButtonProps={{ 'aria-label': 'Next Page' }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
+            </TableFooter>
+          </Table>
+        </div>
       </Paper>
     );
   }
