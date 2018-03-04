@@ -1,10 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from 'material-ui/Table';
 
-class UserComps extends Component {}
+import { selectUserRoleComps } from '../../reducers/selectors';
 
-function mapStateToProps({ comps, courses }, ownProps) {
+import Toolbar from 'material-ui/Toolbar';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+
+let EnhanceRoleToolbar = () => {
+  return (
+    <Toolbar>
+      <div style={{ flex: '0 0 auto' }}>
+        <Typography variant="title">Competencies</Typography>
+      </div>
+    </Toolbar>
+  );
+};
+
+class UserComps extends Component {
+  renderRoleComps(comps) {
+    return comps.map((comp, index) => {
+      return (
+        <TableRow key={index}>
+          <TableCell>{comp.compname}</TableCell>
+        </TableRow>
+      );
+    });
+  }
+
+  render() {
+    return (
+      <Paper>
+        <EnhanceRoleToolbar />
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Required</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.renderRoleComps(this.props.userRoleComps)}
+          </TableBody>
+        </Table>
+      </Paper>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    userRoleComps: selectUserRoleComps(state)
+  };
+
   // iterate of the courses state to get the full details
   // compare pass date and validity
   // merge (or ignore courses past validity)
@@ -13,6 +66,6 @@ function mapStateToProps({ comps, courses }, ownProps) {
   // has expired...do we show the competency? Do we highlight this to the user in some way?
   // I think we need to tie the courses and competencies together in a clearly understandable way
   // added this to a pr and seperate branch
-}
+};
 
 export default connect(mapStateToProps)(UserComps);

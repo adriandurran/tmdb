@@ -4,7 +4,7 @@ import { selectUserRoleNames } from '../../reducers/selectors';
 
 import Toolbar from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 
 let EnhancedListToolbar = () => {
@@ -19,9 +19,9 @@ let EnhancedListToolbar = () => {
 
 class UserRoles extends Component {
   renderRoles(roles) {
-    return roles.map(role => {
+    return roles.map((role, index) => {
       return (
-        <ListItem key={role.roleId} dense>
+        <ListItem key={index} dense>
           <ListItemText primary={role.rolename} />
         </ListItem>
       );

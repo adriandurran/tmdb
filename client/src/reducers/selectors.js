@@ -31,3 +31,17 @@ export const selectUserCourseNames = createSelector(
     });
   }
 );
+
+// competencies
+export const selectCompetencies = state => state.comps;
+
+// get competencies for a given role
+
+export const selectUserRoleComps = createSelector(
+  selectUserRoleNames,
+  selectCompetencies,
+  (roles, comps) => {
+    const flatty = _.flatten(_.map(roles, 'compIds'));
+    return comps.filter(x => flatty.includes(x.compId));
+  }
+);
