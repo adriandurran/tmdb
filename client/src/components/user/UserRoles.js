@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectUserRoleNames } from '../../reducers/selectors';
 
-// import { withStyles } from 'material-ui/styles';
-// import { withTheme } from 'material-ui/styles';
-import withRoot from '../../withRoot';
-// import rootStyles from '../../styles/rootStyle';
-
+import Toolbar from 'material-ui/Toolbar';
+import Paper from 'material-ui/Paper';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Typography from 'material-ui/Typography';
+
+let EnhancedListToolbar = () => {
+  return (
+    <Toolbar>
+      <div style={{ flex: '0 0 auto' }}>
+        <Typography variant="title">Roles</Typography>
+      </div>
+    </Toolbar>
+  );
+};
 
 class UserRoles extends Component {
   renderRoles(roles) {
@@ -22,10 +30,10 @@ class UserRoles extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Roles</h3>
+      <Paper>
+        <EnhancedListToolbar />
         <List disablePadding>{this.renderRoles(this.props.userRoles)}</List>
-      </div>
+      </Paper>
     );
   }
 }
@@ -36,7 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-// UserRoles = withStyles(rootStyles)(UserRoles);
-// UserRoles = withTheme()(UserRoles);
-
-export default withRoot(connect(mapStateToProps)(UserRoles));
+export default connect(mapStateToProps)(UserRoles);
