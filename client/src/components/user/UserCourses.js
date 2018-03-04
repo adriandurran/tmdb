@@ -181,6 +181,7 @@ class UserCourses extends Component {
 }
 
 const mapStateToProps = state => {
+  // console.log(state);
   return {
     userCourses: selectUserCourseNames(state)
   };
