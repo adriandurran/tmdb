@@ -7,11 +7,13 @@ import Table, {
   TableRow
 } from 'material-ui/Table';
 
-import { selectUserRoleComps } from '../../reducers/selectors';
-
 import Toolbar from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import rootStyles from '../../styles/rootStyle';
+
+import { selectUserRoleComps } from '../../reducers/selectors';
 
 let EnhanceRoleToolbar = () => {
   return (
@@ -35,6 +37,7 @@ class UserComps extends Component {
   }
 
   render() {
+    const { classes, userRoleComps } = this.props;
     return (
       <Paper>
         <EnhanceRoleToolbar />
@@ -44,9 +47,7 @@ class UserComps extends Component {
               <TableCell>Required</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {this.renderRoleComps(this.props.userRoleComps)}
-          </TableBody>
+          <TableBody>{this.renderRoleComps(userRoleComps)}</TableBody>
         </Table>
       </Paper>
     );
@@ -67,5 +68,7 @@ const mapStateToProps = state => {
   // I think we need to tie the courses and competencies together in a clearly understandable way
   // added this to a pr and seperate branch
 };
+
+UserComps = withStyles(rootStyles)(UserComps);
 
 export default connect(mapStateToProps)(UserComps);
