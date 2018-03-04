@@ -53,26 +53,32 @@ class UserCourses extends Component {
   };
 
   renderCourses() {
-    return this.state.data.map((course, index) => {
-      return (
-        <TableRow key={index}>
-          <TableCell>{course.coursename}</TableCell>
-          <TableCell>
-            <Moment fromNow>{course.passDate}</Moment>
-          </TableCell>
-          <TableCell>
-            {' '}
-            <Moment format="DD MMM YYYY" add={{ months: course.validity }}>
-              {course.passDate}
-            </Moment>
-          </TableCell>
-        </TableRow>
-      );
-    });
+    const { data, rowsPerPage, page, order, orderBy } = this.state;
+
+    return data
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((course, index) => {
+        return (
+          <TableRow key={index}>
+            <TableCell>{course.coursename}</TableCell>
+            <TableCell>
+              <Moment fromNow>{course.passDate}</Moment>
+            </TableCell>
+            <TableCell>
+              {' '}
+              <Moment format="DD MMM YYYY" add={{ months: course.validity }}>
+                {course.passDate}
+              </Moment>
+            </TableCell>
+          </TableRow>
+        );
+      });
   }
 
   render() {
     const { data, rowsPerPage, page, order, orderBy } = this.state;
+    const emptyRows =
+      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <Paper>
         <Table>
@@ -84,6 +90,11 @@ class UserCourses extends Component {
             </TableRow>
           </TableHead>
           <TableBody>{this.renderCourses()}</TableBody>
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 49 * emptyRows }}>
+              <TableCell colSpan={3} />
+            </TableRow>
+          )}
           <TableFooter>
             <TableRow>
               <TablePagination
