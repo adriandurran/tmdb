@@ -33,10 +33,10 @@ class User extends Component {
     } else {
       return (
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item>
             <UserRoles />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item>
             <UserCompetencies />
           </Grid>
           <Grid item xs={12}>

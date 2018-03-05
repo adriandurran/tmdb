@@ -13,7 +13,10 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import rootStyles from '../../styles/rootStyle';
 
-import { selectUserRoleComps } from '../../reducers/selectors';
+import {
+  selectUserRoleComps,
+  selectUserCoursesCurrent
+} from '../../reducers/selectors';
 
 let EnhanceRoleToolbar = () => {
   return (
@@ -56,7 +59,8 @@ class UserComps extends Component {
 
 const mapStateToProps = state => {
   return {
-    userRoleComps: selectUserRoleComps(state)
+    userRoleComps: selectUserRoleComps(state),
+    userCurCor: selectUserCoursesCurrent(state)
   };
 
   // iterate of the courses state to get the full details

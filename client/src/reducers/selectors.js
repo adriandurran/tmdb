@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
+import moment from 'moment';
 
 import * as fromAuth from './users/authUser';
 
@@ -29,6 +30,29 @@ export const selectUserCourseNames = createSelector(
     return _.map(filteredList, obj => {
       return _.assign(obj, _.find(coursesList, { courseId: obj.courseId }));
     });
+  }
+);
+
+// get the user courses that are current
+export const selectUserCoursesCurrent = createSelector(
+  selectUserCourseNames,
+  usercourses => {
+    let today = moment(new Date(), 'YYYY-MM-YY').format();
+    let curcor = usercourses
+      .filter(course => {
+        if (
+          moment(course.passDate, 'YYYY-MM-DD')
+            .add(course.validity, 'months')
+            .isAfter(today)
+        ) {
+          return true;
+        }
+
+        return false;
+      })
+      .map(course => {
+        return course.courseId;
+      });
   }
 );
 
