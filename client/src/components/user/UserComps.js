@@ -15,7 +15,8 @@ import rootStyles from '../../styles/rootStyle';
 
 import {
   selectUserRoleComps,
-  selectUserCoursesCurrent
+  selectUserCoursesCurrent,
+  selectUserCompetenciesCurrent
 } from '../../reducers/selectors';
 
 let EnhanceRoleToolbar = () => {
@@ -60,7 +61,8 @@ class UserComps extends Component {
 const mapStateToProps = state => {
   return {
     userRoleComps: selectUserRoleComps(state),
-    userCurCor: selectUserCoursesCurrent(state)
+    userCurCor: selectUserCoursesCurrent(state),
+    userComps: selectUserCompetenciesCurrent(state)
   };
 
   // iterate of the courses state to get the full details

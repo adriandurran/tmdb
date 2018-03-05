@@ -38,7 +38,7 @@ export const selectUserCoursesCurrent = createSelector(
   selectUserCourseNames,
   usercourses => {
     let today = moment(new Date(), 'YYYY-MM-YY').format();
-    let curcor = usercourses
+    return usercourses
       .filter(course => {
         if (
           moment(course.passDate, 'YYYY-MM-DD')
@@ -67,5 +67,32 @@ export const selectUserRoleComps = createSelector(
   (roles, comps) => {
     const flatty = _.flatten(_.map(roles, 'compIds'));
     return comps.filter(x => flatty.includes(x.compId));
+  }
+);
+
+// compare users current courses to competencies to find what competencies he has
+
+export const selectUserCompetenciesCurrent = createSelector(
+  selectUserCoursesCurrent,
+  selectCompetencies,
+  (curcourses, comps) => {
+    // comps.map(comp => console.log(comp.courseIds.length));
+    let curlength = curcourses.length;
+    // console.log(curlength);
+    let testthisy = comps
+      .filter(comp => {
+        if (comp.courseIds.length <= curlength) {
+          return true;
+        }
+        return false;
+      })
+      .map(comp => {
+        let compare = _.intersection(curcourses, comp.courseIds);
+        console.log(compare, comp.courseIds);
+        if (compare.length >= comp.courseIds.length) {
+          return comp;
+        }
+      });
+    console.log(testthisy);
   }
 );
