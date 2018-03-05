@@ -76,23 +76,15 @@ export const selectUserCompetenciesCurrent = createSelector(
   selectUserCoursesCurrent,
   selectCompetencies,
   (curcourses, comps) => {
-    // comps.map(comp => console.log(comp.courseIds.length));
     let curlength = curcourses.length;
-    // console.log(curlength);
-    let testthisy = comps
-      .filter(comp => {
-        if (comp.courseIds.length <= curlength) {
+    return comps.filter(comp => {
+      if (comp.courseIds.length <= curlength) {
+        let compare = _.intersection(curcourses, comp.courseIds);
+        if (compare.length >= comp.courseIds.length) {
           return true;
         }
-        return false;
-      })
-      .map(comp => {
-        let compare = _.intersection(curcourses, comp.courseIds);
-        console.log(compare, comp.courseIds);
-        if (compare.length >= comp.courseIds.length) {
-          return comp;
-        }
-      });
-    console.log(testthisy);
+      }
+      return false;
+    });
   }
 );

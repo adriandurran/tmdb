@@ -12,6 +12,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import rootStyles from '../../styles/rootStyle';
+import Grid from 'material-ui/Grid';
 
 import {
   selectUserRoleComps,
@@ -40,19 +41,43 @@ class UserComps extends Component {
     });
   }
 
+  renderUserComps(comps) {
+    return comps.map((comp, index) => {
+      return (
+        <TableRow key={index}>
+          <TableCell>{comp.compname}</TableCell>
+        </TableRow>
+      );
+    });
+  }
+
   render() {
-    const { classes, userRoleComps } = this.props;
+    const { classes, userRoleComps, userCurrentComps } = this.props;
     return (
       <Paper>
         <EnhanceRoleToolbar />
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Required</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{this.renderRoleComps(userRoleComps)}</TableBody>
-        </Table>
+        <Grid container spacing={8}>
+          <Grid item>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Required</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderRoleComps(userRoleComps)}</TableBody>
+            </Table>
+          </Grid>
+          <Grid item>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Current</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderUserComps(userCurrentComps)}</TableBody>
+            </Table>
+          </Grid>
+        </Grid>
       </Paper>
     );
   }
@@ -62,7 +87,7 @@ const mapStateToProps = state => {
   return {
     userRoleComps: selectUserRoleComps(state),
     userCurCor: selectUserCoursesCurrent(state),
-    userComps: selectUserCompetenciesCurrent(state)
+    userCurrentComps: selectUserCompetenciesCurrent(state)
   };
 
   // iterate of the courses state to get the full details
