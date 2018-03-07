@@ -81,13 +81,27 @@ class UserCourses extends Component {
     this.state = {
       order: 'desc',
       orderBy: 'Passed',
-      data: this.props.userCourses.sort(
-        (a, b) => (a.passDate > b.passDate ? -1 : 1)
-      ),
+      data: [],
       page: 0,
       rowsPerPage: 5
     };
   }
+
+  setUserCourses(props) {
+    this.setState({ data: props.userCourses.sort(
+      (a, b) => (a.passDate > b.passDate ? -1 : 1))}) 
+  }
+
+  componentDidMount() {
+    this.setUserCourses(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.userCourses !== nextProps.userCourses) {
+      this.setUserCourses(nextProps);
+    }
+  }
+
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
