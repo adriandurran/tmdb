@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 
 import { patchUserCourses } from '../../actions';
 
@@ -68,7 +69,12 @@ class UserCourseAdder extends Component {
   }
 
   render() {
-    return <AddCourseForm onSubmit={this.handleSubmit} courses={this.props.courses} />
+    return (
+      <Paper>
+        <AddCourseForm onSubmit={this.handleSubmit} courses={this.props.courses} />
+      </Paper>
+    )
+    return 
   }
 }
 
