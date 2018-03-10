@@ -13,6 +13,7 @@ import Typography from 'material-ui/Typography';
 
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
+import UserCourseAdder from './UserCourseAdder';
 
 class User extends Component {
   componentDidMount() {
@@ -40,6 +41,9 @@ class User extends Component {
           </Grid>
           <Grid item xs={12}>
             <UserCourses />
+          </Grid>
+          <Grid item xs={12}>
+            <UserCourseAdder />
           </Grid>
         </Grid>
       );
