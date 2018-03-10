@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "downshift": "^1.28.2",
     "eslint": "^4.17.0",
     "lodash": "^4.17.5",
     "material-ui": "^1.0.0-beta.35",
