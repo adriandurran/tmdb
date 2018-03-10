@@ -13,24 +13,45 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import rootStyles from '../../styles/rootStyle';
 import Grid from 'material-ui/Grid';
-
+import WarningIcon from 'material-ui-icons/Warning';
+import CheckCircleIcon from 'material-ui-icons/CheckCircle';
+import Tooltip from 'material-ui/Tooltip';
+import _ from 'lodash';
 import {
   selectUserRoleComps,
-  selectUserCoursesCurrent,
+  // selectUserCoursesCurrent,
   selectUserCompetenciesCurrent
 } from '../../reducers/selectors';
 
-let EnhanceRoleToolbar = () => {
-  return (
-    <Toolbar>
-      <div style={{ flex: '0 0 auto' }}>
-        <Typography variant="title">Competencies</Typography>
-      </div>
-    </Toolbar>
-  );
-};
-
 class UserComps extends Component {
+  renderToolBar(rcomp, ucomp) {
+    let compComp = _.intersection(rcomp.compId, ucomp.compId);
+    console.log(compComp);
+    return (
+      <Toolbar>
+        <div style={{ flex: '1' }}>
+          <Typography variant="title">Competencies</Typography>
+        </div>
+        {compComp.length < rcomp.length && (
+          <Tooltip
+            id="comp-warning"
+            title="User does not have the required competencies for this role!"
+          >
+            <WarningIcon style={{ color: 'red' }} />
+          </Tooltip>
+        )}
+        {compComp.length >= rcomp.length && (
+          <Tooltip
+            id="comp-ok"
+            title="User has the required competencies for this role"
+          >
+            <CheckCircleIcon style={{ color: 'green' }} />
+          </Tooltip>
+        )}
+      </Toolbar>
+    );
+  }
+
   renderRoleComps(comps) {
     return comps.map((comp, index) => {
       return (
@@ -52,10 +73,10 @@ class UserComps extends Component {
   }
 
   render() {
-    const { classes, userRoleComps, userCurrentComps } = this.props;
+    const { userRoleComps, userCurrentComps } = this.props;
     return (
       <Paper>
-        <EnhanceRoleToolbar />
+        {this.renderToolBar(userRoleComps, userCurrentComps)}
         <Grid container spacing={8}>
           <Grid item>
             <Table>
@@ -86,18 +107,9 @@ class UserComps extends Component {
 const mapStateToProps = state => {
   return {
     userRoleComps: selectUserRoleComps(state),
-    userCurCor: selectUserCoursesCurrent(state),
+    // userCurCor: selectUserCoursesCurrent(state),
     userCurrentComps: selectUserCompetenciesCurrent(state)
   };
-
-  // iterate of the courses state to get the full details
-  // compare pass date and validity
-  // merge (or ignore courses past validity)
-  // iterate over the comps state and check combination of user courses = competency
-  // some things to think about....if the user has the courses for a  competency....but one of his courses
-  // has expired...do we show the competency? Do we highlight this to the user in some way?
-  // I think we need to tie the courses and competencies together in a clearly understandable way
-  // added this to a pr and seperate branch
 };
 
 UserComps = withStyles(rootStyles)(UserComps);
