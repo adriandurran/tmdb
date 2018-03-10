@@ -19,14 +19,12 @@ import Tooltip from 'material-ui/Tooltip';
 import _ from 'lodash';
 import {
   selectUserRoleComps,
-  // selectUserCoursesCurrent,
   selectUserCompetenciesCurrent
 } from '../../reducers/selectors';
 
 class UserComps extends Component {
   renderToolBar(rcomp, ucomp) {
     let compComp = _.intersection(rcomp.compId, ucomp.compId);
-    console.log(compComp);
     return (
       <Toolbar>
         <div style={{ flex: '1' }}>
@@ -107,7 +105,6 @@ class UserComps extends Component {
 const mapStateToProps = state => {
   return {
     userRoleComps: selectUserRoleComps(state),
-    // userCurCor: selectUserCoursesCurrent(state),
     userCurrentComps: selectUserCompetenciesCurrent(state)
   };
 };
