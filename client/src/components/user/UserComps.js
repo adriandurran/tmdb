@@ -1,18 +1,114 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from 'material-ui/Table';
+
+import Toolbar from 'material-ui/Toolbar';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import rootStyles from '../../styles/rootStyle';
+import Grid from 'material-ui/Grid';
+import WarningIcon from 'material-ui-icons/Warning';
+import CheckCircleIcon from 'material-ui-icons/CheckCircle';
+import Tooltip from 'material-ui/Tooltip';
 import _ from 'lodash';
+import {
+  selectUserRoleComps,
+  selectUserCompetenciesCurrent
+} from '../../reducers/selectors';
 
-class UserComps extends Component {}
+class UserComps extends Component {
+  renderToolBar(rcomp, ucomp) {
+    let compComp = _.intersection(rcomp.compId, ucomp.compId);
+    return (
+      <Toolbar>
+        <div style={{ flex: '1' }}>
+          <Typography variant="title">Competencies</Typography>
+        </div>
+        {compComp.length < rcomp.length && (
+          <Tooltip
+            id="comp-warning"
+            title="User does not have the required competencies for this role!"
+          >
+            <WarningIcon style={{ color: 'red' }} />
+          </Tooltip>
+        )}
+        {compComp.length >= rcomp.length && (
+          <Tooltip
+            id="comp-ok"
+            title="User has the required competencies for this role"
+          >
+            <CheckCircleIcon style={{ color: 'green' }} />
+          </Tooltip>
+        )}
+      </Toolbar>
+    );
+  }
 
-function mapStateToProps({ comps, courses }, ownProps) {
-  // iterate of the courses state to get the full details
-  // compare pass date and validity
-  // merge (or ignore courses past validity)
-  // iterate over the comps state and check combination of user courses = competency
-  // some things to think about....if the user has the courses for a  competency....but one of his courses
-  // has expired...do we show the competency? Do we highlight this to the user in some way?
-  // I think we need to tie the courses and competencies together in a clearly understandable way
-  // added this to a pr and seperate branch
+  renderRoleComps(comps) {
+    return comps.map((comp, index) => {
+      return (
+        <TableRow key={index}>
+          <TableCell>{comp.compname}</TableCell>
+        </TableRow>
+      );
+    });
+  }
+
+  renderUserComps(comps) {
+    return comps.map((comp, index) => {
+      return (
+        <TableRow key={index}>
+          <TableCell>{comp.compname}</TableCell>
+        </TableRow>
+      );
+    });
+  }
+
+  render() {
+    const { userRoleComps, userCurrentComps } = this.props;
+    return (
+      <Paper>
+        {this.renderToolBar(userRoleComps, userCurrentComps)}
+        <Grid container spacing={8}>
+          <Grid item>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Required</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderRoleComps(userRoleComps)}</TableBody>
+            </Table>
+          </Grid>
+          <Grid item>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Current</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{this.renderUserComps(userCurrentComps)}</TableBody>
+            </Table>
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  }
 }
+
+const mapStateToProps = state => {
+  return {
+    userRoleComps: selectUserRoleComps(state),
+    userCurrentComps: selectUserCompetenciesCurrent(state)
+  };
+};
+
+UserComps = withStyles(rootStyles)(UserComps);
 
 export default connect(mapStateToProps)(UserComps);

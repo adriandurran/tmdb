@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
+import moment from 'moment';
 
 import * as fromAuth from './users/authUser';
 
@@ -28,6 +29,62 @@ export const selectUserCourseNames = createSelector(
     );
     return _.map(filteredList, obj => {
       return _.assign(obj, _.find(coursesList, { courseId: obj.courseId }));
+    });
+  }
+);
+
+// get the user courses that are current
+export const selectUserCoursesCurrent = createSelector(
+  selectUserCourseNames,
+  usercourses => {
+    let today = moment(new Date(), 'YYYY-MM-YY').format();
+    return usercourses
+      .filter(course => {
+        if (
+          moment(course.passDate, 'YYYY-MM-DD')
+            .add(course.validity, 'months')
+            .isAfter(today)
+        ) {
+          return true;
+        }
+
+        return false;
+      })
+      .map(course => {
+        return course.courseId;
+      });
+  }
+);
+
+// competencies
+export const selectCompetencies = state => state.comps;
+
+// get competencies for a given role
+
+export const selectUserRoleComps = createSelector(
+  selectUserRoleNames,
+  selectCompetencies,
+  (roles, comps) => {
+    const flatty = _.flatten(_.map(roles, 'compIds'));
+    return comps.filter(x => flatty.includes(x.compId));
+  }
+);
+
+// compare users current courses to competencies to find what competencies he has
+
+export const selectUserCompetenciesCurrent = createSelector(
+  selectUserCoursesCurrent,
+  selectCompetencies,
+  (curcourses, comps) => {
+    let curlength = curcourses.length;
+    return comps.filter(comp => {
+      if (comp.courseIds.length <= curlength) {
+        let compare = _.intersection(curcourses, comp.courseIds);
+        if (compare.length >= comp.courseIds.length) {
+          return true;
+        }
+      }
+      return false;
     });
   }
 );

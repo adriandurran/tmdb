@@ -8,12 +8,16 @@ import { withStyles } from 'material-ui/styles';
 import withRoot from '../../withRoot';
 import rootStyles from '../../styles/rootStyle';
 import Grid from 'material-ui/Grid';
-import Card, { CardContent, CardHeader } from 'material-ui/Card';
+import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
+
+import UserCompetencies from './UserComps';
+
 import UserCourseAdder from './UserCourseAdder';
+
 
 class User extends Component {
   componentDidMount() {
@@ -26,18 +30,18 @@ class User extends Component {
     const { authUser } = this.props;
     if (!authUser.verified || '') {
       return (
-        <div className="center-align">
-          <h3>Awaiting account verfication</h3>
-        </div>
+        <Typography variant="display3" gutterBottom align="center">
+          Awaiting account verfication
+        </Typography>
       );
     } else {
       return (
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item>
             <UserRoles />
           </Grid>
-          <Grid item xs={6}>
-            {/* <UserComps ucomps={authUser.courses} /> */}
+          <Grid item>
+            <UserCompetencies />
           </Grid>
           <Grid item xs={12}>
             <UserCourses />
@@ -54,12 +58,7 @@ class User extends Component {
     const { classes } = this.props;
     return (
       <Card raised className={classes.card}>
-        <CardContent>
-          <CardHeader>
-            <Typography>User</Typography>
-          </CardHeader>
-          {this.renderEmpInfo()}
-        </CardContent>
+        <CardContent>{this.renderEmpInfo()}</CardContent>
       </Card>
     );
   }
