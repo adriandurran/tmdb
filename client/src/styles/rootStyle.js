@@ -30,6 +30,7 @@ const rootStyles = theme => ({
     flexWrap: 'wrap'
   },
   formFields: {
+    flex: 1,
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,

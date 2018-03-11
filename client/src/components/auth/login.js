@@ -20,6 +20,8 @@ const renderTextField = ({
   input,
   label,
   type,
+  className,
+
   meta: { touched, error },
   ...custom
 }) => (
@@ -29,6 +31,8 @@ const renderTextField = ({
     error={touched && error}
     {...input}
     type={type}
+    helperText={touched && error}
+    className={className}
   />
 );
 
@@ -42,36 +46,35 @@ class LoginUser extends Component {
             <CardHeader>
               <Typography className={classes.title}>Login</Typography>
             </CardHeader>
-            <form onSubmit={handleSubmit(values => console.log(values))}>
-              <Grid container spacing={16}>
-                <Grid item xs={5}>
-                  <Field
-                    // required
-                    name="email"
-                    label="Email address"
-                    type="email"
-                    component={renderTextField}
-                  />
-                </Grid>
-                <Grid item xs={5}>
-                  <Field
-                    name="password"
-                    label="Password"
-                    type="password"
-                    component={renderTextField}
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  <Button
-                    variant="raised"
-                    disabled={pristine || submitting}
-                    component={Link}
-                    to={'/users/1'}
-                  >
-                    Login
-                  </Button>
-                </Grid>
-              </Grid>
+            <form
+              onSubmit={handleSubmit(values => console.log(values))}
+              className={classes.formContainer}
+            >
+              <Field
+                name="email"
+                label="Email address"
+                type="email"
+                component={
+                  renderTextField // required
+                }
+                className={classes.formFields}
+              />
+              <Field
+                name="password"
+                label="Password"
+                type="password"
+                component={renderTextField}
+                className={classes.formFields}
+              />
+
+              <Button
+                variant="raised"
+                disabled={pristine || submitting}
+                component={Link}
+                to={'/users/1'}
+              >
+                Login
+              </Button>
             </form>
           </CardContent>
         </Card>

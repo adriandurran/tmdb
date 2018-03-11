@@ -88,11 +88,10 @@ class RegisterUser extends Component {
               onSubmit={handleSubmit(values => this.submitNewUser(values))}
             >
               {this.renderRegFields()}
-              <div className="row">
-                <Button variant="raised" disabled={submitting} type="submit">
-                  Submit
-                </Button>
-              </div>
+              <div style={{ flex: 1, textAlign: 'center' }} />
+              <Button variant="raised" disabled={submitting} type="submit">
+                Submit
+              </Button>
             </form>
           </CardContent>
         </Card>
