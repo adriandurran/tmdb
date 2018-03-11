@@ -2,67 +2,77 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
+import rootStyles from '../../styles/rootStyle';
+import withRoot from '../../withRoot';
+import { withStyles } from 'material-ui/styles';
+
+import Card, { CardContent, CardHeader } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
+import Grid from 'material-ui/Grid';
+
 import { submitUser } from '../../actions/auth';
 import RegisterField from './registerField';
 
 class RegisterUser extends Component {
   renderRegFields() {
+    const { classes } = this.props;
     return (
       <div>
-        <div className="row">
-          <div className="col s6">
-            <Field
-              component={RegisterField}
-              type="text"
-              name="firstname"
-              label="First name"
-            />
-          </div>
-          <div className="col s6">
-            <Field
-              component={RegisterField}
-              type="text"
-              label="Last name"
-              name="lastname"
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col s12">
-            <Field
-              component={RegisterField}
-              type="text"
-              label="Email address"
-              name="email"
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col s6">
-            <Field
-              component={RegisterField}
-              type="text"
-              label="Employee number"
-              name="empId"
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col s12">
-            <Field
-              component={RegisterField}
-              type="password"
-              label="Password"
-              name="pwd"
-            />
-          </div>
-        </div>
+        <Field
+          required
+          component={RegisterField}
+          type="text"
+          name="firstname"
+          label="First name"
+          margin="normal"
+          className={classes.formFields}
+        />
+        <Field
+          component={RegisterField}
+          type="text"
+          label="Last name"
+          name="lastname"
+          margin="normal"
+          className={classes.formFields}
+        />
+
+        <Field
+          component={RegisterField}
+          type="text"
+          label="Email address"
+          name="email"
+          margin="normal"
+          margin="normal"
+          margin="normal"
+        />
+
+        <Field
+          component={RegisterField}
+          type="text"
+          label="Employee number"
+          name="empId"
+          margin="normal"
+          className={classes.formFields}
+        />
+
+        <Field
+          component={RegisterField}
+          type="password"
+          label="Password"
+          name="pwd"
+          margin="normal"
+          className={classes.formFields}
+        />
       </div>
     );
   }
 
   submitNewUser(values, dispatch) {
     const { submitUser, history } = this.props;
+    values.verified = false;
+    values.isAdmin = false;
     submitUser(values).then(result => {
       // console.log(result);
       history.push(`/users/${result.id}`);
@@ -70,30 +80,27 @@ class RegisterUser extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, classes } = this.props;
     return (
       <div>
-        <div className="row" style={{ marginTop: '20px' }}>
-          <div className="s12">
-            <div className="card-panel grey lighten-1">
-              <h4 className="white-text center-align">Register</h4>
-              <form
-                onSubmit={handleSubmit(values => this.submitNewUser(values))}
-              >
-                {this.renderRegFields()}
-                <div className="row">
-                  <button
-                    disabled={submitting}
-                    className="waves-effect waves-light btn right blue-grey darken-1"
-                    type="submit"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+        <Card raised className={classes.card}>
+          <CardContent>
+            <CardHeader>
+              <Typography className={classes.title}>Register</Typography>
+            </CardHeader>
+            <form
+              className={classes.formContainer}
+              onSubmit={handleSubmit(values => this.submitNewUser(values))}
+            >
+              {this.renderRegFields()}
+              <div className="row">
+                <Button variant="raised" disabled={submitting} type="submit">
+                  Submit
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -138,9 +145,13 @@ const mapDispatchToProps = {
   submitUser
 };
 
+RegisterUser = withStyles(rootStyles)(RegisterUser);
+
 RegisterUser = connect(mapStateToProps, mapDispatchToProps)(RegisterUser);
 
-export default reduxForm({
-  form: 'registerForm',
-  validate
-})(RegisterUser);
+export default withRoot(
+  reduxForm({
+    form: 'registerForm',
+    validate
+  })(RegisterUser)
+);

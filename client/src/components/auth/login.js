@@ -19,10 +19,17 @@ import Grid from 'material-ui/Grid';
 const renderTextField = ({
   input,
   label,
+  type,
   meta: { touched, error },
   ...custom
 }) => (
-  <TextField required placeholder={label} error={touched && error} {...input} />
+  <TextField
+    required
+    placeholder={label}
+    error={touched && error}
+    {...input}
+    type={type}
+  />
 );
 
 class LoginUser extends Component {
