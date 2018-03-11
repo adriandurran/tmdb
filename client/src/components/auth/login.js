@@ -21,8 +21,8 @@ const renderTextField = ({
   type,
   className,
 
-  meta: { touched, error },
-  ...custom
+  meta: { touched, error }
+  // ...custom
 }) => (
   <TextField
     required
