@@ -24,7 +24,7 @@ import {
 
 class UserComps extends Component {
   renderToolBar(rcomp, ucomp) {
-    let compComp = _.intersection(rcomp.compId, ucomp.compId);
+    let compComp = _.intersection(rcomp, ucomp);
     return (
       <Toolbar>
         <div style={{ flex: '1' }}>

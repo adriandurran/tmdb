@@ -6,6 +6,8 @@
       "lastname": "Doe",
       "email": "john.doe@doe.com",
       "verified": true,
+      "isAdmin": false,
+
       "courses": [
         {
           "courseId": 3,
@@ -30,9 +32,21 @@
         {
           "courseId": 10,
           "passDate": "2017-01-01"
+        },
+        {
+          "courseId": 0,
+          "passDate": "2018-02-01"
+        },
+        {
+          "courseId": 6,
+          "passDate": "2018-03-01"
+        },
+        {
+          "courseId": 7,
+          "passDate": "2018-01-01"
         }
       ],
-      "roles": [3, 4]
+      "roles": [3]
     },
     {
       "id": 2,
@@ -40,6 +54,7 @@
       "lastname": "Robin",
       "email": "chris.robin@robin.com",
       "verified": false,
+      "isAdmin": false,
       "courses": [
         {
           "courseId": 0,
@@ -52,73 +67,20 @@
       ]
     },
     {
-      "firstname": "john",
-      "lastname": "donoooo",
-      "email": "yaya@yaaa.com",
-      "id": 3433
+      "id": "29292929",
+      "firstname": "John",
+      "lastname": "Snow",
+      "email": "john@snow.com",
+      "verified": false,
+      "isAdmin": false
     },
     {
-      "id": 33445,
-      "firstname": "ggdxfxgfxg",
-      "lastname": "bhjkjjh",
-      "email": "szfdzfdd@yyuuu.com",
-      "verified": false
-    },
-    {
-      "id": "2399",
-      "firstname": "test",
-      "lastname": "user",
-      "email": "test@user.com",
-      "verified": false
-    },
-    {
-      "id": "2211",
-      "firstname": "test2",
-      "lastname": "test3",
-      "email": "test2@test3.com",
-      "verified": false
-    },
-    {
-      "id": "24567",
-      "firstname": "testr",
-      "lastname": "rturn",
-      "email": "test@return.com",
-      "verified": false
-    },
-    {
-      "id": "9999",
-      "firstname": "testreu",
-      "lastname": "testteee",
-      "email": "asasda@iadsasd.com",
-      "verified": false
-    },
-    {
-      "id": "787878",
-      "firstname": "jow",
-      "lastname": "shmow",
-      "email": "shmow@joe.com",
-      "verified": false
-    },
-    {
-      "id": "222111",
-      "firstname": "jonny",
-      "lastname": "shakes",
-      "email": "shakes@shakes.com",
-      "verified": false
-    },
-    {
-      "id": "9009",
-      "firstname": "snow",
-      "lastname": "flake",
-      "email": "snow@flake.com",
-      "verified": false
-    },
-    {
-      "id": "01911",
-      "firstname": "hahoooooa",
-      "lastname": "asdasdsdcsadvc",
-      "email": "sadasd@adraim.com",
-      "verified": false
+      "id": "3003003",
+      "firstname": "King",
+      "lastname": "North",
+      "email": "king@inthe.com",
+      "verified": false,
+      "isAdmin": false
     }
   ],
   "courses": [

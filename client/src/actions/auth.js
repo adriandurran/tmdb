@@ -13,7 +13,8 @@ export const submitUser = values => async dispatch => {
     firstname,
     lastname,
     email,
-    verified: false
+    verified: false,
+    isAdmin: false
   };
   const res = await axios.post(`/api/users`, newUser);
   return res.data;

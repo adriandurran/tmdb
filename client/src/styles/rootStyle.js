@@ -24,6 +24,17 @@ const rootStyles = theme => ({
   appbarTitle: {
     textDecoration: 'none',
     flex: 1
+  },
+  formContainer: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  formFields: {
+    flex: 1,
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+    width: 400
   }
 });
 

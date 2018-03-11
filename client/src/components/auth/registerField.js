@@ -1,19 +1,26 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
 
-export default ({ input, label, type, meta: { error, touched, warning } }) => {
+const RegisterField = ({
+  input,
+  label,
+  type,
+  className,
+  fullWidth,
+  required,
+  meta: { error, touched, warning }
+}) => {
   return (
-    <div>
-      <input
-        {...input}
-        placeholder={label}
-        type={type}
-        style={{ marginBottom: '5px' }}
-      />
-      <div className="red-text" style={{ marginBottom: '20px' }}>
-        {touched &&
-          ((error && <span>{error}</span>) ||
-            (warning && <span>{warning}</span>))}
-      </div>
-    </div>
+    <TextField
+      {...input}
+      placeholder={label}
+      type={type}
+      helperText={touched && error}
+      className={className}
+      fullWidth={fullWidth}
+      required={required}
+    />
   );
 };
+
+export default RegisterField;
