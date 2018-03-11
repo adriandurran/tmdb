@@ -9,7 +9,6 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardContent, CardHeader } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 
 import { submitUser } from '../../actions/auth';
@@ -26,34 +25,32 @@ class RegisterUser extends Component {
           type="text"
           name="firstname"
           label="First name"
-          margin="normal"
           className={classes.formFields}
         />
         <Field
+          required
           component={RegisterField}
           type="text"
           label="Last name"
           name="lastname"
-          margin="normal"
           className={classes.formFields}
         />
 
         <Field
+          required
           component={RegisterField}
           type="text"
           label="Email address"
           name="email"
-          margin="normal"
-          margin="normal"
-          margin="normal"
+          className={classes.formFields}
         />
 
         <Field
+          required
           component={RegisterField}
           type="text"
           label="Employee number"
           name="empId"
-          margin="normal"
           className={classes.formFields}
         />
 
@@ -62,7 +59,6 @@ class RegisterUser extends Component {
           type="password"
           label="Password"
           name="pwd"
-          margin="normal"
           className={classes.formFields}
         />
       </div>
@@ -71,8 +67,7 @@ class RegisterUser extends Component {
 
   submitNewUser(values, dispatch) {
     const { submitUser, history } = this.props;
-    values.verified = false;
-    values.isAdmin = false;
+
     submitUser(values).then(result => {
       // console.log(result);
       history.push(`/users/${result.id}`);

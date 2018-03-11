@@ -32,7 +32,8 @@ const rootStyles = theme => ({
   formFields: {
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
-    flexBasis: 300
+    marginBottom: theme.spacing.unit * 2,
+    width: 400
   }
 });
 
