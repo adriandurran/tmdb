@@ -32,9 +32,21 @@
         {
           "courseId": 10,
           "passDate": "2017-01-01"
+        },
+        {
+          "courseId": 0,
+          "passDate": "2018-02-01"
+        },
+        {
+          "courseId": 6,
+          "passDate": "2018-03-01"
+        },
+        {
+          "courseId": 7,
+          "passDate": "2018-01-01"
         }
       ],
-      "roles": [3, 4]
+      "roles": [3]
     },
     {
       "id": 2,
