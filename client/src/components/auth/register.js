@@ -9,7 +9,6 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardContent, CardHeader } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
 
 import { submitUser } from '../../actions/auth';
 import RegisterField from './registerField';

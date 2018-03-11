@@ -10,7 +10,6 @@ import Card, { CardContent, CardHeader } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
-import Grid from 'material-ui/Grid';
 
 // use redux form
 // will mock the actuall login process until set up with a db
