@@ -9,6 +9,7 @@ import withRoot from '../../withRoot';
 import Input from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
+import Paper from 'material-ui/Paper';
 
 import { selectCourses } from '../../reducers/selectors';
 import debounce from '../../utils/debounce';
@@ -22,22 +23,75 @@ class CourseSelector extends Component {
   fetchCourses = debounce(value => {
     const { courses } = this.props;
 
-    let counter = 0;
+    const items = courses
+      .filter(course =>
+        course.coursename.toLowerCase().includes(value.toLowerCase())
+      )
+      .map(course => {
+        return `${course.coursename} Valid for ${course.validity} month(s)`;
+      });
 
-    const keepers =
-      courses.toLowerCase().includes(value.toLowerCase()) && count < 5;
+    console.log(items);
 
-    if (keepers) {
-      counter += 1;
-    }
-    const items = keepers.map(keeper => {
-      `${keeper.coursename} Valid for ${keeper.validity} month(s)`;
-    });
     this.setState({ items });
   }, 300);
 
   render() {
-    return <div>Course Selector</div>;
+    return (
+      <div>
+        <Downshift
+          render={({
+            selectedItem,
+            getInputProps,
+            getItemProps,
+            highlightedIndex,
+            isOpen
+          }) => {
+            return (
+              <div>
+                <Input
+                  fullWidth
+                  placeholder="Enter the Course name"
+                  {...getInputProps({
+                    onChange: event => {
+                      const value = event.target.value;
+                      if (!value) {
+                        return;
+                      }
+                      // call the debounce function
+                      this.fetchCourses(value);
+                    }
+                  })}
+                />
+                {isOpen && (
+                  <Paper square>
+                    {this.state.items.map((item, index) => (
+                      <MenuItem
+                        component="div"
+                        key={index}
+                        {...getItemProps({
+                          item,
+                          style: {
+                            backgroundColor:
+                              highlightedIndex === index ? 'gray' : 'white',
+                            fontWeight:
+                              selectedItem === item ? 'bold' : 'normal'
+                          }
+                        })}
+                      >
+                        <Typography variant="body1" gutterBottom noWrap>
+                          {item}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Paper>
+                )}
+              </div>
+            );
+          }}
+        />
+      </div>
+    );
   }
 }
 
