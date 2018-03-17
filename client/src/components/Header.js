@@ -52,14 +52,14 @@ class Header extends Component {
         <div>
           <Button
             component={Link}
-            to={`/user/${authUser.id}/courses`}
+            to={`/users/${authUser.id}/courses`}
             className={classes.menuButton}
           >
             Courses
           </Button>
           <Button
             component={Link}
-            to={'/competencies'}
+            to={`/users/${authUser.id}/competencies`}
             className={classes.menuButton}
           >
             Competencies

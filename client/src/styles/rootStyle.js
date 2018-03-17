@@ -6,6 +6,11 @@ const rootStyles = theme => ({
   flex: {
     flex: 1
   },
+  paper: {
+    marginTop: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 2
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20

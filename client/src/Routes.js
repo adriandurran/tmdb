@@ -10,7 +10,8 @@ import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
 import User from './components/user/User';
 import CourseSelector from './components/model/courses';
-import UserCourses from './components/user/UserCourses';
+import CoursesHome from './components/user/CoursesHome';
+import CompsHome from './components/user/CompsHome';
 
 const Routes = () => {
   return (
@@ -24,7 +25,8 @@ const Routes = () => {
             <Route exact path="/auth/login" component={LoginUser} />
             <Route exact path="/auth/register" component={RegisterUser} />
             <Route exact path="/users/:id" component={User} />
-            <Route exact path="/users/:id/courses" component={UserCourses} />
+            <Route exact path="/users/:id/courses" component={CoursesHome} />
+            <Route exact path="/users/:id/competencies" component={CompsHome} />
             <Route exact path="/courses" component={CourseSelector} />
           </Grid>
           <Grid item md={1} lg={2} />

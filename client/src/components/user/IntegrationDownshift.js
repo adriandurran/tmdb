@@ -7,7 +7,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Downshift from 'downshift';
 
 function renderInput(props) {
-  console.log(props);
+  // console.log(props);
   const { InputProps, classes, ref, ...other } = props;
 
   return (
@@ -16,16 +16,22 @@ function renderInput(props) {
       inputRef={ref}
       InputProps={{
         classes: {
-          input: classes.input,
+          input: classes.input
         },
-        ...InputProps,
+        ...InputProps
       }}
     />
   );
 }
 
 function renderSuggestion(params) {
-  const { suggestion, index, itemProps, highlightedIndex, selectedItem } = params;
+  const {
+    suggestion,
+    index,
+    itemProps,
+    highlightedIndex,
+    selectedItem
+  } = params;
   const isHighlighted = highlightedIndex === index;
   const isSelected = selectedItem === suggestion.label;
 
@@ -36,7 +42,7 @@ function renderSuggestion(params) {
       selected={isHighlighted}
       component="div"
       style={{
-        fontWeight: isSelected ? 500 : 400,
+        fontWeight: isSelected ? 500 : 400
       }}
     >
       {suggestion.label}
@@ -49,7 +55,8 @@ function getSuggestions(suggestions, inputValue) {
 
   return suggestions.filter(suggestion => {
     const keep =
-      (!inputValue || suggestion.label.toLowerCase().includes(inputValue.toLowerCase())) &&
+      (!inputValue ||
+        suggestion.label.toLowerCase().includes(inputValue.toLowerCase())) &&
       count < 5;
 
     if (keep) {
@@ -65,35 +72,43 @@ const styles = {
     // flexGrow: 1,
     // height: 200,
     // width: 200,
-  },
+  }
 };
 
 function IntegrationDownshift(props) {
   const { classes, suggestions, placeholder } = props;
-  console.log(props);
+  // console.log(props);
 
   return (
     <Downshift>
-      {({ getInputProps, getItemProps, isOpen, inputValue, selectedItem, highlightedIndex }) => (
+      {({
+        getInputProps,
+        getItemProps,
+        isOpen,
+        inputValue,
+        selectedItem,
+        highlightedIndex
+      }) => (
         <div className={classes.container}>
           {renderInput({
             fullWidth: true,
             classes,
             InputProps: getInputProps({
               placeholder: placeholder,
-              id: 'integration-downshift',
-            }),
+              id: 'integration-downshift'
+            })
           })}
           {isOpen ? (
             <Paper square>
-              {getSuggestions(suggestions, inputValue).map((suggestion, index) =>
-                renderSuggestion({
-                  suggestion,
-                  index,
-                  itemProps: getItemProps({ item: suggestion.label }),
-                  highlightedIndex,
-                  selectedItem,
-                }),
+              {getSuggestions(suggestions, inputValue).map(
+                (suggestion, index) =>
+                  renderSuggestion({
+                    suggestion,
+                    index,
+                    itemProps: getItemProps({ item: suggestion.label }),
+                    highlightedIndex,
+                    selectedItem
+                  })
               )}
             </Paper>
           ) : null}
@@ -104,7 +119,7 @@ function IntegrationDownshift(props) {
 }
 
 IntegrationDownshift.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(IntegrationDownshift);

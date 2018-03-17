@@ -15,6 +15,10 @@ import Tooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
+import { withStyles } from 'material-ui/styles';
+import rootStyles from '../../styles/rootStyle';
+import withRoot from '../../withRoot';
+
 import { selectUserCourseNames } from '../../reducers/selectors';
 
 const columnData = [
@@ -88,8 +92,9 @@ class UserCourses extends Component {
   }
 
   setUserCourses(props) {
-    this.setState({ data: props.userCourses.sort(
-      (a, b) => (a.passDate > b.passDate ? -1 : 1))}) 
+    this.setState({
+      data: props.userCourses.sort((a, b) => (a.passDate > b.passDate ? -1 : 1))
+    });
   }
 
   componentDidMount() {
@@ -151,6 +156,7 @@ class UserCourses extends Component {
 
   render() {
     const { data, rowsPerPage, page, order, orderBy } = this.state;
+    const { classes } = this.props;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
@@ -201,4 +207,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(UserCourses);
+UserCourses = withStyles(rootStyles)(UserCourses);
+
+export default withRoot(connect(mapStateToProps)(UserCourses));
