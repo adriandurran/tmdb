@@ -13,7 +13,7 @@ import CourseSelector from './CourseSelector';
 
 class CourseAdder2 extends Component {
   render() {
-    const { classes } = this.props;
+    const { handleSubmit, submitting, classes } = this.props;
     return (
       <div>
         <Typography
@@ -24,12 +24,24 @@ class CourseAdder2 extends Component {
         >
           Add a Course
         </Typography>
-        <form className={classes.formContainer}>
+        <form
+          className={classes.formContainer}
+          onSubmit={handleSubmit(values => console.log(values))}
+        >
           <Field
             name="course"
             component={CourseSelector}
             className={classes.formFields}
           />
+          <Field
+            name="passdate"
+            type="date"
+            component="input"
+            className={classes.formFields}
+          />
+          <Button type="submit" variant="raised" disabled={submitting}>
+            Submit
+          </Button>
         </form>
       </div>
     );

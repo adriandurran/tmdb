@@ -62,6 +62,7 @@ class CourseSelector extends Component {
                       this.fetchCourses(value);
                     }
                   })}
+                  // selectedItem={input.value}
                 />
                 {isOpen && (
                   <Paper square>
