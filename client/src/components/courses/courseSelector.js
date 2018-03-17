@@ -50,7 +50,7 @@ class CourseSelector extends Component {
             return (
               <div>
                 <Input
-                  fullWidth
+                  // fullWidth
                   placeholder="Enter the Course name"
                   {...getInputProps({
                     onChange: event => {
