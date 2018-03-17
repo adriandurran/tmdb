@@ -28,10 +28,10 @@ class CourseSelector extends Component {
         course.coursename.toLowerCase().includes(value.toLowerCase())
       )
       .map(course => {
-        return `${course.coursename} Valid for ${course.validity} month(s)`;
+        return `${course.coursename} (Valid for ${course.validity} months)`;
       });
 
-    console.log(items);
+    // console.log(items);
 
     this.setState({ items });
   }, 300);
@@ -79,7 +79,7 @@ class CourseSelector extends Component {
                           }
                         })}
                       >
-                        <Typography variant="body1" gutterBottom noWrap>
+                        <Typography variant="body1" gutterBottom>
                           {item}
                         </Typography>
                       </MenuItem>
@@ -101,4 +101,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(CourseSelector);
+CourseSelector = withStyles(rootStyles)(CourseSelector);
+
+export default withRoot(connect(mapStateToProps)(CourseSelector));
