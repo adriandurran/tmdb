@@ -57,7 +57,7 @@ class CourseAdder extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, classes, auth } = this.props;
+    const { handleSubmit, submitting, classes } = this.props;
     return (
       <div>
         <Typography
