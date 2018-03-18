@@ -27,7 +27,7 @@ const columnData = [
   { id: 'course', numeric: false, disablePadding: false, label: 'Course Name' },
   { id: 'pass', numeric: false, disablePadding: false, label: 'Passed' },
   { id: 'expire', numeric: false, disablePadding: false, label: 'Expires' },
-  { id: 'verified', numeric: false, disablePadding: false, lable: 'Verified' }
+  { id: 'verified', numeric: false, disablePadding: false, label: 'Verified' }
 ];
 
 class EnhancedTableHead extends Component {
