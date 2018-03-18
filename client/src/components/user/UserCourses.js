@@ -14,6 +14,8 @@ import Toolbar from 'material-ui/Toolbar';
 import Tooltip from 'material-ui/Tooltip';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
+import WarningIcon from 'material-ui-icons/Warning';
+import DoneIcon from 'material-ui-icons/Done';
 
 import { withStyles } from 'material-ui/styles';
 import rootStyles from '../../styles/rootStyle';
@@ -24,7 +26,8 @@ import { selectUserCourseNames } from '../../reducers/selectors';
 const columnData = [
   { id: 'course', numeric: false, disablePadding: false, label: 'Course Name' },
   { id: 'pass', numeric: false, disablePadding: false, label: 'Passed' },
-  { id: 'expire', numeric: false, disablePadding: false, label: 'Expires' }
+  { id: 'expire', numeric: false, disablePadding: false, label: 'Expires' },
+  { id: 'verified', numeric: false, disablePadding: false, lable: 'Verified' }
 ];
 
 class EnhancedTableHead extends Component {
@@ -148,6 +151,17 @@ class UserCourses extends Component {
               <Moment format="DD MMM YYYY" add={{ months: course.validity }}>
                 {course.passDate}
               </Moment>
+            </TableCell>
+            <TableCell>
+              {course.verified && <DoneIcon style={{ color: 'green' }} />}
+              {!course.verified && (
+                <Tooltip
+                  id="course-not-verified"
+                  title="This course has not been verified by your Role Admin"
+                >
+                  <WarningIcon style={{ color: 'red' }} />
+                </Tooltip>
+              )}
             </TableCell>
           </TableRow>
         );
