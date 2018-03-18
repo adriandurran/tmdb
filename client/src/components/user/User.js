@@ -16,9 +16,6 @@ import UserCourses from './UserCourses';
 
 import UserCompetencies from './UserComps';
 
-import UserCourseAdder from './UserCourseAdder';
-
-
 class User extends Component {
   componentDidMount() {
     const empId = this.props.match.params.id;
@@ -46,9 +43,9 @@ class User extends Component {
           <Grid item xs={12}>
             <UserCourses />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <UserCourseAdder />
-          </Grid>
+          </Grid> */}
         </Grid>
       );
     }

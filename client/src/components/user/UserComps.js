@@ -71,7 +71,7 @@ class UserComps extends Component {
   }
 
   render() {
-    const { userRoleComps, userCurrentComps, classes } = this.props;
+    const { userRoleComps, userCurrentComps } = this.props;
     return (
       <Paper>
         {this.renderToolBar(userRoleComps, userCurrentComps)}

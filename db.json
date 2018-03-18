@@ -9,60 +9,45 @@
       "isAdmin": false,
       "courses": [
         {
-          "courseId": 3,
-          "passDate": "2018-01-01",
-          "coursename": "Linux Essentials",
-          "validity": 6
+          "courseId": 1,
+          "passDate": "2018-02-01",
+          "verified": true,
+          "coursename": "Microsoft Active Directory 2014",
+          "validity": 18
         },
         {
-          "courseId": 4,
-          "passDate": "2018-01-01",
-          "coursename": "Mongo Database Admin v3",
+          "courseId": 2,
+          "passDate": "2018-03-16",
+          "verified": false,
+          "coursename": "Microsoft Sharepoint Server 2003",
           "validity": 12
         },
         {
-          "courseId": 8,
-          "passDate": "2017-01-01",
-          "coursename":
-            "Installation, Storage, and computer with Windows Server 2016",
-          "validity": 12
-        },
-        {
-          "courseId": 9,
-          "passDate": "2016-01-01",
-          "coursename": "Networking with Windows Server 2016",
-          "validity": 12
-        },
-        {
-          "courseId": 9,
-          "passDate": "2018-01-01",
-          "coursename": "Networking with Windows Server 2016",
-          "validity": 12
-        },
-        {
-          "courseId": 10,
-          "passDate": "2017-01-01",
-          "coursename": "Identity with Windows Server 2016",
+          "courseId": 7,
+          "passDate": "2018-03-01",
+          "verified": true,
+          "coursename": "Enabling Office 365 Services",
           "validity": 12
         },
         {
           "courseId": 0,
-          "passDate": "2018-02-01",
+          "passDate": "2018-03-01",
+          "verified": true,
           "coursename":
             "Designing and Deploying Microsoft Exchange Server 2016",
           "validity": 12
         },
         {
           "courseId": 6,
-          "passDate": "2018-03-01",
+          "passDate": "2018-03-16",
+          "verified": false,
           "coursename": "Managing Office 365 Identities and Requirements",
           "validity": 12
         },
         {
-          "courseId": 7,
-          "passDate": "2018-01-01",
-          "coursename": "Enabling Office 365 Services",
-          "validity": 12
+          "courseId": 4,
+          "passDate": "2018-03-16",
+          "verified": false
         }
       ],
       "roles": [3]

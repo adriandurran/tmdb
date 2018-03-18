@@ -34,6 +34,12 @@ const rootStyles = theme => ({
     display: 'flex',
     flexWrap: 'wrap'
   },
+
+  adderPaper: {
+    marginTop: theme.spacing.unit * 1,
+    padding: theme.spacing.unit * 2
+    // display: 'flex'
+  },
   formFields: {
     flex: 1,
     marginLeft: theme.spacing.unit * 2,
