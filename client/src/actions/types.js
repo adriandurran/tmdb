@@ -9,5 +9,6 @@ export const FETCH_ROLES = 'fetch_roles';
 export const FETCH_USER_ROLES = 'fetch_user_roles';
 // courses
 export const FETCH_COURSES = 'fetch_courses';
+export const ADD_USER_COURSE = 'add_user_course';
 // competencies
 export const FETCH_COMPS = 'fetch_competencies';

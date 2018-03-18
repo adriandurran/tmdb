@@ -7,6 +7,9 @@ import * as fromAuth from './users/authUser';
 // concacanate the username....can be added to with rank etc...
 export const selectUserName = state => fromAuth.selectUserName(state.auth);
 
+// get the current user.....this may/will change when we have a conenction to a db
+export const selectCurrentUser = state => state.auth.user;
+
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;
 export const selectRoles = state => state.roles;
