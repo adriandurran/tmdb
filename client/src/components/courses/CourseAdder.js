@@ -52,11 +52,11 @@ class CourseAdder extends Component {
     let newUserCourses = [...auth.courses, newCourse];
     patchUserCourses(auth, newUserCourses).then(result => {
       console.log(result);
+      // maybe clear out fields......
     });
   }
 
   render() {
-    console.log(CurrentDate);
     const { handleSubmit, submitting, classes, auth } = this.props;
     return (
       <div>
