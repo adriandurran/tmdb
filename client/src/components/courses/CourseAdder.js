@@ -9,9 +9,9 @@ import rootStyles from '../../styles/rootStyle';
 import withRoot from '../../withRoot';
 import { withStyles } from 'material-ui/styles';
 
-import CourseSelector from './CourseSelector';
+import CourseAutoCompleteField from '../shared/CourseAutoComplete';
 
-class CourseAdder2 extends Component {
+class CourseAdder extends Component {
   render() {
     const { handleSubmit, submitting, classes } = this.props;
     return (
@@ -28,9 +28,8 @@ class CourseAdder2 extends Component {
           className={classes.formContainer}
           onSubmit={handleSubmit(values => console.log(values))}
         >
-          <Field
+          <CourseAutoCompleteField
             name="course"
-            component={CourseSelector}
             className={classes.formFields}
           />
           <Field
@@ -48,10 +47,10 @@ class CourseAdder2 extends Component {
   }
 }
 
-CourseAdder2 = withStyles(rootStyles)(CourseAdder2);
+CourseAdder = withStyles(rootStyles)(CourseAdder);
 
 export default withRoot(
   reduxForm({
-    form: 'courseadder2'
-  })(CourseAdder2)
+    form: 'courseadder'
+  })(CourseAdder)
 );

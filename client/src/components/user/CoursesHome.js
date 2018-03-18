@@ -8,7 +8,7 @@ import rootStyles from '../../styles/rootStyle';
 import withRoot from '../../withRoot';
 
 import UserCourses from './UserCourses';
-import CourseAdder2 from '../courses/CourseAdder2';
+import CourseAdder from '../courses/CourseAdder';
 
 const CoursesHome = props => {
   const { classes } = props;
@@ -20,7 +20,7 @@ const CoursesHome = props => {
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.adderPaper}>
-            <CourseAdder2 />
+            <CourseAdder />
           </Paper>
         </Grid>
       </Grid>
