@@ -46,7 +46,8 @@ export const selectUserCoursesCurrent = createSelector(
         if (
           moment(course.passDate, 'YYYY-MM-DD')
             .add(course.validity, 'months')
-            .isAfter(today)
+            .isAfter(today) &&
+          course.verified
         ) {
           return true;
         }
