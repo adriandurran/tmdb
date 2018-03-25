@@ -9,49 +9,35 @@
       "isAdmin": false,
       "courses": [
         {
-          "courseId": 1,
-          "passDate": "2018-02-01",
-          "verified": true,
-          "coursename": "Microsoft Active Directory 2014",
-          "validity": 18
-        },
-        {
-          "courseId": 2,
-          "passDate": "2018-03-16",
-          "verified": false,
-          "coursename": "Microsoft Sharepoint Server 2003",
-          "validity": 12
-        },
-        {
-          "courseId": 7,
+          "id": 7,
           "passDate": "2018-03-01",
           "verified": true,
           "coursename": "Enabling Office 365 Services",
           "validity": 12
         },
         {
-          "courseId": 0,
+          "id": 0,
           "passDate": "2018-03-01",
           "verified": true,
           "coursename": "Designing and Deploying Microsoft Exchange Server 2016",
           "validity": 12
         },
         {
-          "courseId": 6,
+          "id": 6,
           "passDate": "2018-03-16",
           "verified": true,
           "coursename": "Managing Office 365 Identities and Requirements",
           "validity": 12
         },
         {
-          "courseId": 4,
+          "id": 4,
           "passDate": "2018-03-16",
           "verified": false,
           "coursename": "Mongo Database Admin v3",
           "validity": 12
         },
         {
-          "courseId": 2,
+          "id": 2,
           "passDate": "2018-03-09",
           "verified": false
         }
@@ -69,12 +55,12 @@
       "isAdmin": true,
       "courses": [
         {
-          "courseId": 0,
+          "id": 0,
           "passDate": "2018-01-01",
           "verified": true
         },
         {
-          "courseId": 7,
+          "id": 7,
           "passDate": "2018-02-25",
           "verified": true
         }
@@ -99,60 +85,104 @@
   ],
   "courses": [
     {
-      "courseId": 0,
+      "id": 0,
       "coursename": "Designing and Deploying Microsoft Exchange Server 2016",
       "validity": 12
     },
     {
-      "courseId": 1,
+      "id": 1,
       "coursename": "Microsoft Active Directory 2014",
       "validity": 18
     },
     {
-      "courseId": 2,
+      "id": 2,
       "coursename": "Microsoft Sharepoint Server 2003",
       "validity": 12
     },
     {
-      "courseId": 3,
+      "id": 3,
       "coursename": "Linux Essentials",
       "validity": 6
     },
     {
-      "courseId": 4,
+      "id": 4,
       "coursename": "Mongo Database Admin v3",
       "validity": 12
     },
     {
-      "courseId": 5,
+      "id": 5,
       "coursename": "Windows Server 2016",
       "validity": 12
     },
     {
-      "courseId": 6,
+      "id": 6,
       "coursename": "Managing Office 365 Identities and Requirements",
       "validity": 12
     },
     {
-      "courseId": 7,
+      "id": 7,
       "coursename": "Enabling Office 365 Services",
       "validity": 12
     },
     {
-      "courseId": 8,
+      "id": 8,
       "coursename": "Installation, Storage, and computer with Windows Server 2016",
       "validity": 12
     },
     {
-      "courseId": 9,
+      "id": 9,
       "coursename": "Networking with Windows Server 2016",
       "validity": 12
     },
     {
-      "courseId": 10,
+      "id": 10,
       "coursename": "Identity with Windows Server 2016",
       "validity": 12
+    },
+    {
+      "coursename": "Test of a new Course",
+      "validity": "13",
+      "type": "Professional",
+      "level": "Practitioner",
+      "id": 11
+    },
+    {
+      "coursename": "Test another new course",
+      "validity": "24",
+      "type": "Personal",
+      "id": 12
+    },
+    {
+      "coursename": "Test of the reset",
+      "validity": "1",
+      "type": "Personal",
+      "level": "Expert",
+      "id": 13
+    },
+    {
+      "coursename": "Nope tis not working me lad",
+      "validity": "12",
+      "type": "Core",
+      "level": "Practitioner",
+      "id": 14
+    },
+    {
+      "coursename": "Ok I give it another go",
+      "validity": "1",
+      "type": "Core",
+      "level": "Practitioner",
+      "id": 15
     }
+  ],
+  "course-types": [
+    "Core",
+    "Professional",
+    "Personal"
+  ],
+  "course-levels": [
+    "Foundation",
+    "Practitioner",
+    "Expert"
   ],
   "competencies": [
     {

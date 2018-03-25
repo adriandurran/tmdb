@@ -14,7 +14,7 @@ export const submitUser = values => async dispatch => {
     lastname,
     email,
     verified: false,
-    isAdmin: false
+    isAdmin: false,
   };
   const res = await axios.post(`/api/users`, newUser);
   return res.data;
