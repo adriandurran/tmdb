@@ -14,7 +14,6 @@ const AdminCourseManager = props => {
   return (
     <Paper className={classes.adminPaper}>
       <CourseBuilder />
-      <hr />
       <Courses />
     </Paper>
   );
