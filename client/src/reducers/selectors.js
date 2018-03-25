@@ -60,6 +60,11 @@ export const selectUserCoursesCurrent = createSelector(
   }
 );
 
+// get course types
+export const selectCourseTypes = state => state.courseTypes;
+// get the course levels
+export const selectCourseLevels = state => state.courseLevels;
+
 // competencies
 export const selectCompetencies = state => state.comps;
 
