@@ -17,6 +17,8 @@ import {
   selectCourseLevels,
 } from '../../reducers/selectors';
 
+import { adminAddNewCourse } from '../../actions/courses';
+
 const renderSelectField = ({
   input,
   label,
@@ -49,6 +51,12 @@ const renderTextField = ({
 );
 
 class CourseBuilder extends Component {
+  submitNewCourse(values, dispatch) {
+    const { adminAddNewCourse } = this.props;
+
+    adminAddNewCourse(values).then(res => console.log(res.data));
+  }
+
   render() {
     const {
       handleSubmit,
@@ -70,13 +78,15 @@ class CourseBuilder extends Component {
             >
               Course Builder
             </Typography>
-            <form onSubmit={handleSubmit(values => console.log(values))}>
+            <form
+              onSubmit={handleSubmit(values => this.submitNewCourse(values))}
+            >
               <div className={classes.formContainer}>
                 <Field
                   required
                   component={renderTextField}
                   type="text"
-                  name="course-name"
+                  name="coursename"
                   label="Course name"
                   className={classes.formFields}
                 />
@@ -84,7 +94,7 @@ class CourseBuilder extends Component {
                   required
                   component={renderTextField}
                   type="number"
-                  name="course-validity"
+                  name="validity"
                   label="Valid"
                   className={classes.formFields}
                 />
@@ -92,7 +102,7 @@ class CourseBuilder extends Component {
               <div className={classes.formContainer}>
                 <Field
                   component={renderSelectField}
-                  name="course-type"
+                  name="type"
                   label="Course Type"
                   className={classes.formFields}
                 >
@@ -108,7 +118,7 @@ class CourseBuilder extends Component {
                 </Field>
                 <Field
                   component={renderSelectField}
-                  name="course-level"
+                  name="level"
                   label="Course Level"
                   className={classes.formFields}
                 >
@@ -149,7 +159,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { adminAddNewCourse };
 
 CourseBuilder = withStyles(rootStyles)(CourseBuilder);
 CourseBuilder = connect(mapStateToProps, mapDispatchToProps)(CourseBuilder);

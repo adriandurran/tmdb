@@ -11,6 +11,7 @@ export const FETCH_USER_ROLES = 'fetch_user_roles';
 export const FETCH_COURSES = 'fetch_courses';
 export const FETCH_COURSE_TYPE = 'fetch_course_type';
 export const FETCH_COURSE_LEVEL = 'fetch_course_level';
+export const ADD_NEW_COURSE = 'add_new_course';
 
 export const ADD_USER_COURSE = 'add_user_course';
 // competencies

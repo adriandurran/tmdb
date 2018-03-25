@@ -31,7 +31,7 @@ export const selectUserCourseNames = createSelector(
       _.includes(_.map(coursesList, 'courseId'), x.courseId)
     );
     return _.map(filteredList, obj => {
-      return _.assign(obj, _.find(coursesList, { courseId: obj.courseId }));
+      return _.assign(obj, _.find(coursesList, { id: obj.id }));
     });
   }
 );
@@ -55,7 +55,7 @@ export const selectUserCoursesCurrent = createSelector(
         return false;
       })
       .map(course => {
-        return course.courseId;
+        return course.id;
       });
   }
 );
