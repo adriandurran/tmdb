@@ -13,6 +13,8 @@ import CourseSelector from './components/model/courses';
 import CoursesHome from './components/user/CoursesHome';
 import CompsHome from './components/user/CompsHome';
 
+import AdminDashboard from './components/admin/AdminDashboard';
+
 const Routes = () => {
   return (
     <BrowserRouter>
@@ -28,6 +30,7 @@ const Routes = () => {
             <Route exact path="/users/:id/courses" component={CoursesHome} />
             <Route exact path="/users/:id/competencies" component={CompsHome} />
             <Route exact path="/courses" component={CourseSelector} />
+            <Route exact path="/admin/dashboard" component={AdminDashboard} />
           </Grid>
           <Grid item md={1} lg={2} />
         </Grid>

@@ -50,6 +50,16 @@ class Header extends Component {
     } else {
       return (
         <div>
+          {authUser.isAdmin && (
+            <Button
+              component={Link}
+              to={`/admin/dashboard`}
+              className={classes.menuButton}
+            >
+              Admin Dashboard
+            </Button>
+          )}
+
           <Button
             component={Link}
             to={`/users/${authUser.id}/courses`}
@@ -139,7 +149,7 @@ Header = withStyles(rootStyles)(Header);
 const mapStateToProps = state => {
   return {
     authUser: state.auth.user,
-    userName: selectUserName(state)
+    userName: selectUserName(state),
   };
 };
 

@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   FETCH_USER,
   FETCH_ROLES,
-  FETCH_COURSES,
   FETCH_COMPS,
   FETCH_USER_ROLES,
 } from './types';
