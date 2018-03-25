@@ -16,6 +16,14 @@ const rootStyles = theme => ({
     marginLeft: -12,
     marginRight: 20,
   },
+  adminCard: {
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 3,
+  },
+  adminPaper: {
+    marginTop: theme.spacing.unit * 10,
+    padding: theme.spacing.unit * 2,
+  },
   card: {
     marginTop: theme.spacing.unit * 10,
     marginBottom: theme.spacing.unit * 10,

@@ -27,9 +27,9 @@ const AdminDashboard = props => {
                 variant="raised"
                 className={classes.dashboardButton}
                 component={Link}
-                to={'/admin/course-builder'}
+                to={'/admin/course-manager'}
               >
-                Course Builder
+                Course Manager
               </Button>
             </Grid>
           </Grid>

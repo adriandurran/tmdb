@@ -15,7 +15,7 @@ import CompsHome from './components/user/CompsHome';
 
 // admin components
 import AdminDashboard from './components/admin/AdminDashboard';
-import CourseBuilder from './components/admin/CourseBuilder';
+import AdminCourseManager from './components/admin/AdminCourseManager';
 
 const Routes = () => {
   return (
@@ -35,8 +35,8 @@ const Routes = () => {
             <Route exact path="/admin/dashboard" component={AdminDashboard} />
             <Route
               exact
-              path="/admin/course-builder"
-              component={CourseBuilder}
+              path="/admin/course-manager"
+              component={AdminCourseManager}
             />
           </Grid>
           <Grid item md={1} lg={2} />

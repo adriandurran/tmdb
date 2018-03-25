@@ -60,7 +60,7 @@ class CourseBuilder extends Component {
 
     return (
       <div>
-        <Card raised className={classes.card}>
+        <Card raised className={classes.adminCard}>
           <CardContent>
             <Typography
               variant="display1"
@@ -68,7 +68,7 @@ class CourseBuilder extends Component {
               gutterBottom
               align="center"
             >
-              Course Creator
+              Course Builder
             </Typography>
             <form onSubmit={handleSubmit(values => console.log(values))}>
               <div className={classes.formContainer}>
