@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { reset } from 'redux-form';
 
 import {
   FETCH_COURSES,
@@ -26,5 +27,5 @@ export const adminAddNewCourse = course => async dispatch => {
   const res = await axios.post('/api/courses', course);
 
   dispatch({ type: ADD_NEW_COURSE, payload: res.data });
-  return res;
+  dispatch(reset('coursebuilder'));
 };

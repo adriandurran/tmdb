@@ -151,6 +151,27 @@
       "validity": "24",
       "type": "Personal",
       "id": 12
+    },
+    {
+      "coursename": "Test of the reset",
+      "validity": "1",
+      "type": "Personal",
+      "level": "Expert",
+      "id": 13
+    },
+    {
+      "coursename": "Nope tis not working me lad",
+      "validity": "12",
+      "type": "Core",
+      "level": "Practitioner",
+      "id": 14
+    },
+    {
+      "coursename": "Ok I give it another go",
+      "validity": "1",
+      "type": "Core",
+      "level": "Practitioner",
+      "id": 15
     }
   ],
   "course-types": [

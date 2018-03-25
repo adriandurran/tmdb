@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Card, { CardContent } from 'material-ui/Card';
@@ -54,7 +54,7 @@ class CourseBuilder extends Component {
   submitNewCourse(values, dispatch) {
     const { adminAddNewCourse } = this.props;
 
-    adminAddNewCourse(values).then(res => console.log(res.data));
+    adminAddNewCourse(values);
   }
 
   render() {
