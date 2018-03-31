@@ -12,7 +12,6 @@ import Table, {
   TableSortLabel,
   TablePagination,
 } from 'material-ui/Table';
-import Toolbar from 'material-ui/Toolbar';
 import Tooltip from 'material-ui/Tooltip';
 
 import { withStyles } from 'material-ui/styles';
