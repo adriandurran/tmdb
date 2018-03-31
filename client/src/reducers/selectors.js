@@ -75,7 +75,7 @@ export const selectUserRoleComps = createSelector(
   selectCompetencies,
   (roles, comps) => {
     const flatty = _.flatten(_.map(roles, 'compIds'));
-    return comps.filter(x => flatty.includes(x.compId));
+    return comps.filter(x => flatty.includes(x.id));
   }
 );
 

@@ -11,7 +11,7 @@ import rootStyles from '../../styles/rootStyle';
 import withRoot from '../../withRoot';
 import { withStyles } from 'material-ui/styles';
 
-import CourseAutoCompleteField from '../shared/CourseAutoComplete';
+import CourseAutoCompleteField from './CourseAutoComplete';
 import { selectCurrentUser } from '../../reducers/selectors';
 import { patchUserCourses } from '../../actions/user';
 
@@ -22,7 +22,7 @@ const renderTextField = ({
   max,
   className,
 
-  meta: { touched, error }
+  meta: { touched, error },
   // ...custom
 }) => (
   <TextField
@@ -46,7 +46,7 @@ class CourseAdder extends Component {
     let newCourse = {
       courseId: values.course,
       passDate: values.passdate,
-      verified: false
+      verified: false,
     };
 
     let newUserCourses = [...auth.courses, newCourse];
@@ -94,12 +94,12 @@ class CourseAdder extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: selectCurrentUser(state)
+    auth: selectCurrentUser(state),
   };
 };
 
 const mapDispatchToProps = {
-  patchUserCourses
+  patchUserCourses,
 };
 
 CourseAdder = withStyles(rootStyles)(CourseAdder);
@@ -107,6 +107,6 @@ CourseAdder = connect(mapStateToProps, mapDispatchToProps)(CourseAdder);
 
 export default withRoot(
   reduxForm({
-    form: 'courseadder'
+    form: 'courseadder',
   })(CourseAdder)
 );
