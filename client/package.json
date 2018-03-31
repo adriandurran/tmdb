@@ -13,7 +13,7 @@
     "eslint": "^4.17.0",
     "lodash": "^4.17.5",
     "match-sorter": "^2.2.1",
-    "material-ui": "^1.0.0-beta.35",
+    "material-ui": "^1.0.0-beta.39",
     "material-ui-icons": "^1.0.0-beta.17",
     "materialize-css": "^0.100.2",
     "moment": "^2.20.1",
