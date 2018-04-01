@@ -7,7 +7,6 @@ import Typography from 'material-ui/Typography';
 import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import { MenuItem } from 'material-ui/Menu';
 import Chip from 'material-ui/Chip';
 import Paper from 'material-ui/Paper';
 
@@ -23,6 +22,7 @@ import {
   addCourseForCompBuilder,
   removeCourseForCompBuilder
 } from '../../../actions/courses';
+import { adminAddNewComp } from '../../../actions/comps';
 
 const renderTextField = ({
   input,
@@ -73,6 +73,17 @@ class CompBuilder extends Component {
     removeCourseForCompBuilder(course.id);
   };
 
+  submitNewComp(values, dispatch) {
+    const { compCourses, adminAddNewComp } = this.props;
+    let compCourseIds = compCourses.map(course => course.id);
+    let newComp = {
+      compname: values.compname,
+      shortname: values.shortname.toUpperCase(),
+      courseIds: compCourseIds
+    };
+    adminAddNewComp(newComp);
+  }
+
   render() {
     const {
       handleSubmit,
@@ -94,7 +105,7 @@ class CompBuilder extends Component {
             >
               Competency Builder
             </Typography>
-            <form onSubmit={values => console.log(values)}>
+            <form onSubmit={handleSubmit(values => this.submitNewComp(values))}>
               <div className={classes.formContainer}>
                 <Field
                   required
@@ -117,7 +128,7 @@ class CompBuilder extends Component {
                 <Field
                   component={renderSelectField}
                   native
-                  name="courses"
+                  name="courseSelector"
                   onChange={this.handleSelectChange}
                   className={classes.formFields}
                 >
@@ -131,10 +142,11 @@ class CompBuilder extends Component {
                 </Field>
               </div>
               <div className={classes.formContainer}>
-                <Paper className={classes.formFields}>
+                <Paper name="courses" className={classes.formFields}>
                   {compCourses.map(course => {
                     return (
                       <Chip
+                        name="chippers"
                         className={classes.chip}
                         key={course.id}
                         value={course.id}
@@ -144,6 +156,12 @@ class CompBuilder extends Component {
                     );
                   })}
                 </Paper>
+              </div>
+              <div className={classes.formContainer}>
+                <div style={{ flex: 1, textAlign: 'center' }} />
+                <Button variant="raised" disabled={submitting} type="submit">
+                  Submit
+                </Button>
               </div>
             </form>
           </CardContent>
@@ -162,7 +180,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addCourseForCompBuilder,
-  removeCourseForCompBuilder
+  removeCourseForCompBuilder,
+  adminAddNewComp
 };
 
 CompBuilder = withRoot(withStyles(rootStyles)(CompBuilder));
