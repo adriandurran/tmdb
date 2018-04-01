@@ -15,5 +15,7 @@ export const ADD_NEW_COURSE = 'add_new_course';
 
 export const ADD_USER_COURSE = 'add_user_course';
 export const ADD_COURSE_FOR_COMPBUILDER = 'add_course_for_compbuilder';
+export const REMOVE_COURSE_FOR_COMPBUILDER = 'remove_course_for_compbuilder';
+
 // competencies
 export const FETCH_COMPS = 'fetch_competencies';

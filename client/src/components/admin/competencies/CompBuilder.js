@@ -19,7 +19,10 @@ import {
   selectCourses,
   selectCompBuilderCourseNames
 } from '../../../reducers/selectors';
-import { addCourseForCompBuilder } from '../../../actions/courses';
+import {
+  addCourseForCompBuilder,
+  removeCourseForCompBuilder
+} from '../../../actions/courses';
 
 const renderTextField = ({
   input,
@@ -66,7 +69,8 @@ class CompBuilder extends Component {
   };
 
   handleChipDelete = course => () => {
-    console.log(course.id);
+    const { removeCourseForCompBuilder } = this.props;
+    removeCourseForCompBuilder(course.id);
   };
 
   render() {
@@ -156,7 +160,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = { addCourseForCompBuilder };
+const mapDispatchToProps = {
+  addCourseForCompBuilder,
+  removeCourseForCompBuilder
+};
 
 CompBuilder = withRoot(withStyles(rootStyles)(CompBuilder));
 CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);

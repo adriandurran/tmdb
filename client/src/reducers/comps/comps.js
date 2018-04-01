@@ -1,4 +1,8 @@
-import { FETCH_COMPS, ADD_COURSE_FOR_COMPBUILDER } from '../../actions/types';
+import {
+  FETCH_COMPS,
+  ADD_COURSE_FOR_COMPBUILDER,
+  REMOVE_COURSE_FOR_COMPBUILDER
+} from '../../actions/types';
 
 const INITIAL_STATE = [];
 
@@ -16,6 +20,8 @@ export const compBuilderCourses = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_COURSE_FOR_COMPBUILDER:
       return [...state, action.payload];
+    case REMOVE_COURSE_FOR_COMPBUILDER:
+      return state.filter(({ id }) => id !== action.payload);
     default:
       return state;
   }
