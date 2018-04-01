@@ -172,6 +172,12 @@
       "type": "Core",
       "level": "Practitioner",
       "id": 15
+    },
+    {
+      "coursename": "Test Comp Update",
+      "validity": "4",
+      "type": "Core",
+      "id": 16
     }
   ],
   "course-types": [
@@ -245,6 +251,24 @@
         11
       ],
       "id": 6
+    },
+    {
+      "compname": "Yassss Another Comp",
+      "shortname": "YASA",
+      "courseIds": [
+        4,
+        13
+      ],
+      "id": 7
+    },
+    {
+      "compname": "Try this Comp",
+      "shortname": "TRYI",
+      "courseIds": [
+        4,
+        9
+      ],
+      "id": 8
     }
   ],
   "roles": [

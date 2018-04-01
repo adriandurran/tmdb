@@ -10,7 +10,7 @@ import Table, {
   TableRow,
   TableFooter,
   TableSortLabel,
-  TablePagination,
+  TablePagination
 } from 'material-ui/Table';
 import Tooltip from 'material-ui/Tooltip';
 
@@ -25,15 +25,15 @@ const columnData = [
     id: 'compshort',
     numeric: false,
     disablePadding: false,
-    label: 'Competency Short Name',
+    label: 'Competency Short Name'
   },
 
   {
     id: 'comp',
     numeric: false,
     disablePadding: false,
-    label: 'Competency Name',
-  },
+    label: 'Competency Name'
+  }
 ];
 
 class EnhancedCourseTableHead extends Component {
@@ -86,23 +86,23 @@ class Competencies extends Component {
       orderBy: 'Passed',
       data: [],
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 10
     };
   }
 
-  setCourses(props) {
+  setComps(props) {
     this.setState({
-      data: props.comps.sort((a, b) => (a.type > b.type ? -1 : 1)),
+      data: props.comps.sort((a, b) => (a.type > b.type ? -1 : 1))
     });
   }
 
   componentDidMount() {
-    this.setCourses(this.props);
+    this.setComps(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.courses !== nextProps.courses) {
-      this.setCourses(nextProps);
+    if (this.props.comps !== nextProps.comps) {
+      this.setComps(nextProps);
     }
   }
 
@@ -202,7 +202,7 @@ class Competencies extends Component {
 
 const mapStateToProps = state => {
   return {
-    comps: selectCompetencies(state),
+    comps: selectCompetencies(state)
   };
 };
 
