@@ -11,7 +11,9 @@ const rootStyles = theme => ({
   },
   chips: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit / 2,
+    justifyContent: 'center'
   },
   dashboardButton: {},
   paper: {

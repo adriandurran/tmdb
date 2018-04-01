@@ -22,7 +22,7 @@ const renderTextField = ({
   max,
   className,
 
-  meta: { touched, error },
+  meta: { touched, error }
   // ...custom
 }) => (
   <TextField
@@ -44,9 +44,9 @@ class CourseAdder extends Component {
     const { auth, patchUserCourses } = this.props;
 
     let newCourse = {
-      courseId: values.course,
+      id: values.course,
       passDate: values.passdate,
-      verified: false,
+      verified: false
     };
 
     let newUserCourses = [...auth.courses, newCourse];
@@ -94,12 +94,12 @@ class CourseAdder extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: selectCurrentUser(state),
+    auth: selectCurrentUser(state)
   };
 };
 
 const mapDispatchToProps = {
-  patchUserCourses,
+  patchUserCourses
 };
 
 CourseAdder = withStyles(rootStyles)(CourseAdder);
@@ -107,6 +107,6 @@ CourseAdder = connect(mapStateToProps, mapDispatchToProps)(CourseAdder);
 
 export default withRoot(
   reduxForm({
-    form: 'courseadder',
+    form: 'courseadder'
   })(CourseAdder)
 );

@@ -60,6 +60,16 @@ export const selectUserCoursesCurrent = createSelector(
   }
 );
 
+// get courses for the compBuilder
+export const selectCompBuilderCourses = state => state.compCourses;
+export const selectCompBuilderCourseNames = createSelector(
+  selectCourses,
+  selectCompBuilderCourses,
+  (courses, compcourses) => {
+    return _.filter(courses, x => _.includes(_.map(compcourses, 'id'), x.id));
+  }
+);
+
 // get course types
 export const selectCourseTypes = state => state.courseTypes;
 // get the course levels

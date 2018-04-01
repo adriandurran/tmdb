@@ -2,20 +2,21 @@ import { combineReducers } from 'redux';
 import { reducer as reduxForm } from 'redux-form';
 
 import authReducer from './users/authUser';
-import rolesReducer from './models/roles';
-import compsReducer from './models/comps';
-import coursesReducer from './models/courses';
-import courseLevelsReducer from './models/course-levels';
-import courseTypesReducer from './models/course-types';
+import rolesReducer from './roles/roles';
+import { compsReducer, compBuilderCourses } from './comps/comps';
+import coursesReducer from './courses/courses';
+import courseLevelsReducer from './courses/course-levels';
+import courseTypesReducer from './courses/course-types';
 
 const reducer = combineReducers({
   auth: authReducer,
   roles: rolesReducer,
   comps: compsReducer,
+  compCourses: compBuilderCourses,
   courses: coursesReducer,
   courseTypes: courseTypesReducer,
   courseLevels: courseLevelsReducer,
-  form: reduxForm,
+  form: reduxForm
 });
 
 export default reducer;

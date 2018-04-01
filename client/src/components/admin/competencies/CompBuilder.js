@@ -9,12 +9,17 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { MenuItem } from 'material-ui/Menu';
 import Chip from 'material-ui/Chip';
+import Paper from 'material-ui/Paper';
 
 import { withStyles } from 'material-ui/styles';
 import withRoot from '../../../withRoot';
 import rootStyles from '../../../styles/rootStyle';
 
-import { selectCourses } from '../../../reducers/selectors';
+import {
+  selectCourses,
+  selectCompBuilderCourseNames
+} from '../../../reducers/selectors';
+import { addCourseForCompBuilder } from '../../../actions/courses';
 
 const renderTextField = ({
   input,
@@ -35,16 +40,17 @@ const renderTextField = ({
   />
 );
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 500
-    }
-  }
-};
+const renderSelectField = ({
+  input,
+  label,
+  className,
+  meta: { touched, error },
+  children
+}) => (
+  <Select native {...input} className={className}>
+    {children}
+  </Select>
+);
 
 class CompBuilder extends Component {
   constructor(props) {
@@ -54,13 +60,23 @@ class CompBuilder extends Component {
     };
   }
 
-  handleChange = event => {
-    console.log(event.target.value);
-    this.setState({ name: event.target.value });
+  handleSelectChange = event => {
+    const { addCourseForCompBuilder } = this.props;
+    addCourseForCompBuilder(parseInt(event.target.value, 10));
+  };
+
+  handleChipDelete = course => () => {
+    console.log(course.id);
   };
 
   render() {
-    const { handleSubmit, submitting, classes, courses } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      classes,
+      courses,
+      compCourses
+    } = this.props;
 
     return (
       <div>
@@ -93,33 +109,38 @@ class CompBuilder extends Component {
                   className={classes.formFields}
                 />
               </div>
-              <div className={classes.formContainer} />
-              <Select
-                multiple
-                className={classes.formFields}
-                value={this.state.name}
-                onChange={this.handleChange}
-                MenuProps={MenuProps}
-                renderValue={selected => (
-                  <div className={classes.chips}>
-                    {selected.map(value => (
+              <div className={classes.formContainer}>
+                <Field
+                  component={renderSelectField}
+                  native
+                  name="courses"
+                  onChange={this.handleSelectChange}
+                  className={classes.formFields}
+                >
+                  {courses.map(course => {
+                    return (
+                      <option value={course.id} key={course.id}>
+                        {course.coursename}
+                      </option>
+                    );
+                  })}
+                </Field>
+              </div>
+              <div className={classes.formContainer}>
+                <Paper className={classes.formFields}>
+                  {compCourses.map(course => {
+                    return (
                       <Chip
-                        key={value}
-                        label={value}
                         className={classes.chip}
+                        key={course.id}
+                        value={course.id}
+                        label={course.coursename}
+                        onDelete={this.handleChipDelete(course)}
                       />
-                    ))}
-                  </div>
-                )}
-              >
-                {courses.map(course => {
-                  return (
-                    <MenuItem key={course.id} value={course.id}>
-                      {course.coursename}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
+                    );
+                  })}
+                </Paper>
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -130,11 +151,12 @@ class CompBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    courses: selectCourses(state)
+    courses: selectCourses(state),
+    compCourses: selectCompBuilderCourseNames(state)
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { addCourseForCompBuilder };
 
 CompBuilder = withRoot(withStyles(rootStyles)(CompBuilder));
 CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);

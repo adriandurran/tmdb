@@ -17,7 +17,7 @@ function CourseAutoComplete({ loading, courses, input, ...other }) {
       itemToString={item =>
         `${item.coursename} (Valid for ${item.validity} months)` || ''
       }
-      onChange={selectedItem => input.onChange(selectedItem.courseId)}
+      onChange={selectedItem => input.onChange(selectedItem.id)}
       onStateChange={({ inputValue }) => {
         return input.onChange(inputValue);
       }}
@@ -51,7 +51,7 @@ function CourseAutoComplete({ loading, courses, input, ...other }) {
                   results.map((course, index) => (
                     <MenuItem
                       {...getItemProps({ item: course })}
-                      key={course.courseId}
+                      key={course.id}
                       style={{
                         backgroundColor:
                           highlightedIndex === index ? '#f7f7f7' : '#fdfdfd'
