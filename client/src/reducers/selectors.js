@@ -17,7 +17,7 @@ export const selectUserRoleNames = createSelector(
   selectUserRoles,
   selectRoles,
   (userRoles, rolesList) =>
-    _.filter(rolesList, x => _.includes(userRoles, x.roleId))
+    _.filter(rolesList, x => _.includes(userRoles, x.id))
 );
 
 // match up the courses to the user
