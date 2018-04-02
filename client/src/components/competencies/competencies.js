@@ -10,7 +10,7 @@ import Table, {
   TableRow,
   TableFooter,
   TableSortLabel,
-  TablePagination,
+  TablePagination
 } from 'material-ui/Table';
 import Tooltip from 'material-ui/Tooltip';
 
@@ -18,13 +18,22 @@ import { withStyles } from 'material-ui/styles';
 import withRoot from '../../withRoot';
 import rootStyles from '../../styles/rootStyle';
 
-import { selectCourses } from '../../reducers/selectors';
+import { selectCompetencies } from '../../reducers/selectors';
 
 const columnData = [
-  { id: 'course', numeric: false, disablePadding: false, label: 'Course Name' },
-  { id: 'validity', numeric: false, disablePadding: false, label: 'Validity' },
-  { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
-  { id: 'level', numeric: false, disablePadding: false, label: 'Level' },
+  {
+    id: 'compshort',
+    numeric: false,
+    disablePadding: false,
+    label: 'Competency Short Name'
+  },
+
+  {
+    id: 'comp',
+    numeric: false,
+    disablePadding: false,
+    label: 'Competency Name'
+  }
 ];
 
 class EnhancedCourseTableHead extends Component {
@@ -68,7 +77,7 @@ class EnhancedCourseTableHead extends Component {
   }
 }
 
-class Courses extends Component {
+class Competencies extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -77,23 +86,23 @@ class Courses extends Component {
       orderBy: 'Passed',
       data: [],
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 10
     };
   }
 
-  setCourses(props) {
+  setComps(props) {
     this.setState({
-      data: props.courses.sort((a, b) => (a.type > b.type ? -1 : 1)),
+      data: props.comps.sort((a, b) => (a.type > b.type ? -1 : 1))
     });
   }
 
   componentDidMount() {
-    this.setCourses(this.props);
+    this.setComps(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.courses !== nextProps.courses) {
-      this.setCourses(nextProps);
+    if (this.props.comps !== nextProps.comps) {
+      this.setComps(nextProps);
     }
   }
 
@@ -121,18 +130,16 @@ class Courses extends Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  renderCourses() {
+  renderComps() {
     const { data, rowsPerPage, page } = this.state;
 
     return data
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map((course, index) => {
+      .map((comp, index) => {
         return (
           <TableRow key={index}>
-            <TableCell>{course.coursename}</TableCell>
-            <TableCell>{course.validity}</TableCell>
-            <TableCell>{course.type}</TableCell>
-            <TableCell>{course.level}</TableCell>
+            <TableCell>{comp.shortname}</TableCell>
+            <TableCell>{comp.compname}</TableCell>
           </TableRow>
         );
       });
@@ -153,7 +160,7 @@ class Courses extends Component {
               gutterBottom
               align="center"
             >
-              Courses
+              Competencies
             </Typography>
             <div>
               <Table>
@@ -163,7 +170,7 @@ class Courses extends Component {
                   onRequestSort={this.handleRequestSort}
                 />
                 <TableBody>
-                  {this.renderCourses()}
+                  {this.renderComps()}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 49 * emptyRows }}>
                       <TableCell colSpan={3} />
@@ -195,10 +202,11 @@ class Courses extends Component {
 
 const mapStateToProps = state => {
   return {
-    courses: selectCourses(state),
+    comps: selectCompetencies(state)
   };
 };
 
-Courses = connect(mapStateToProps)(Courses);
+Competencies = connect(mapStateToProps)(Competencies);
+Competencies = withRoot(withStyles(rootStyles)(Competencies));
 
-export default withRoot(withStyles(rootStyles)(Courses));
+export default Competencies;

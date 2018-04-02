@@ -6,6 +6,8 @@ import {
   FETCH_COURSE_TYPE,
   FETCH_COURSE_LEVEL,
   ADD_NEW_COURSE,
+  ADD_COURSE_FOR_COMPBUILDER,
+  REMOVE_COURSE_FOR_COMPBUILDER
 } from './types';
 
 export const fetchCourses = () => async dispatch => {
@@ -28,4 +30,12 @@ export const adminAddNewCourse = course => async dispatch => {
 
   dispatch({ type: ADD_NEW_COURSE, payload: res.data });
   dispatch(reset('coursebuilder'));
+};
+
+export const addCourseForCompBuilder = id => async dispatch => {
+  dispatch({ type: ADD_COURSE_FOR_COMPBUILDER, payload: { id } });
+};
+
+export const removeCourseForCompBuilder = id => async dispatch => {
+  dispatch({ type: REMOVE_COURSE_FOR_COMPBUILDER, payload: id });
 };

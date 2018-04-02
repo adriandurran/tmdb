@@ -11,7 +11,7 @@ import rootStyles from '../../styles/rootStyle';
 import withRoot from '../../withRoot';
 import { withStyles } from 'material-ui/styles';
 
-import CourseAutoCompleteField from '../shared/CourseAutoComplete';
+import CourseAutoCompleteField from './CourseAutoComplete';
 import { selectCurrentUser } from '../../reducers/selectors';
 import { patchUserCourses } from '../../actions/user';
 
@@ -44,7 +44,7 @@ class CourseAdder extends Component {
     const { auth, patchUserCourses } = this.props;
 
     let newCourse = {
-      courseId: values.course,
+      id: values.course,
       passDate: values.passdate,
       verified: false
     };

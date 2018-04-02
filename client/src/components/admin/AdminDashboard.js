@@ -32,6 +32,17 @@ const AdminDashboard = props => {
                 Course Manager
               </Button>
             </Grid>
+            <Grid item xs={6}>
+              <Button
+                size="large"
+                variant="raised"
+                className={classes.dashboardButton}
+                component={Link}
+                to={'/admin/comp-manager'}
+              >
+                Competency Manager
+              </Button>
+            </Grid>
           </Grid>
         </CardContent>
       </Card>

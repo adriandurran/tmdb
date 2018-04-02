@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, Field, reset } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Card, { CardContent } from 'material-ui/Card';
@@ -9,15 +9,15 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
 import { withStyles } from 'material-ui/styles';
-import withRoot from '../../withRoot';
-import rootStyles from '../../styles/rootStyle';
+import withRoot from '../../../withRoot';
+import rootStyles from '../../../styles/rootStyle';
 
 import {
   selectCourseTypes,
   selectCourseLevels,
-} from '../../reducers/selectors';
+} from '../../../reducers/selectors';
 
-import { adminAddNewCourse } from '../../actions/courses';
+import { adminAddNewCourse } from '../../../actions/courses';
 
 const renderSelectField = ({
   input,

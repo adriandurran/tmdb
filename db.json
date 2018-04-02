@@ -172,6 +172,12 @@
       "type": "Core",
       "level": "Practitioner",
       "id": 15
+    },
+    {
+      "coursename": "Test Comp Update",
+      "validity": "4",
+      "type": "Core",
+      "id": 16
     }
   ],
   "course-types": [
@@ -186,7 +192,7 @@
   ],
   "competencies": [
     {
-      "compId": 0,
+      "id": 0,
       "compname": "Best in class",
       "courseIds": [
         1,
@@ -196,14 +202,14 @@
       ]
     },
     {
-      "compId": 1,
+      "id": 1,
       "compname": "Best CV",
       "courseIds": [
         2
       ]
     },
     {
-      "compId": 2,
+      "id": 2,
       "compname": "Network Admin",
       "courseIds": [
         3,
@@ -211,7 +217,7 @@
       ]
     },
     {
-      "compId": 3,
+      "id": 3,
       "compname": "Microsoft Analyst",
       "courseIds": [
         0,
@@ -219,7 +225,7 @@
       ]
     },
     {
-      "compId": 4,
+      "id": 4,
       "compname": "MSCE Messaging",
       "courseIds": [
         0,
@@ -228,13 +234,41 @@
       ]
     },
     {
-      "compId": 5,
+      "id": 5,
       "compname": "MSCA Windows Server 2016",
       "courseIds": [
         8,
         9,
         10
       ]
+    },
+    {
+      "compname": "Test New Comp",
+      "shortname": "TEST",
+      "courseIds": [
+        2,
+        6,
+        11
+      ],
+      "id": 6
+    },
+    {
+      "compname": "Yassss Another Comp",
+      "shortname": "YASA",
+      "courseIds": [
+        4,
+        13
+      ],
+      "id": 7
+    },
+    {
+      "compname": "Try this Comp",
+      "shortname": "TRYI",
+      "courseIds": [
+        4,
+        9
+      ],
+      "id": 8
     }
   ],
   "roles": [
