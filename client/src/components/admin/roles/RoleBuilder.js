@@ -14,7 +14,16 @@ import { withStyles } from 'material-ui/styles';
 import withRoot from '../../../withRoot';
 import rootStyles from '../../../styles/rootStyle';
 
-import { selectRoles, selectCompetencies } from '../../../reducers/selectors';
+import {
+  selectRoleBuilderCompNames,
+  selectCompetencies
+} from '../../../reducers/selectors';
+import {
+  addCompForRoleBuilder,
+  removeCompForRoleBuilder
+} from '../../../actions/comps';
+
+import { adminAddNewRole } from '../../../actions/roles';
 
 const renderTextField = ({
   input,
@@ -49,12 +58,27 @@ const renderSelectField = ({
 
 class RoleBuilder extends Component {
   handleSelectChange = event => {
-    // const { addCourseForCompBuilder } = this.props;
-    // addCourseForCompBuilder(parseInt(event.target.value, 10));
+    const { addCompForRoleBuilder } = this.props;
+    addCompForRoleBuilder(parseInt(event.target.value, 10));
   };
 
+  handleChipDelete = comp => () => {
+    const { removeCompForRoleBuilder } = this.props;
+    removeCompForRoleBuilder(comp.id);
+  };
+
+  submitNewRole(values, dispatch) {
+    const { roleComps, adminAddNewRole } = this.props;
+    let roleCompIds = roleComps.map(comp => comp.id);
+    let newRole = {
+      rolename: values.rolename,
+      compIds: roleCompIds
+    };
+    adminAddNewRole(newRole);
+  }
+
   render() {
-    const { handleSubmit, submitting, classes, comps } = this.props;
+    const { handleSubmit, submitting, classes, comps, roleComps } = this.props;
     return (
       <div>
         <Card raised className={classes.adminCard}>
@@ -67,7 +91,7 @@ class RoleBuilder extends Component {
             >
               Role Builder
             </Typography>
-            <form onSubmit={handleSubmit(values => console.log(values))}>
+            <form onSubmit={handleSubmit(values => this.submitNewRole(values))}>
               <div className={classes.formContainer}>
                 <Field
                   required
@@ -95,6 +119,28 @@ class RoleBuilder extends Component {
                   })}
                 </Field>
               </div>
+              <div className={classes.formContainer}>
+                <Paper name="courses" className={classes.formFields}>
+                  {roleComps.map(comp => {
+                    return (
+                      <Chip
+                        name="chippers"
+                        className={classes.chip}
+                        key={comp.id}
+                        value={comp.id}
+                        label={comp.compname}
+                        onDelete={this.handleChipDelete(comp)}
+                      />
+                    );
+                  })}
+                </Paper>
+              </div>
+              <div className={classes.formContainer}>
+                <div style={{ flex: 1, textAlign: 'center' }} />
+                <Button variant="raised" disabled={submitting} type="submit">
+                  Submit
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -103,11 +149,15 @@ class RoleBuilder extends Component {
   }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  addCompForRoleBuilder,
+  removeCompForRoleBuilder,
+  adminAddNewRole
+};
 
 const mapStateToProps = state => {
   return {
-    roles: selectRoles(state),
+    roleComps: selectRoleBuilderCompNames(state),
     comps: selectCompetencies(state)
   };
 };

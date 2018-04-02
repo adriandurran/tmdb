@@ -4,6 +4,21 @@ import moment from 'moment';
 
 import * as fromAuth from './users/authUser';
 
+// roles
+export const selectRoles = state => state.roles;
+
+// competencies
+export const selectCompetencies = state => state.comps;
+
+// courses
+export const selectCourses = state => state.courses;
+// get course types
+export const selectCourseTypes = state => state.courseTypes;
+// get the course levels
+export const selectCourseLevels = state => state.courseLevels;
+
+// ************ USER ************************
+
 // concacanate the username....can be added to with rank etc...
 export const selectUserName = state => fromAuth.selectUserName(state.auth);
 
@@ -12,7 +27,7 @@ export const selectCurrentUser = state => state.auth.user;
 
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;
-export const selectRoles = state => state.roles;
+
 export const selectUserRoleNames = createSelector(
   selectUserRoles,
   selectRoles,
@@ -22,7 +37,7 @@ export const selectUserRoleNames = createSelector(
 
 // match up the courses to the user
 export const selectUserCourses = state => state.auth.user.courses;
-export const selectCourses = state => state.courses;
+
 export const selectUserCourseNames = createSelector(
   selectUserCourses,
   selectCourses,
@@ -60,34 +75,6 @@ export const selectUserCoursesCurrent = createSelector(
   }
 );
 
-// get courses for the compBuilder
-export const selectCompBuilderCourses = state => state.compCourses;
-export const selectCompBuilderCourseNames = createSelector(
-  selectCourses,
-  selectCompBuilderCourses,
-  (courses, compcourses) => {
-    return _.filter(courses, x => _.includes(_.map(compcourses, 'id'), x.id));
-  }
-);
-
-// get course types
-export const selectCourseTypes = state => state.courseTypes;
-// get the course levels
-export const selectCourseLevels = state => state.courseLevels;
-
-// competencies
-export const selectCompetencies = state => state.comps;
-
-// get competencies for roles
-export const selectRoleComps = createSelector(
-  selectRoles,
-  selectCompetencies,
-  (roles, comps) => {
-    const flatty = _.flatten(_.map(roles, 'compIds'));
-    return comps.filter(x => flatty.includes(x.id));
-  }
-);
-
 // get competencies for a given role for a user
 
 export const selectUserRoleComps = createSelector(
@@ -115,5 +102,37 @@ export const selectUserCompetenciesCurrent = createSelector(
       }
       return false;
     });
+  }
+);
+
+// ************ END OF USER
+
+// get courses for the compBuilder
+export const selectCompBuilderCourses = state => state.compCourses;
+export const selectCompBuilderCourseNames = createSelector(
+  selectCourses,
+  selectCompBuilderCourses,
+  (courses, compcourses) => {
+    return _.filter(courses, x => _.includes(_.map(compcourses, 'id'), x.id));
+  }
+);
+
+// get the comps for the role builder
+export const selectRoleBuilderComps = state => state.roleComps;
+export const selectRoleBuilderCompNames = createSelector(
+  selectCompetencies,
+  selectRoleBuilderComps,
+  (comps, rolecomps) => {
+    return _.filter(comps, x => _.includes(_.map(rolecomps, 'id'), x.id));
+  }
+);
+
+// get competencies for roles
+export const selectRoleComps = createSelector(
+  selectRoles,
+  selectCompetencies,
+  (roles, comps) => {
+    const flatty = _.flatten(_.map(roles, 'compIds'));
+    return comps.filter(x => flatty.includes(x.id));
   }
 );

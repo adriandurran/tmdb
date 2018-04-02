@@ -19,8 +19,7 @@
           "id": 0,
           "passDate": "2018-03-01",
           "verified": true,
-          "coursename":
-            "Designing and Deploying Microsoft Exchange Server 2016",
+          "coursename": "Designing and Deploying Microsoft Exchange Server 2016",
           "validity": 12
         },
         {
@@ -43,7 +42,9 @@
           "verified": false
         }
       ],
-      "roles": [3]
+      "roles": [
+        3
+      ]
     },
     {
       "id": 2,
@@ -125,8 +126,7 @@
     },
     {
       "id": 8,
-      "coursename":
-        "Installation, Storage, and computer with Windows Server 2016",
+      "coursename": "Installation, Storage, and computer with Windows Server 2016",
       "validity": 12
     },
     {
@@ -180,55 +180,94 @@
       "id": 16
     }
   ],
-  "course-types": ["Core", "Professional", "Personal"],
-  "course-levels": ["Foundation", "Practitioner", "Expert"],
+  "course-types": [
+    "Core",
+    "Professional",
+    "Personal"
+  ],
+  "course-levels": [
+    "Foundation",
+    "Practitioner",
+    "Expert"
+  ],
   "competencies": [
     {
       "id": 0,
       "compname": "Best in class",
-      "courseIds": [1, 2, 3, 4]
+      "courseIds": [
+        1,
+        2,
+        3,
+        4
+      ]
     },
     {
       "id": 1,
       "compname": "Best CV",
-      "courseIds": [2]
+      "courseIds": [
+        2
+      ]
     },
     {
       "id": 2,
       "compname": "Network Admin",
-      "courseIds": [3, 4]
+      "courseIds": [
+        3,
+        4
+      ]
     },
     {
       "id": 3,
       "compname": "Microsoft Analyst",
-      "courseIds": [0, 2]
+      "courseIds": [
+        0,
+        2
+      ]
     },
     {
       "id": 4,
       "compname": "MSCE Messaging",
-      "courseIds": [0, 6, 7]
+      "courseIds": [
+        0,
+        6,
+        7
+      ]
     },
     {
       "id": 5,
       "compname": "MSCA Windows Server 2016",
-      "courseIds": [8, 9, 10]
+      "courseIds": [
+        8,
+        9,
+        10
+      ]
     },
     {
       "compname": "Test New Comp",
       "shortname": "TEST",
-      "courseIds": [2, 6, 11],
+      "courseIds": [
+        2,
+        6,
+        11
+      ],
       "id": 6
     },
     {
       "compname": "Yassss Another Comp",
       "shortname": "YASA",
-      "courseIds": [4, 13],
+      "courseIds": [
+        4,
+        13
+      ],
       "id": 7
     },
     {
       "compname": "Try this Comp",
       "shortname": "TRYI",
-      "courseIds": [4, 9],
+      "courseIds": [
+        4,
+        9
+      ],
       "id": 8
     }
   ],
@@ -236,27 +275,47 @@
     {
       "id": 0,
       "rolename": "Database Administrator",
-      "compIds": [2, 3]
+      "compIds": [
+        2,
+        3
+      ]
     },
     {
       "id": 1,
       "rolename": "Service Desk Analyst",
-      "compIds": [1, 3]
+      "compIds": [
+        1,
+        3
+      ]
     },
     {
       "id": 2,
       "rolename": "Network Support",
-      "compIds": [3]
+      "compIds": [
+        3
+      ]
     },
     {
       "id": 3,
       "rolename": "Exchange Admin",
-      "compIds": [4]
+      "compIds": [
+        4
+      ]
     },
     {
       "id": 4,
       "rolename": "Windows Server Admin",
-      "compIds": [5]
+      "compIds": [
+        5
+      ]
+    },
+    {
+      "rolename": "Test this Role Boy",
+      "compIds": [
+        4,
+        7
+      ],
+      "id": 5
     }
   ]
 }
