@@ -56,12 +56,12 @@ const renderSelectField = ({
 );
 
 class CompBuilder extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: []
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     name: []
+  //   };
+  // }
 
   handleSelectChange = event => {
     const { addCourseForCompBuilder } = this.props;

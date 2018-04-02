@@ -14,10 +14,107 @@ import { withStyles } from 'material-ui/styles';
 import withRoot from '../../../withRoot';
 import rootStyles from '../../../styles/rootStyle';
 
+import { selectRoles, selectCompetencies } from '../../../reducers/selectors';
+
+const renderTextField = ({
+  input,
+  label,
+  type,
+  className,
+
+  meta: { touched, error }
+}) => (
+  <TextField
+    required
+    placeholder={label}
+    error={touched && error}
+    {...input}
+    type={type}
+    helperText={touched && error}
+    className={className}
+  />
+);
+
+const renderSelectField = ({
+  input,
+  label,
+  className,
+  meta: { touched, error },
+  children
+}) => (
+  <Select native {...input} className={className}>
+    {children}
+  </Select>
+);
+
 class RoleBuilder extends Component {
+  handleSelectChange = event => {
+    // const { addCourseForCompBuilder } = this.props;
+    // addCourseForCompBuilder(parseInt(event.target.value, 10));
+  };
+
   render() {
-    return <div>Role Builder</div>;
+    const { handleSubmit, submitting, classes, comps } = this.props;
+    return (
+      <div>
+        <Card raised className={classes.adminCard}>
+          <CardContent>
+            <Typography
+              variant="display1"
+              component="h5"
+              gutterBottom
+              align="center"
+            >
+              Role Builder
+            </Typography>
+            <form onSubmit={handleSubmit(values => console.log(values))}>
+              <div className={classes.formContainer}>
+                <Field
+                  required
+                  component={renderTextField}
+                  type="text"
+                  name="rolename"
+                  label="Role name"
+                  className={classes.formFields}
+                />
+              </div>
+              <div className={classes.formContainer}>
+                <Field
+                  component={renderSelectField}
+                  native
+                  name="courseSelector"
+                  onChange={this.handleSelectChange}
+                  className={classes.formFields}
+                >
+                  {comps.map(comp => {
+                    return (
+                      <option value={comp.id} key={comp.id}>
+                        {comp.compname}
+                      </option>
+                    );
+                  })}
+                </Field>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 }
 
-export default RoleBuilder;
+const mapDispatchToProps = {};
+
+const mapStateToProps = state => {
+  return {
+    roles: selectRoles(state),
+    comps: selectCompetencies(state)
+  };
+};
+
+RoleBuilder = connect(mapStateToProps, mapDispatchToProps)(RoleBuilder);
+RoleBuilder = withRoot(withStyles(rootStyles)(RoleBuilder));
+
+export default reduxForm({
+  form: 'rolebuilder'
+})(RoleBuilder);

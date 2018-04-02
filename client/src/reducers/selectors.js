@@ -78,7 +78,17 @@ export const selectCourseLevels = state => state.courseLevels;
 // competencies
 export const selectCompetencies = state => state.comps;
 
-// get competencies for a given role
+// get competencies for roles
+export const selectRoleComps = createSelector(
+  selectRoles,
+  selectCompetencies,
+  (roles, comps) => {
+    const flatty = _.flatten(_.map(roles, 'compIds'));
+    return comps.filter(x => flatty.includes(x.id));
+  }
+);
+
+// get competencies for a given role for a user
 
 export const selectUserRoleComps = createSelector(
   selectUserRoleNames,
