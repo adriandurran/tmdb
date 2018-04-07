@@ -16,6 +16,7 @@ import CompsHome from './components/user/CompsHome';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminCourseManager from './components/admin/courses/AdminCourseManager';
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
+import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 
 const Routes = () => {
   return (
@@ -41,6 +42,11 @@ const Routes = () => {
               exact
               path="/admin/comp-manager"
               component={AdminCompManager}
+            />
+            <Route
+              exact
+              path="/admin/role-manager"
+              component={AdminRoleManager}
             />
           </Grid>
           <Grid item md={1} lg={2} />

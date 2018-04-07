@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchRoles, fetchComps } from '../actions';
+import { fetchRoles } from '../actions/roles';
+import { fetchComps } from '../actions/comps';
+
 import {
   fetchCourses,
   fetchCourseTypes,
-  fetchCourseLevels,
+  fetchCourseLevels
 } from '../actions/courses';
 
 import Routes from '../Routes';
@@ -17,7 +19,7 @@ class App extends Component {
       fetchCourses,
       fetchComps,
       fetchCourseLevels,
-      fetchCourseTypes,
+      fetchCourseTypes
     } = this.props;
     fetchRoles(); //this needs to change when we add authentication
     fetchCourses(); //this needs to change when we add authentication
@@ -40,7 +42,7 @@ const mapDispatchToProps = {
   fetchCourses,
   fetchCourseTypes,
   fetchCourseLevels,
-  fetchComps,
+  fetchComps
 };
 
 export default connect(null, mapDispatchToProps)(App);

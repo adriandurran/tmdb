@@ -15,14 +15,15 @@ import withRoot from '../../../withRoot';
 import rootStyles from '../../../styles/rootStyle';
 
 import {
-  selectCourses,
-  selectCompBuilderCourseNames
+  selectRoleBuilderCompNames,
+  selectCompetencies
 } from '../../../reducers/selectors';
 import {
-  addCourseForCompBuilder,
-  removeCourseForCompBuilder
-} from '../../../actions/courses';
-import { adminAddNewComp } from '../../../actions/comps';
+  addCompForRoleBuilder,
+  removeCompForRoleBuilder
+} from '../../../actions/comps';
+
+import { adminAddNewRole } from '../../../actions/roles';
 
 const renderTextField = ({
   input,
@@ -55,44 +56,29 @@ const renderSelectField = ({
   </Select>
 );
 
-class CompBuilder extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     name: []
-  //   };
-  // }
-
+class RoleBuilder extends Component {
   handleSelectChange = event => {
-    const { addCourseForCompBuilder } = this.props;
-    addCourseForCompBuilder(parseInt(event.target.value, 10));
+    const { addCompForRoleBuilder } = this.props;
+    addCompForRoleBuilder(parseInt(event.target.value, 10));
   };
 
-  handleChipDelete = course => () => {
-    const { removeCourseForCompBuilder } = this.props;
-    removeCourseForCompBuilder(course.id);
+  handleChipDelete = comp => () => {
+    const { removeCompForRoleBuilder } = this.props;
+    removeCompForRoleBuilder(comp.id);
   };
 
-  submitNewComp(values, dispatch) {
-    const { compCourses, adminAddNewComp } = this.props;
-    let compCourseIds = compCourses.map(course => course.id);
-    let newComp = {
-      compname: values.compname,
-      shortname: values.shortname.toUpperCase(),
-      courseIds: compCourseIds
+  submitNewRole(values, dispatch) {
+    const { roleComps, adminAddNewRole } = this.props;
+    let roleCompIds = roleComps.map(comp => comp.id);
+    let newRole = {
+      rolename: values.rolename,
+      compIds: roleCompIds
     };
-    adminAddNewComp(newComp);
+    adminAddNewRole(newRole);
   }
 
   render() {
-    const {
-      handleSubmit,
-      submitting,
-      classes,
-      courses,
-      compCourses
-    } = this.props;
-
+    const { handleSubmit, submitting, classes, comps, roleComps } = this.props;
     return (
       <div>
         <Card raised className={classes.adminCard}>
@@ -103,24 +89,16 @@ class CompBuilder extends Component {
               gutterBottom
               align="center"
             >
-              Competency Builder
+              Role Builder
             </Typography>
-            <form onSubmit={handleSubmit(values => this.submitNewComp(values))}>
+            <form onSubmit={handleSubmit(values => this.submitNewRole(values))}>
               <div className={classes.formContainer}>
                 <Field
                   required
                   component={renderTextField}
                   type="text"
-                  name="shortname"
-                  label="Short name"
-                  className={classes.formFields}
-                />
-                <Field
-                  required
-                  component={renderTextField}
-                  type="text"
-                  name="compname"
-                  label="Competency name"
+                  name="rolename"
+                  label="Role name"
                   className={classes.formFields}
                 />
               </div>
@@ -132,10 +110,10 @@ class CompBuilder extends Component {
                   onChange={this.handleSelectChange}
                   className={classes.formFields}
                 >
-                  {courses.map(course => {
+                  {comps.map(comp => {
                     return (
-                      <option value={course.id} key={course.id}>
-                        {course.coursename}
+                      <option value={comp.id} key={comp.id}>
+                        {comp.compname}
                       </option>
                     );
                   })}
@@ -143,15 +121,15 @@ class CompBuilder extends Component {
               </div>
               <div className={classes.formContainer}>
                 <Paper name="courses" className={classes.formFields}>
-                  {compCourses.map(course => {
+                  {roleComps.map(comp => {
                     return (
                       <Chip
                         name="chippers"
                         className={classes.chip}
-                        key={course.id}
-                        value={course.id}
-                        label={course.coursename}
-                        onDelete={this.handleChipDelete(course)}
+                        key={comp.id}
+                        value={comp.id}
+                        label={comp.compname}
+                        onDelete={this.handleChipDelete(comp)}
                       />
                     );
                   })}
@@ -171,23 +149,22 @@ class CompBuilder extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  addCompForRoleBuilder,
+  removeCompForRoleBuilder,
+  adminAddNewRole
+};
+
 const mapStateToProps = state => {
   return {
-    courses: selectCourses(state),
-    compCourses: selectCompBuilderCourseNames(state)
+    roleComps: selectRoleBuilderCompNames(state),
+    comps: selectCompetencies(state)
   };
 };
 
-const mapDispatchToProps = {
-  addCourseForCompBuilder,
-  removeCourseForCompBuilder,
-  adminAddNewComp
-};
-
-CompBuilder = withRoot(withStyles(rootStyles)(CompBuilder));
-CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);
+RoleBuilder = connect(mapStateToProps, mapDispatchToProps)(RoleBuilder);
+RoleBuilder = withRoot(withStyles(rootStyles)(RoleBuilder));
 
 export default reduxForm({
-  form: 'compbuilder'
-  //   validate,
-})(CompBuilder);
+  form: 'rolebuilder'
+})(RoleBuilder);

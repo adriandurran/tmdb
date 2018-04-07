@@ -273,7 +273,7 @@
   ],
   "roles": [
     {
-      "roleId": 0,
+      "id": 0,
       "rolename": "Database Administrator",
       "compIds": [
         2,
@@ -281,7 +281,7 @@
       ]
     },
     {
-      "roleId": 1,
+      "id": 1,
       "rolename": "Service Desk Analyst",
       "compIds": [
         1,
@@ -289,25 +289,41 @@
       ]
     },
     {
-      "roleId": 2,
+      "id": 2,
       "rolename": "Network Support",
       "compIds": [
         3
       ]
     },
     {
-      "roleId": 3,
+      "id": 3,
       "rolename": "Exchange Admin",
       "compIds": [
         4
       ]
     },
     {
-      "roleId": 4,
+      "id": 4,
       "rolename": "Windows Server Admin",
       "compIds": [
         5
       ]
+    },
+    {
+      "rolename": "Test this Role Boy",
+      "compIds": [
+        4,
+        7
+      ],
+      "id": 5
+    },
+    {
+      "rolename": "And Another Role",
+      "compIds": [
+        3,
+        6
+      ],
+      "id": 6
     }
   ]
 }
