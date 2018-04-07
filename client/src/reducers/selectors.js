@@ -105,7 +105,7 @@ export const selectUserCompetenciesCurrent = createSelector(
   }
 );
 
-// ************ END OF USER
+// ************ END OF USER **************************************
 
 // get courses for the compBuilder
 export const selectCompBuilderCourses = state => state.compCourses;
@@ -136,3 +136,5 @@ export const selectRoleComps = createSelector(
     return comps.filter(x => flatty.includes(x.id));
   }
 );
+
+// get roles

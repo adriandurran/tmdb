@@ -316,6 +316,14 @@
         7
       ],
       "id": 5
+    },
+    {
+      "rolename": "And Another Role",
+      "compIds": [
+        3,
+        6
+      ],
+      "id": 6
     }
   ]
 }
