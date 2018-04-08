@@ -24,9 +24,16 @@ export const submitNewUser = values => async dispatch => {
 
 export const loginUser = values => async dispatch => {
   const { email, password } = values;
-  await axios.post('/auth/tmdb/login', {
-    username: email,
-    password: password
+  const userDet = { username: email, password: password };
+  const loginHead = {
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    mode: 'cors',
+    credentials: 'include'
+  };
+  const res = await axios.post('/auth/tmdb/login', userDet, {
+    mode: 'cors',
+    credentials: 'include'
   });
+  console.log(res.data);
   dispatch(fetchUser());
 };

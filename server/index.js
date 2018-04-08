@@ -1,31 +1,44 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cookieSession = require('cookie-session');
+const session = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const LocalStrategy = require('passport-local').Strategy;
 
 const morgan = require('morgan');
 
 const keys = require('./config/keys');
 
 require('./models/user');
-require('./services/passport');
+// require('./services/passport');
 
 mongoose.connect(keys.mongoURI);
 
 const app = express();
 
+app.use(morgan('dev'));
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(
-  cookieSession({
+  session({
+    name: 'tmdb',
     maxAge: 6 * 60 * 60 * 1000, // 6 hours temp may reduce to 1
     keys: [keys.cookieKey]
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(morgan('dev'));
+// Configure passport-local to use account model for authentication
+const User = mongoose.model('User');
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 require('./routes/authRoutes')(app);
 

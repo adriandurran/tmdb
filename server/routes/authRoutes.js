@@ -6,7 +6,7 @@ const User = mongoose.model('User');
 module.exports = app => {
   // get the current user
   app.get('/auth/tmdb/current_user', async (req, res) => {
-    res.send(req.user);
+    res.send(req.session);
   });
 
   //   register new user
@@ -20,15 +20,20 @@ module.exports = app => {
         username,
         password
       } = req.body.data.newUser;
-      const newUser = await new User({
+
+      const newUser = new User({
         username,
         userId,
         firstName,
-        lastName,
-        password
-      }).save();
-      // console.log(newUser);
-      res.send(newUser);
+        lastName
+      });
+      User.register(newUser, password, (err, user) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(user);
+        res.send(user);
+      });
     } catch (error) {
       console.log(error);
     }
