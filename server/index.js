@@ -8,6 +8,9 @@ const morgan = require('morgan');
 
 const keys = require('./config/keys');
 
+require('./models/user');
+require('./services/passport');
+
 mongoose.connect(keys.mongoURI);
 
 const app = express();
@@ -19,8 +22,8 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(morgan('dev'));
 
