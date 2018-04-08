@@ -15,7 +15,7 @@ const User = new Schema({
     type: String,
     required: true
   },
-  email: {
+  username: {
     type: String,
     required: true
   },
@@ -33,6 +33,13 @@ const User = new Schema({
   }
 });
 
-User.plugin(passportLocalMongoose, { usernameField: 'email' });
+User.plugin(
+  passportLocalMongoose
+  //   ,
+  //    {
+  //   usernameField: 'email',
+  //   passwordField: 'password'
+  // }
+);
 
 mongoose.model('User', User);

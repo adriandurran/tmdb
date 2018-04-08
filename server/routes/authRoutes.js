@@ -13,13 +13,22 @@ module.exports = app => {
   app.post('/auth/tmdb/register', async (req, res) => {
     console.log(req.body);
     try {
-      const { userId, firstName, lastName, email } = req.body.data.newUser;
-      const newUser = await new User({
-        email,
+      const {
         userId,
         firstName,
-        lastName
+        lastName,
+        username,
+        password
+      } = req.body.data.newUser;
+      const newUser = await new User({
+        username,
+        userId,
+        firstName,
+        lastName,
+        password
       }).save();
+      // console.log(newUser);
+      res.send(newUser);
     } catch (error) {
       console.log(error);
     }
