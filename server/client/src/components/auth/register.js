@@ -10,7 +10,7 @@ import Card, { CardContent, CardHeader } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
-import { submitUser } from '../../actions/auth';
+import { submitNewUser } from '../../actions/auth';
 import RegisterField from './registerField';
 
 class RegisterUser extends Component {
@@ -22,7 +22,7 @@ class RegisterUser extends Component {
           required
           component={RegisterField}
           type="text"
-          name="firstname"
+          name="firstName"
           label="First name"
           className={classes.formFields}
         />
@@ -31,7 +31,7 @@ class RegisterUser extends Component {
           component={RegisterField}
           type="text"
           label="Last name"
-          name="lastname"
+          name="lastName"
           className={classes.formFields}
         />
 
@@ -49,7 +49,7 @@ class RegisterUser extends Component {
           component={RegisterField}
           type="text"
           label="Employee number"
-          name="empId"
+          name="userId"
           className={classes.formFields}
         />
 
@@ -57,17 +57,17 @@ class RegisterUser extends Component {
           component={RegisterField}
           type="password"
           label="Password"
-          name="pwd"
+          name="password"
           className={classes.formFields}
         />
       </div>
     );
   }
 
-  submitNewUser(values, dispatch) {
-    const { submitUser, history } = this.props;
+  submitUser(values, dispatch) {
+    const { submitNewUser, history } = this.props;
 
-    submitUser(values).then(result => {
+    submitNewUser(values).then(result => {
       // console.log(result);
       history.push(`/users/${result.id}`);
     });
@@ -84,7 +84,7 @@ class RegisterUser extends Component {
             </CardHeader>
             <form
               className={classes.formContainer}
-              onSubmit={handleSubmit(values => this.submitNewUser(values))}
+              onSubmit={handleSubmit(values => this.submitUser(values))}
             >
               {this.renderRegFields()}
               <div style={{ flex: 1, textAlign: 'center' }} />
@@ -102,11 +102,11 @@ class RegisterUser extends Component {
 function validate(values) {
   const errors = {};
 
-  if (!values.firstname) {
-    errors.firstname = 'Required';
+  if (!values.firstName) {
+    errors.firstName = 'Required';
   }
-  if (!values.lastname) {
-    errors.lastname = 'Required';
+  if (!values.lastName) {
+    errors.lastName = 'Required';
   }
 
   if (!values.email) {
@@ -115,17 +115,17 @@ function validate(values) {
     errors.email = 'Invalid email address';
   }
 
-  if (!values.empId) {
-    errors.empId = 'Required';
+  if (!values.userId) {
+    errors.userId = 'Required';
   }
 
-  // if (!values.pwd) {
-  //   errors.pwd = 'Required';
-  // } else if (values.pwd.length < 8) {
-  //   errors.pwd = 'Password must be 8 to 25 characters';
-  // } else if (values.pwd.length > 25) {
-  //   errors.pwd = 'Password must be more 8 to 25 characters';
-  // }
+  if (!values.passwordd) {
+    errors.pwd = 'Required';
+  } else if (values.pwd.length < 8) {
+    errors.pwd = 'Password must be 8 to 25 characters';
+  } else if (values.pwd.length > 25) {
+    errors.pwd = 'Password must be more 8 to 25 characters';
+  }
 
   return errors;
 }
@@ -135,7 +135,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  submitUser
+  submitNewUser
 };
 
 RegisterUser = withStyles(rootStyles)(RegisterUser);

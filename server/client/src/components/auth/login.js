@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import rootStyles from '../../styles/rootStyle';
 import withRoot from '../../withRoot';
@@ -11,9 +12,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 
-// use redux form
-// will mock the actuall login process until set up with a db
-// so for dev only the submit button will just link to user 1
+import { loginUser } from '../../actions/auth';
 
 const renderTextField = ({
   input,
@@ -36,6 +35,10 @@ const renderTextField = ({
 );
 
 class LoginUser extends Component {
+  userLogin(values, dispatch) {
+    this.props.loginUser(values);
+  }
+
   render() {
     const { handleSubmit, submitting, pristine, classes } = this.props;
     return (
@@ -46,7 +49,7 @@ class LoginUser extends Component {
               <Typography className={classes.title}>Login</Typography>
             </CardHeader>
             <form
-              onSubmit={handleSubmit(values => console.log(values))}
+              onSubmit={handleSubmit(values => this.userLogin(values))}
               className={classes.formContainer}
             >
               <Field
@@ -69,8 +72,7 @@ class LoginUser extends Component {
               <Button
                 variant="raised"
                 disabled={pristine || submitting}
-                component={Link}
-                to={'/users/1'}
+                type="submit"
               >
                 Login
               </Button>
@@ -98,6 +100,12 @@ const validate = values => {
   }
   return errors;
 };
+
+const mapDispatchToProps = {
+  loginUser
+};
+
+LoginUser = connect(null, mapDispatchToProps)(LoginUser);
 
 LoginUser = withStyles(rootStyles)(LoginUser);
 
