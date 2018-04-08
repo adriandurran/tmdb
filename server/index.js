@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+
+const morgan = require('morgan');
+
 const keys = require('./config/keys');
+
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
@@ -16,6 +21,8 @@ app.use(
 );
 // app.use(passport.initialize());
 // app.use(passport.session());
+
+app.use(morgan('dev'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
