@@ -1,11 +1,40 @@
-// const passport = require('passport');
-// const mongoose = require('mongoose');
-// const LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
+const mongoose = require('mongoose');
+const LocalStrategy = require('passport-local');
+const CustomStrategy = require('passport-custom');
 
-// const User = mongoose.model('User');
+const User = require('../models/user');
 
-// passport.serializeUser(User.serializeUser);
+// used to serialize the user for the session
+passport.serializeUser((user, done) => {
+  console.log(user);
+  done(null, user.id);
+});
 
-// passport.deserializeUser(User.deserializeUser);
+// used to deserialize the user
+passport.deserializeUser((id, done) => {
+  User.findById(id).then(user => {
+    done(null, user);
+  });
+});
 
-// passport.use(new LocalStrategy(User.authenticate()));
+passport.use(
+  'tmdb',
+  new CustomStrategy(async (req, done) => {
+    const { username, password } = req.body;
+    try {
+      const existingUser = await User.findOne({ username });
+
+      if (
+        !existingUser ||
+        !existingUser.validPassword(existingUser, password)
+      ) {
+        return done(null, false);
+      } else {
+        return done(null, existingUser);
+      }
+    } catch (error) {
+      return done(error);
+    }
+  })
+);

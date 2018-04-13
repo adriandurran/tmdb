@@ -1,12 +1,10 @@
 const passport = require('passport');
-const mongoose = require('mongoose');
-
-const User = mongoose.model('User');
+const User = require('../models/user');
 
 module.exports = app => {
   // get the current user
   app.get('/auth/tmdb/current_user', async (req, res) => {
-    res.send(req.session);
+    res.send(req.user);
   });
 
   //   register new user
@@ -21,25 +19,19 @@ module.exports = app => {
         password
       } = req.body.data.newUser;
 
-      const newUser = new User({
-        username,
-        userId,
-        firstName,
-        lastName
-      });
-      User.register(newUser, password, (err, user) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log(user);
-        res.send(user);
-      });
+      let newUser = new User();
+
+      let passwordHash = await newUser.generateHash(password);
+
+      User.create({ username, userId, firstName, lastName, passwordHash })
+        .then(user => console.log('newuser', user))
+        .catch(err => console.log('error', err));
     } catch (error) {
       console.log(error);
     }
   });
 
-  app.post('/auth/tmdb/login', passport.authenticate('local'), (req, res) => {
+  app.post('/auth/tmdb/login', passport.authenticate('tmdb'), (req, res) => {
     res.send(req.user);
   });
 };
