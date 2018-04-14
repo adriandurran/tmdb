@@ -1,156 +1,157 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 
-import { withStyles } from 'material-ui/styles';
-import rootStyles from '../styles/rootStyle';
-import withRoot from '../withRoot';
-
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import Person from 'material-ui-icons/Person';
-import Button from 'material-ui/Button';
-
-import Menu, { MenuItem } from 'material-ui/Menu';
+import { Button, Menu, Icon } from 'semantic-ui-react';
 
 import { selectUserName } from '../reducers/selectors';
 
 class Header extends Component {
-  state = { anchorEl: null };
+  // renderHeader() {
+  //   const { authUser, userName, classes } = this.props;
 
-  renderHeader() {
-    const { authUser, userName, classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+  //   if (isEmpty(authUser, true)) {
+  //     return (
+  //       <div>
+  //         <Button
+  //           component={Link}
+  //           to={'/auth/login'}
+  //           className={classes.menuButton}
+  //         >
+  //           Login
+  //         </Button>
+  //         <Button
+  //           color="inherit"
+  //           component={Link}
+  //           to={'/auth/register'}
+  //           className={classes.menuButton}
+  //         >
+  //           Register
+  //         </Button>
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div>
+  //         {authUser.isAdmin && (
+  //           <Button
+  //             component={Link}
+  //             to={`/admin/dashboard`}
+  //             className={classes.menuButton}
+  //           >
+  //             Admin Dashboard
+  //           </Button>
+  //         )}
 
-    if (_.isEmpty(authUser, true)) {
+  //         <Button
+  //           component={Link}
+  //           to={`/users/${authUser.userId}/courses`}
+  //           className={classes.menuButton}
+  //         >
+  //           Courses
+  //         </Button>
+  //         <Button
+  //           component={Link}
+  //           to={`/users/${authUser.userId}/competencies`}
+  //           className={classes.menuButton}
+  //         >
+  //           Competencies
+  //         </Button>
+  //         <IconButton
+  //           aria-owns={open ? 'menu-user' : null}
+  //           aria-haspopup="true"
+  //           onClick={this.handleMenu}
+  //           color="inherit"
+  //         >
+  //           <Person />
+  //         </IconButton>
+  //         {/* <Typography variant="body2">{userName}</Typography> */}
+
+  //         <Menu
+  //           id="menu-user"
+  //           anchorEl={anchorEl}
+  //           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+  //           transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+  //           open={open}
+  //           onClose={this.handleClose}
+  //         >
+  //           <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+  //           <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+  //         </Menu>
+  //       </div>
+  //     );
+  //   }
+  // }
+
+  renderMenus() {
+    const { authUser } = this.props;
+    if (authUser) {
+      const {
+        firstName,
+        lastName,
+        userId,
+        isAdmin,
+        isSuperAdmin,
+        verified
+      } = authUser;
       return (
         <div>
-          <Button
-            component={Link}
-            to={'/auth/login'}
-            className={classes.menuButton}
-          >
-            Login
-          </Button>
-          <Button
-            color="inherit"
-            component={Link}
-            to={'/auth/register'}
-            className={classes.menuButton}
-          >
-            Register
-          </Button>
+          <Menu.Item header>
+            <Icon name="user circle" />
+            {firstName} {lastName}
+          </Menu.Item>
         </div>
       );
     } else {
       return (
         <div>
-          {authUser.isAdmin && (
-            <Button
-              component={Link}
-              to={`/admin/dashboard`}
-              className={classes.menuButton}
-            >
-              Admin Dashboard
+          <Menu.Item>
+            <Button primary as={Link} to={'/auth/login'}>
+              Login
             </Button>
-          )}
-
-          <Button
-            component={Link}
-            to={`/users/${authUser.id}/courses`}
-            className={classes.menuButton}
-          >
-            Courses
-          </Button>
-          <Button
-            component={Link}
-            to={`/users/${authUser.id}/competencies`}
-            className={classes.menuButton}
-          >
-            Competencies
-          </Button>
-          <IconButton
-            aria-owns={open ? 'menu-user' : null}
-            aria-haspopup="true"
-            onClick={this.handleMenu}
-            color="inherit"
-          >
-            <Person />
-          </IconButton>
-          {/* <Typography variant="body2">{userName}</Typography> */}
-
-          <Menu
-            id="menu-user"
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={open}
-            onClose={this.handleClose}
-          >
-            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-            <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-          </Menu>
+          </Menu.Item>
+          <Menu.Item>
+            <Button primary as={Link} to={'/auth/register'}>
+              Register
+            </Button>
+          </Menu.Item>
         </div>
       );
     }
   }
 
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    // temp will logout
-    this.setState({ anchorEl: null });
-  };
-
-  handleProfile = () => {
-    // temp will send to profile details
-    this.setState({ anchorEl: null });
-  };
-
   render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-    const { classes } = this.props;
+    const { authUser } = this.props;
+
     return (
-      <AppBar>
-        <Toolbar>
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="title"
-            color="inherit"
-            className={classes.appbarTitle}
-            component={Link}
-            to={'/'}
+      <div>
+        <Menu size="huge" inverted borderless fixed="top">
+          <Menu.Item
+            header
+            as={Link}
+            to={authUser ? `/users/${authUser.userId}` : '/'}
           >
             TMDB
-          </Typography>
-          {this.renderHeader()}
-        </Toolbar>
-      </AppBar>
+          </Menu.Item>
+          <Menu.Menu position="right">
+            {this.renderMenus()}
+            <Menu.Item position="right">
+              <Button inverted href="/auth/tmdb/logout">
+                Logout
+              </Button>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </div>
     );
   }
 }
 
-Header = withStyles(rootStyles)(Header);
-
 const mapStateToProps = state => {
   return {
     authUser: state.auth.user,
-    userName: selectUserName(state),
+    userName: selectUserName(state)
   };
 };
 
-export default withRoot(connect(mapStateToProps)(Header));
+export default connect(mapStateToProps)(Header);

@@ -9,7 +9,6 @@ module.exports = app => {
 
   // register new user
   app.post('/auth/tmdb/register', async (req, res) => {
-    console.log(req.body);
     try {
       const {
         userId,
@@ -34,5 +33,10 @@ module.exports = app => {
   // login a user
   app.post('/auth/tmdb/login', passport.authenticate('tmdb'), (req, res) => {
     res.send(req.user);
+  });
+
+  app.get('/auth/tmdb/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
   });
 };
