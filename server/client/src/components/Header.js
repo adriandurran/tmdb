@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Button, Menu, Icon } from 'semantic-ui-react';
 
-import { selectUserName } from '../reducers/selectors';
+import { selectCurrentUser } from '../reducers/selectors';
 
 class Header extends Component {
   // renderHeader() {
@@ -95,27 +95,48 @@ class Header extends Component {
         verified
       } = authUser;
       return (
-        <div>
-          <Menu.Item header>
-            <Icon name="user circle" />
-            {firstName} {lastName}
+        <Menu.Menu position="right">
+          {verified ? (
+            <div>
+              <Menu.Item header>
+                <Icon name="user circle" />
+                {firstName} {lastName}
+              </Menu.Item>
+              <Menu.Item as={Link} to={`/users/${authUser.userId}/courses`}>
+                Courses
+              </Menu.Item>
+              <Menu.Item
+                as={Link}
+                to={`/users/${authUser.userId}/competencies`}
+              >
+                Competencies
+              </Menu.Item>
+            </div>
+          ) : (
+            <Menu.Item header>Awaiting Verification</Menu.Item>
+          )}
+
+          <Menu.Item>
+            <Button inverted href="/auth/tmdb/logout">
+              Logout
+            </Button>
           </Menu.Item>
-        </div>
+        </Menu.Menu>
       );
     } else {
       return (
-        <div>
+        <Menu.Menu position="right">
           <Menu.Item>
-            <Button primary as={Link} to={'/auth/login'}>
-              Login
-            </Button>
+            <Button.Group>
+              <Button as={Link} to="/auth/login">
+                Login
+              </Button>
+              <Button as={Link} to="/auth/register">
+                Register
+              </Button>
+            </Button.Group>
           </Menu.Item>
-          <Menu.Item>
-            <Button primary as={Link} to={'/auth/register'}>
-              Register
-            </Button>
-          </Menu.Item>
-        </div>
+        </Menu.Menu>
       );
     }
   }
@@ -133,14 +154,7 @@ class Header extends Component {
           >
             TMDB
           </Menu.Item>
-          <Menu.Menu position="right">
-            {this.renderMenus()}
-            <Menu.Item position="right">
-              <Button inverted href="/auth/tmdb/logout">
-                Logout
-              </Button>
-            </Menu.Item>
-          </Menu.Menu>
+          {this.renderMenus()}
         </Menu>
       </div>
     );
@@ -149,8 +163,7 @@ class Header extends Component {
 
 const mapStateToProps = state => {
   return {
-    authUser: state.auth.user,
-    userName: selectUserName(state)
+    authUser: selectCurrentUser(state)
   };
 };
 

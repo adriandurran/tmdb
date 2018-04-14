@@ -2,20 +2,13 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import rootStyles from '../../styles/rootStyle';
-import withRoot from '../../withRoot';
-import { withStyles } from 'material-ui/styles';
-
-import Card, { CardContent, CardHeader } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import { Form, Button, Header, Grid } from 'semantic-ui-react';
 
 import { submitNewUser } from '../../actions/auth';
 import RegisterField from './registerField';
 
 class RegisterUser extends Component {
   renderRegFields() {
-    const { classes } = this.props;
     return (
       <div>
         <Field
@@ -24,7 +17,8 @@ class RegisterUser extends Component {
           type="text"
           name="firstName"
           label="First name"
-          className={classes.formFields}
+          icon="user"
+          iconPosition="left"
         />
         <Field
           required
@@ -32,7 +26,8 @@ class RegisterUser extends Component {
           type="text"
           label="Last name"
           name="lastName"
-          className={classes.formFields}
+          icon="user"
+          iconPosition="left"
         />
 
         <Field
@@ -41,7 +36,6 @@ class RegisterUser extends Component {
           type="text"
           label="Email address"
           name="email"
-          className={classes.formFields}
         />
 
         <Field
@@ -50,7 +44,6 @@ class RegisterUser extends Component {
           type="text"
           label="Employee number"
           name="userId"
-          className={classes.formFields}
         />
 
         <Field
@@ -58,7 +51,8 @@ class RegisterUser extends Component {
           type="password"
           label="Password"
           name="password"
-          className={classes.formFields}
+          icon="key"
+          iconPosition="left"
         />
       </div>
     );
@@ -73,26 +67,28 @@ class RegisterUser extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, classes } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <div>
-        <Card raised className={classes.card}>
-          <CardContent>
-            <CardHeader>
-              <Typography className={classes.title}>Register</Typography>
-            </CardHeader>
-            <form
-              className={classes.formContainer}
+        <Grid textAlign="center" verticalAlign="middle">
+          <Grid.Column width={8}>
+            <Header>Register</Header>
+            <Form
+              size="large"
               onSubmit={handleSubmit(values => this.submitUser(values))}
             >
               {this.renderRegFields()}
-              <div style={{ flex: 1, textAlign: 'center' }} />
-              <Button variant="raised" disabled={submitting} type="submit">
+              <Button
+                fluid
+                disabled={pristine || submitting}
+                type="submit"
+                style={{ marginTop: '15px' }}
+              >
                 Submit
               </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
@@ -137,13 +133,9 @@ const mapDispatchToProps = {
   submitNewUser
 };
 
-RegisterUser = withStyles(rootStyles)(RegisterUser);
-
 RegisterUser = connect(mapStateToProps, mapDispatchToProps)(RegisterUser);
 
-export default withRoot(
-  reduxForm({
-    form: 'registerForm',
-    validate
-  })(RegisterUser)
-);
+export default reduxForm({
+  form: 'registerForm',
+  validate
+})(RegisterUser);
