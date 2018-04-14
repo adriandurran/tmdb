@@ -7,7 +7,6 @@ const User = require('../models/user');
 
 // used to serialize the user for the session
 passport.serializeUser((user, done) => {
-  console.log(user);
   done(null, user.id);
 });
 

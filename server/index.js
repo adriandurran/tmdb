@@ -1,10 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
-const passport = require('passport');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
 
 const morgan = require('morgan');
 
@@ -21,7 +20,7 @@ mongoose
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(
   cookieSession({
@@ -30,13 +29,10 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(morgan('dev'));
-
-// Configure passport-local to use account model for authentication
 
 require('./routes/authRoutes')(app);
 
