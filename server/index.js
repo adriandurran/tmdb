@@ -22,6 +22,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(
   cookieSession({
+    name: 'tmdb',
     maxAge: 6 * 60 * 60 * 1000, // 6 hours temp may reduce to 1
     keys: [keys.cookieKey]
   })

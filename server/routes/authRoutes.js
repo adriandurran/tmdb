@@ -4,11 +4,10 @@ const User = require('../models/user');
 module.exports = app => {
   // get the current user
   app.get('/auth/tmdb/current_user', async (req, res) => {
-    console.log(req.session);
     res.send(req.user);
   });
 
-  //   register new user
+  // register new user
   app.post('/auth/tmdb/register', async (req, res) => {
     console.log(req.body);
     try {
@@ -32,8 +31,8 @@ module.exports = app => {
     }
   });
 
+  // login a user
   app.post('/auth/tmdb/login', passport.authenticate('tmdb'), (req, res) => {
-    console.log(req.session);
     res.send(req.user);
   });
 };

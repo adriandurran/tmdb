@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import rootStyles from '../../styles/rootStyle';
@@ -36,7 +35,10 @@ const renderTextField = ({
 
 class LoginUser extends Component {
   userLogin(values, dispatch) {
-    this.props.loginUser(values);
+    const { history, loginUser } = this.props;
+    loginUser(values).then(result => {
+      history.push(`/users/${result.userId}`);
+    });
   }
 
   render() {

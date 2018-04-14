@@ -68,7 +68,6 @@ class RegisterUser extends Component {
     const { submitNewUser, history } = this.props;
 
     submitNewUser(values).then(result => {
-      // console.log(result);
       history.push(`/users/${result.id}`);
     });
   }
