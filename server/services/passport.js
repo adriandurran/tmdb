@@ -1,16 +1,13 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
-const LocalStrategy = require('passport-local');
 const CustomStrategy = require('passport-custom');
 
 const User = require('../models/user');
 
-// used to serialize the user for the session
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// used to deserialize the user
 passport.deserializeUser((id, done) => {
   User.findById(id).then(user => {
     done(null, user);

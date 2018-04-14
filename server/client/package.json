@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.18.0",
     "downshift": "^1.28.2",
     "lodash": "^4.17.5",
     "material-ui": "^1.0.0-beta.39",

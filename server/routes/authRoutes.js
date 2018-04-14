@@ -4,6 +4,7 @@ const User = require('../models/user');
 module.exports = app => {
   // get the current user
   app.get('/auth/tmdb/current_user', async (req, res) => {
+    console.log(req.session);
     res.send(req.user);
   });
 
@@ -32,6 +33,7 @@ module.exports = app => {
   });
 
   app.post('/auth/tmdb/login', passport.authenticate('tmdb'), (req, res) => {
+    console.log(req.session);
     res.send(req.user);
   });
 };

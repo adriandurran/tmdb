@@ -20,11 +20,8 @@ mongoose
 const app = express();
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
 app.use(
   cookieSession({
-    name: 'tmdb',
     maxAge: 6 * 60 * 60 * 1000, // 6 hours temp may reduce to 1
     keys: [keys.cookieKey]
   })
