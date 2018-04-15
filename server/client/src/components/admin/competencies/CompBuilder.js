@@ -134,8 +134,8 @@ class CompBuilder extends Component {
                 >
                   {courses.map(course => {
                     return (
-                      <option value={course.id} key={course.id}>
-                        {course.coursename}
+                      <option value={course._id} key={course._id}>
+                        {course.courseName}
                       </option>
                     );
                   })}
@@ -148,9 +148,9 @@ class CompBuilder extends Component {
                       <Chip
                         name="chippers"
                         className={classes.chip}
-                        key={course.id}
-                        value={course.id}
-                        label={course.coursename}
+                        key={course._id}
+                        value={course._id}
+                        label={course.courseName}
                         onDelete={this.handleChipDelete(course)}
                       />
                     );

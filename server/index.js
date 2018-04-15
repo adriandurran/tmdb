@@ -34,6 +34,7 @@ app.use(morgan('dev'));
 
 require('./routes/authRoutes')(app);
 require('./routes/courseRoutes')(app);
+require('./routes/compRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

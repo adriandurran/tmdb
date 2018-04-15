@@ -68,6 +68,11 @@ class Header extends Component {
             TMDB
           </Menu.Item>
           <Menu.Menu position="right">
+            {authUser.isAdmin && (
+              <Menu.Item as={Link} to={`/admin/dashboard`}>
+                Admin Dashboard
+              </Menu.Item>
+            )}
             {authUser.verified && (
               <Menu.Item
                 as={Link}
