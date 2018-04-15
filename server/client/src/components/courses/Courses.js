@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {
+  fetchCourses,
+  fetchCourseTypes,
+  fetchCourseLevels
+} from '../../actions/courses';
+
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Table, {
@@ -10,7 +16,7 @@ import Table, {
   TableRow,
   TableFooter,
   TableSortLabel,
-  TablePagination,
+  TablePagination
 } from 'material-ui/Table';
 import Tooltip from 'material-ui/Tooltip';
 
@@ -24,7 +30,7 @@ const columnData = [
   { id: 'course', numeric: false, disablePadding: false, label: 'Course Name' },
   { id: 'validity', numeric: false, disablePadding: false, label: 'Validity' },
   { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
-  { id: 'level', numeric: false, disablePadding: false, label: 'Level' },
+  { id: 'level', numeric: false, disablePadding: false, label: 'Level' }
 ];
 
 class EnhancedCourseTableHead extends Component {
@@ -77,17 +83,21 @@ class Courses extends Component {
       orderBy: 'Passed',
       data: [],
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 10
     };
   }
 
   setCourses(props) {
     this.setState({
-      data: props.courses.sort((a, b) => (a.type > b.type ? -1 : 1)),
+      data: props.courses.sort((a, b) => (a.type > b.type ? -1 : 1))
     });
   }
 
   componentDidMount() {
+    const { fetchCourseLevels, fetchCourseTypes, fetchCourses } = this.props;
+    fetchCourses();
+    fetchCourseLevels();
+    fetchCourseTypes();
     this.setCourses(this.props);
   }
 
@@ -129,7 +139,7 @@ class Courses extends Component {
       .map((course, index) => {
         return (
           <TableRow key={index}>
-            <TableCell>{course.coursename}</TableCell>
+            <TableCell>{course.courseName}</TableCell>
             <TableCell>{course.validity}</TableCell>
             <TableCell>{course.type}</TableCell>
             <TableCell>{course.level}</TableCell>
@@ -193,12 +203,18 @@ class Courses extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  fetchCourses,
+  fetchCourseLevels,
+  fetchCourseTypes
+};
+
 const mapStateToProps = state => {
   return {
-    courses: selectCourses(state),
+    courses: selectCourses(state)
   };
 };
 
-Courses = connect(mapStateToProps)(Courses);
+Courses = connect(mapStateToProps, mapDispatchToProps)(Courses);
 
 export default withRoot(withStyles(rootStyles)(Courses));

@@ -14,7 +14,7 @@ import rootStyles from '../../../styles/rootStyle';
 
 import {
   selectCourseTypes,
-  selectCourseLevels,
+  selectCourseLevels
 } from '../../../reducers/selectors';
 
 import { adminAddNewCourse } from '../../../actions/courses';
@@ -24,7 +24,7 @@ const renderSelectField = ({
   label,
   className,
   meta: { touched, error },
-  children,
+  children
 }) => (
   <Select native {...input} className={className}>
     {children}
@@ -37,7 +37,7 @@ const renderTextField = ({
   type,
   className,
 
-  meta: { touched, error },
+  meta: { touched, error }
 }) => (
   <TextField
     required
@@ -63,7 +63,7 @@ class CourseBuilder extends Component {
       submitting,
       classes,
       courseTypes,
-      courseLevels,
+      courseLevels
     } = this.props;
 
     return (
@@ -86,7 +86,7 @@ class CourseBuilder extends Component {
                   required
                   component={renderTextField}
                   type="text"
-                  name="coursename"
+                  name="courseName"
                   label="Course name"
                   className={classes.formFields}
                 />
@@ -155,7 +155,7 @@ function validate(values) {
 const mapStateToProps = state => {
   return {
     courseTypes: selectCourseTypes(state),
-    courseLevels: selectCourseLevels(state),
+    courseLevels: selectCourseLevels(state)
   };
 };
 
@@ -167,6 +167,6 @@ CourseBuilder = connect(mapStateToProps, mapDispatchToProps)(CourseBuilder);
 export default withRoot(
   reduxForm({
     form: 'coursebuilder',
-    validate,
+    validate
   })(CourseBuilder)
 );
