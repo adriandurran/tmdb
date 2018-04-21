@@ -1,6 +1,6 @@
 const passport = require('passport');
 const User = require('../models/user');
-
+// i hate bycript
 module.exports = app => {
   // get the current user
   app.get('/auth/tmdb/current_user', async (req, res) => {
@@ -34,7 +34,7 @@ module.exports = app => {
   app.post('/auth/tmdb/login', passport.authenticate('tmdb'), (req, res) => {
     res.send(req.user);
   });
-
+  // logout
   app.get('/auth/tmdb/logout', (req, res) => {
     req.logout();
     res.redirect('/');

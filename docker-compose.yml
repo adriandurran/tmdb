@@ -5,9 +5,13 @@ services:
     build:
       context: ./server
     volumes:
-      - ./server:/usr/src/app
+     - ./server:/usr/src/app
+     - /usr/src/app/node_modules/
     ports:
-      - "3050:3050"
+      - 3050:3050
+    depends_on:
+      - db
+    command: ["nodemon", "./bin/www"]
 
   db:
     image: mongo:latest
