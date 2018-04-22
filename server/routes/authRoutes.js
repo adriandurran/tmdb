@@ -28,6 +28,7 @@ module.exports = app => {
     } catch (error) {
       console.log(error);
     }
+    // need to send a status on this
   });
 
   // login a user

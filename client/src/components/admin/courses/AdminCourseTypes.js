@@ -3,7 +3,8 @@ import { Grid, Header, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-import { selectCourseTypes } from '../../../reducers/selectors';
+import AdminCTList from './AdminCTList';
+import { addCourseType } from '../../../actions/courses';
 
 const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
   <Form.Input
@@ -17,25 +18,34 @@ const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
 );
 
 class AdminCourseTypes extends Component {
+  newCourseType(values, dispatch) {
+    const { addCourseType } = this.props;
+    addCourseType(values);
+  }
+
   render() {
-    const { handleSubmit, submitting, pristine, types } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <div>
         <Header as="h2" textAlign="center">
           Course Types
         </Header>
-        <Grid>
+        <Grid centered>
           <Grid.Row>
-            <Grid.Column>
-              <Form onSubmit={handleSubmit(values => console.log(values))}>
-                <Form.Group widths={8}>
+            <Grid.Column width={10}>
+              <Form
+                onSubmit={handleSubmit(values => this.newCourseType(values))}
+              >
+                <Form.Group inline widths="equal">
                   <Field
+                    fluid
                     component={renderInputField}
                     type="text"
                     name="courseType"
                     label="Course Type"
                   />
                   <Button
+                    fluid
                     disabled={pristine || submitting}
                     type="submit"
                     size="large"
@@ -47,7 +57,9 @@ class AdminCourseTypes extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column>list</Grid.Column>
+            <Grid.Column width={8}>
+              <AdminCTList />
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </div>
@@ -55,13 +67,11 @@ class AdminCourseTypes extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    types: selectCourseTypes(state)
-  };
+const mapDispatchToProps = {
+  addCourseType
 };
 
-AdminCourseTypes = connect(mapStateToProps)(AdminCourseTypes);
+AdminCourseTypes = connect(null, mapDispatchToProps)(AdminCourseTypes);
 
 export default reduxForm({
   form: 'courseTypes'

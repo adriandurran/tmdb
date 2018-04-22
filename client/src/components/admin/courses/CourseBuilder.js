@@ -110,8 +110,8 @@ class CourseBuilder extends Component {
                   <option value="">None</option>
                   {courseTypes.map((type, index) => {
                     return (
-                      <option value={type} key={index}>
-                        {type}
+                      <option value={type._id} key={type._id}>
+                        {type.courseType}
                       </option>
                     );
                   })}

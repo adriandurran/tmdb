@@ -12,6 +12,8 @@ export const ADD_NEW_ROLE = 'add_new_role';
 // courses
 export const FETCH_COURSES = 'fetch_courses';
 export const FETCH_COURSE_TYPE = 'fetch_course_type';
+export const ADD_COURSE_TYPE = 'add_course_type';
+export const DELETE_COURSE_TYPE = 'delete_course_type';
 export const FETCH_COURSE_LEVEL = 'fetch_course_level';
 export const ADD_NEW_COURSE = 'add_new_course';
 

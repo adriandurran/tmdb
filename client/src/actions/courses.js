@@ -7,7 +7,9 @@ import {
   FETCH_COURSE_LEVEL,
   ADD_NEW_COURSE,
   ADD_COURSE_FOR_COMPBUILDER,
-  REMOVE_COURSE_FOR_COMPBUILDER
+  REMOVE_COURSE_FOR_COMPBUILDER,
+  ADD_COURSE_TYPE,
+  DELETE_COURSE_TYPE
 } from './types';
 
 export const fetchCourses = () => async dispatch => {
@@ -18,6 +20,20 @@ export const fetchCourses = () => async dispatch => {
 export const fetchCourseTypes = () => async dispatch => {
   const res = await axios.get('/api/course-types');
   dispatch({ type: FETCH_COURSE_TYPE, payload: res.data });
+};
+
+export const addCourseType = type => async dispatch => {
+  const res = await axios.post('/api/course-types', type);
+  dispatch({ type: ADD_COURSE_TYPE, payload: res.data });
+};
+
+export const deleteCourseType = id => async dispatch => {
+  const res = await axios.delete('/api/course-types', { params: { id } });
+  if (res.status === 200) {
+    dispatch({ type: DELETE_COURSE_TYPE, payload: id });
+  } else {
+    console.log('not deleted');
+  }
 };
 
 export const fetchCourseLevels = () => async dispatch => {
