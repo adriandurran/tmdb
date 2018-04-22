@@ -126,8 +126,8 @@ class CourseBuilder extends Component {
                   <option value="">None</option>
                   {courseLevels.map((level, index) => {
                     return (
-                      <option value={level} key={index}>
-                        {level}
+                      <option value={level._id} key={level._id}>
+                        {level.courseLevel}
                       </option>
                     );
                   })}

@@ -32,6 +32,21 @@ module.exports = app => {
     res.send(dbCourseLevels);
   });
 
+  app.post('/api/course-levels', requireAdmin, async (req, res) => {
+    const newLevel = req.body;
+    const newCourseLevel = await CourseLevel.create(newLevel);
+    res.send(newCourseLevel);
+  });
+
+  app.delete('/api/course-levels', requireAdmin, async (req, res) => {
+    const remCourseLevel = await CourseLevel.remove({ _id: req.query.id });
+    if (remCourseLevel.ok > 0) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(418);
+    }
+  });
+
   // Courses
   app.get('/api/courses', requireLogin, async (req, res) => {
     const dbCourses = await Course.find({});

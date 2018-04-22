@@ -59,7 +59,7 @@ class AdminCourseTools extends Component {
             )}
           </Card.Content>
         </Card>
-        <Card as={Link} to="/admin/course-manager" raised>
+        <Card as={Link} to="/admin/course-levels" raised>
           <Card.Content>
             <Header as="h5">Course Levels</Header>
           </Card.Content>

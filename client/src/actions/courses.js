@@ -9,7 +9,9 @@ import {
   ADD_COURSE_FOR_COMPBUILDER,
   REMOVE_COURSE_FOR_COMPBUILDER,
   ADD_COURSE_TYPE,
-  DELETE_COURSE_TYPE
+  DELETE_COURSE_TYPE,
+  ADD_COURSE_LEVEL,
+  DELETE_COURSE_LEVEL
 } from './types';
 
 export const fetchCourses = () => async dispatch => {
@@ -25,6 +27,7 @@ export const fetchCourseTypes = () => async dispatch => {
 export const addCourseType = type => async dispatch => {
   const res = await axios.post('/api/course-types', type);
   dispatch({ type: ADD_COURSE_TYPE, payload: res.data });
+  dispatch(reset('courseTypes'));
 };
 
 export const deleteCourseType = id => async dispatch => {
@@ -39,6 +42,21 @@ export const deleteCourseType = id => async dispatch => {
 export const fetchCourseLevels = () => async dispatch => {
   const res = await axios.get('/api/course-levels');
   dispatch({ type: FETCH_COURSE_LEVEL, payload: res.data });
+};
+
+export const addCourseLevel = level => async dispatch => {
+  const res = await axios.post('/api/course-levels', level);
+  dispatch({ type: ADD_COURSE_LEVEL, payload: res.data });
+  dispatch(reset('courseLevels'));
+};
+
+export const deleteCourseLevel = id => async dispatch => {
+  const res = await axios.delete('/api/course-levels', { params: { id } });
+  if (res.status === 200) {
+    dispatch({ type: DELETE_COURSE_LEVEL, payload: id });
+  } else {
+    console.log('not deleted');
+  }
 };
 
 export const adminAddNewCourse = course => async dispatch => {
