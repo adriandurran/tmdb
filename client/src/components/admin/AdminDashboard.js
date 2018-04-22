@@ -1,64 +1,48 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Grid, Header, Icon } from 'semantic-ui-react';
 
-import Card, { CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../withRoot';
-import rootStyles from '../../styles/rootStyle';
+import AdminCourseTools from './courses/AdminCourseTools';
 
 const AdminDashboard = props => {
-  const { classes } = props;
   return (
     <div>
-      <Card raised>
-        <CardContent className={classes.card}>
-          <Typography variant="display3" gutterBottom align="center">
-            Admin Dashboard
-          </Typography>
-          <hr />
-          <Grid container spacing={8}>
-            <Grid item xs={4}>
-              <Button
-                size="large"
-                variant="raised"
-                className={classes.dashboardButton}
-                component={Link}
-                to={'/admin/course-manager'}
-              >
-                Course Manager
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                size="large"
-                variant="raised"
-                className={classes.dashboardButton}
-                component={Link}
-                to={'/admin/comp-manager'}
-              >
-                Competency Manager
-              </Button>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                size="large"
-                variant="raised"
-                className={classes.dashboardButton}
-                component={Link}
-                to={'/admin/role-manager'}
-              >
-                Role Manager
-              </Button>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
+      <Header as="h1" textAlign="center">
+        <Icon name="dashboard" />
+        Admin Dashboard
+      </Header>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
+              Course Tools
+            </Header>
+            <AdminCourseTools />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
+              Competency Tools
+            </Header>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
+              Role Tools
+            </Header>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
+              User Manager Tools
+            </Header>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   );
 };
 
-export default withRoot(withStyles(rootStyles)(AdminDashboard));
+export default AdminDashboard;

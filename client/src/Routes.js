@@ -15,6 +15,7 @@ import CompsHome from './components/user/CompsHome';
 // admin components
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminCourseManager from './components/admin/courses/AdminCourseManager';
+import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 
@@ -35,6 +36,11 @@ const Routes = () => {
             exact
             path="/admin/course-manager"
             component={AdminCourseManager}
+          />
+          <Route
+            exact
+            path="/admin/course-types"
+            component={AdminCourseTypes}
           />
           <Route
             exact
