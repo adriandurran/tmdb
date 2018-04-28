@@ -1,2 +1,4 @@
-node_modules
+docker/data/db
+docker/data/.DS_Store
+docker/.DS_Store
 .DS_Store

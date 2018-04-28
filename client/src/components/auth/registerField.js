@@ -1,24 +1,26 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
+import { Form } from 'semantic-ui-react';
 
 const RegisterField = ({
+  required,
   input,
   label,
-  type,
   className,
-  fullWidth,
-  required,
-  meta: { error, touched, warning }
+  type,
+  icon,
+  iconPosition,
+  meta: { touched, error }
 }) => {
   return (
-    <TextField
-      {...input}
-      placeholder={label}
-      type={type}
-      helperText={touched && error}
-      className={className}
-      fullWidth={fullWidth}
+    <Form.Input
       required={required}
+      placeholder={label}
+      className={className}
+      error={touched && error}
+      type={type}
+      icon={icon}
+      iconPosition={iconPosition}
+      {...input}
     />
   );
 };

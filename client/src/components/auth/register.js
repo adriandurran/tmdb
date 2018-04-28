@@ -2,37 +2,32 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import rootStyles from '../../styles/rootStyle';
-import withRoot from '../../withRoot';
-import { withStyles } from 'material-ui/styles';
+import { Form, Button, Header, Grid } from 'semantic-ui-react';
 
-import Card, { CardContent, CardHeader } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-
-import { submitUser } from '../../actions/auth';
+import { submitNewUser } from '../../actions/auth';
 import RegisterField from './registerField';
 
 class RegisterUser extends Component {
   renderRegFields() {
-    const { classes } = this.props;
     return (
       <div>
         <Field
           required
           component={RegisterField}
           type="text"
-          name="firstname"
+          name="firstName"
           label="First name"
-          className={classes.formFields}
+          icon="user"
+          iconPosition="left"
         />
         <Field
           required
           component={RegisterField}
           type="text"
           label="Last name"
-          name="lastname"
-          className={classes.formFields}
+          name="lastName"
+          icon="user"
+          iconPosition="left"
         />
 
         <Field
@@ -41,7 +36,6 @@ class RegisterUser extends Component {
           type="text"
           label="Email address"
           name="email"
-          className={classes.formFields}
         />
 
         <Field
@@ -49,51 +43,52 @@ class RegisterUser extends Component {
           component={RegisterField}
           type="text"
           label="Employee number"
-          name="empId"
-          className={classes.formFields}
+          name="userId"
         />
 
         <Field
           component={RegisterField}
           type="password"
           label="Password"
-          name="pwd"
-          className={classes.formFields}
+          name="password"
+          icon="key"
+          iconPosition="left"
         />
       </div>
     );
   }
 
-  submitNewUser(values, dispatch) {
-    const { submitUser, history } = this.props;
+  submitUser(values, dispatch) {
+    const { submitNewUser, history } = this.props;
 
-    submitUser(values).then(result => {
-      // console.log(result);
-      history.push(`/users/${result.id}`);
+    submitNewUser(values).then(result => {
+      history.push(`/auth/login`);
     });
   }
 
   render() {
-    const { handleSubmit, submitting, classes } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <div>
-        <Card raised className={classes.card}>
-          <CardContent>
-            <CardHeader>
-              <Typography className={classes.title}>Register</Typography>
-            </CardHeader>
-            <form
-              className={classes.formContainer}
-              onSubmit={handleSubmit(values => this.submitNewUser(values))}
+        <Grid textAlign="center" verticalAlign="middle">
+          <Grid.Column width={8}>
+            <Header>Register</Header>
+            <Form
+              size="large"
+              onSubmit={handleSubmit(values => this.submitUser(values))}
             >
               {this.renderRegFields()}
-              <div style={{ flex: 1, textAlign: 'center' }} />
-              <Button variant="raised" disabled={submitting} type="submit">
+              <Button
+                fluid
+                disabled={pristine || submitting}
+                type="submit"
+                style={{ marginTop: '15px' }}
+              >
                 Submit
               </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
@@ -102,11 +97,11 @@ class RegisterUser extends Component {
 function validate(values) {
   const errors = {};
 
-  if (!values.firstname) {
-    errors.firstname = 'Required';
+  if (!values.firstName) {
+    errors.firstName = 'Required';
   }
-  if (!values.lastname) {
-    errors.lastname = 'Required';
+  if (!values.lastName) {
+    errors.lastName = 'Required';
   }
 
   if (!values.email) {
@@ -115,17 +110,17 @@ function validate(values) {
     errors.email = 'Invalid email address';
   }
 
-  if (!values.empId) {
-    errors.empId = 'Required';
+  if (!values.userId) {
+    errors.userId = 'Required';
   }
 
-  // if (!values.pwd) {
-  //   errors.pwd = 'Required';
-  // } else if (values.pwd.length < 8) {
-  //   errors.pwd = 'Password must be 8 to 25 characters';
-  // } else if (values.pwd.length > 25) {
-  //   errors.pwd = 'Password must be more 8 to 25 characters';
-  // }
+  if (!values.passwordd) {
+    errors.pwd = 'Required';
+  } else if (values.pwd.length < 8) {
+    errors.pwd = 'Password must be 8 to 25 characters';
+  } else if (values.pwd.length > 25) {
+    errors.pwd = 'Password must be more 8 to 25 characters';
+  }
 
   return errors;
 }
@@ -135,16 +130,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  submitUser
+  submitNewUser
 };
-
-RegisterUser = withStyles(rootStyles)(RegisterUser);
 
 RegisterUser = connect(mapStateToProps, mapDispatchToProps)(RegisterUser);
 
-export default withRoot(
-  reduxForm({
-    form: 'registerForm',
-    validate
-  })(RegisterUser)
-);
+export default reduxForm({
+  form: 'registerForm',
+  validate
+})(RegisterUser);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { fetchComps } from '../../actions/comps';
+
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Table, {
@@ -98,6 +100,7 @@ class Competencies extends Component {
 
   componentDidMount() {
     this.setComps(this.props);
+    this.props.fetchComps();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -200,13 +203,17 @@ class Competencies extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  fetchComps
+};
+
 const mapStateToProps = state => {
   return {
     comps: selectCompetencies(state)
   };
 };
 
-Competencies = connect(mapStateToProps)(Competencies);
+Competencies = connect(mapStateToProps, mapDispatchToProps)(Competencies);
 Competencies = withRoot(withStyles(rootStyles)(Competencies));
 
 export default Competencies;
