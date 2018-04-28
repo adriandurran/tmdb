@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
+const Course = require('./course');
+const Role = require('./role');
+
 const saltRounds = 10;
 
 const userSchema = new Schema({
@@ -42,7 +45,16 @@ const userSchema = new Schema({
   isSuperAdmin: {
     type: Boolean,
     default: false
-  }
+  },
+  courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Course',
+      passDate: { type: Date },
+      verified: { type: Boolean, default: false }
+    }
+  ],
+  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }]
 });
 
 userSchema.methods.validPassword = async (user, password) => {
