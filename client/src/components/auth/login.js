@@ -1,82 +1,81 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import rootStyles from '../../styles/rootStyle';
-import withRoot from '../../withRoot';
-import { withStyles } from 'material-ui/styles';
+import { Form, Button, Header, Grid } from 'semantic-ui-react';
 
-import Card, { CardContent, CardHeader } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-
-// use redux form
-// will mock the actuall login process until set up with a db
-// so for dev only the submit button will just link to user 1
+import { loginUser } from '../../actions/auth';
 
 const renderTextField = ({
   input,
   label,
-  type,
   className,
-
+  type,
+  icon,
+  iconPosition,
   meta: { touched, error }
   // ...custom
 }) => (
-  <TextField
+  <Form.Input
     required
+    fluid
+    icon={icon}
+    iconPosition={iconPosition}
     placeholder={label}
     error={touched && error}
-    {...input}
     type={type}
-    helperText={touched && error}
-    className={className}
+    {...input}
   />
 );
 
 class LoginUser extends Component {
+  userLogin(values, dispatch) {
+    const { history, loginUser } = this.props;
+    loginUser(values).then(result => {
+      history.push(`/users/${result.userId}`);
+    });
+  }
+
   render() {
-    const { handleSubmit, submitting, pristine, classes } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <div>
-        <Card raised className={classes.card}>
-          <CardContent>
-            <CardHeader>
-              <Typography className={classes.title}>Login</Typography>
-            </CardHeader>
-            <form
-              onSubmit={handleSubmit(values => console.log(values))}
-              className={classes.formContainer}
-            >
+        <Grid textAlign="center" verticalAlign="middle">
+          <Grid.Column width={8}>
+            <Header as="h3" textAlign="center">
+              Login to Training Manager
+            </Header>
+            <Form onSubmit={handleSubmit(values => this.userLogin(values))}>
               <Field
                 name="email"
                 label="Email address"
                 type="email"
+                icon="user"
+                iconPosition="left"
                 component={
                   renderTextField // required
                 }
-                className={classes.formFields}
               />
               <Field
                 name="password"
                 label="Password"
                 type="password"
+                iconPosition="left"
+                icon="lock"
                 component={renderTextField}
-                className={classes.formFields}
               />
 
               <Button
-                variant="raised"
+                fluid
                 disabled={pristine || submitting}
-                component={Link}
-                to={'/users/1'}
+                type="submit"
+                size="large"
               >
                 Login
               </Button>
-            </form>
-          </CardContent>
-        </Card>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
@@ -99,11 +98,13 @@ const validate = values => {
   return errors;
 };
 
-LoginUser = withStyles(rootStyles)(LoginUser);
+const mapDispatchToProps = {
+  loginUser
+};
 
-export default withRoot(
-  reduxForm({
-    // validate,
-    form: 'loginForm'
-  })(LoginUser)
-);
+LoginUser = connect(null, mapDispatchToProps)(LoginUser);
+
+export default reduxForm({
+  validate,
+  form: 'loginForm'
+})(LoginUser);

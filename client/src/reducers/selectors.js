@@ -32,7 +32,7 @@ export const selectUserRoleNames = createSelector(
   selectUserRoles,
   selectRoles,
   (userRoles, rolesList) =>
-    _.filter(rolesList, x => _.includes(userRoles, x.id))
+    _.filter(rolesList, x => _.includes(userRoles, x._id))
 );
 
 // match up the courses to the user
@@ -46,7 +46,7 @@ export const selectUserCourseNames = createSelector(
       _.includes(_.map(coursesList, 'courseId'), x.courseId)
     );
     return _.map(filteredList, obj => {
-      return _.assign(obj, _.find(coursesList, { id: obj.id }));
+      return _.assign(obj, _.find(coursesList, { _id: obj._id }));
     });
   }
 );
@@ -70,7 +70,7 @@ export const selectUserCoursesCurrent = createSelector(
         return false;
       })
       .map(course => {
-        return course.id;
+        return course._id;
       });
   }
 );
@@ -82,7 +82,7 @@ export const selectUserRoleComps = createSelector(
   selectCompetencies,
   (roles, comps) => {
     const flatty = _.flatten(_.map(roles, 'compIds'));
-    return comps.filter(x => flatty.includes(x.id));
+    return comps.filter(x => flatty.includes(x._id));
   }
 );
 
@@ -113,7 +113,7 @@ export const selectCompBuilderCourseNames = createSelector(
   selectCourses,
   selectCompBuilderCourses,
   (courses, compcourses) => {
-    return _.filter(courses, x => _.includes(_.map(compcourses, 'id'), x.id));
+    return _.filter(courses, x => _.includes(_.map(compcourses, '_id'), x._id));
   }
 );
 
@@ -123,7 +123,7 @@ export const selectRoleBuilderCompNames = createSelector(
   selectCompetencies,
   selectRoleBuilderComps,
   (comps, rolecomps) => {
-    return _.filter(comps, x => _.includes(_.map(rolecomps, 'id'), x.id));
+    return _.filter(comps, x => _.includes(_.map(rolecomps, '_id'), x._id));
   }
 );
 
@@ -133,7 +133,7 @@ export const selectRoleComps = createSelector(
   selectCompetencies,
   (roles, comps) => {
     const flatty = _.flatten(_.map(roles, 'compIds'));
-    return comps.filter(x => flatty.includes(x.id));
+    return comps.filter(x => flatty.includes(x._id));
   }
 );
 

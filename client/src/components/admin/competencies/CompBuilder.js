@@ -77,8 +77,8 @@ class CompBuilder extends Component {
     const { compCourses, adminAddNewComp } = this.props;
     let compCourseIds = compCourses.map(course => course.id);
     let newComp = {
-      compname: values.compname,
-      shortname: values.shortname.toUpperCase(),
+      compName: values.compName,
+      shortName: values.shortName.toUpperCase(),
       courseIds: compCourseIds
     };
     adminAddNewComp(newComp);
@@ -111,7 +111,7 @@ class CompBuilder extends Component {
                   required
                   component={renderTextField}
                   type="text"
-                  name="shortname"
+                  name="shortName"
                   label="Short name"
                   className={classes.formFields}
                 />
@@ -119,7 +119,7 @@ class CompBuilder extends Component {
                   required
                   component={renderTextField}
                   type="text"
-                  name="compname"
+                  name="compName"
                   label="Competency name"
                   className={classes.formFields}
                 />
@@ -134,8 +134,8 @@ class CompBuilder extends Component {
                 >
                   {courses.map(course => {
                     return (
-                      <option value={course.id} key={course.id}>
-                        {course.coursename}
+                      <option value={course._id} key={course._id}>
+                        {course.courseName}
                       </option>
                     );
                   })}
@@ -148,9 +148,9 @@ class CompBuilder extends Component {
                       <Chip
                         name="chippers"
                         className={classes.chip}
-                        key={course.id}
-                        value={course.id}
-                        label={course.coursename}
+                        key={course._id}
+                        value={course._id}
+                        label={course.courseName}
                         onDelete={this.handleChipDelete(course)}
                       />
                     );

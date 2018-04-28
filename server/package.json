@@ -1,0 +1,28 @@
+{
+  "name": "tmdb",
+  "version": "0.0.1",
+  "description": "training manager",
+  "repository": "https://github.com/adriandurran/tmdb.git",
+  "author": "adriandurran <adriandurran@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./bin/www",
+    "server": "nodemon ./bin/www",
+    "dev": "npm run server "
+  },
+  "devDependencies": {
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.3"
+  },
+  "dependencies": {
+    "bcrypt": "^2.0.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "mongoose": "^5.0.13",
+    "passport": "^0.4.0",
+    "passport-custom": "^1.0.5"
+  }
+}

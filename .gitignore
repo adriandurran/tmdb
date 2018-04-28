@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 node_modules
 .DS_Store
 docker/data/db
+=======
+docker/data/db
+docker/data/.DS_Store
+docker/.DS_Store
+.DS_Store
+>>>>>>> e9f3e57ceb6f23318d513c2d87428ddd62d8d4fc

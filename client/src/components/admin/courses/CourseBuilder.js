@@ -14,7 +14,7 @@ import rootStyles from '../../../styles/rootStyle';
 
 import {
   selectCourseTypes,
-  selectCourseLevels,
+  selectCourseLevels
 } from '../../../reducers/selectors';
 
 import { adminAddNewCourse } from '../../../actions/courses';
@@ -24,7 +24,7 @@ const renderSelectField = ({
   label,
   className,
   meta: { touched, error },
-  children,
+  children
 }) => (
   <Select native {...input} className={className}>
     {children}
@@ -37,7 +37,7 @@ const renderTextField = ({
   type,
   className,
 
-  meta: { touched, error },
+  meta: { touched, error }
 }) => (
   <TextField
     required
@@ -63,7 +63,7 @@ class CourseBuilder extends Component {
       submitting,
       classes,
       courseTypes,
-      courseLevels,
+      courseLevels
     } = this.props;
 
     return (
@@ -86,7 +86,7 @@ class CourseBuilder extends Component {
                   required
                   component={renderTextField}
                   type="text"
-                  name="coursename"
+                  name="courseName"
                   label="Course name"
                   className={classes.formFields}
                 />
@@ -110,8 +110,8 @@ class CourseBuilder extends Component {
                   <option value="">None</option>
                   {courseTypes.map((type, index) => {
                     return (
-                      <option value={type} key={index}>
-                        {type}
+                      <option value={type.courseType} key={type._id}>
+                        {type.courseType}
                       </option>
                     );
                   })}
@@ -126,8 +126,8 @@ class CourseBuilder extends Component {
                   <option value="">None</option>
                   {courseLevels.map((level, index) => {
                     return (
-                      <option value={level} key={index}>
-                        {level}
+                      <option value={level.courseLevel} key={level._id}>
+                        {level.courseLevel}
                       </option>
                     );
                   })}
@@ -155,7 +155,7 @@ function validate(values) {
 const mapStateToProps = state => {
   return {
     courseTypes: selectCourseTypes(state),
-    courseLevels: selectCourseLevels(state),
+    courseLevels: selectCourseLevels(state)
   };
 };
 
@@ -167,6 +167,6 @@ CourseBuilder = connect(mapStateToProps, mapDispatchToProps)(CourseBuilder);
 export default withRoot(
   reduxForm({
     form: 'coursebuilder',
-    validate,
+    validate
   })(CourseBuilder)
 );
