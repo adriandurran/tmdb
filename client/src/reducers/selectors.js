@@ -12,6 +12,14 @@ export const selectCompetencies = state => state.comps;
 
 // courses
 export const selectCourses = state => state.courses;
+export const selectCoursesForDropDown = createSelector(
+  selectCourses,
+  courses => {
+    return courses.map(course => {
+      return { key: course._id, value: course._id, text: course.coursename };
+    });
+  }
+);
 // get course types
 export const selectCourseTypes = state => state.courseTypes;
 // get the course levels
