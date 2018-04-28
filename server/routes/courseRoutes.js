@@ -4,27 +4,19 @@ const Course = require('../models/course');
 const CourseType = require('../models/courseType');
 const CourseLevel = require('../models/courseLevel');
 
+const courseController = require('../controllers/courseController');
+
 module.exports = app => {
   // Course Types
-  app.get('/api/course-types', requireLogin, async (req, res) => {
-    const dbCourseTypes = await CourseType.find({});
-    res.send(dbCourseTypes);
-  });
+  app.get('/api/course-types', requireLogin, courseController.getCourseTypes);
 
-  app.post('/api/course-types', requireAdmin, async (req, res) => {
-    const newType = req.body;
-    const newCourseType = await CourseType.create(newType);
-    res.send(newCourseType);
-  });
+  app.post('/api/course-types', requireAdmin, courseController.addCourseTypes);
 
-  app.delete('/api/course-types', requireAdmin, async (req, res) => {
-    const remCourseType = await CourseType.remove({ _id: req.query.id });
-    if (remCourseType.ok > 0) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(418);
-    }
-  });
+  app.delete(
+    '/api/course-types',
+    requireAdmin,
+    courseController.deleteCourseTypes
+  );
 
   // Course Levels
   app.get('/api/course-levels', requireLogin, async (req, res) => {
