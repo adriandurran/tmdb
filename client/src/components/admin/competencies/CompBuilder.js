@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import Card, { CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Select from 'material-ui/Select';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import Chip from 'material-ui/Chip';
-import Paper from 'material-ui/Paper';
+import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../../withRoot';
-import rootStyles from '../../../styles/rootStyle';
+// import Card, { CardContent } from 'material-ui/Card';
+// import Typography from 'material-ui/Typography';
+// import Select from 'material-ui/Select';
+// import TextField from 'material-ui/TextField';
+// import Button from 'material-ui/Button';
+// import Chip from 'material-ui/Chip';
+// import Paper from 'material-ui/Paper';
+
+// import { withStyles } from 'material-ui/styles';
+// import withRoot from '../../../withRoot';
+// import rootStyles from '../../../styles/rootStyle';
 
 import {
   selectCourses,
@@ -32,37 +34,34 @@ const renderTextField = ({
 
   meta: { touched, error }
 }) => (
-  <TextField
+  <Form.Input
     required
+    fluid
     placeholder={label}
     error={touched && error}
     {...input}
     type={type}
-    helperText={touched && error}
-    className={className}
   />
 );
 
-const renderSelectField = ({
+const renderDropdownField = ({
+  name,
   input,
   label,
-  className,
   meta: { touched, error },
-  children
+  options
 }) => (
-  <Select native {...input} className={className}>
-    {children}
-  </Select>
+  <Dropdown
+    {...input}
+    placeholder={label}
+    fluid
+    multiple
+    selection
+    options={options}
+  />
 );
 
 class CompBuilder extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     name: []
-  //   };
-  // }
-
   handleSelectChange = event => {
     const { addCourseForCompBuilder } = this.props;
     addCourseForCompBuilder(parseInt(event.target.value, 10));
@@ -88,72 +87,91 @@ class CompBuilder extends Component {
     const {
       handleSubmit,
       submitting,
-      classes,
+      pristine,
       courses,
       compCourses
     } = this.props;
 
     return (
       <div>
-        <Card raised className={classes.adminCard}>
+        <Header as="h2" textAlign="center">
+          Competency Builder
+        </Header>
+        <Grid centered>
+          <Grid.Row>
+            <Grid.Column>
+              <Form
+                onSubmit={handleSubmit(values => this.submitNewComp(values))}
+              >
+                <Form.Group inline widths="equal">
+                  <Field
+                    required
+                    component={renderTextField}
+                    type="text"
+                    name="shortName"
+                    label="Short name"
+                  />
+                  <Field
+                    required
+                    component={renderTextField}
+                    type="text"
+                    name="compName"
+                    label="Competency Name"
+                  />
+                </Form.Group>
+                <Form.Group inline>
+                  <Field
+                    name="compCourses"
+                    component={renderDropdownField}
+                    label="Courses"
+                    options={courses.map(course => {
+                      return {
+                        key: course._id,
+                        value: course._id,
+                        text: course.coursename
+                      };
+                    })}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Button
+                    fluid
+                    disabled={pristine || submitting}
+                    type="submit"
+                    size="medium"
+                  >
+                    Add Competency
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+
+        {/* <Card raised className={classes.adminCard}>
           <CardContent>
-            <Typography
-              variant="display1"
-              component="h5"
-              gutterBottom
-              align="center"
-            >
-              Competency Builder
-            </Typography>
-            <form onSubmit={handleSubmit(values => this.submitNewComp(values))}>
+            
+            <Form onSubmit={handleSubmit(values =>
+                this.submitNewComp(values)
+              )}>
               <div className={classes.formContainer}>
-                <Field
-                  required
-                  component={renderTextField}
-                  type="text"
-                  name="shortName"
-                  label="Short name"
-                  className={classes.formFields}
-                />
-                <Field
-                  required
-                  component={renderTextField}
-                  type="text"
-                  name="compName"
-                  label="Competency name"
-                  className={classes.formFields}
-                />
+                <Field required component={renderTextField} type="text" name="shortName" label="Short name" className={classes.formFields} />
+                <Field required component={renderTextField} type="text" name="compName" label="Competency name" className={classes.formFields} />
               </div>
               <div className={classes.formContainer}>
-                <Field
-                  component={renderSelectField}
-                  native
-                  name="courseSelector"
-                  onChange={this.handleSelectChange}
-                  className={classes.formFields}
-                >
+                <Field component={renderSelectField} native name="courseSelector" onChange={this.handleSelectChange} className={classes.formFields}>
                   {courses.map(course => {
-                    return (
-                      <option value={course._id} key={course._id}>
+                    return <option value={course._id} key={course._id}>
                         {course.courseName}
-                      </option>
-                    );
+                      </option>;
                   })}
                 </Field>
               </div>
               <div className={classes.formContainer}>
                 <Paper name="courses" className={classes.formFields}>
                   {compCourses.map(course => {
-                    return (
-                      <Chip
-                        name="chippers"
-                        className={classes.chip}
-                        key={course._id}
-                        value={course._id}
-                        label={course.courseName}
-                        onDelete={this.handleChipDelete(course)}
-                      />
-                    );
+                    return <Chip name="chippers" className={classes.chip} key={course._id} value={course._id} label={course.courseName} onDelete={this.handleChipDelete(course)} />;
                   })}
                 </Paper>
               </div>
@@ -165,7 +183,7 @@ class CompBuilder extends Component {
               </div>
             </form>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     );
   }
@@ -184,7 +202,6 @@ const mapDispatchToProps = {
   adminAddNewComp
 };
 
-CompBuilder = withRoot(withStyles(rootStyles)(CompBuilder));
 CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);
 
 export default reduxForm({

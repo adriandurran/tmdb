@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+const Course = require('./course');
+
 const compSchema = new Schema({
   shortName: {
     required: true,
@@ -12,7 +14,7 @@ const compSchema = new Schema({
     type: String,
     trim: true
   },
-  courseIds: Array
+  courses: [{ type: Schema.Types.ObjectId, ref: 'Course' }]
 });
 
 const Competency = mongoose.model('Competency', compSchema);

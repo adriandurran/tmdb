@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Header, Icon } from 'semantic-ui-react';
 
 import AdminCourseTools from './courses/AdminCourseTools';
+import AdminCompTools from './competencies/AdminCompTools';
 
 const AdminDashboard = props => {
   return (
@@ -24,6 +25,7 @@ const AdminDashboard = props => {
             <Header as="h2" textAlign="center">
               Competency Tools
             </Header>
+            <AdminCompTools />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
