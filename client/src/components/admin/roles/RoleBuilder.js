@@ -2,168 +2,108 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import Card, { CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Select from 'material-ui/Select';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import Chip from 'material-ui/Chip';
-import Paper from 'material-ui/Paper';
+import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../../withRoot';
-import rootStyles from '../../../styles/rootStyle';
-
-import {
-  selectRoleBuilderCompNames,
-  selectCompetencies
-} from '../../../reducers/selectors';
-import {
-  addCompForRoleBuilder,
-  removeCompForRoleBuilder
-} from '../../../actions/comps';
-
+import { selectCompetencies } from '../../../reducers/selectors';
+import { fetchComps } from '../../../actions/comps';
 import { adminAddNewRole } from '../../../actions/roles';
 
-const renderTextField = ({
-  input,
-  label,
-  type,
-  className,
-
-  meta: { touched, error }
-}) => (
-  <TextField
-    required
-    placeholder={label}
-    error={touched && error}
-    {...input}
-    type={type}
-    helperText={touched && error}
-    className={className}
-  />
-);
-
-const renderSelectField = ({
-  input,
-  label,
-  className,
-  meta: { touched, error },
-  children
-}) => (
-  <Select native {...input} className={className}>
-    {children}
-  </Select>
-);
+import semanticFormField from '../../shared/semanticFormField';
 
 class RoleBuilder extends Component {
-  handleSelectChange = event => {
-    const { addCompForRoleBuilder } = this.props;
-    addCompForRoleBuilder(parseInt(event.target.value, 10));
+  componentDidMount() {
+    this.props.fetchComps();
+  }
+
+  handleSelectChange = (e, item) => {
+    this.setState({
+      cForR: item.value
+    });
   };
 
-  handleChipDelete = comp => () => {
-    const { removeCompForRoleBuilder } = this.props;
-    removeCompForRoleBuilder(comp.id);
-  };
+  makeCompOptions() {
+    return this.props.comps.map(comp => {
+      let statComp = {
+        key: comp._id,
+        value: comp._id,
+        text: comp.compName
+      };
+      return statComp;
+    });
+  }
 
   submitNewRole(values, dispatch) {
-    const { roleComps, adminAddNewRole } = this.props;
-    let roleCompIds = roleComps.map(comp => comp.id);
+    const { adminAddNewRole } = this.props;
     let newRole = {
-      rolename: values.rolename,
-      compIds: roleCompIds
+      roleName: values.roleName,
+      competencies: this.state.cForR
     };
     adminAddNewRole(newRole);
   }
 
   render() {
-    const { handleSubmit, submitting, classes, comps, roleComps } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <div>
-        <Card raised className={classes.adminCard}>
-          <CardContent>
-            <Typography
-              variant="display1"
-              component="h5"
-              gutterBottom
-              align="center"
-            >
-              Role Builder
-            </Typography>
-            <form onSubmit={handleSubmit(values => this.submitNewRole(values))}>
-              <div className={classes.formContainer}>
-                <Field
-                  required
-                  component={renderTextField}
-                  type="text"
-                  name="rolename"
-                  label="Role name"
-                  className={classes.formFields}
-                />
-              </div>
-              <div className={classes.formContainer}>
-                <Field
-                  component={renderSelectField}
-                  native
-                  name="courseSelector"
+        <Header as="h2" textAlign="center">
+          Role Builder
+        </Header>
+
+        <Grid centered>
+          <Grid.Row>
+            <Grid.Column>
+              <Form
+                onSubmit={handleSubmit(values => this.submitNewRole(values))}
+              >
+                <Form.Group inline widths="equal">
+                  <Field
+                    fluid
+                    component={semanticFormField}
+                    as={Form.Input}
+                    type="text"
+                    name="roleName"
+                    placeholder="Role name"
+                  />
+                </Form.Group>
+                <Dropdown
+                  fluid
+                  multiple
+                  name="roleComps"
+                  options={this.makeCompOptions()}
+                  placeholder="Select competencies"
                   onChange={this.handleSelectChange}
-                  className={classes.formFields}
-                >
-                  {comps.map(comp => {
-                    return (
-                      <option value={comp.id} key={comp.id}>
-                        {comp.compname}
-                      </option>
-                    );
-                  })}
-                </Field>
-              </div>
-              <div className={classes.formContainer}>
-                <Paper name="courses" className={classes.formFields}>
-                  {roleComps.map(comp => {
-                    return (
-                      <Chip
-                        name="chippers"
-                        className={classes.chip}
-                        key={comp.id}
-                        value={comp.id}
-                        label={comp.compname}
-                        onDelete={this.handleChipDelete(comp)}
-                      />
-                    );
-                  })}
-                </Paper>
-              </div>
-              <div className={classes.formContainer}>
-                <div style={{ flex: 1, textAlign: 'center' }} />
-                <Button variant="raised" disabled={submitting} type="submit">
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+                />
+                <Form.Group>
+                  <Button
+                    fluid
+                    disabled={pristine || submitting}
+                    type="submit"
+                    size="medium"
+                  >
+                    Add Role
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = {
-  addCompForRoleBuilder,
-  removeCompForRoleBuilder,
+  fetchComps,
   adminAddNewRole
 };
 
 const mapStateToProps = state => {
   return {
-    roleComps: selectRoleBuilderCompNames(state),
     comps: selectCompetencies(state)
   };
 };
 
 RoleBuilder = connect(mapStateToProps, mapDispatchToProps)(RoleBuilder);
-RoleBuilder = withRoot(withStyles(rootStyles)(RoleBuilder));
 
 export default reduxForm({
   form: 'rolebuilder'
