@@ -67,6 +67,7 @@ class RoleBuilder extends Component {
                 </Form.Group>
                 <Dropdown
                   fluid
+                  selection
                   multiple
                   name="roleComps"
                   options={this.makeCompOptions()}

@@ -102,16 +102,20 @@ class CourseBuilder extends Component {
                     placeholder="Course Validity"
                   />
                 </Form.Group>
-                <Form.Group inline>
+                <Form.Group inline widths="equal">
                   <Dropdown
+                    selection
                     fluid
+                    inline
                     name="type"
                     options={this.makeTypeOptions()}
                     placeholder="Select a Course Type"
                     onChange={this.handleTypeChange}
                   />
                   <Dropdown
+                    selection
                     fluid
+                    inline
                     name="level"
                     options={this.makeLevelOptions()}
                     placeholder="Select a Course Level"
