@@ -2,7 +2,11 @@ const Role = require('../models/role');
 
 module.exports = {
   getRoles: async (req, res) => {
-    const dbRoles = await Role.find({}).populate('competencies');
+    const dbRoles = await Role.find({}).populate({
+      path: 'competencies',
+      populate: { path: 'courses' }
+    });
+
     res.send(dbRoles);
   },
 
