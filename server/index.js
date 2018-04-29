@@ -12,6 +12,7 @@ const keys = require('./config/keys');
 require('./models/user');
 require('./services/passport');
 
+// conenct to mongo db
 mongoose
   .connect(keys.mongoURI)
   .then(() => console.log('Database connection successful'))
@@ -19,6 +20,7 @@ mongoose
 
 const app = express();
 
+// middleware
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -32,9 +34,11 @@ app.use(passport.session());
 
 app.use(morgan('dev'));
 
+// routes
 require('./routes/authRoutes')(app);
 require('./routes/courseRoutes')(app);
 require('./routes/compRoutes')(app);
+require('./routes/roleRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

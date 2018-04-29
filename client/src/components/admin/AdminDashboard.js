@@ -3,6 +3,7 @@ import { Grid, Header, Icon } from 'semantic-ui-react';
 
 import AdminCourseTools from './courses/AdminCourseTools';
 import AdminCompTools from './competencies/AdminCompTools';
+import AdminRoleTools from './roles/AdminRoleTools';
 
 const AdminDashboard = props => {
   return (
@@ -33,6 +34,7 @@ const AdminDashboard = props => {
             <Header as="h2" textAlign="center">
               Role Tools
             </Header>
+            <AdminRoleTools />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
