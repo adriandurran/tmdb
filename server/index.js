@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     name: 'tmdb',
-    maxAge: 6 * 60 * 60 * 1000, // 6 hours temp may reduce to 1
+    maxAge: 8 * 60 * 60 * 1000, // 8 hours temp may reduce to 1
     keys: [keys.cookieKey]
   })
 );

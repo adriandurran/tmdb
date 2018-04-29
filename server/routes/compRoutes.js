@@ -1,17 +1,9 @@
 const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');
-const Competency = require('../models/competency');
+const compController = require('../controllers/compController');
 
 module.exports = app => {
-  app.get('/api/competencies', requireLogin, async (req, res) => {
-    const dbComps = await Competency.find({});
-    res.send(dbComps);
-  });
+  app.get('/api/competencies', requireLogin, compController.getComps);
 
-  app.post('/api/competencies', requireAdmin, async (req, res) => {
-    const newComp = req.body;
-    console.log(newComp);
-    const newCompCreated = await Competency.create(newComp);
-    res.send(newCompCreated);
-  });
+  app.post('/api/competencies', requireAdmin, compController.addComps);
 };
