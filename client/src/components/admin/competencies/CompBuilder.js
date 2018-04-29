@@ -10,14 +10,9 @@ import { adminAddNewComp } from '../../../actions/comps';
 
 import semanticFormField from '../../shared/semanticFormField';
 
-const required = value => (value ? undefined : 'Required');
-
 class CompBuilder extends Component {
   componentDidMount() {
     this.props.fetchCourses();
-    const state = {
-      cForC: []
-    };
   }
 
   handleSelectChange = (e, item) => {
@@ -48,13 +43,7 @@ class CompBuilder extends Component {
   }
 
   render() {
-    const {
-      handleSubmit,
-      submitting,
-      pristine,
-      courses,
-      compCourses
-    } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
 
     return (
       <div>

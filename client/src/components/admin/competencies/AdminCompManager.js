@@ -1,22 +1,25 @@
 import React from 'react';
 
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../../withRoot';
-import rootStyles from '../../../styles/rootStyle';
+import { Grid } from 'semantic-ui-react';
 
-import Paper from 'material-ui/Paper';
-
-import Competencies from '../../competencies/competencies';
 import CompBuilder from './CompBuilder';
+import CompsTable from '../../competencies/compsTable';
 
 const AdminCompManager = props => {
-  const { classes } = props;
   return (
-    <Paper className={classes.adminPaper}>
-      <CompBuilder />
-      <Competencies />
-    </Paper>
+    <Grid celled>
+      <Grid.Row>
+        <Grid.Column>
+          <CompBuilder />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <CompsTable />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
-export default withRoot(withStyles(rootStyles)(AdminCompManager));
+export default AdminCompManager;
