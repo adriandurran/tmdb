@@ -27,14 +27,13 @@ class CompBuilder extends Component {
   };
 
   submitNewComp(values, dispatch) {
-    console.log(this.state);
     const { adminAddNewComp } = this.props;
     let newComp = {
       compName: values.compName,
       shortName: values.shortName.toUpperCase(),
       courses: this.state.cForC
     };
-    adminAddNewComp(newComp);
+    adminAddNewComp(newComp).then(() => this.setState({ cForC: [] }));
   }
 
   makeCourseOptions() {

@@ -39,7 +39,7 @@ class AdminCourseTools extends Component {
                 {courses.length} Courses loaded
               </span>
             ) : (
-              <span>No courses in the system</span>
+              <span>No Courses in the system</span>
             )}
           </Card.Content>
         </Card>
@@ -55,7 +55,7 @@ class AdminCourseTools extends Component {
                 {types.length} Course types loaded
               </span>
             ) : (
-              <span>No courses types in the system</span>
+              <span>No Courses types in the system</span>
             )}
           </Card.Content>
         </Card>
@@ -71,7 +71,7 @@ class AdminCourseTools extends Component {
                 {levels.length} Course levels loaded
               </span>
             ) : (
-              <span>No course levels in the system</span>
+              <span>No Course levels in the system</span>
             )}
           </Card.Content>
         </Card>
