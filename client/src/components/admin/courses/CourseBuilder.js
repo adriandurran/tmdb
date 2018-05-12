@@ -2,154 +2,143 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import Card, { CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import Select from 'material-ui/Select';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../../withRoot';
-import rootStyles from '../../../styles/rootStyle';
+import semanticFormField from '../../shared/semanticFormField';
 
 import {
   selectCourseTypes,
   selectCourseLevels
 } from '../../../reducers/selectors';
 
-import { adminAddNewCourse } from '../../../actions/courses';
-
-const renderSelectField = ({
-  input,
-  label,
-  className,
-  meta: { touched, error },
-  children
-}) => (
-  <Select native {...input} className={className}>
-    {children}
-  </Select>
-);
-
-const renderTextField = ({
-  input,
-  label,
-  type,
-  className,
-
-  meta: { touched, error }
-}) => (
-  <TextField
-    required
-    placeholder={label}
-    error={touched && error}
-    {...input}
-    type={type}
-    helperText={touched && error}
-    className={className}
-  />
-);
+import {
+  fetchCourseTypes,
+  fetchCourseLevels,
+  adminAddNewCourse
+} from '../../../actions/courses';
 
 class CourseBuilder extends Component {
+  componentDidMount() {
+    const { fetchCourseLevels, fetchCourseTypes } = this.props;
+    fetchCourseLevels();
+    fetchCourseTypes();
+  }
+
+  handleLevelChange = (e, item) => {
+    this.setState({
+      level: item.value
+    });
+  };
+
+  makeLevelOptions() {
+    return this.props.courseLevels.map(level => {
+      let newLvl = {
+        key: level._id,
+        value: level.courseLevel,
+        text: level.courseLevel
+      };
+      return newLvl;
+    });
+  }
+
+  handleTypeChange = (e, item) => {
+    this.setState({
+      type: item.value
+    });
+  };
+
+  makeTypeOptions() {
+    return this.props.courseTypes.map(type => {
+      let newType = {
+        key: type._id,
+        value: type.courseType,
+        text: type.courseType
+      };
+      return newType;
+    });
+  }
+
   submitNewCourse(values, dispatch) {
     const { adminAddNewCourse } = this.props;
+    let newCourse = {
+      courseName: values.courseName,
+      validity: values.validity,
+      level: this.state.level,
+      type: this.state.type
+    };
 
-    adminAddNewCourse(values);
+    adminAddNewCourse(newCourse);
   }
 
   render() {
-    const {
-      handleSubmit,
-      submitting,
-      classes,
-      courseTypes,
-      courseLevels
-    } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
 
     return (
       <div>
-        <Card raised className={classes.adminCard}>
-          <CardContent>
-            <Typography
-              variant="display1"
-              component="h5"
-              gutterBottom
-              align="center"
-            >
-              Course Builder
-            </Typography>
-            <form
-              onSubmit={handleSubmit(values => this.submitNewCourse(values))}
-            >
-              <div className={classes.formContainer}>
-                <Field
-                  required
-                  component={renderTextField}
-                  type="text"
-                  name="courseName"
-                  label="Course name"
-                  className={classes.formFields}
-                />
-                <Field
-                  required
-                  component={renderTextField}
-                  type="number"
-                  name="validity"
-                  label="Valid"
-                  className={classes.formFields}
-                />
-              </div>
-              <div className={classes.formContainer}>
-                <Field
-                  component={renderSelectField}
-                  name="type"
-                  label="Course Type"
-                  className={classes.formFields}
-                >
-                  <option value="">Type</option>
-                  <option value="">None</option>
-                  {courseTypes.map((type, index) => {
-                    return (
-                      <option value={type.courseType} key={type._id}>
-                        {type.courseType}
-                      </option>
-                    );
-                  })}
-                </Field>
-                <Field
-                  component={renderSelectField}
-                  name="level"
-                  label="Course Level"
-                  className={classes.formFields}
-                >
-                  <option value="">Level</option>
-                  <option value="">None</option>
-                  {courseLevels.map((level, index) => {
-                    return (
-                      <option value={level.courseLevel} key={level._id}>
-                        {level.courseLevel}
-                      </option>
-                    );
-                  })}
-                </Field>
-              </div>
-              <div className={classes.formContainer}>
-                <div style={{ flex: 1, textAlign: 'center' }} />
-                <Button variant="raised" disabled={submitting} type="submit">
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+        <Header as="h2" textAlign="center">
+          Course Builder
+        </Header>
+        <Grid centered>
+          <Grid.Row>
+            <Grid.Column>
+              <Form
+                onSubmit={handleSubmit(values => this.submitNewCourse(values))}
+              >
+                <Form.Group inline widths="equal">
+                  <Field
+                    fluid
+                    component={semanticFormField}
+                    as={Form.Input}
+                    type="text"
+                    name="courseName"
+                    placeholder="Course name"
+                  />
+                  <Field
+                    fluid
+                    name="validity"
+                    component={semanticFormField}
+                    as={Form.Input}
+                    type="number"
+                    placeholder="Course Validity"
+                  />
+                </Form.Group>
+                <Form.Group inline widths="equal">
+                  <Dropdown
+                    selection
+                    fluid
+                    inline
+                    name="type"
+                    options={this.makeTypeOptions()}
+                    placeholder="Select a Course Type"
+                    onChange={this.handleTypeChange}
+                  />
+                  <Dropdown
+                    selection
+                    fluid
+                    inline
+                    name="level"
+                    options={this.makeLevelOptions()}
+                    placeholder="Select a Course Level"
+                    onChange={this.handleLevelChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Button
+                    fluid
+                    disabled={pristine || submitting}
+                    type="submit"
+                    size="medium"
+                  >
+                    Add Course
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }
-}
-
-function validate(values) {
-  const errors = {};
-  return errors;
 }
 
 const mapStateToProps = state => {
@@ -159,14 +148,15 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = { adminAddNewCourse };
+const mapDispatchToProps = {
+  adminAddNewCourse,
+  fetchCourseLevels,
+  fetchCourseTypes
+};
 
-CourseBuilder = withStyles(rootStyles)(CourseBuilder);
 CourseBuilder = connect(mapStateToProps, mapDispatchToProps)(CourseBuilder);
 
-export default withRoot(
-  reduxForm({
-    form: 'coursebuilder',
-    validate
-  })(CourseBuilder)
-);
+export default reduxForm({
+  form: 'coursebuilder'
+  // validate
+})(CourseBuilder);

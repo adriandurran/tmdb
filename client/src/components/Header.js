@@ -13,9 +13,9 @@ class Header extends Component {
       const {
         firstName,
         lastName,
-        userId,
-        isAdmin,
-        isSuperAdmin,
+        // userId,
+        // isAdmin,
+        // isSuperAdmin,
         verified
       } = authUser;
       return (

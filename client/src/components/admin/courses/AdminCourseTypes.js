@@ -3,6 +3,8 @@ import { Grid, Header, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
+import AdminCoursesMenu from './AdminCoursesMenu';
+
 import AdminCTList from './AdminCTList';
 import { addCourseType } from '../../../actions/courses';
 
@@ -30,7 +32,8 @@ class AdminCourseTypes extends Component {
         <Header as="h2" textAlign="center">
           Course Types
         </Header>
-        <Grid centered>
+        <AdminCoursesMenu />
+        <Grid centered attached="bottom" style={{ marginTop: '0.5em' }}>
           <Grid.Row>
             <Grid.Column width={10}>
               <Form

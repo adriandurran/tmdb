@@ -1,22 +1,25 @@
 import React from 'react';
 
-import { withStyles } from 'material-ui/styles';
-import withRoot from '../../../withRoot';
-import rootStyles from '../../../styles/rootStyle';
-
-import Paper from 'material-ui/Paper';
+import { Grid } from 'semantic-ui-react';
 
 import RoleBuilder from './RoleBuilder';
-import Roles from '../../roles/roles';
+import RolesTable from '../../roles/rolesTable';
 
 const AdminRoleManager = props => {
-  const { classes } = props;
   return (
-    <Paper className={classes.adminPaper}>
-      <RoleBuilder />
-      <Roles />
-    </Paper>
+    <Grid celled>
+      <Grid.Row>
+        <Grid.Column>
+          <RoleBuilder />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <RolesTable />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   );
 };
 
-export default withRoot(withStyles(rootStyles)(AdminRoleManager));
+export default AdminRoleManager;

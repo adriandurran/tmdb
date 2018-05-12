@@ -12,6 +12,14 @@ export const selectCompetencies = state => state.comps;
 
 // courses
 export const selectCourses = state => state.courses;
+export const selectCoursesForDropDown = createSelector(
+  selectCourses,
+  courses => {
+    return courses.map(course => {
+      return { key: course._id, value: course._id, text: course.coursename };
+    });
+  }
+);
 // get course types
 export const selectCourseTypes = state => state.courseTypes;
 // get the course levels
@@ -94,9 +102,9 @@ export const selectUserCompetenciesCurrent = createSelector(
   (curcourses, comps) => {
     let curlength = curcourses.length;
     return comps.filter(comp => {
-      if (comp.courseIds.length <= curlength) {
-        let compare = _.intersection(curcourses, comp.courseIds);
-        if (compare.length >= comp.courseIds.length) {
+      if (comp.courses.length <= curlength) {
+        let compare = _.intersection(curcourses, comp.courses);
+        if (compare.length >= comp.courses.length) {
           return true;
         }
       }
