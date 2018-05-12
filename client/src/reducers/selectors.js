@@ -104,7 +104,7 @@ export const selectUserCompetenciesCurrent = createSelector(
     return comps.filter(comp => {
       if (comp.courses.length <= curlength) {
         let compare = _.intersection(curcourses, comp.courses);
-        if (compare.length >= comp.courseIds.length) {
+        if (compare.length >= comp.courses.length) {
           return true;
         }
       }

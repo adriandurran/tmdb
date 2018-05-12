@@ -5,6 +5,7 @@ import { reduxForm, Field } from 'redux-form';
 
 import AdminCLList from './AdminCLList';
 import { addCourseLevel } from '../../../actions/courses';
+import AdminCoursesMenu from './AdminCoursesMenu';
 
 const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
   <Form.Input
@@ -31,7 +32,8 @@ class AdminCourseLevels extends Component {
         <Header as="h2" textAlign="center">
           Course Levels
         </Header>
-        <Grid centered>
+        <AdminCoursesMenu />
+        <Grid centered attached="bottom" style={{ marginTop: '0.5em' }}>
           <Grid.Row>
             <Grid.Column width={10}>
               <Form
