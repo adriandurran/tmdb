@@ -7,9 +7,11 @@ import { compsReducer } from './comps/comps';
 import coursesReducer from './courses/courses';
 import courseLevelsReducer from './courses/course-levels';
 import courseTypesReducer from './courses/course-types';
+import { allUsersReducer } from './users/users';
 
 const reducer = combineReducers({
   auth: authReducer,
+  allusers: allUsersReducer,
   roles: rolesReducer,
   comps: compsReducer,
   courses: coursesReducer,

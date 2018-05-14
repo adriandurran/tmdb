@@ -30,8 +30,10 @@ export const selectCourseLevels = state => state.courseLevels;
 // concacanate the username....can be added to with rank etc...
 export const selectUserName = state => fromAuth.selectUserName(state.auth);
 
-// get the current user.....this may/will change when we have a conenction to a db
+// get the current user.....t
 export const selectCurrentUser = state => state.auth.user;
+
+export const selectAllUsers = state => state.allusers;
 
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;
