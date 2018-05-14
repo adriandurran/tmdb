@@ -33,7 +33,14 @@ export const selectUserName = state => fromAuth.selectUserName(state.auth);
 // get the current user.....t
 export const selectCurrentUser = state => state.auth.user;
 
+// get all the users (admin function)
 export const selectAllUsers = state => state.allusers;
+
+// get all users that require verification
+
+export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
+  allusers.filter(user => user.verified === false)
+);
 
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;

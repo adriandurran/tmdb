@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { Header, Card, Icon } from 'semantic-ui-react';
 
 import { fetchAllUsers } from '../../../actions/user';
-import { selectAllUsers } from '../../../reducers/selectors';
+import {
+  selectAllUsers,
+  selectAllUsersVerify
+} from '../../../reducers/selectors';
 
 class AdminUserTools extends Component {
   componentDidMount() {
@@ -13,7 +16,7 @@ class AdminUserTools extends Component {
     fetchAllUsers();
   }
   render() {
-    const { allusers } = this.props;
+    const { allusers, allusersverify } = this.props;
     return (
       <Card.Group itemsPerRow={3}>
         <Card as={Link} to="/admin/user-access-manager" raised>
@@ -25,7 +28,9 @@ class AdminUserTools extends Component {
             {allusers.length > 0 ? (
               <span>
                 <Icon name="users" />
-                {allusers.length} Users loaded
+                {allusers.length} Users loaded &nbsp;
+                <Icon name="user plus" color="red" />
+                {allusersverify.length} Users require verification
               </span>
             ) : (
               <span>No Users in the system</span>
@@ -43,7 +48,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
   return {
-    allusers: selectAllUsers(state)
+    allusers: selectAllUsers(state),
+    allusersverify: selectAllUsersVerify(state)
   };
 };
 
