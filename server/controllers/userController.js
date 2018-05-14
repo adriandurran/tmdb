@@ -3,7 +3,9 @@ const keys = require('../config/keys');
 
 module.exports = {
   allUsers: async (req, res) => {
-    const dbAllUsers = await User.find({}).populate('courses');
+    const dbAllUsers = await User.find({})
+      .populate('courses')
+      .populate('roles');
     res.send(dbAllUsers);
   },
 
