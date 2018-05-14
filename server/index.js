@@ -39,6 +39,7 @@ require('./routes/authRoutes')(app);
 require('./routes/courseRoutes')(app);
 require('./routes/compRoutes')(app);
 require('./routes/roleRoutes')(app);
+require('./routes/userRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

@@ -2,6 +2,11 @@ const User = require('../models/user');
 const keys = require('../config/keys');
 
 module.exports = {
+  allUsers: async (req, res) => {
+    const dbAllUsers = await User.find({}).populate('courses');
+    res.send(dbAllUsers);
+  },
+
   currentUser: (req, res) => {
     res.send(req.user);
   },
