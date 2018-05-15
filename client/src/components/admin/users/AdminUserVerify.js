@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersVerify } from '../../../reducers/selectors';
+import { adminVerifyUser } from '../../../actions/user';
 
 class AdminUserVerify extends Component {
   verifiyUser = (e, { value }) => {
-    console.log(value);
-    // create an action with this
+    this.props.adminVerifyUser(value, true);
   };
 
   renderUserVerify() {
@@ -58,6 +58,10 @@ const mapStateToProps = state => {
   };
 };
 
-AdminUserVerify = connect(mapStateToProps)(AdminUserVerify);
+const mapDispatchToProps = {
+  adminVerifyUser
+};
+
+AdminUserVerify = connect(mapStateToProps, mapDispatchToProps)(AdminUserVerify);
 
 export default AdminUserVerify;

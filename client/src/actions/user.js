@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
-import { FETCH_USER, FETCH_USER_ROLES, FETCH_ALL_USERS } from './types';
+import {
+  FETCH_USER,
+  FETCH_USER_ROLES,
+  FETCH_ALL_USERS,
+  ADMIN_VERIFY_USER
+} from './types';
 
 export const patchUserCourses = (user, courses) => async dispatch => {
   const res = await axios.patch(`/api/users/${user.id}`, { courses });
@@ -16,4 +21,16 @@ export const fetchUserRoles = roles => async dispatch => {
 export const fetchAllUsers = () => async dispatch => {
   const res = await axios.get('/api/admin/allusers');
   dispatch({ type: FETCH_ALL_USERS, payload: res.data });
+};
+
+export const adminVerifyUser = (user, verify) => async dispatch => {
+  const res = await axios.patch(`/api/admin/users/${user}/verify`, { verify });
+  if (res.status === 200) {
+    // update redux
+
+    dispatch({ type: ADMIN_VERIFY_USER, payload: res.data });
+  } else {
+    // do nothing but need to communicate this soon
+    console.log(res.data);
+  }
 };

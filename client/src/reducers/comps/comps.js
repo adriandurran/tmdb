@@ -16,16 +16,3 @@ export const compsReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-// export const compBuilderCourses = (state = INITIAL_STATE, action) => {
-//   switch (action.type) {
-//     case ADD_COURSE_FOR_COMPBUILDER:
-//       return [...state, action.payload];
-//     case REMOVE_COURSE_FOR_COMPBUILDER:
-//       return state.filter(({ _id }) => _id !== action.payload);
-//     case CLEAR_COURSES_FROM_COMPBUILDER:
-//       return INITIAL_STATE;
-//     default:
-//       return state;
-//   }
-// };

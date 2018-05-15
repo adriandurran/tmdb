@@ -9,6 +9,23 @@ module.exports = {
     res.send(dbAllUsers);
   },
 
+  verifyUser: async (req, res) => {
+    const { verify } = req.body;
+    try {
+      const veriUser = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { verified: verify }
+        },
+        { new: true }
+      );
+      return res.status(200).send(veriUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   currentUser: (req, res) => {
     res.send(req.user);
   },
