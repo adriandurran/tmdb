@@ -46,6 +46,11 @@ export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === true)
 );
 
+// get all users that are admins && active
+export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
+  allusers.filter(user => user.verified === true && user.isAdmin === true)
+);
+
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;
 

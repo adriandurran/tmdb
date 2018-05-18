@@ -4,7 +4,7 @@ import {
   FETCH_USER,
   FETCH_USER_ROLES,
   FETCH_ALL_USERS,
-  ADMIN_VERIFY_USER
+  ADMIN_USER_META
 } from './types';
 
 export const patchUserCourses = (user, courses) => async dispatch => {
@@ -28,7 +28,17 @@ export const adminVerifyUser = (user, verify) => async dispatch => {
   if (res.status === 200) {
     // update redux
 
-    dispatch({ type: ADMIN_VERIFY_USER, payload: res.data });
+    dispatch({ type: ADMIN_USER_META, payload: res.data });
+  } else {
+    // do nothing but need to communicate this soon
+    console.log(res.data);
+  }
+};
+
+export const adminAdminiUser = (user, admin) => async dispatch => {
+  const res = await axios.patch(`/api/admin/users/${user}/admin`, { admin });
+  if (res.status === 200) {
+    dispatch({ type: ADMIN_USER_META, payload: res.data });
   } else {
     // do nothing but need to communicate this soon
     console.log(res.data);

@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersActive } from '../../../reducers/selectors';
-import { adminVerifyUser } from '../../../actions/user';
+import { adminVerifyUser, adminAdminiUser } from '../../../actions/user';
 
 class AdminUserSuspend extends Component {
   suspendUser = (e, { value }) => {
     this.props.adminVerifyUser(value, false);
+  };
+
+  adminiUser = (e, { value }) => {
+    this.props.adminAdminiUser(value, true);
   };
 
   renderUserSuspend() {
@@ -23,6 +27,16 @@ class AdminUserSuspend extends Component {
             <Item.Meta>{user.userId}</Item.Meta>
             <Item.Description>{user.username}</Item.Description>
             <Item.Extra>
+              <Button
+                animated="vertical"
+                onClick={this.adminiUser}
+                value={user._id}
+              >
+                <Button.Content hidden>Admin</Button.Content>
+                <Button.Content visible>
+                  <Icon name="spy" color="orange" />
+                </Button.Content>
+              </Button>
               <Button
                 floated="right"
                 animated="vertical"
@@ -45,7 +59,7 @@ class AdminUserSuspend extends Component {
     return (
       <div>
         <Header as="h3" textAlign="center">
-          Suspend Users
+          Manage Access
         </Header>
         <Item.Group divided>{this.renderUserSuspend()}</Item.Group>
       </div>
@@ -60,7 +74,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  adminVerifyUser
+  adminVerifyUser,
+  adminAdminiUser
 };
 
 AdminUserSuspend = connect(mapStateToProps, mapDispatchToProps)(
