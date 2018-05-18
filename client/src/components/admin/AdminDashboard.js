@@ -41,7 +41,7 @@ const AdminDashboard = props => {
         <Grid.Row>
           <Grid.Column>
             <Header as="h2" textAlign="center">
-              User Manager Tools
+              User Tools
             </Header>
             <AdminUserTools />
           </Grid.Column>

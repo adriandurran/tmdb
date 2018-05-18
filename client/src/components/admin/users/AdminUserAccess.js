@@ -4,6 +4,7 @@ import { Grid, Header } from 'semantic-ui-react';
 
 import AdminUserMenu from './AdminUserMenu';
 import AdminUserVerify from './AdminUserVerify';
+import AdminUserSuspend from './AdminUserSuspend';
 
 import { fetchAllUsers } from '../../../actions/user';
 
@@ -20,9 +21,12 @@ class AdminUserAccess extends Component {
         </Header>
         <AdminUserMenu />
         <Grid celled centered style={{ marginTop: '0/5em' }} attached="bottom">
-          <Grid.Row>
+          <Grid.Row columns={2}>
             <Grid.Column>
               <AdminUserVerify />
+            </Grid.Column>
+            <Grid.Column>
+              <AdminUserSuspend />
             </Grid.Column>
           </Grid.Row>
         </Grid>

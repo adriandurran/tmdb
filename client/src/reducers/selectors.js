@@ -37,9 +37,13 @@ export const selectCurrentUser = state => state.auth.user;
 export const selectAllUsers = state => state.allusers;
 
 // get all users that require verification
-
 export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === false)
+);
+
+// get all users that are verified
+export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
+  allusers.filter(user => user.verified === true)
 );
 
 // match up the user roles
