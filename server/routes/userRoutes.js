@@ -9,4 +9,9 @@ module.exports = app => {
     requireAdmin,
     userController.verifyUser
   );
+  app.patch(
+    '/api/admin/users/:id/admin',
+    requireAdmin,
+    userController.adminUser
+  );
 };

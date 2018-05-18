@@ -44,7 +44,7 @@ class AdminUserSuspend extends Component {
   render() {
     return (
       <div>
-        <Header as="h4" textAlign="center">
+        <Header as="h3" textAlign="center">
           Suspend Users
         </Header>
         <Item.Group divided>{this.renderUserSuspend()}</Item.Group>

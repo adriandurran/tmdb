@@ -43,7 +43,7 @@ class AdminUserVerify extends Component {
   render() {
     return (
       <div>
-        <Header as="h4" textAlign="center">
+        <Header as="h3" textAlign="center">
           Verify Users
         </Header>
         <Item.Group divided>{this.renderUserVerify()}</Item.Group>

@@ -26,6 +26,22 @@ module.exports = {
     }
   },
 
+  adminUser: async (req, res) => {
+    const { admin } = req.body;
+    try {
+      const adminiUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { isAdmin: admin } },
+        { new: true }
+      );
+      return res.status(200).send(adminiUser);
+    } catch (error) {
+      console.log(error);
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   currentUser: (req, res) => {
     res.send(req.user);
   },
