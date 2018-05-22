@@ -43,6 +43,12 @@ class AdminUserTools extends Component {
           </Card.Content>
           <Card.Content description="Manager User Roles" />
         </Card>
+        <Card as={Link} to="/admin/user-course-manager" raised>
+          <Card.Content>
+            <Header as="h5">User Course Manager</Header>
+          </Card.Content>
+          <Card.Content description="Manager User Courses" />
+        </Card>
       </Card.Group>
     );
   }
