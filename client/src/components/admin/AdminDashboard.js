@@ -22,15 +22,13 @@ const AdminDashboard = props => {
             <AdminCourseTools />
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
+        <Grid.Row columns={2}>
           <Grid.Column>
             <Header as="h2" textAlign="center">
               Competency Tools
             </Header>
             <AdminCompTools />
           </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
           <Grid.Column>
             <Header as="h2" textAlign="center">
               Role Tools
@@ -38,6 +36,7 @@ const AdminDashboard = props => {
             <AdminRoleTools />
           </Grid.Column>
         </Grid.Row>
+
         <Grid.Row>
           <Grid.Column>
             <Header as="h2" textAlign="center">

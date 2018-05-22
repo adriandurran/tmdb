@@ -15,7 +15,7 @@ class AdminRoleTools extends Component {
   render() {
     const { roles } = this.props;
     return (
-      <Card.Group itemsPerRow={2} centered>
+      <Card.Group itemsPerRow={1} centered>
         <Card as={Link} to="/admin/role-manager" raised>
           <Card.Content>
             <Header as="h5">Role Manager</Header>

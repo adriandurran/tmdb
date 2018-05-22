@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersAdmins } from '../../../reducers/selectors';
-import { adminAdminiUser } from '../../../actions/user';
+import { adminVerifyUser, adminAdminiUser } from '../../../actions/user';
 
 class AdminUsersAdmini extends Component {
+  suspendUser = (e, { value }) => {
+    this.props.adminVerifyUser(value, false);
+  };
+
   adminiUser = (e, { value }) => {
     this.props.adminAdminiUser(value, false);
   };
@@ -24,12 +28,22 @@ class AdminUsersAdmini extends Component {
             <Item.Description>{user.username}</Item.Description>
             <Item.Extra>
               <Button
-                floated="right"
                 animated="vertical"
                 onClick={this.adminiUser}
                 value={user._id}
               >
                 <Button.Content hidden>Demote</Button.Content>
+                <Button.Content visible>
+                  <Icon name="ban" color="red" />
+                </Button.Content>
+              </Button>
+              <Button
+                floated="right"
+                animated="vertical"
+                onClick={this.suspendUser}
+                value={user._id}
+              >
+                <Button.Content hidden>Suspend</Button.Content>
                 <Button.Content visible>
                   <Icon name="ban" color="red" />
                 </Button.Content>
@@ -60,7 +74,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  adminAdminiUser
+  adminAdminiUser,
+  adminVerifyUser
 };
 
 AdminUsersAdmini = connect(mapStateToProps, mapDispatchToProps)(

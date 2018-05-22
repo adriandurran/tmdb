@@ -15,7 +15,7 @@ class AdminCompTools extends Component {
   render() {
     const { comps } = this.props;
     return (
-      <Card.Group itemsPerRow={2} centered>
+      <Card.Group itemsPerRow={1} centered>
         <Card as={Link} to="/admin/comp-manager" raised>
           <Card.Content>
             <Header as="h5">Competency Manager</Header>
