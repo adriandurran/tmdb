@@ -23,7 +23,7 @@ class AdminUserTools extends Component {
           <Card.Content>
             <Header as="h5">User Access Manager</Header>
           </Card.Content>
-          <Card.Content description="Manage User access" />
+          <Card.Content description="Manage User Access" />
           <Card.Content extra>
             {allusers.length > 0 ? (
               <span>
@@ -36,6 +36,12 @@ class AdminUserTools extends Component {
               <span>No Users in the system</span>
             )}
           </Card.Content>
+        </Card>
+        <Card as={Link} to="/admin/user-role-manager" raised>
+          <Card.Content>
+            <Header as="h5">User Role Manager</Header>
+          </Card.Content>
+          <Card.Content description="Manager User Roles" />
         </Card>
       </Card.Group>
     );
