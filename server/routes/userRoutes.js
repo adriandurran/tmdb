@@ -14,4 +14,6 @@ module.exports = app => {
     requireAdmin,
     userController.adminUser
   );
+
+  app.get('/api/admin/users/:id', requireAdmin, userController.getUser);
 };

@@ -3,9 +3,9 @@ export const FETCH_USER = 'fetch_user';
 export const FETCH_ALL_USERS = 'fetch_all_users';
 export const ADD_PASS = 'add_pass';
 export const SAVE_USER = 'save_user';
-// export const ADMIN_VERIFY_USER = 'admin_verify_user';
-// export const ADMIN_ADMIN_USER = 'admin_admin_user';
 export const ADMIN_USER_META = 'admin_user_meta';
+export const ADMIN_SEARCH_RESULT = 'admin_search_result';
+export const ADMIN_CLEAR_SEARCH = 'admin_clear_search';
 // roles
 export const FETCH_ROLE = 'fetch_role';
 export const FETCH_ROLES = 'fetch_roles';

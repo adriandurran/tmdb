@@ -5,21 +5,40 @@ import _ from 'lodash';
 import { Search } from 'semantic-ui-react';
 
 import { selectAllUsersForSearch } from '../../../reducers/selectors';
+import {
+  fetchAllUsers,
+  fetchUser,
+  clearSearchResult
+} from '../../../actions/user';
 
 class AdminUserSearch extends Component {
+  componentDidMount() {
+    this.props.fetchAllUsers();
+  }
   componentWillMount() {
     this.resetComponent();
   }
 
-  resetComponent = () =>
+  resetComponent = () => {
     this.setState({ isLoading: false, results: [], value: '' });
+    this.props.clearSearchResult();
+  };
 
-  handleResultSelect = (e, { result }) =>
-    this.setState({ value: result.title, key: result.key });
+  handleResultSelect = (e, { result }) => {
+    this.setState({
+      value: result.title,
+      key: result.key
+    });
+    console.log(result.key);
+    // fetch and add to temp while managing the user
+    this.props.fetchUser(result.key);
+  };
 
   handleSearchChange = (e, { value }) => {
     const { users } = this.props;
     this.setState({ isLoading: true, value });
+    // clear out the temp user
+    this.props.clearSearchResult();
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
@@ -46,12 +65,18 @@ class AdminUserSearch extends Component {
           })}
           results={results}
           value={value}
-          {...this.props}
+          //   {...this.props}
         />
       </div>
     );
   }
 }
+
+const mapDispatchToProps = {
+  fetchAllUsers,
+  fetchUser,
+  clearSearchResult
+};
 
 const mapStateToProps = state => {
   return {
@@ -59,6 +84,6 @@ const mapStateToProps = state => {
   };
 };
 
-AdminUserSearch = connect(mapStateToProps)(AdminUserSearch);
+AdminUserSearch = connect(mapStateToProps, mapDispatchToProps)(AdminUserSearch);
 
 export default AdminUserSearch;

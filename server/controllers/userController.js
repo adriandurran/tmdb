@@ -9,6 +9,13 @@ module.exports = {
     res.send(dbAllUsers);
   },
 
+  getUser: async (req, res) => {
+    const dbUser = await User.findById(req.params.id)
+      .populate('courses')
+      .populate('roles');
+    res.send(dbUser);
+  },
+
   verifyUser: async (req, res) => {
     const { verify } = req.body;
     try {
