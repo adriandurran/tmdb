@@ -46,6 +46,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
+  joinDate: {
+    type: Date,
+    default: Date.now()
+  },
   courses: [
     {
       type: Schema.Types.ObjectId,

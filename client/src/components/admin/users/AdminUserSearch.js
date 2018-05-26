@@ -29,7 +29,6 @@ class AdminUserSearch extends Component {
       value: result.title,
       key: result.key
     });
-    console.log(result.key);
     // fetch and add to temp while managing the user
     this.props.fetchUser(result.key);
   };

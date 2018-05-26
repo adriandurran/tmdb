@@ -36,6 +36,9 @@ export const selectCurrentUser = state => state.auth.user;
 // get all the users (admin function)
 export const selectAllUsers = state => state.allusers;
 
+// get the user to manage (admin function)
+export const selectUserManage = state => state.user;
+
 // get all users that require verification
 export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === false)

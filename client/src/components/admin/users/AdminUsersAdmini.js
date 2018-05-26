@@ -25,7 +25,7 @@ class AdminUsersAdmini extends Component {
               {user.firstName} {user.lastName}
             </Item.Header>
             <Item.Meta>{user.userId}</Item.Meta>
-            <Item.Description>{user.username}</Item.Description>
+            <Item.Meta>{user.username}</Item.Meta>
             <Item.Extra>
               <Button
                 animated="vertical"
