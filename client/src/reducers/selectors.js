@@ -46,6 +46,19 @@ export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === true)
 );
 
+export const selectAllUsersForSearch = createSelector(
+  selectAllUsersActive,
+  allusers => {
+    return allusers.map(user => {
+      return {
+        title: `${user.firstName} ${user.lastName}`,
+        email: user.username,
+        key: user._id
+      };
+    });
+  }
+);
+
 // get all users that are admins && active
 export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === true && user.isAdmin === true)
