@@ -4,7 +4,7 @@ import { Grid, Header } from 'semantic-ui-react';
 
 import AdminUserMenu from '../AdminUserMenu';
 import AdminUserSearch from '../AdminUserSearch';
-import AdminUserRoleManager from './AdminUserRoleManager';
+import AdminUserRoleTools from './AdminUserRoleTools';
 
 class AdminUserRoles extends Component {
   render() {
@@ -22,7 +22,7 @@ class AdminUserRoles extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
-              <AdminUserRoleManager />
+              <AdminUserRoleTools />
             </Grid.Column>
           </Grid.Row>
         </Grid>
