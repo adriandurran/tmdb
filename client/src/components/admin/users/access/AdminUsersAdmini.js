@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
-import { selectAllUsersAdmins } from '../../../reducers/selectors';
-import { adminVerifyUser, adminAdminiUser } from '../../../actions/user';
+import { selectAllUsersAdmins } from '../../../../reducers/selectors';
+import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
 
 class AdminUsersAdmini extends Component {
   suspendUser = (e, { value }) => {

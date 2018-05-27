@@ -19,8 +19,8 @@ import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
 import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
-import AdminUserAccess from './components/admin/users/AdminUserAccess';
-import AdminUserRoles from './components/admin/users/AdminUserRoles';
+import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
+import AdminUserRoles from './components/admin/users/roles/AdminUserRoles';
 
 const Routes = () => {
   return (

@@ -3,21 +3,21 @@ import { connect } from 'react-redux';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
-import { selectAllUsersVerify } from '../../../reducers/selectors';
-import { adminVerifyUser, adminAdminiUser } from '../../../actions/user';
+import { selectAllUsersActive } from '../../../../reducers/selectors';
+import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
 
-class AdminUserVerify extends Component {
-  verifiyUser = (e, { value }) => {
-    this.props.adminVerifyUser(value, true);
+class AdminUserSuspend extends Component {
+  suspendUser = (e, { value }) => {
+    this.props.adminVerifyUser(value, false);
   };
 
   adminiUser = (e, { value }) => {
     this.props.adminAdminiUser(value, true);
   };
 
-  renderUserVerify() {
-    const { verify } = this.props;
-    return verify.map(user => {
+  renderUserSuspend() {
+    const { active } = this.props;
+    return active.map(user => {
       return (
         <Item key={user._id}>
           <Item.Content verticalAlign="middle">
@@ -40,12 +40,12 @@ class AdminUserVerify extends Component {
               <Button
                 floated="right"
                 animated="vertical"
-                onClick={this.verifiyUser}
+                onClick={this.suspendUser}
                 value={user._id}
               >
-                <Button.Content hidden>Verify</Button.Content>
+                <Button.Content hidden>Suspend</Button.Content>
                 <Button.Content visible>
-                  <Icon name="checkmark" color="green" />
+                  <Icon name="ban" color="red" />
                 </Button.Content>
               </Button>
             </Item.Extra>
@@ -54,13 +54,14 @@ class AdminUserVerify extends Component {
       );
     });
   }
+
   render() {
     return (
       <div>
         <Header as="h3" textAlign="center">
-          Verify Users
+          Manage Access
         </Header>
-        <Item.Group divided>{this.renderUserVerify()}</Item.Group>
+        <Item.Group divided>{this.renderUserSuspend()}</Item.Group>
       </div>
     );
   }
@@ -68,7 +69,7 @@ class AdminUserVerify extends Component {
 
 const mapStateToProps = state => {
   return {
-    verify: selectAllUsersVerify(state)
+    active: selectAllUsersActive(state)
   };
 };
 
@@ -77,6 +78,8 @@ const mapDispatchToProps = {
   adminAdminiUser
 };
 
-AdminUserVerify = connect(mapStateToProps, mapDispatchToProps)(AdminUserVerify);
+AdminUserSuspend = connect(mapStateToProps, mapDispatchToProps)(
+  AdminUserSuspend
+);
 
-export default AdminUserVerify;
+export default AdminUserSuspend;

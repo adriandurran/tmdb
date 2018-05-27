@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Header } from 'semantic-ui-react';
 
-import AdminUserMenu from './AdminUserMenu';
+import AdminUserMenu from '../AdminUserMenu';
 import AdminUserVerify from './AdminUserVerify';
 import AdminUserSuspend from './AdminUserSuspend';
 import AdminUsersAdmini from './AdminUsersAdmini';
 
-import { fetchAllUsers } from '../../../actions/user';
+import { fetchAllUsers } from '../../../../actions/user';
 
 class AdminUserAccess extends Component {
   componentDidMount() {

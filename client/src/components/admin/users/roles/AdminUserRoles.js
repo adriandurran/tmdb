@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import { Grid, Header } from 'semantic-ui-react';
 
-import AdminUserMenu from './AdminUserMenu';
-import AdminUserSearch from './AdminUserSearch';
+import AdminUserMenu from '../AdminUserMenu';
+import AdminUserSearch from '../AdminUserSearch';
 import AdminUserRoleManager from './AdminUserRoleManager';
 
 class AdminUserRoles extends Component {
