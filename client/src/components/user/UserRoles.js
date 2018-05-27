@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectUserRoleNames } from '../../reducers/selectors';
-
+// dont need this selector now we are populating from the db......
 import Toolbar from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
 import List, { ListItem, ListItemText } from 'material-ui/List';

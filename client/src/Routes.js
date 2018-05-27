@@ -8,7 +8,7 @@ import Header from './components/Header';
 import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
-import User from './components/user/User';
+import UserLanding from './components/user/UserLanding';
 import CoursesHome from './components/user/CoursesHome';
 import CompsHome from './components/user/CompsHome';
 
@@ -31,7 +31,7 @@ const Routes = () => {
           <Route exact path="/" component={Landing} />
           <Route exact path="/auth/login" component={LoginUser} />
           <Route exact path="/auth/register" component={RegisterUser} />
-          <Route exact path="/users/:id" component={User} />
+          <Route exact path="/users/:id" component={UserLanding} />
           <Route exact path="/users/:id/courses" component={CoursesHome} />
           <Route exact path="/users/:id/competencies" component={CompsHome} />
           <Route exact path="/admin/dashboard" component={AdminDashboard} />
