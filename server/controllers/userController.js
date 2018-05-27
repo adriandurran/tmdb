@@ -79,8 +79,11 @@ module.exports = {
     }
   },
 
-  currentUser: (req, res) => {
-    res.send(req.user);
+  currentUser: async (req, res) => {
+    const currUser = await User.findById(req.user._id)
+      .populate('courses')
+      .populate('roles');
+    res.send(currUser);
   },
 
   registerUser: async (req, res) => {
