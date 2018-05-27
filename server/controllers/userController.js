@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const keys = require('../config/keys');
+const arrayHelp = require('../utils/arrayHelpers');
 
 module.exports = {
   allUsers: async (req, res) => {
@@ -21,29 +22,24 @@ module.exports = {
     try {
       const thisUser = await User.findById(req.params.id);
       // get the array of roles from the user
-      const roleSet = new Set(thisUser.roles);
+      const roleSet = thisUser.roles;
 
       if (action) {
-        roleSet.add(role);
-        console.log('not here');
+        arrayHelp.addToArray(roleSet, role);
       } else {
-        roleSet.delete(role);
-        console.log('but here', role);
+        arrayHelp.removeFromArray(roleSet, role);
       }
 
-      let newRoleSet = Array.from(roleSet);
-      console.log(newRoleSet);
-
-      // const newRole = await User.findByIdAndUpdate(
-      //   req.params.id,
-      //   {
-      //     $set: { roles: newRoleSet }
-      //   },
-      //   { new: true }
-      // )
-      //   .populate('courses')
-      //   .populate('roles');
-      // return res.status(200).send(newRole);
+      const newRole = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { roles: roleSet }
+        },
+        { new: true }
+      )
+        .populate('courses')
+        .populate('roles');
+      return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);

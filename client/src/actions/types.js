@@ -10,7 +10,7 @@ export const ADMIN_CLEAR_SEARCH = 'admin_clear_search';
 export const FETCH_ROLE = 'fetch_role';
 export const FETCH_ROLES = 'fetch_roles';
 export const FETCH_USER_ROLES = 'fetch_user_roles';
-export const ADMIN_EDIT_USER_ROLE = 'admin_add_user_role';
+export const ADMIN_EDIT_USER_ROLE = 'admin_edit_user_role';
 // export const ADD_NEW_ROLE = 'add_new_role';
 
 // courses

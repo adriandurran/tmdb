@@ -27,7 +27,6 @@ export const editUserRole = (role, user, action) => async dispatch => {
     action
   });
   if (res.status === 200) {
-    console.log(res.data);
     // update the temp user
     dispatch({ type: ADMIN_EDIT_USER_ROLE, payload: res.data });
   } else {
