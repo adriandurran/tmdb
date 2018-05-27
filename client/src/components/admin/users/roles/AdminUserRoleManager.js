@@ -2,15 +2,37 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { List, Icon, Button } from 'semantic-ui-react';
+import { List, Icon, Button, Select } from 'semantic-ui-react';
 
-import { selectUserManage } from '../../../../reducers/selectors';
+import {
+  selectUserManage,
+  selectRolesForDropDown
+} from '../../../../reducers/selectors';
+
+import { addUserRole } from '../../../../actions/user';
 
 class AdminUserRoleManager extends Component {
-  deleteRole = (e, { value }) => {
+  deleteUserRole = (e, { value }) => {
     console.log(value);
   };
 
+  addUserRole = (e, item) => {
+    const { addUserRole, user } = this.props;
+    addUserRole(item.value, user._id);
+  };
+
+  renderRoleSelect() {
+    const { user, roles } = this.props;
+    if (!_.isEmpty(user)) {
+      return (
+        <Select
+          placeholder="Select Roles"
+          options={roles}
+          onChange={this.addUserRole}
+        />
+      );
+    }
+  }
   renderUserRoles() {
     const { user } = this.props;
     if (_.isEmpty(user)) {
@@ -23,7 +45,7 @@ class AdminUserRoleManager extends Component {
       return (
         <List.Item key={role._id}>
           <List.Content floated="right">
-            <Button icon onClick={this.deleteRole} value={role._id}>
+            <Button icon onClick={this.deleteUserRole} value={role._id}>
               <Icon name="delete" />
             </Button>
           </List.Content>
@@ -34,11 +56,13 @@ class AdminUserRoleManager extends Component {
   }
 
   render() {
+    const { roles } = this.props;
     return (
       <div>
         <List divided verticalAlign="middle">
           {this.renderUserRoles()}
         </List>
+        {this.renderRoleSelect()}
       </div>
     );
   }
@@ -46,10 +70,17 @@ class AdminUserRoleManager extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: selectUserManage(state)
+    user: selectUserManage(state),
+    roles: selectRolesForDropDown(state)
   };
 };
 
-AdminUserRoleManager = connect(mapStateToProps)(AdminUserRoleManager);
+const mapDispatchToProps = {
+  addUserRole
+};
+
+AdminUserRoleManager = connect(mapStateToProps, mapDispatchToProps)(
+  AdminUserRoleManager
+);
 
 export default AdminUserRoleManager;

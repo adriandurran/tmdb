@@ -16,6 +16,26 @@ module.exports = {
     res.send(dbUser);
   },
 
+  addUserRole: async (req, res) => {
+    const { role } = req.body;
+    // get the array of roles from the user
+    try {
+      const thisUser = await User.findById(req.params.id);
+      const newRoleSet = [...thisUser.roles, role];
+      console.log(newRoleSet);
+      const newRole = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { roles: newRoleSet }
+        },
+        { new: true }
+      );
+      return res.status(200).send(newRole);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   verifyUser: async (req, res) => {
     const { verify } = req.body;
     try {

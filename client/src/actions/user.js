@@ -6,7 +6,8 @@ import {
   FETCH_ALL_USERS,
   ADMIN_USER_META,
   ADMIN_SEARCH_RESULT,
-  ADMIN_CLEAR_SEARCH
+  ADMIN_CLEAR_SEARCH,
+  ADMIN_ADD_USER_ROLE
 } from './types';
 
 export const patchUserCourses = (user, courses) => async dispatch => {
@@ -18,6 +19,11 @@ export const patchUserCourses = (user, courses) => async dispatch => {
 
 export const fetchUserRoles = roles => async dispatch => {
   dispatch({ type: FETCH_USER_ROLES, payload: roles });
+};
+
+export const addUserRole = (role, user) => async dispatch => {
+  const res = await axios.patch(`/api/admin/users/${user}/roles`, { role });
+  console.log(res.data);
 };
 
 export const fetchAllUsers = () => async dispatch => {

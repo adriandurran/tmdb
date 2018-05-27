@@ -15,6 +15,9 @@ class AdminUserSearch extends Component {
   componentDidMount() {
     this.props.fetchAllUsers();
   }
+  componentWillUnmount() {
+    this.resetComponent();
+  }
   componentWillMount() {
     this.resetComponent();
   }

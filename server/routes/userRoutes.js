@@ -16,4 +16,9 @@ module.exports = app => {
   );
 
   app.get('/api/admin/users/:id', requireAdmin, userController.getUser);
+  app.patch(
+    '/api/admin/users/:id/roles',
+    requireAdmin,
+    userController.addUserRole
+  );
 };
