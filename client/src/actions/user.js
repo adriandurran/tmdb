@@ -23,7 +23,12 @@ export const fetchUserRoles = roles => async dispatch => {
 
 export const addUserRole = (role, user) => async dispatch => {
   const res = await axios.patch(`/api/admin/users/${user}/roles`, { role });
-  console.log(res.data);
+  if (res.status === 200) {
+    // update the temp user
+    dispatch({ type: ADMIN_ADD_USER_ROLE, payload: res.data });
+  } else {
+    console.log(res.data);
+  }
 };
 
 export const fetchAllUsers = () => async dispatch => {

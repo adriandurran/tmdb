@@ -21,6 +21,7 @@ module.exports = {
     // get the array of roles from the user
     try {
       const thisUser = await User.findById(req.params.id);
+      // need to make this unique......or at least check
       const newRoleSet = [...thisUser.roles, role];
       console.log(newRoleSet);
       const newRole = await User.findByIdAndUpdate(
@@ -29,10 +30,13 @@ module.exports = {
           $set: { roles: newRoleSet }
         },
         { new: true }
-      );
+      )
+        .populate('courses')
+        .populate('roles');
       return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
+      return res.status(400).send(error);
     }
   },
 
