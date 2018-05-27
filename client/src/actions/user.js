@@ -7,7 +7,7 @@ import {
   ADMIN_USER_META,
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
-  ADMIN_ADD_USER_ROLE
+  ADMIN_EDIT_USER_ROLE
 } from './types';
 
 export const patchUserCourses = (user, courses) => async dispatch => {
@@ -21,11 +21,15 @@ export const fetchUserRoles = roles => async dispatch => {
   dispatch({ type: FETCH_USER_ROLES, payload: roles });
 };
 
-export const addUserRole = (role, user) => async dispatch => {
-  const res = await axios.patch(`/api/admin/users/${user}/roles`, { role });
+export const editUserRole = (role, user, action) => async dispatch => {
+  const res = await axios.patch(`/api/admin/users/${user}/roles`, {
+    role,
+    action
+  });
   if (res.status === 200) {
+    console.log(res.data);
     // update the temp user
-    dispatch({ type: ADMIN_ADD_USER_ROLE, payload: res.data });
+    dispatch({ type: ADMIN_EDIT_USER_ROLE, payload: res.data });
   } else {
     console.log(res.data);
   }

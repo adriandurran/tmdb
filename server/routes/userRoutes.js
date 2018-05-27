@@ -19,6 +19,6 @@ module.exports = app => {
   app.patch(
     '/api/admin/users/:id/roles',
     requireAdmin,
-    userController.addUserRole
+    userController.editUserRole
   );
 };

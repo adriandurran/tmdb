@@ -16,24 +16,34 @@ module.exports = {
     res.send(dbUser);
   },
 
-  addUserRole: async (req, res) => {
-    const { role } = req.body;
-    // get the array of roles from the user
+  editUserRole: async (req, res) => {
+    const { role, action } = req.body;
     try {
       const thisUser = await User.findById(req.params.id);
-      // need to make this unique......or at least check
-      const newRoleSet = [...thisUser.roles, role];
+      // get the array of roles from the user
+      const roleSet = new Set(thisUser.roles);
+
+      if (action) {
+        roleSet.add(role);
+        console.log('not here');
+      } else {
+        roleSet.delete(role);
+        console.log('but here', role);
+      }
+
+      let newRoleSet = Array.from(roleSet);
       console.log(newRoleSet);
-      const newRole = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: { roles: newRoleSet }
-        },
-        { new: true }
-      )
-        .populate('courses')
-        .populate('roles');
-      return res.status(200).send(newRole);
+
+      // const newRole = await User.findByIdAndUpdate(
+      //   req.params.id,
+      //   {
+      //     $set: { roles: newRoleSet }
+      //   },
+      //   { new: true }
+      // )
+      //   .populate('courses')
+      //   .populate('roles');
+      // return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);

@@ -9,16 +9,17 @@ import {
   selectRolesForDropDown
 } from '../../../../reducers/selectors';
 
-import { addUserRole } from '../../../../actions/user';
+import { editUserRole } from '../../../../actions/user';
 
 class AdminUserRoleManager extends Component {
   deleteUserRole = (e, { value }) => {
-    console.log(value);
+    const { user, editUserRole } = this.props;
+    editUserRole(value, user._id, false);
   };
 
   addUserRole = (e, item) => {
-    const { addUserRole, user } = this.props;
-    addUserRole(item.value, user._id);
+    const { editUserRole, user } = this.props;
+    editUserRole(item.value, user._id, true);
   };
 
   renderRoleSelect() {
@@ -56,7 +57,6 @@ class AdminUserRoleManager extends Component {
   }
 
   render() {
-    const { roles } = this.props;
     return (
       <div>
         <List divided verticalAlign="middle">
@@ -76,7 +76,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  addUserRole
+  editUserRole
 };
 
 AdminUserRoleManager = connect(mapStateToProps, mapDispatchToProps)(

@@ -3,7 +3,7 @@ import {
   ADMIN_USER_META,
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
-  ADMIN_ADD_USER_ROLE
+  ADMIN_EDIT_USER_ROLE
 } from '../../actions/types';
 
 const INITIAL_STATE_A = [];
@@ -28,9 +28,8 @@ export const userSearchResultReducer = (state = INITIAL_STATE_O, action) => {
       return action.payload;
     case ADMIN_CLEAR_SEARCH:
       return INITIAL_STATE_O;
-    case ADMIN_ADD_USER_ROLE:
+    case ADMIN_EDIT_USER_ROLE:
       return action.payload;
-      return;
     default:
       return state;
   }
