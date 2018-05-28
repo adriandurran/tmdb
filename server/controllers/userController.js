@@ -80,10 +80,14 @@ module.exports = {
   },
 
   currentUser: async (req, res) => {
-    const currUser = await User.findById(req.user._id)
-      .populate('courses')
-      .populate('roles');
-    res.send(currUser);
+    if (req.user === undefined) {
+      res.send(req.user);
+    } else {
+      const currUser = await User.findById(req.user._id)
+        .populate('courses')
+        .populate('roles');
+      res.send(currUser);
+    }
   },
 
   registerUser: async (req, res) => {
