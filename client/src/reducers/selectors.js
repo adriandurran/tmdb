@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import _ from 'lodash';
 import moment from 'moment';
 
-import * as fromAuth from './users/authUser';
+// import * as fromAuth from './users/authUser';
 
 // roles
 export const selectRoles = state => state.roles;
@@ -81,16 +81,10 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;
 
-// export const selectUserRoleNames = createSelector(
-//   selectUserRoles,
-//   selectRoles,
-//   (userRoles, rolesList) =>
-//     _.filter(rolesList, x => _.includes(userRoles, x._id))
-// );
-
 // match up the courses to the user
 export const selectUserCourses = state => state.auth.user.courses;
 
+// this one can be deleted
 export const selectUserCourseNames = createSelector(
   selectUserCourses,
   selectCourses,
@@ -105,6 +99,7 @@ export const selectUserCourseNames = createSelector(
 );
 
 // get the user courses that are current
+// this one can be altered
 export const selectUserCoursesCurrent = createSelector(
   selectUserCourseNames,
   usercourses => {
@@ -130,14 +125,9 @@ export const selectUserCoursesCurrent = createSelector(
 
 // get competencies for a given role for a user
 
-// export const selectUserRoleComps = createSelector(
-//   selectUserRoleNames,
-//   selectCompetencies,
-//   (roles, comps) => {
-//     const flatty = _.flatten(_.map(roles, 'compIds'));
-//     return comps.filter(x => flatty.includes(x._id));
-//   }
-// );
+export const selectUserRoleComps = createSelector(selectUserRoles, roles => {
+  return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
+});
 
 // compare users current courses to competencies to find what competencies he has
 

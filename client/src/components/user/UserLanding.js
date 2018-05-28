@@ -36,7 +36,9 @@ class UserLanding extends Component {
               <Grid.Column>
                 <UserRoles />
               </Grid.Column>
-              <Grid.Column>{/* <UserCompetencies /> */}</Grid.Column>
+              <Grid.Column>
+                <UserCompetencies />
+              </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>

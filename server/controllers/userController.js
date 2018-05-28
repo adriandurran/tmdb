@@ -85,7 +85,10 @@ module.exports = {
     } else {
       const currUser = await User.findById(req.user._id)
         .populate('courses')
-        .populate('roles');
+        .populate({
+          path: 'roles',
+          populate: { path: 'competencies' }
+        });
       res.send(currUser);
     }
   },
