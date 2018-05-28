@@ -8,7 +8,7 @@ import Table, {
   TableRow,
   TableFooter,
   TableSortLabel,
-  TablePagination,
+  TablePagination
 } from 'material-ui/Table';
 import Toolbar from 'material-ui/Toolbar';
 import Tooltip from 'material-ui/Tooltip';
@@ -21,13 +21,13 @@ import { withStyles } from 'material-ui/styles';
 import rootStyles from '../../styles/rootStyle';
 import withRoot from '../../withRoot';
 
-import { selectUserCourseNames } from '../../reducers/selectors';
+import { selectUserCourses } from '../../reducers/selectors';
 
 const columnData = [
   { id: 'course', numeric: false, disablePadding: false, label: 'Course Name' },
   { id: 'pass', numeric: false, disablePadding: false, label: 'Passed' },
   { id: 'expire', numeric: false, disablePadding: false, label: 'Expires' },
-  { id: 'verified', numeric: false, disablePadding: false, label: 'Verified' },
+  { id: 'verified', numeric: false, disablePadding: false, label: 'Verified' }
 ];
 
 class EnhancedTableHead extends Component {
@@ -90,15 +90,13 @@ class UserCourses extends Component {
       orderBy: 'Passed',
       data: [],
       page: 0,
-      rowsPerPage: 5,
+      rowsPerPage: 5
     };
   }
 
   setUserCourses(props) {
     this.setState({
-      data: props.userCourses.sort(
-        (a, b) => (a.passDate > b.passDate ? -1 : 1)
-      ),
+      data: props.userCourses.sort((a, b) => (a.passDate > b.passDate ? -1 : 1))
     });
   }
 
@@ -218,7 +216,7 @@ class UserCourses extends Component {
 const mapStateToProps = state => {
   // console.log(state);
   return {
-    userCourses: selectUserCourseNames(state),
+    userCourses: selectUserCourses(state)
   };
 };
 

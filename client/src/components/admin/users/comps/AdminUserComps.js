@@ -13,7 +13,7 @@ class AdminUserComps extends Component {
   renderCompCourses(courses) {
     return courses.map(course => {
       return (
-        <List.Item>
+        <List.Item key={course._id}>
           <List.Icon name="book" />
           <List.Content>
             <List.Header>{course.courseName}</List.Header>

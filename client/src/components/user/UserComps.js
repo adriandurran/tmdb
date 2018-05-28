@@ -39,26 +39,6 @@ class UserComps extends Component {
   //   );
   // }
 
-  // renderRoleComps(comps) {
-  //   return comps.map((comp, index) => {
-  //     return (
-  //       <TableRow key={index}>
-  //         <TableCell>{comp.compname}</TableCell>
-  //       </TableRow>
-  //     );
-  //   });
-  // }
-
-  // renderUserComps(comps) {
-  //   return comps.map((comp, index) => {
-  //     return (
-  //       <TableRow key={index}>
-  //         <TableCell>{comp.compname}</TableCell>
-  //       </TableRow>
-  //     );
-  //   });
-  // }
-
   renderReqComps() {
     const { reqComps } = this.props;
     return reqComps.map(comp => {
@@ -69,6 +49,22 @@ class UserComps extends Component {
             <Item.Extra>
               {comp.courses.length} Courses required for this Competency
             </Item.Extra>
+          </Item.Content>
+        </Item>
+      );
+    });
+  }
+
+  renderCurrentComps() {
+    const { currentComps } = this.props;
+    return currentComps.map(comp => {
+      return (
+        <Item key={comp._id}>
+          <Item.Content>
+            <Item.Header>{comp._id}</Item.Header>
+            {/* <Item.Extra>
+              {comp.courses.length} Courses required for this Competency
+            </Item.Extra> */}
           </Item.Content>
         </Item>
       );
@@ -86,6 +82,13 @@ class UserComps extends Component {
           </Header>
           <Item.Group>{this.renderReqComps()}</Item.Group>
         </Segment>
+        <Segment padded>
+          <Header as="h2" textAlign="center">
+            Competencies
+            <Header.Subheader>Current</Header.Subheader>
+          </Header>
+          <Item.Group>{this.renderCurrentComps()}</Item.Group>
+        </Segment>
       </div>
     );
   }
@@ -95,7 +98,7 @@ const mapStateToProps = state => {
   return {
     user: selectCurrentUser(state),
     reqComps: selectUserRoleComps(state),
-    userCurrentComps: selectUserCompetenciesCurrent(state)
+    currentComps: selectUserCompetenciesCurrent(state)
   };
 };
 

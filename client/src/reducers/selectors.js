@@ -88,23 +88,23 @@ export const selectAdminUserRoles = state => state.user.roles;
 export const selectUserCourses = state => state.auth.user.courses;
 
 // this one can be deleted
-export const selectUserCourseNames = createSelector(
-  selectUserCourses,
-  selectCourses,
-  (userCourses, coursesList) => {
-    const filteredList = _.filter(userCourses, x =>
-      _.includes(_.map(coursesList, 'courseId'), x.courseId)
-    );
-    return _.map(filteredList, obj => {
-      return _.assign(obj, _.find(coursesList, { _id: obj._id }));
-    });
-  }
-);
+// export const selectUserCourseNames = createSelector(
+//   selectUserCourses,
+//   selectCourses,
+//   (userCourses, coursesList) => {
+//     const filteredList = _.filter(userCourses, x =>
+//       _.includes(_.map(coursesList, 'courseId'), x.courseId)
+//     );
+//     return _.map(filteredList, obj => {
+//       return _.assign(obj, _.find(coursesList, { _id: obj._id }));
+//     });
+//   }
+// );
 
 // get the user courses that are current
 // this one can be altered
 export const selectUserCoursesCurrent = createSelector(
-  selectUserCourseNames,
+  selectUserCourses,
   usercourses => {
     let today = moment(new Date(), 'YYYY-MM-YY').format();
     return usercourses
@@ -132,7 +132,6 @@ export const selectUserRoleComps = createSelector(selectUserRoles, roles => {
 });
 
 // get unique competencies for a given role for a user being managed by admin
-
 export const selectAdminUserRoleComps = createSelector(
   selectAdminUserRoles,
   roles => {
@@ -142,8 +141,8 @@ export const selectAdminUserRoleComps = createSelector(
     return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
   }
 );
-// compare users current courses to competencies to find what competencies he has
 
+// compare users current courses to competencies to find what competencies he has
 export const selectUserCompetenciesCurrent = createSelector(
   selectUserCoursesCurrent,
   selectCompetencies,

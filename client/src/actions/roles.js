@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
 
-import {
-  FETCH_ROLES
-  // ADD_NEW_ROLE,
-  // CLEAR_COMPS_FROM_ROLEBUILDER
-} from './types';
+import { FETCH_ROLES } from './types';
 
 export const fetchRoles = () => async dispatch => {
   const res = await axios.get('/api/roles');
