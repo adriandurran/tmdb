@@ -15,7 +15,7 @@ module.exports = {
       .populate('courses')
       .populate({
         path: 'roles',
-        populate: { path: 'competencies' }
+        populate: { path: 'competencies', populate: { path: 'courses' } }
       });
     res.send(dbUser);
   },
@@ -41,7 +41,15 @@ module.exports = {
         { new: true }
       )
         .populate('courses')
-        .populate('roles');
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: {
+              path: 'courses'
+            }
+          }
+        });
       return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
@@ -90,7 +98,12 @@ module.exports = {
         .populate('courses')
         .populate({
           path: 'roles',
-          populate: { path: 'competencies' }
+          populate: {
+            path: 'competencies',
+            populate: {
+              path: 'courses'
+            }
+          }
         });
       res.send(currUser);
     }

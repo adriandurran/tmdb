@@ -10,6 +10,19 @@ import {
 } from '../../../../reducers/selectors';
 
 class AdminUserComps extends Component {
+  renderCompCourses(courses) {
+    return courses.map(course => {
+      return (
+        <List.Item>
+          <List.Icon name="book" />
+          <List.Content>
+            <List.Header>{course.courseName}</List.Header>
+          </List.Content>
+        </List.Item>
+      );
+    });
+  }
+
   renderReqComps() {
     const { reqComps, user } = this.props;
     if (_.isEmpty(user)) {
@@ -23,12 +36,10 @@ class AdminUserComps extends Component {
         <List.Item key={comp._id}>
           <List.Content>
             <List.Header>{comp.compName}</List.Header>
-            <List.Description>Courses required for Competency</List.Description>
-            {/* <List.List>
-              {this.courses.map(course => {
-                return <List.Item>{course._id}</List.Item>;
-              })}
-            </List.List> */}
+            <List.Description>
+              {comp.courses.length} Courses required for Competency
+            </List.Description>
+            <List.List>{this.renderCompCourses(comp.courses)}</List.List>
           </List.Content>
         </List.Item>
       );
