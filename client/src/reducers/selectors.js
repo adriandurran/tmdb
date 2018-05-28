@@ -38,7 +38,7 @@ export const selectCourseLevels = state => state.courseLevels;
 // ************ USER ************************
 
 // concacanate the username....can be added to with rank etc...
-export const selectUserName = state => fromAuth.selectUserName(state.auth);
+// export const selectUserName = state => fromAuth.selectUserName(state.auth);
 
 // get the current user.....t
 export const selectCurrentUser = state => state.auth.user;
@@ -59,6 +59,7 @@ export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === true)
 );
 
+// get the users for the search
 export const selectAllUsersForSearch = createSelector(
   selectAllUsersActive,
   allusers => {
@@ -80,12 +81,12 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
 // match up the user roles
 export const selectUserRoles = state => state.auth.user.roles;
 
-export const selectUserRoleNames = createSelector(
-  selectUserRoles,
-  selectRoles,
-  (userRoles, rolesList) =>
-    _.filter(rolesList, x => _.includes(userRoles, x._id))
-);
+// export const selectUserRoleNames = createSelector(
+//   selectUserRoles,
+//   selectRoles,
+//   (userRoles, rolesList) =>
+//     _.filter(rolesList, x => _.includes(userRoles, x._id))
+// );
 
 // match up the courses to the user
 export const selectUserCourses = state => state.auth.user.courses;
@@ -129,14 +130,14 @@ export const selectUserCoursesCurrent = createSelector(
 
 // get competencies for a given role for a user
 
-export const selectUserRoleComps = createSelector(
-  selectUserRoleNames,
-  selectCompetencies,
-  (roles, comps) => {
-    const flatty = _.flatten(_.map(roles, 'compIds'));
-    return comps.filter(x => flatty.includes(x._id));
-  }
-);
+// export const selectUserRoleComps = createSelector(
+//   selectUserRoleNames,
+//   selectCompetencies,
+//   (roles, comps) => {
+//     const flatty = _.flatten(_.map(roles, 'compIds'));
+//     return comps.filter(x => flatty.includes(x._id));
+//   }
+// );
 
 // compare users current courses to competencies to find what competencies he has
 

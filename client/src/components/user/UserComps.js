@@ -18,7 +18,7 @@ import CheckCircleIcon from 'material-ui-icons/CheckCircle';
 import Tooltip from 'material-ui/Tooltip';
 import _ from 'lodash';
 import {
-  selectUserRoleComps,
+  // selectUserRoleComps,
   selectUserCompetenciesCurrent
 } from '../../reducers/selectors';
 
@@ -104,7 +104,7 @@ class UserComps extends Component {
 
 const mapStateToProps = state => {
   return {
-    userRoleComps: selectUserRoleComps(state),
+    // userRoleComps: selectUserRoleComps(state),
     userCurrentComps: selectUserCompetenciesCurrent(state)
   };
 };

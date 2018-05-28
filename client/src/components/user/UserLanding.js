@@ -6,6 +6,7 @@ import { Grid, Header } from 'semantic-ui-react';
 import { fetchUser } from '../../actions/auth';
 import { selectCurrentUser } from '../../reducers/selectors';
 
+import UserDetailsCard from './UserDetailsCard';
 import UserRoles from './UserRoles';
 import UserCourses from './UserCourses';
 import UserCompetencies from './UserComps';
@@ -28,12 +29,14 @@ class UserLanding extends Component {
           </Header>
         ) : (
           <Grid>
-            <Grid.Row columns={2} centered>
-              <Grid.Column>User card in here</Grid.Column>
+            <Grid.Row columns={3} centered>
+              <Grid.Column>
+                <UserDetailsCard />
+              </Grid.Column>
               <Grid.Column>
                 <UserRoles />
-                <UserCompetencies />
               </Grid.Column>
+              <Grid.Column>{/* <UserCompetencies /> */}</Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
