@@ -13,7 +13,10 @@ module.exports = {
   getUser: async (req, res) => {
     const dbUser = await User.findById(req.params.id)
       .populate('courses')
-      .populate('roles');
+      .populate({
+        path: 'roles',
+        populate: { path: 'competencies' }
+      });
     res.send(dbUser);
   },
 

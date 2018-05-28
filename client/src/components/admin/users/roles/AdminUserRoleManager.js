@@ -10,8 +10,13 @@ import {
 } from '../../../../reducers/selectors';
 
 import { editUserRole } from '../../../../actions/user';
+import { fetchRoles } from '../../../../actions/roles';
 
 class AdminUserRoleManager extends Component {
+  componentDidMount() {
+    this.props.fetchRoles();
+  }
+
   deleteUserRole = (e, { value }) => {
     const { user, editUserRole } = this.props;
     editUserRole(value, user._id, false);
@@ -76,7 +81,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  editUserRole
+  editUserRole,
+  fetchRoles
 };
 
 AdminUserRoleManager = connect(mapStateToProps, mapDispatchToProps)(

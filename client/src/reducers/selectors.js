@@ -78,8 +78,11 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === true && user.isAdmin === true)
 );
 
-// match up the user roles
+// get the user roles for the current/logged in user
 export const selectUserRoles = state => state.auth.user.roles;
+
+// this is for the user being managed
+export const selectAdminUserRoles = state => state.user.roles;
 
 // match up the courses to the user
 export const selectUserCourses = state => state.auth.user.courses;
@@ -123,12 +126,22 @@ export const selectUserCoursesCurrent = createSelector(
   }
 );
 
-// get competencies for a given role for a user
-
+// get unique competencies for a given role for a user
 export const selectUserRoleComps = createSelector(selectUserRoles, roles => {
   return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
 });
 
+// get unique competencies for a given role for a user being managed by admin
+
+export const selectAdminUserRoleComps = createSelector(
+  selectAdminUserRoles,
+  roles => {
+    if (roles === undefined) {
+      return null;
+    }
+    return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
+  }
+);
 // compare users current courses to competencies to find what competencies he has
 
 export const selectUserCompetenciesCurrent = createSelector(
