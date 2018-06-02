@@ -11,7 +11,6 @@ export const FETCH_ROLE = 'fetch_role';
 export const FETCH_ROLES = 'fetch_roles';
 export const FETCH_USER_ROLES = 'fetch_user_roles';
 export const ADMIN_EDIT_USER_ROLE = 'admin_edit_user_role';
-// export const ADD_NEW_ROLE = 'add_new_role';
 
 // courses
 export const FETCH_COURSES = 'fetch_courses';
@@ -27,3 +26,6 @@ export const ADD_USER_COURSE = 'add_user_course';
 
 // competencies
 export const FETCH_COMPS = 'fetch_competencies';
+export const FETCH_COMP_TYPES = 'fetch_comp_types';
+export const ADD_COMP_TYPE = 'add_comp_type';
+export const DELETE_COMP_TYPE = 'delete_comp_type';
