@@ -74,19 +74,19 @@ class CompsTable extends Component {
                 Name
               </Table.HeaderCell>
               <Table.HeaderCell
-                sorted={column === 'courses' ? direction : null}
-                onClick={this.handleSort('courses')}
+                sorted={column === 'compType' ? direction : null}
+                onClick={this.handleSort('compType')}
               >
-                Courses
+                Competency Type
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {_.map(data, ({ _id, shortName, compName, courses }) => (
+            {_.map(data, ({ _id, shortName, compName, compType }) => (
               <Table.Row key={_id}>
                 <Table.Cell>{shortName}</Table.Cell>
                 <Table.Cell>{compName}</Table.Cell>
-                <Table.Cell>Coming soon</Table.Cell>
+                {compType && <Table.Cell>{compType.compType}</Table.Cell>}
               </Table.Row>
             ))}
           </Table.Body>
