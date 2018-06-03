@@ -1,12 +1,7 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
 
-import {
-  FETCH_COMPS,
-  ADD_COMP_TYPE,
-  DELETE_COMP_TYPE,
-  FETCH_COMP_TYPES
-} from './types';
+import { FETCH_COMPS, DELETE_COMP_TYPE, FETCH_COMP_TYPES } from './types';
 
 export const adminAddNewComp = comp => async dispatch => {
   const res = await axios.post('/api/competencies', comp);
@@ -29,10 +24,11 @@ export const fetchCompTypes = () => async dispatch => {
 };
 
 export const adminAddCompType = comptype => async dispatch => {
+  console.log(comptype);
   const res = await axios.post('/api/competencies/type', comptype);
   if (res.status === 200) {
     dispatch(reset('compType'));
-    dispatch(fetchComps());
+    dispatch(fetchCompTypes());
   } else {
     console.log(res.status, res.data);
   }
