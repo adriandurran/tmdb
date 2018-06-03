@@ -58,7 +58,7 @@ class CompsTable extends Component {
         <Header as="h2" textAlign="center">
           Competencies
         </Header>
-        <Table sortable celled fixed structured>
+        <Table sortable celled fixed structured selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell

@@ -27,7 +27,7 @@ export const adminAddCompType = comptype => async dispatch => {
   console.log(comptype);
   const res = await axios.post('/api/competencies/type', comptype);
   if (res.status === 200) {
-    dispatch(reset('compType'));
+    dispatch(reset('compTypes'));
     dispatch(fetchCompTypes());
   } else {
     console.log(res.status, res.data);
