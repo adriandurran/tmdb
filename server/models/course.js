@@ -8,8 +8,7 @@ const courseSchema = new Schema({
     trim: true
   },
   validity: {
-    type: Number,
-    default: 0
+    type: Number
   },
   type: {
     type: String,

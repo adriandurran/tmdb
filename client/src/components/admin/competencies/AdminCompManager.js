@@ -10,10 +10,10 @@ const AdminCompManager = props => {
   return (
     <Grid celled>
       <Grid.Row columns={2}>
-        <Grid.Column>
+        <Grid.Column width={10}>
           <CompBuilder />
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column width={6}>
           <AdminCompTypes />
         </Grid.Column>
       </Grid.Row>

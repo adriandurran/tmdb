@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { selectCourses } from '../../../reducers/selectors';
+import {
+  selectCourses,
+  selectCoursesForDropDown,
+  selectCompetencyTypes
+} from '../../../reducers/selectors';
 import { fetchCourses } from '../../../actions/courses';
 import { adminAddNewComp } from '../../../actions/comps';
 
@@ -31,19 +35,19 @@ class CompBuilder extends Component {
     adminAddNewComp(newComp).then(() => this.setState({ cForC: [] }));
   }
 
-  makeCourseOptions() {
-    return this.props.courses.map(course => {
-      let statCourse = {
-        key: course._id,
-        value: course._id,
-        text: course.courseName
-      };
-      return statCourse;
-    });
-  }
+  // makeCourseOptions() {
+  //   return this.props.courses.map(course => {
+  //     let statCourse = {
+  //       key: course._id,
+  //       value: course._id,
+  //       text: course.courseName
+  //     };
+  //     return statCourse;
+  //   });
+  // }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, courses } = this.props;
 
     return (
       <div>
@@ -80,7 +84,7 @@ class CompBuilder extends Component {
                   selection
                   multiple
                   name="compCourses"
-                  options={this.makeCourseOptions()}
+                  options={courses}
                   placeholder="Select a Course"
                   onChange={this.handleSelectChange}
                 />
@@ -107,7 +111,8 @@ class CompBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    courses: selectCourses(state)
+    courses: selectCoursesForDropDown(state),
+    compTypes: selectCompetencyTypes(state)
   };
 };
 

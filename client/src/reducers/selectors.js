@@ -28,7 +28,25 @@ export const selectCoursesForDropDown = createSelector(
   selectCourses,
   courses => {
     return courses.map(course => {
-      return { key: course._id, value: course._id, text: course.coursename };
+      let validDetails = '';
+      let disFlag = false;
+      if (course.validity >= 0) {
+        if (course.validity > 0) {
+          validDetails = `Valid for ${course.validity} months`;
+        }
+        if (course.validity === 0) {
+          validDetails = 'Course has expired - DO NOT USE';
+          disFlag = true;
+        }
+      } else {
+        validDetails = 'No expiry date';
+      }
+      return {
+        key: course._id,
+        value: course._id,
+        text: `${course.courseName} -- ${validDetails}`,
+        disabled: disFlag
+      };
     });
   }
 );
