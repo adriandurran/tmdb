@@ -9,13 +9,15 @@ import {
   selectCompetencyTypesForDropDown
 } from '../../../reducers/selectors';
 import { fetchCourses } from '../../../actions/courses';
-import { adminAddNewComp } from '../../../actions/comps';
+import { adminAddNewComp, fetchCompTypes } from '../../../actions/comps';
 
 import semanticFormField from '../../shared/semanticFormField';
 
 class CompBuilder extends Component {
   componentDidMount() {
-    this.props.fetchCourses();
+    const { fetchCompTypes, fetchCourses } = this.props;
+    fetchCourses();
+    fetchCompTypes();
   }
 
   handleSelectChange = (e, item) => {
@@ -24,18 +26,33 @@ class CompBuilder extends Component {
     });
   };
 
+  handleSelectCompChange = (e, item) => {
+    this.setState({
+      cForCType: item.value
+    });
+  };
+
   submitNewComp(values, dispatch) {
     const { adminAddNewComp } = this.props;
     let newComp = {
       compName: values.compName,
       shortName: values.shortName.toUpperCase(),
-      courses: this.state.cForC
+      courses: this.state.cForC,
+      compType: this.state.cForCType
     };
-    adminAddNewComp(newComp).then(() => this.setState({ cForC: [] }));
+    adminAddNewComp(newComp).then(() =>
+      this.setState({ cForC: [], cForCType: '' })
+    );
   }
 
   render() {
-    const { handleSubmit, submitting, pristine, courses } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      pristine,
+      courses,
+      compTypes
+    } = this.props;
 
     return (
       <div>
@@ -64,6 +81,13 @@ class CompBuilder extends Component {
                     as={Form.Input}
                     type="text"
                     placeholder="Competency Name"
+                  />
+                  <Dropdown
+                    selection
+                    name="compTypes"
+                    options={compTypes}
+                    placeholder="Select a Competency Type"
+                    onChange={this.handleSelectCompChange}
                   />
                 </Form.Group>
                 {/* <Form.Group inline> */}
@@ -106,7 +130,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   adminAddNewComp,
-  fetchCourses
+  fetchCourses,
+  fetchCompTypes
 };
 
 CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);
