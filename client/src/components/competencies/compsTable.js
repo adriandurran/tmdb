@@ -101,21 +101,14 @@ class CompsTable extends Component {
             ))}
           </Table.Body>
         </Table>
+        {/* this is better off as a seperate....comp */}
         <Modal open={this.state.openModal} onClose={this.onCloseModal}>
-          <Modal.Header>Select a Photo</Modal.Header>
-          <Modal.Content image>
-            <Image
-              wrapped
-              size="medium"
-              src="http://lorempixel.com/400/400/people"
-            />
+          <Modal.Header>Edit Competency</Modal.Header>
+          <Modal.Content>
             <Modal.Description>
-              <Header>Default Profile Image</Header>
-              <p>
-                We've found the following gravatar image associated with your
-                e-mail address.
-              </p>
-              <p>Is it okay to use this photo?</p>
+              <Header>Edit Competency</Header>
+              <p>This is still in development.</p>
+              <p>Coming soon</p>
             </Modal.Description>
           </Modal.Content>
         </Modal>
