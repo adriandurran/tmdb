@@ -19,6 +19,8 @@ export const selectRolesForDropDown = createSelector(selectRoles, roles => {
 
 // competencies
 export const selectCompetencies = state => state.comps;
+// get competency types
+export const selectCompetencyTypes = state => state.compTypes;
 
 // courses
 export const selectCourses = state => state.courses;

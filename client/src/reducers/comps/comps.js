@@ -1,7 +1,6 @@
 import {
   FETCH_COMPS,
-  // ADD_COMP_TYPE,
-  // DELETE_COMP_TYPE,
+  DELETE_COMP_TYPE,
   FETCH_COMP_TYPES
 } from '../../actions/types';
 
@@ -20,6 +19,8 @@ export const compTypesReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_COMP_TYPES:
       return action.payload;
+    case DELETE_COMP_TYPE:
+      return state.filter(type => type._id !== action.payload);
     default:
       return state;
   }

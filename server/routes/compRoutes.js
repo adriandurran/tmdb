@@ -9,7 +9,7 @@ module.exports = app => {
   app.get('/api/competencies/type', requireLogin, compController.getCompTypes);
   app.post('/api/competencies/type', requireAdmin, compController.addCompType);
   app.delete(
-    '/api/comptetencies/type',
+    '/api/competencies/type',
     requireAdmin,
     compController.deleteCompType
   );

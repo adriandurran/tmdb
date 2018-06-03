@@ -5,6 +5,8 @@ import { reduxForm, Field } from 'redux-form';
 
 import { adminAddCompType } from '../../../actions/comps';
 
+import AdminCTypeList from './AdminCTypeList';
+
 const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
   <Form.Input
     required
@@ -31,14 +33,14 @@ class AdminCompTypes extends Component {
         </Header>
         <Grid centered attached="bottom" style={{ marginTop: '0.5em' }}>
           <Grid.Row>
-            <Grid.Column width={10}>
+            <Grid.Column>
               <Form onSubmit={handleSubmit(values => this.newCompType(values))}>
                 <Form.Group inline widths="equal">
                   <Field
                     fluid
                     component={renderInputField}
                     type="text"
-                    name="CompType"
+                    name="compType"
                     label="Competency  Type"
                   />
                   <Button
@@ -54,8 +56,8 @@ class AdminCompTypes extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column width={8}>
-              <AdminCTList />
+            <Grid.Column width={10}>
+              <AdminCTypeList />
             </Grid.Column>
           </Grid.Row>
         </Grid>

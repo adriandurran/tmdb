@@ -4,7 +4,7 @@ import { reset } from 'redux-form';
 import {
   FETCH_COMPS,
   ADD_COMP_TYPE,
-  // DELETE_COMP_TYPE,
+  DELETE_COMP_TYPE,
   FETCH_COMP_TYPES
 } from './types';
 
@@ -35,5 +35,14 @@ export const adminAddCompType = comptype => async dispatch => {
     dispatch(fetchComps());
   } else {
     console.log(res.status, res.data);
+  }
+};
+
+export const adminDeleteCompType = id => async dispatch => {
+  const res = await axios.delete('/api/competencies/type', { params: { id } });
+  if (res.status === 200) {
+    dispatch({ type: DELETE_COMP_TYPE, payload: id });
+  } else {
+    console.log('not deleted');
   }
 };
