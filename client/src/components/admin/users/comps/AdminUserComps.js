@@ -32,10 +32,16 @@ class AdminUserComps extends Component {
       return <List.Content description="No User Roles" />;
     }
     return reqComps.map(comp => {
+      let compSt = '';
+      if (!_.isEmpty(comp.compType)) {
+        compSt = `-- ${comp.compType.compType}`;
+      }
       return (
         <List.Item key={comp._id}>
           <List.Content>
-            <List.Header>{comp.compName}</List.Header>
+            <List.Header>
+              {comp.compName} {comp.compType && compSt}
+            </List.Header>
             <List.Description>
               {comp.courses.length} Courses required for Competency
             </List.Description>

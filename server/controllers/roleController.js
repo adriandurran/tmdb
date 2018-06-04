@@ -4,7 +4,7 @@ module.exports = {
   getRoles: async (req, res) => {
     const dbRoles = await Role.find({}).populate({
       path: 'competencies',
-      populate: { path: 'courses' }
+      populate: [{ path: 'courses' }, { path: 'compType' }]
     });
 
     res.send(dbRoles);

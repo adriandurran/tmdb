@@ -15,7 +15,10 @@ module.exports = {
       .populate('courses')
       .populate({
         path: 'roles',
-        populate: { path: 'competencies', populate: { path: 'courses' } }
+        populate: {
+          path: 'competencies',
+          populate: [{ path: 'courses' }, { path: 'compType' }]
+        }
       });
     res.send(dbUser);
   },
@@ -45,9 +48,12 @@ module.exports = {
           path: 'roles',
           populate: {
             path: 'competencies',
-            populate: {
-              path: 'courses'
-            }
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
           }
         });
       return res.status(200).send(newRole);
@@ -100,9 +106,12 @@ module.exports = {
           path: 'roles',
           populate: {
             path: 'competencies',
-            populate: {
-              path: 'courses'
-            }
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
           }
         });
       res.send(currUser);

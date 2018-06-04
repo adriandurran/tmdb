@@ -23,7 +23,6 @@ class AdminUserRoleTools extends Component {
           <Grid.Column>
             <Header as="h3" textAlign="center">
               Competencies
-              <Header.Subheader>Required</Header.Subheader>
             </Header>
             <AdminUserComps />
           </Grid.Column>
