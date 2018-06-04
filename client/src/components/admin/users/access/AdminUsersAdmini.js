@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
@@ -20,12 +21,21 @@ class AdminUsersAdmini extends Component {
     return admins.map(user => {
       return (
         <Item key={user._id}>
+          <Item.Image size="tiny" src="http://lorempixel.com/400/400/people" />
           <Item.Content verticalAlign="middle">
             <Item.Header>
-              {user.firstName} {user.lastName}
+              {user.firstName} {user.lastName} &nbsp;
+              {user.isSuperAdmin ? (
+                <span>Super Admin</span>
+              ) : (
+                <span>Manager</span>
+              )}
             </Item.Header>
             <Item.Meta>{user.userId}</Item.Meta>
             <Item.Meta>{user.username}</Item.Meta>
+            <Item.Meta>
+              Joined <Moment fromNow>{user.joinDate}</Moment>
+            </Item.Meta>
             <Item.Extra>
               <Button
                 animated="vertical"
@@ -59,7 +69,7 @@ class AdminUsersAdmini extends Component {
     return (
       <div>
         <Header as="h3" textAlign="center">
-          Admin Users
+          Managers
         </Header>
         <Item.Group divided>{this.renderUserAdmins()}</Item.Group>
       </div>

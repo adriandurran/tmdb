@@ -91,7 +91,7 @@ export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
   allusers.filter(user => user.verified === true)
 );
 
-// get the users for the search
+// get the users for the search that are active
 export const selectAllUsersForSearch = createSelector(
   selectAllUsersActive,
   allusers => {
@@ -102,6 +102,22 @@ export const selectAllUsersForSearch = createSelector(
         key: user._id
       };
     });
+  }
+);
+
+// all active users for serach but not admins
+export const selectAllUsersForSearchNoAdmins = createSelector(
+  selectAllUsersActive,
+  allusers => {
+    return allusers
+      .filter(user => !user.isAdmin && !user.isSuperAdmin)
+      .map(user => {
+        return {
+          title: `${user.firstName} ${user.lastName}`,
+          email: user.username,
+          key: user._id
+        };
+      });
   }
 );
 

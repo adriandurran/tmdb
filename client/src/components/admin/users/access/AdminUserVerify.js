@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersVerify } from '../../../../reducers/selectors';
-import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
+import { adminVerifyUser } from '../../../../actions/user';
 
 class AdminUserVerify extends Component {
   verifiyUser = (e, { value }) => {
     this.props.adminVerifyUser(value, true);
-  };
-
-  adminiUser = (e, { value }) => {
-    this.props.adminAdminiUser(value, true);
   };
 
   renderUserVerify() {
@@ -26,17 +23,10 @@ class AdminUserVerify extends Component {
             </Item.Header>
             <Item.Meta>{user.userId}</Item.Meta>
             <Item.Meta>{user.username}</Item.Meta>
+            <Item.Meta>
+              Registered <Moment fromNow>{user.joinDate}</Moment>
+            </Item.Meta>
             <Item.Extra>
-              <Button
-                animated="vertical"
-                onClick={this.adminiUser}
-                value={user._id}
-              >
-                <Button.Content hidden>Admin</Button.Content>
-                <Button.Content visible>
-                  <Icon name="spy" color="orange" />
-                </Button.Content>
-              </Button>
               <Button
                 floated="right"
                 animated="vertical"
@@ -73,8 +63,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  adminVerifyUser,
-  adminAdminiUser
+  adminVerifyUser
 };
 
 AdminUserVerify = connect(mapStateToProps, mapDispatchToProps)(AdminUserVerify);

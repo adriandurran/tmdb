@@ -8,7 +8,7 @@ import {
   selectUserRoleComps
 } from '../../reducers/selectors';
 
-import _ from 'lodash';
+// import _ from 'lodash';
 import { selectUserCompetenciesCurrent } from '../../reducers/selectors';
 
 class UserComps extends Component {
@@ -72,7 +72,7 @@ class UserComps extends Component {
   }
 
   render() {
-    const { user, userCurrentComps } = this.props;
+    // const { user, userCurrentComps } = this.props;
     return (
       <div>
         <Segment padded>

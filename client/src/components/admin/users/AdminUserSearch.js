@@ -4,7 +4,11 @@ import _ from 'lodash';
 
 import { Search } from 'semantic-ui-react';
 
-import { selectAllUsersForSearch } from '../../../reducers/selectors';
+import {
+  selectAllUsersForSearch,
+  selectAllUsersForSearchNoAdmins,
+  selectCurrentUser
+} from '../../../reducers/selectors';
 import {
   fetchAllUsers,
   fetchUser,
@@ -37,7 +41,19 @@ class AdminUserSearch extends Component {
   };
 
   handleSearchChange = (e, { value }) => {
-    const { users } = this.props;
+    const { users, userNoAdmin, user } = this.props;
+
+    // if the user is an admin/manager he cannot pull up his own account
+    // or other admin/manager accounts
+    // only a super admin can manage the other admins/managers
+
+    let userData = [];
+    if (user.isAdmin && !user.isSuperAdmin) {
+      userData = userNoAdmin;
+    } else {
+      userData = users;
+    }
+
     this.setState({ isLoading: true, value });
     // clear out the temp user
     this.props.clearSearchResult();
@@ -50,7 +66,7 @@ class AdminUserSearch extends Component {
 
       this.setState({
         isLoading: false,
-        results: _.filter(users, isMatch)
+        results: _.filter(userData, isMatch)
       });
     }, 300);
   };
@@ -60,6 +76,7 @@ class AdminUserSearch extends Component {
     return (
       <div>
         <Search
+          fluid
           loading={isLoading}
           onResultSelect={this.handleResultSelect}
           onSearchChange={_.debounce(this.handleSearchChange, 500, {
@@ -82,7 +99,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
   return {
-    users: selectAllUsersForSearch(state)
+    users: selectAllUsersForSearch(state),
+    userNoAdmin: selectAllUsersForSearchNoAdmins(state),
+    user: selectCurrentUser(state)
   };
 };
 

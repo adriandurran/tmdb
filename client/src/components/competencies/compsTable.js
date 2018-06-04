@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Table, Header, Modal, Image } from 'semantic-ui-react';
+import { Table, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { fetchComps } from '../../actions/comps';
