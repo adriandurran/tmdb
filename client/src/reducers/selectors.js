@@ -67,7 +67,9 @@ export const selectCoursesForSearch = createSelector(selectCourses, courses => {
       return {
         key: course._id,
         value: course._id,
-        text: `${course.courseName} -- ${validDetails}`
+        text: `${course.courseName} ${course.type} ${
+          course.level
+        } -- ${validDetails}`
       };
     });
 });
