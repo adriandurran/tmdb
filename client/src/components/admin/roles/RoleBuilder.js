@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { selectCompetencies } from '../../../reducers/selectors';
+import { selectCompetenciesForDropDown } from '../../../reducers/selectors';
 import { fetchComps } from '../../../actions/comps';
 import { adminAddNewRole } from '../../../actions/roles';
 
@@ -21,16 +21,16 @@ class RoleBuilder extends Component {
     });
   };
 
-  makeCompOptions() {
-    return this.props.comps.map(comp => {
-      let statComp = {
-        key: comp._id,
-        value: comp._id,
-        text: comp.compName
-      };
-      return statComp;
-    });
-  }
+  // makeCompOptions() {
+  //   return this.props.comps.map(comp => {
+  //     let statComp = {
+  //       key: comp._id,
+  //       value: comp._id,
+  //       text: comp.compName
+  //     };
+  //     return statComp;
+  //   });
+  // }
 
   submitNewRole(values, dispatch) {
     const { adminAddNewRole } = this.props;
@@ -42,7 +42,7 @@ class RoleBuilder extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, comps } = this.props;
     return (
       <div>
         <Header as="h2" textAlign="center">
@@ -70,7 +70,7 @@ class RoleBuilder extends Component {
                   selection
                   multiple
                   name="roleComps"
-                  options={this.makeCompOptions()}
+                  options={comps}
                   placeholder="Select competencies"
                   onChange={this.handleSelectChange}
                 />
@@ -100,7 +100,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
   return {
-    comps: selectCompetencies(state)
+    comps: selectCompetenciesForDropDown(state)
   };
 };
 
