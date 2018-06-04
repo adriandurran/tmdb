@@ -34,4 +34,6 @@ module.exports = app => {
   app.get('/api/courses', requireLogin, courseController.getCourses);
 
   app.post('/api/courses', requireAdmin, courseController.addCourses);
+
+  app.get('/api/courses/:id', requireLogin, courseController.getCourse);
 };

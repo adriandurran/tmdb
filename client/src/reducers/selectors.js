@@ -2,8 +2,6 @@ import { createSelector } from 'reselect';
 import _ from 'lodash';
 import moment from 'moment';
 
-// import * as fromAuth from './users/authUser';
-
 // roles
 export const selectRoles = state => state.roles;
 //  roles for dropdown
@@ -54,9 +52,12 @@ export const selectCompetencyTypesForDropDown = createSelector(
 // courses
 export const selectCourses = state => state.courses;
 
+// course
+export const selectCourse = state => state.course;
+
 export const selectCoursesForSearch = createSelector(selectCourses, courses => {
   return courses
-    .filter(course => course.validity > 0 && course.validity === undefined)
+    .filter(course => course.validity > 0 || course.validity === undefined)
     .map(course => {
       let validDetails = '';
       if (course.validity !== undefined) {
@@ -105,9 +106,6 @@ export const selectCourseTypes = state => state.courseTypes;
 export const selectCourseLevels = state => state.courseLevels;
 
 // ************ USER ************************
-
-// concacanate the username....can be added to with rank etc...
-// export const selectUserName = state => fromAuth.selectUserName(state.auth);
 
 // get the current user.....t
 export const selectCurrentUser = state => state.auth.user;

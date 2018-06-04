@@ -3,15 +3,15 @@ import { reset } from 'redux-form';
 
 import {
   FETCH_COURSES,
+  FETCH_COURSE,
   FETCH_COURSE_TYPE,
   FETCH_COURSE_LEVEL,
   ADD_NEW_COURSE,
-  // ADD_COURSE_FOR_COMPBUILDER,
-  // REMOVE_COURSE_FOR_COMPBUILDER,
   ADD_COURSE_TYPE,
   DELETE_COURSE_TYPE,
   ADD_COURSE_LEVEL,
-  DELETE_COURSE_LEVEL
+  DELETE_COURSE_LEVEL,
+  CLEAR_COURSE_SEARCH
 } from './types';
 
 export const fetchCourses = () => async dispatch => {
@@ -64,4 +64,13 @@ export const adminAddNewCourse = course => async dispatch => {
 
   dispatch({ type: ADD_NEW_COURSE, payload: res.data });
   dispatch(reset('coursebuilder'));
+};
+
+export const clearCourseSearchResult = () => dispatch => {
+  dispatch({ type: CLEAR_COURSE_SEARCH });
+};
+
+export const fetchCourse = id => async dispatch => {
+  const res = await axios.get(`/api/courses/${id}`);
+  dispatch({ type: FETCH_COURSE, payload: res.data });
 };

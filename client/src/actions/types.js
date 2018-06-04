@@ -14,6 +14,7 @@ export const ADMIN_EDIT_USER_ROLE = 'admin_edit_user_role';
 
 // courses
 export const FETCH_COURSES = 'fetch_courses';
+export const FETCH_COURSE = 'fetch_course';
 export const ADD_NEW_COURSE = 'add_new_course';
 export const FETCH_COURSE_TYPE = 'fetch_course_type';
 export const ADD_COURSE_TYPE = 'add_course_type';
@@ -21,6 +22,7 @@ export const DELETE_COURSE_TYPE = 'delete_course_type';
 export const FETCH_COURSE_LEVEL = 'fetch_course_level';
 export const ADD_COURSE_LEVEL = 'add_course_level';
 export const DELETE_COURSE_LEVEL = 'delete_course_level';
+export const CLEAR_COURSE_SEARCH = 'clear_course_search';
 
 export const ADD_USER_COURSE = 'add_user_course';
 

@@ -55,5 +55,10 @@ module.exports = {
     const newCourse = req.body;
     const newCourseCreated = await Course.create(newCourse);
     res.send(newCourseCreated);
+  },
+
+  getCourse: async (req, res) => {
+    const dbCourse = await Course.findById(req.params.id);
+    res.send(dbCourse);
   }
 };
