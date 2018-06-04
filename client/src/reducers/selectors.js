@@ -67,9 +67,8 @@ export const selectCoursesForSearch = createSelector(selectCourses, courses => {
       return {
         key: course._id,
         value: course._id,
-        text: `${course.courseName} ${course.type} ${
-          course.level
-        } -- ${validDetails}`
+        title: course.courseName,
+        description: `${course.type} ${course.level} -- ${validDetails}`
       };
     });
 });
@@ -136,7 +135,7 @@ export const selectAllUsersForSearch = createSelector(
     return allusers.map(user => {
       return {
         title: `${user.firstName} ${user.lastName}`,
-        email: user.username,
+        description: user.username,
         key: user._id
       };
     });
@@ -152,7 +151,7 @@ export const selectAllUsersForSearchNoAdmins = createSelector(
       .map(user => {
         return {
           title: `${user.firstName} ${user.lastName}`,
-          email: user.username,
+          description: user.username,
           key: user._id
         };
       });
