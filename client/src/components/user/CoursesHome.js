@@ -1,31 +1,25 @@
 import React from 'react';
 
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
+import { Grid } from 'semantic-ui-react';
 
-import { withStyles } from 'material-ui/styles';
-import rootStyles from '../../styles/rootStyle';
-import withRoot from '../../withRoot';
-
-import UserCourses from './UserCourses';
-import CourseAdder from '../courses/CourseAdder';
+import CoursesSearch from '../courses/CoursesSearch';
 
 const CoursesHome = props => {
-  const { classes } = props;
   return (
-    <div style={{ marginTop: '70px' }}>
-      <Grid container>
-        <Grid item xs={12}>
-          <UserCourses />
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.adderPaper}>
-            <CourseAdder />
-          </Paper>
-        </Grid>
+    <div>
+      <Grid>
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <CoursesSearch />
+          </Grid.Column>
+          <Grid.Column>Course results with date add goes in here</Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>Users courses go in here</Grid.Column>
+        </Grid.Row>
       </Grid>
     </div>
   );
 };
 
-export default withRoot(withStyles(rootStyles)(CoursesHome));
+export default CoursesHome;

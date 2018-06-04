@@ -53,6 +53,25 @@ export const selectCompetencyTypesForDropDown = createSelector(
 
 // courses
 export const selectCourses = state => state.courses;
+
+export const selectCoursesForSearch = createSelector(selectCourses, courses => {
+  return courses
+    .filter(course => course.validity > 0 && course.validity === undefined)
+    .map(course => {
+      let validDetails = '';
+      if (course.validity !== undefined) {
+        validDetails = `Valid for ${course.validity} months`;
+      } else {
+        validDetails = 'No expiry date';
+      }
+      return {
+        key: course._id,
+        value: course._id,
+        text: `${course.courseName} -- ${validDetails}`
+      };
+    });
+});
+
 export const selectCoursesForDropDown = createSelector(
   selectCourses,
   courses => {
@@ -228,24 +247,24 @@ export const selectUserCompetenciesCurrent = createSelector(
 // ************ END OF USER **************************************
 
 // get courses for the compBuilder
-export const selectCompBuilderCourses = state => state.compCourses;
-export const selectCompBuilderCourseNames = createSelector(
-  selectCourses,
-  selectCompBuilderCourses,
-  (courses, compcourses) => {
-    return _.filter(courses, x => _.includes(_.map(compcourses, '_id'), x._id));
-  }
-);
+// export const selectCompBuilderCourses = state => state.compCourses;
+// export const selectCompBuilderCourseNames = createSelector(
+//   selectCourses,
+//   selectCompBuilderCourses,
+//   (courses, compcourses) => {
+//     return _.filter(courses, x => _.includes(_.map(compcourses, '_id'), x._id));
+//   }
+// );
 
-// get the comps for the role builder
-export const selectRoleBuilderComps = state => state.roleComps;
-export const selectRoleBuilderCompNames = createSelector(
-  selectCompetencies,
-  selectRoleBuilderComps,
-  (comps, rolecomps) => {
-    return _.filter(comps, x => _.includes(_.map(rolecomps, '_id'), x._id));
-  }
-);
+// // get the comps for the role builder
+// export const selectRoleBuilderComps = state => state.roleComps;
+// export const selectRoleBuilderCompNames = createSelector(
+//   selectCompetencies,
+//   selectRoleBuilderComps,
+//   (comps, rolecomps) => {
+//     return _.filter(comps, x => _.includes(_.map(rolecomps, '_id'), x._id));
+//   }
+// );
 
 // get competencies for roles
 export const selectRoleComps = createSelector(
