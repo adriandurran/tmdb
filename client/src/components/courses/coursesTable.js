@@ -51,8 +51,33 @@ class CoursesTable extends Component {
     });
   };
 
+  renderTableBody() {
+    const { data } = this.state;
+    return data.map(({ _id, courseName, validity, type, level }) => {
+      let validText = '';
+      if (validity === undefined) {
+        validText = 'No expiry date';
+      }
+      if (validity === 0) {
+        validText = 'Expired';
+      }
+      if (validity > 0) {
+        validText = `Valid for ${validity} months`;
+      }
+
+      return (
+        <Table.Row key={_id} negative={validity === 0}>
+          <Table.Cell>{courseName}</Table.Cell>
+          <Table.Cell textAlign="right">{validText}</Table.Cell>
+          <Table.Cell>{type}</Table.Cell>
+          <Table.Cell>{level}</Table.Cell>
+        </Table.Row>
+      );
+    });
+  }
+
   render() {
-    const { column, data, direction } = this.state;
+    const { column, direction } = this.state;
 
     return (
       <div>
@@ -88,18 +113,7 @@ class CoursesTable extends Component {
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body>
-            {_.map(data, ({ _id, courseName, validity, type, level }) => (
-              <Table.Row key={_id}>
-                <Table.Cell>{courseName}</Table.Cell>
-                <Table.Cell textAlign="right">
-                  {validity}&nbsp; months
-                </Table.Cell>
-                <Table.Cell>{type}</Table.Cell>
-                <Table.Cell>{level}</Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
+          <Table.Body>{this.renderTableBody()}</Table.Body>
         </Table>
       </div>
     );

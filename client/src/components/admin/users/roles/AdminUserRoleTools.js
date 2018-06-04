@@ -10,22 +10,27 @@ class AdminUserRoleTools extends Component {
   render() {
     return (
       <div>
-        <Grid columns={3}>
-          <Grid.Column>
-            <AdminUserDetailsCard />
-          </Grid.Column>
-          <Grid.Column>
-            <Header as="h3" textAlign="center">
-              Roles
-            </Header>
-            <AdminUserRoleManager />
-          </Grid.Column>
-          <Grid.Column>
-            <Header as="h3" textAlign="center">
-              Competencies
-            </Header>
-            <AdminUserComps />
-          </Grid.Column>
+        <Grid>
+          <Grid.Row columns={3}>
+            <Grid.Column>
+              <AdminUserDetailsCard />
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3" textAlign="center">
+                Roles
+              </Header>
+              <AdminUserRoleManager />
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3" textAlign="center">
+                Competencies
+              </Header>
+              <AdminUserComps />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>User courses go in here</Grid.Column>
+          </Grid.Row>
         </Grid>
       </div>
     );
