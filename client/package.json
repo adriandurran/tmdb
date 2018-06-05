@@ -12,10 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "downshift": "^1.28.2",
     "lodash": "^4.17.5",
-    "material-ui": "^1.0.0-beta.39",
-    "material-ui-icons": "^1.0.0-beta.17",
     "moment": "^2.20.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",

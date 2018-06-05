@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 
 import CoursesSearch from '../courses/CoursesSearch';
 import UserCoursesAdd from './UserCoursesAdd';
+import UserCourses from './UserCourses';
 
 const CoursesHome = props => {
   return (
@@ -18,7 +19,9 @@ const CoursesHome = props => {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column>Users courses go in here</Grid.Column>
+          <Grid.Column>
+            <UserCourses />
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </div>
