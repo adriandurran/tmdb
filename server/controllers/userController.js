@@ -23,6 +23,39 @@ module.exports = {
     res.send(dbUser);
   },
 
+  addUserCourse: async (req, res) => {
+    const { course } = req.body;
+    // use the array helper to add
+    try {
+      const thisUser = await User.findById(req.params.id);
+      const courseSet = thisUser.courses;
+      arrayHelp.addToArray(courseSet, course);
+
+      const newCourse = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { courses: courseSet } },
+        { new: true }
+      )
+        .populate('courses')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+      return res.status(200).send(newCourse);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   editUserRole: async (req, res) => {
     const { role, action } = req.body;
     try {

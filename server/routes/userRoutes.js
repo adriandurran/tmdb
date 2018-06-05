@@ -21,4 +21,6 @@ module.exports = app => {
     requireAdmin,
     userController.editUserRole
   );
+
+  app.patch('/api/user/:id/course', requireLogin, userController.addUserCourse);
 };

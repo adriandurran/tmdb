@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 
-import { Grid, Header, Card } from 'semantic-ui-react';
+import { Grid, Header, Card, Form, Button } from 'semantic-ui-react';
 
 // pull out course from the course state
-import { selectCourse } from '../../reducers/selectors';
+import { selectCourse, selectCurrentUser } from '../../reducers/selectors';
+import { addUserCourse } from '../../actions/user';
+
+const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
+  <Form.Input
+    required
+    fluid
+    placeholder={label}
+    error={touched && error}
+    {...input}
+    type={type}
+  />
+);
 
 class UserCoursesAdd extends Component {
   renderCourseCard() {
-    const { course } = this.props;
-    if (_.isEmpty(course)) {
+    const { selCourse } = this.props;
+    if (_.isEmpty(selCourse)) {
       return (
         <Card centered>
           <Card.Content description="No Course loaded" />
@@ -19,16 +32,16 @@ class UserCoursesAdd extends Component {
     }
 
     const courseDescription = `Course type is ${
-      course.type
-    } and Course level is ${course.level}`;
+      selCourse.type
+    } and Course level is ${selCourse.level}`;
 
     return (
       <Card raised centered>
-        <Card.Content header={course.courseName} />
+        <Card.Content header={selCourse.courseName} />
         <Card.Content
           meta={
-            course.validity > 0
-              ? `Valid for ${course.validity} months`
+            selCourse.validity > 0
+              ? `Valid for ${selCourse.validity} months`
               : `Course does not expire`
           }
         />
@@ -37,7 +50,17 @@ class UserCoursesAdd extends Component {
     );
   }
 
+  newUserCourse(values) {
+    const { selCourse, user, addUserCourse } = this.props;
+    // add new user course
+    const newCourse = { _id: selCourse._id, passDate: values.courseDate };
+    console.log(newCourse);
+
+    addUserCourse(user._id, newCourse);
+  }
+
   render() {
+    const { handleSubmit, submitting, pristine, selCourse } = this.props;
     return (
       <div>
         <Header as="h3" textAlign="center">
@@ -48,7 +71,29 @@ class UserCoursesAdd extends Component {
             <Grid.Column>{this.renderCourseCard()}</Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column>Input here</Grid.Column>
+            <Grid.Column>
+              <Form
+                onSubmit={handleSubmit(values => this.newUserCourse(values))}
+              >
+                <Form.Group inline widths="equal">
+                  <Field
+                    fluid
+                    component={renderInputField}
+                    type="date"
+                    name="courseDate"
+                    label="Course Date"
+                  />
+                  <Button
+                    fluid
+                    disabled={pristine || submitting || _.isEmpty(selCourse)}
+                    type="submit"
+                    size="large"
+                  >
+                    Submit
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </div>
@@ -58,10 +103,20 @@ class UserCoursesAdd extends Component {
 
 const mapStateToProps = state => {
   return {
-    course: selectCourse(state)
+    selCourse: selectCourse(state),
+    user: selectCurrentUser(state)
   };
 };
 
-UserCoursesAdd = connect(mapStateToProps)(UserCoursesAdd);
+const mapDispatchToProps = {
+  addUserCourse
+};
 
-export default UserCoursesAdd;
+UserCoursesAdd = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserCoursesAdd);
+
+export default reduxForm({
+  form: 'newUserCourse'
+})(UserCoursesAdd);

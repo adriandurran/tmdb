@@ -7,14 +7,16 @@ import {
   ADMIN_USER_META,
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
-  ADMIN_EDIT_USER_ROLE
+  ADMIN_EDIT_USER_ROLE,
+  CLEAR_COURSE_SEARCH
 } from './types';
 
-export const patchUserCourses = (user, courses) => async dispatch => {
-  const res = await axios.patch(`/api/users/${user.id}`, { courses });
+export const addUserCourse = (user, course) => async dispatch => {
+  const res = await axios.patch(`/api/user/${user}/course`, { course });
   dispatch({ type: FETCH_USER, payload: res.data });
-  dispatch(reset('courseadder'));
-  return res.data;
+  dispatch({ type: CLEAR_COURSE_SEARCH });
+  dispatch(reset('newUserCourse'));
+  // return res.data;
 };
 
 export const fetchUserRoles = roles => async dispatch => {
