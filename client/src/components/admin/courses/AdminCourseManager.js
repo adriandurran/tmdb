@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import CourseBuilder from './CourseBuilder';
-import CoursesTable from '../../courses/coursesTable';
+import CoursesTable from '../../courses/CoursesTable';
 import AdminCoursesMenu from './AdminCoursesMenu';
 
 class AdminCourseManager extends Component {

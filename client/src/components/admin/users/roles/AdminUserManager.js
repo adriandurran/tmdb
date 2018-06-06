@@ -4,14 +4,14 @@ import { Grid, Header } from 'semantic-ui-react';
 
 import AdminUserMenu from '../AdminUserMenu';
 import AdminUserSearch from '../AdminUserSearch';
-import AdminUserRoleTools from './AdminUserRoleTools';
+import AdminUserRCTools from './AdminUserRCTools';
 
-class AdminUserRoles extends Component {
+class AdminUserManager extends Component {
   render() {
     return (
       <div>
         <Header as="h2" textAlign="center">
-          Manage User Roles
+          Manage User Roles &amp; Courses
         </Header>
         <AdminUserMenu />
         <Grid celled centered style={{ marginTop: '0/5em' }} attached="bottom">
@@ -22,7 +22,7 @@ class AdminUserRoles extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
-              <AdminUserRoleTools />
+              <AdminUserRCTools />
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -31,4 +31,4 @@ class AdminUserRoles extends Component {
   }
 }
 
-export default AdminUserRoles;
+export default AdminUserManager;

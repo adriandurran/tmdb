@@ -130,6 +130,9 @@ const mapDispatchToProps = {
   fetchCourses
 };
 
-CoursesTable = connect(mapStateToProps, mapDispatchToProps)(CoursesTable);
+CoursesTable = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CoursesTable);
 
 export default CoursesTable;

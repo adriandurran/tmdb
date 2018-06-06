@@ -37,17 +37,17 @@ class AdminUserTools extends Component {
             )}
           </Card.Content>
         </Card>
-        <Card as={Link} to="/admin/user-role-manager" raised>
+        <Card as={Link} to="/admin/user-manager" raised>
           <Card.Content>
             <Header as="h5">User Manager</Header>
           </Card.Content>
           <Card.Content description="Manager User Roles &amp; Courses" />
         </Card>
-        <Card as={Link} to="/admin/user-course-manager" raised>
+        <Card as={Link} to="/admin/user-courses-manager" raised>
           <Card.Content>
-            <Header as="h5">User Course Manager</Header>
+            <Header as="h5">User Courses Manager</Header>
           </Card.Content>
-          <Card.Content description="Manager User Courses" />
+          <Card.Content description="Verify User Courses" />
         </Card>
       </Card.Group>
     );
@@ -65,6 +65,9 @@ const mapStateToProps = state => {
   };
 };
 
-AdminUserTools = connect(mapStateToProps, mapDispatchToProps)(AdminUserTools);
+AdminUserTools = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserTools);
 
 export default AdminUserTools;

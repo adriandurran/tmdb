@@ -19,13 +19,9 @@ const AdminUserMenu = props => {
             <Icon name="users" />
             User Access Manager
           </Dropdown.Item>
-          <Dropdown.Item
-            name="User Role Manager"
-            as={Link}
-            to="/admin/user-role-manager"
-          >
+          <Dropdown.Item name="User Manager" as={Link} to="/admin/user-manager">
             <Icon name="user circle" />
-            User Role Manager
+            User Roles &amp; Courses Manager
           </Dropdown.Item>
           <Dropdown.Item
             name="User Course Manager"

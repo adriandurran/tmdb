@@ -6,7 +6,7 @@ import AdminUserDetailsCard from '../AdminUserDetailsCard';
 import AdminUserRoleManager from './AdminUserRoleManager';
 import AdminUserComps from '../comps/AdminUserComps';
 
-class AdminUserRoleTools extends Component {
+class AdminUserRCTools extends Component {
   render() {
     return (
       <div>
@@ -37,4 +37,4 @@ class AdminUserRoleTools extends Component {
   }
 }
 
-export default AdminUserRoleTools;
+export default AdminUserRCTools;

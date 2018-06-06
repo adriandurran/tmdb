@@ -85,8 +85,9 @@ const mapDispatchToProps = {
   fetchRoles
 };
 
-AdminUserRoleManager = connect(mapStateToProps, mapDispatchToProps)(
-  AdminUserRoleManager
-);
+AdminUserRoleManager = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserRoleManager);
 
 export default AdminUserRoleManager;
