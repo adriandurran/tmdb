@@ -5,6 +5,7 @@ import { Grid, Header } from 'semantic-ui-react';
 import AdminUserDetailsCard from '../AdminUserDetailsCard';
 import AdminUserRoleManager from './AdminUserRoleManager';
 import AdminUserComps from '../comps/AdminUserComps';
+import AdminUserCourseTable from '../courses/AdminUserCoursesTable';
 
 class AdminUserRCTools extends Component {
   render() {
@@ -29,7 +30,9 @@ class AdminUserRCTools extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column>User courses go in here</Grid.Column>
+            <Grid.Column>
+              <AdminUserCourseTable />
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </div>

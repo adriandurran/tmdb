@@ -53,7 +53,7 @@ class UserCoursesAdd extends Component {
   newUserCourse(values) {
     const { selCourse, user, addUserCourse } = this.props;
     // add new user course
-    const newCourse = { _id: selCourse._id, passDate: values.courseDate };
+    const newCourse = { _course: selCourse._id, passDate: values.courseDate };
     addUserCourse(user._id, newCourse);
   }
 

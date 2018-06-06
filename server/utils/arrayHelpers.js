@@ -7,6 +7,7 @@ module.exports = {
   },
 
   addToArray: (array, value) => {
+    console.log(value);
     if (array.indexOf(value) === -1) {
       array.push(value);
     }

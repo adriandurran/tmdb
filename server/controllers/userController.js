@@ -5,14 +5,20 @@ const arrayHelp = require('../utils/arrayHelpers');
 module.exports = {
   allUsers: async (req, res) => {
     const dbAllUsers = await User.find({})
-      .populate('courses')
-      .populate('roles');
+      .populate('courses._course')
+      .populate({
+        path: 'roles',
+        populate: {
+          path: 'competencies',
+          populate: [{ path: 'courses' }, { path: 'compType' }]
+        }
+      });
     res.send(dbAllUsers);
   },
 
   getUser: async (req, res) => {
     const dbUser = await User.findById(req.params.id)
-      .populate('courses')
+      .populate('courses._course')
       .populate({
         path: 'roles',
         populate: {
@@ -28,15 +34,14 @@ module.exports = {
     // use the array helper to add
     try {
       const thisUser = await User.findById(req.params.id);
-      const courseSet = thisUser.courses;
-      arrayHelp.addToArray(courseSet, course);
-
+      const courseSet = [...thisUser.courses, course];
+      console.log(courseSet);
       const newCourse = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { courses: courseSet } },
         { new: true }
       )
-        .populate('courses')
+        .populate('courses._course')
         .populate({
           path: 'roles',
           populate: {
@@ -76,7 +81,7 @@ module.exports = {
         },
         { new: true }
       )
-        .populate('courses')
+        .populate('courses._course')
         .populate({
           path: 'roles',
           populate: {
@@ -134,7 +139,7 @@ module.exports = {
       res.send(req.user);
     } else {
       const currUser = await User.findById(req.user._id)
-        .populate('courses')
+        .populate('courses._course')
         .populate({
           path: 'roles',
           populate: {
