@@ -166,11 +166,19 @@ module.exports = {
         password
       } = req.body.data.newUser;
 
+      const joinDate = Date.now();
       let newUser = new User();
 
       let passwordHash = await newUser.generateHash(password);
 
-      User.create({ username, userId, firstName, lastName, passwordHash })
+      User.create({
+        username,
+        userId,
+        firstName,
+        lastName,
+        passwordHash,
+        joinDate
+      })
         .then(user => res.status(200).send(user))
         .catch(err => res.status(400).send(err));
     } catch (error) {

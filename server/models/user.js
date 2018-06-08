@@ -47,8 +47,7 @@ const userSchema = new Schema({
     default: false
   },
   joinDate: {
-    type: Date,
-    default: Date.now()
+    type: Date
   },
   courses: [
     {
