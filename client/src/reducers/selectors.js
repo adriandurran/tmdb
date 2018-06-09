@@ -177,26 +177,47 @@ export const selectUserCourses = state => state.auth.user.courses;
 // expired courses
 // current courses
 // courses awaiting verification
+
+// current active verified courses
 export const selectUserCoursesCurrent = createSelector(
   selectUserCourses,
   usercourses => {
-    let today = moment(new Date(), 'YYYY-MM-YY').format();
+    let today = moment(new Date(), 'YYYY-MM-DD').format();
     return usercourses
       .filter(course => {
         if (
-          moment(course.passDate, 'YYYY-MM-DD')
+          (moment(course.passDate, 'YYYY-MM-DD')
             .add(course.validity, 'months')
             .isAfter(today) &&
-          course.verified
+            course.verified) ||
+          (course.validity === undefined && course.verified)
         ) {
           return true;
         }
 
         return false;
       })
-      .map(course => {
-        return course._id;
-      });
+      .map(course => course);
+  }
+);
+
+// courses that are expired
+export const selectUserCoursesExpired = createSelector(
+  selectUserCourses,
+  usercourses => {
+    return usercourses.filter(course =>
+      moment(course.passDate, 'YYYY-MM-DD')
+        .add(course.validity, 'months')
+        .isBefore(Date.now())
+    );
+  }
+);
+
+// courses that are waiting verification
+export const selectUserCoursesVerify = createSelector(
+  selectUserCourses,
+  usercourses => {
+    return usercourses.filter(course => !course.verified);
   }
 );
 
