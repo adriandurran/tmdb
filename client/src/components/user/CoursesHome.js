@@ -3,8 +3,8 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import CoursesSearch from '../courses/CoursesSearch';
-import UserCoursesAdd from './UserCoursesAdd';
-import UserCourses from './UserCourses';
+import UserCoursesAdd from './courses/UserCoursesAdd';
+import UserCourses from './courses/UserCourses';
 
 const CoursesHome = props => {
   return (

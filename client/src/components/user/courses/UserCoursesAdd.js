@@ -6,8 +6,8 @@ import _ from 'lodash';
 import { Grid, Header, Card, Form, Button } from 'semantic-ui-react';
 
 // pull out course from the course state
-import { selectCourse, selectCurrentUser } from '../../reducers/selectors';
-import { addUserCourse } from '../../actions/user';
+import { selectCourse, selectCurrentUser } from '../../../reducers/selectors';
+import { addUserCourse } from '../../../actions/user';
 
 const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
   <Form.Input

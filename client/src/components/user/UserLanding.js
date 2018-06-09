@@ -8,7 +8,7 @@ import { selectCurrentUser } from '../../reducers/selectors';
 
 import UserDetailsCard from './UserDetailsCard';
 import UserRoles from './UserRoles';
-import UserCourses from './UserCourses';
+import UserCourses from './courses/UserCourses';
 import UserCompetencies from './UserComps';
 
 class UserLanding extends Component {
@@ -63,6 +63,9 @@ const mapDispatchToProps = {
   fetchUser
 };
 
-UserLanding = connect(mapStateToProps, mapDispatchToProps)(UserLanding);
+UserLanding = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserLanding);
 
 export default UserLanding;
