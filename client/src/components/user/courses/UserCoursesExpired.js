@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Moment from 'react-moment';
+import moment from 'moment';
 
 import { Table, Header } from 'semantic-ui-react';
 
@@ -60,7 +61,15 @@ class UserCoursesExpired extends Component {
           <Table.Cell>{_course.type}</Table.Cell>
           <Table.Cell>{_course.level}</Table.Cell>
           <Table.Cell>
-            <Moment fromNow>{passDate}</Moment>
+            <Moment
+              diff={moment(passDate, 'YYYY-MM-DD').add(
+                _course.validity,
+                'months'
+              )}
+              units="days"
+            >
+              {nowDate}
+            </Moment>
           </Table.Cell>
         </Table.Row>
       );
