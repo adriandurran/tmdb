@@ -52,6 +52,8 @@ class UserCoursesExpired extends Component {
   renderTableBody() {
     const { data } = this.state;
     return data.map(({ _id, _course, passDate }) => {
+      let nowDate = Date.now();
+
       return (
         <Table.Row key={_id}>
           <Table.Cell>{_course.courseName}</Table.Cell>
