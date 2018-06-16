@@ -15,23 +15,25 @@ import {
 } from './types';
 
 export const fetchCourses = () => async dispatch => {
-  const res = await axios.get('/api/courses');
+  const res = await axios.get('/api/tmdb/courses');
   dispatch({ type: FETCH_COURSES, payload: res.data });
 };
 
 export const fetchCourseTypes = () => async dispatch => {
-  const res = await axios.get('/api/course-types');
+  const res = await axios.get('/api/tmdb/courses/course-types');
   dispatch({ type: FETCH_COURSE_TYPE, payload: res.data });
 };
 
 export const addCourseType = type => async dispatch => {
-  const res = await axios.post('/api/course-types', type);
+  const res = await axios.post('/api/tmdb/courses/course-types', type);
   dispatch({ type: ADD_COURSE_TYPE, payload: res.data });
   dispatch(reset('courseTypes'));
 };
 
 export const deleteCourseType = id => async dispatch => {
-  const res = await axios.delete('/api/course-types', { params: { id } });
+  const res = await axios.delete('/api/tmdb/courses/course-types', {
+    params: { id }
+  });
   if (res.status === 200) {
     dispatch({ type: DELETE_COURSE_TYPE, payload: id });
   } else {
@@ -40,18 +42,20 @@ export const deleteCourseType = id => async dispatch => {
 };
 
 export const fetchCourseLevels = () => async dispatch => {
-  const res = await axios.get('/api/course-levels');
+  const res = await axios.get('/api/tmdb/courses/course-levels');
   dispatch({ type: FETCH_COURSE_LEVEL, payload: res.data });
 };
 
 export const addCourseLevel = level => async dispatch => {
-  const res = await axios.post('/api/course-levels', level);
+  const res = await axios.post('/api/tmdb/courses/course-levels', level);
   dispatch({ type: ADD_COURSE_LEVEL, payload: res.data });
   dispatch(reset('courseLevels'));
 };
 
 export const deleteCourseLevel = id => async dispatch => {
-  const res = await axios.delete('/api/course-levels', { params: { id } });
+  const res = await axios.delete('/api/tmdb/courses/course-levels', {
+    params: { id }
+  });
   if (res.status === 200) {
     dispatch({ type: DELETE_COURSE_LEVEL, payload: id });
   } else {
@@ -60,7 +64,7 @@ export const deleteCourseLevel = id => async dispatch => {
 };
 
 export const adminAddNewCourse = course => async dispatch => {
-  const res = await axios.post('/api/courses', course);
+  const res = await axios.post('/api/tmdb/courses', course);
 
   dispatch({ type: ADD_NEW_COURSE, payload: res.data });
   dispatch(reset('coursebuilder'));
@@ -71,6 +75,6 @@ export const clearCourseSearchResult = () => dispatch => {
 };
 
 export const fetchCourse = id => async dispatch => {
-  const res = await axios.get(`/api/courses/${id}`);
+  const res = await axios.get(`/api/tmdb/courses/${id}`);
   dispatch({ type: FETCH_COURSE, payload: res.data });
 };

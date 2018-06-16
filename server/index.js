@@ -13,6 +13,7 @@ require('./models/user');
 require('./services/passport');
 const authRoutes = require('./routes/authRoutes');
 const compRoutes = require('./routes/compRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 
 // conenct to mongo db
 mongoose
@@ -38,8 +39,8 @@ app.use(morgan('dev'));
 
 // routes
 app.use('/api/tmdb/auth', authRoutes);
-require('./routes/courseRoutes')(app);
 app.use('/api/tmdb/competencies', compRoutes);
+app.use('/api/tmdb/courses', courseRoutes);
 require('./routes/roleRoutes')(app);
 require('./routes/userRoutes')(app);
 
