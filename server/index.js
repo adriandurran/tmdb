@@ -15,6 +15,7 @@ const authRoutes = require('./routes/authRoutes');
 const compRoutes = require('./routes/compRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const roleRoutes = require('./routes/roleRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // conenct to mongo db
 mongoose
@@ -43,7 +44,7 @@ app.use('/api/tmdb/auth', authRoutes);
 app.use('/api/tmdb/competencies', compRoutes);
 app.use('/api/tmdb/courses', courseRoutes);
 app.use('api/tmdb/roles', roleRoutes);
-require('./routes/userRoutes')(app);
+app.use('/api/tmdb/user', userRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

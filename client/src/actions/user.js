@@ -12,7 +12,7 @@ import {
 } from './types';
 
 export const addUserCourse = (user, course) => async dispatch => {
-  const res = await axios.patch(`/api/user/${user}/course`, { course });
+  const res = await axios.patch(`/api/tmdb/user/${user}/course`, { course });
   dispatch({ type: FETCH_USER, payload: res.data });
   dispatch({ type: CLEAR_COURSE_SEARCH });
   dispatch(reset('newUserCourse'));
@@ -24,7 +24,7 @@ export const fetchUserRoles = roles => async dispatch => {
 };
 
 export const editUserRole = (role, user, action) => async dispatch => {
-  const res = await axios.patch(`/api/admin/users/${user}/roles`, {
+  const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/roles`, {
     role,
     action
   });
@@ -37,12 +37,12 @@ export const editUserRole = (role, user, action) => async dispatch => {
 };
 
 export const fetchAllUsers = () => async dispatch => {
-  const res = await axios.get('/api/admin/allusers');
+  const res = await axios.get('/api/tmdb/user/admin/allusers');
   dispatch({ type: FETCH_ALL_USERS, payload: res.data });
 };
 
 export const fetchUser = id => async dispatch => {
-  const res = await axios.get(`/api/admin/users/${id}`);
+  const res = await axios.get(`/api/tmdb/user/admin/users/${id}`);
   dispatch({ type: ADMIN_SEARCH_RESULT, payload: res.data });
 };
 
@@ -51,7 +51,9 @@ export const clearSearchResult = () => async dispatch => {
 };
 
 export const adminVerifyUser = (user, verify) => async dispatch => {
-  const res = await axios.patch(`/api/admin/users/${user}/verify`, { verify });
+  const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/verify`, {
+    verify
+  });
   if (res.status === 200) {
     // update redux
     dispatch({ type: ADMIN_USER_META, payload: res.data });
@@ -62,7 +64,9 @@ export const adminVerifyUser = (user, verify) => async dispatch => {
 };
 
 export const adminAdminiUser = (user, admin) => async dispatch => {
-  const res = await axios.patch(`/api/admin/users/${user}/admin`, { admin });
+  const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/admin`, {
+    admin
+  });
   if (res.status === 200) {
     dispatch({ type: ADMIN_USER_META, payload: res.data });
   } else {

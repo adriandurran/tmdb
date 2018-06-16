@@ -1,26 +1,25 @@
+const express = require('express');
+const router = express.Router();
+
 const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');
 const userController = require('../controllers/userController');
 
-module.exports = app => {
-  app.get('/api/admin/allusers', requireAdmin, userController.allUsers);
-  app.patch(
-    '/api/admin/users/:id/verify',
-    requireAdmin,
-    userController.verifyUser
-  );
-  app.patch(
-    '/api/admin/users/:id/admin',
-    requireAdmin,
-    userController.adminUser
-  );
+router.get('/admin/allusers', requireAdmin, userController.allUsers);
+router.patch(
+  '/admin/users/:id/verify',
+  requireAdmin,
+  userController.verifyUser
+);
+router.patch('/admin/users/:id/admin', requireAdmin, userController.adminUser);
 
-  app.get('/api/admin/users/:id', requireAdmin, userController.getUser);
-  app.patch(
-    '/api/admin/users/:id/roles',
-    requireAdmin,
-    userController.editUserRole
-  );
+router.get('/admin/users/:id', requireAdmin, userController.getUser);
+router.patch(
+  '/admin/users/:id/roles',
+  requireAdmin,
+  userController.editUserRole
+);
 
-  app.patch('/api/user/:id/course', requireLogin, userController.addUserCourse);
-};
+router.patch('/:id/course', requireLogin, userController.addUserCourse);
+
+module.exports = router;
