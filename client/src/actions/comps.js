@@ -4,7 +4,7 @@ import { reset } from 'redux-form';
 import { FETCH_COMPS, DELETE_COMP_TYPE, FETCH_COMP_TYPES } from './types';
 
 export const adminAddNewComp = comp => async dispatch => {
-  const res = await axios.post('/api/competencies', comp);
+  const res = await axios.post('/api/tmdb/competencies', comp);
   if (res.status === 200) {
     dispatch(reset('compbuilder'));
     dispatch(fetchComps());
@@ -14,18 +14,18 @@ export const adminAddNewComp = comp => async dispatch => {
 };
 
 export const fetchComps = () => async dispatch => {
-  const res = await axios.get('/api/competencies');
+  const res = await axios.get('/api/tmdb/competencies');
   dispatch({ type: FETCH_COMPS, payload: res.data });
 };
 
 export const fetchCompTypes = () => async dispatch => {
-  const res = await axios.get('/api/competencies/type');
+  const res = await axios.get('/api/tmdb/competencies/type');
   dispatch({ type: FETCH_COMP_TYPES, payload: res.data });
 };
 
 export const adminAddCompType = comptype => async dispatch => {
   console.log(comptype);
-  const res = await axios.post('/api/competencies/type', comptype);
+  const res = await axios.post('/api/tmdb/competencies/type', comptype);
   if (res.status === 200) {
     dispatch(reset('compTypes'));
     dispatch(fetchCompTypes());
@@ -35,7 +35,9 @@ export const adminAddCompType = comptype => async dispatch => {
 };
 
 export const adminDeleteCompType = id => async dispatch => {
-  const res = await axios.delete('/api/competencies/type', { params: { id } });
+  const res = await axios.delete('/api/tmdb/competencies/type', {
+    params: { id }
+  });
   if (res.status === 200) {
     dispatch({ type: DELETE_COMP_TYPE, payload: id });
   } else {
