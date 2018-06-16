@@ -11,6 +11,7 @@ const keys = require('./config/keys');
 
 require('./models/user');
 require('./services/passport');
+const authRoutes = require('./routes/authRoutes');
 
 // conenct to mongo db
 mongoose
@@ -35,7 +36,7 @@ app.use(passport.session());
 app.use(morgan('dev'));
 
 // routes
-require('./routes/authRoutes')(app);
+app.use('/api/tmdb/auth', authRoutes);
 require('./routes/courseRoutes')(app);
 require('./routes/compRoutes')(app);
 require('./routes/roleRoutes')(app);

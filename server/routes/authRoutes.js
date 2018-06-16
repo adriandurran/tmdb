@@ -1,23 +1,22 @@
+const express = require('express');
+const router = express.Router();
+
 const passport = require('passport');
 const userController = require('../controllers/userController');
 
-module.exports = app => {
-  // get the current user
-  app.get('/auth/tmdb/current_user', userController.currentUser);
+// get the current user
+router.get('/current_user', userController.currentUser);
 
-  // register new user
-  app.post('/auth/tmdb/register', userController.registerUser);
+// register new user
+router.post('/register', userController.registerUser);
 
-  // login a user
-  app.post(
-    '/auth/tmdb/login',
-    passport.authenticate('tmdb'),
-    userController.loginUser
-  );
-  // logout
-  app.get('/auth/tmdb/logout', userController.logoutUser);
+// login a user
+router.post('/login', passport.authenticate('tmdb'), userController.loginUser);
+// logout
+router.get('/logout', userController.logoutUser);
 
-  // seed super admin this is for dev only............
-  // will change before putting into cloud
-  app.get('/auth/tmdb/start/seedadmin', userController.seedSuperAdmin);
-};
+// seed super admin this is for dev only............
+// will change before putting into cloud
+router.get('/start/seedadmin', userController.seedSuperAdmin);
+
+module.exports = router;

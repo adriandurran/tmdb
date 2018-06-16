@@ -3,7 +3,7 @@ import { FETCH_USER } from './types';
 import { fetchCourses, fetchCourseLevels, fetchCourseTypes } from './courses';
 
 export const fetchUser = () => async dispatch => {
-  const res = await axios.get(`/auth/tmdb/current_user`);
+  const res = await axios.get(`/api/tmdb/auth/current_user`);
   dispatch({ type: FETCH_USER, payload: res.data });
   // need to dispatch the other actions here?
 };
@@ -17,7 +17,7 @@ export const submitNewUser = values => async dispatch => {
     username: email,
     password
   };
-  const res = await axios.post(`/auth/tmdb/register`, {
+  const res = await axios.post(`/api/tmdb/auth/register`, {
     data: { newUser }
   });
   return res.data;
@@ -27,7 +27,7 @@ export const loginUser = values => async dispatch => {
   const { email, password } = values;
   const userDet = { username: email, password: password };
 
-  const res = await axios.post('/auth/tmdb/login', userDet);
+  const res = await axios.post('/api/tmdb/auth/login', userDet);
   dispatch(fetchUser());
   if (res.data.verified) {
     // load up the courses, course types , roles, and competencies

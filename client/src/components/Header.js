@@ -30,7 +30,7 @@ class Header extends Component {
           )}
 
           <Menu.Item>
-            <Button inverted href="/auth/tmdb/logout">
+            <Button inverted href="/api/tmdb/auth/logout">
               Logout
             </Button>
           </Menu.Item>
