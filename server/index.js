@@ -43,7 +43,7 @@ app.use(morgan('dev'));
 app.use('/api/tmdb/auth', authRoutes);
 app.use('/api/tmdb/competencies', compRoutes);
 app.use('/api/tmdb/courses', courseRoutes);
-app.use('api/tmdb/roles', roleRoutes);
+app.use('/api/tmdb/roles', roleRoutes);
 app.use('/api/tmdb/user', userRoutes);
 
 if (process.env.NODE_ENV === 'production') {
