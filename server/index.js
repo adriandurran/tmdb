@@ -14,6 +14,7 @@ require('./services/passport');
 const authRoutes = require('./routes/authRoutes');
 const compRoutes = require('./routes/compRoutes');
 const courseRoutes = require('./routes/courseRoutes');
+const roleRoutes = require('./routes/roleRoutes');
 
 // conenct to mongo db
 mongoose
@@ -41,7 +42,7 @@ app.use(morgan('dev'));
 app.use('/api/tmdb/auth', authRoutes);
 app.use('/api/tmdb/competencies', compRoutes);
 app.use('/api/tmdb/courses', courseRoutes);
-require('./routes/roleRoutes')(app);
+app.use('api/tmdb/roles', roleRoutes);
 require('./routes/userRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
