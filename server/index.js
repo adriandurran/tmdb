@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const helmet = require('helmet');
 
 const morgan = require('morgan');
 
@@ -26,6 +26,7 @@ mongoose
 const app = express();
 
 // middleware
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(
   cookieSession({
