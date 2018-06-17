@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 
 import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import {
-  selectCoursesForDropDown,
-  selectCompetencyTypesForDropDown
-} from '../../../reducers/selectors';
+import { selectCoursesForDropDown } from '../../../reducers/selectors/courseSelectors';
+import { selectCompetencyTypesForDropDown } from '../../../reducers/selectors/compSelectors';
 import { fetchCourses } from '../../../actions/courses';
 import { adminAddNewComp, fetchCompTypes } from '../../../actions/comps';
 
@@ -134,7 +132,10 @@ const mapDispatchToProps = {
   fetchCompTypes
 };
 
-CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);
+CompBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CompBuilder);
 
 export default reduxForm({
   form: 'compbuilder'

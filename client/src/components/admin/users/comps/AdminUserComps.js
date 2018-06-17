@@ -7,7 +7,7 @@ import { List } from 'semantic-ui-react';
 import {
   selectUserManage,
   selectAdminUserRoleComps
-} from '../../../../reducers/selectors';
+} from '../../../../reducers/selectors/adminSelectors';
 
 class AdminUserComps extends Component {
   renderCompCourses(courses) {

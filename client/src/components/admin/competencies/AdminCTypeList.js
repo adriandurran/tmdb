@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, List, Icon } from 'semantic-ui-react';
 
-import { selectCompetencyTypes } from '../../../reducers/selectors';
+import { selectCompetencyTypes } from '../../../reducers/selectors/compSelectors';
 import { fetchCompTypes, adminDeleteCompType } from '../../../actions/comps';
 
 class AdminCTypeList extends Component {
@@ -53,6 +53,9 @@ const mapDispatchToProps = {
   adminDeleteCompType
 };
 
-AdminCTypeList = connect(mapStateToProps, mapDispatchToProps)(AdminCTypeList);
+AdminCTypeList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminCTypeList);
 
 export default AdminCTypeList;

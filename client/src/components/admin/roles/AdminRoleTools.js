@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Header, Card, Icon } from 'semantic-ui-react';
 
 import { fetchRoles } from '../../../actions/roles';
-import { selectRoles } from '../../../reducers/selectors';
+import { selectRoles } from '../../../reducers/selectors/roleSelectors';
 
 class AdminRoleTools extends Component {
   componentDidMount() {
@@ -47,6 +47,9 @@ const mapDispatchToProps = {
   fetchRoles
 };
 
-AdminRoleTools = connect(mapStateToProps, mapDispatchToProps)(AdminRoleTools);
+AdminRoleTools = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminRoleTools);
 
 export default AdminRoleTools;

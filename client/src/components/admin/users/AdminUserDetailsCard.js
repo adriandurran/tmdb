@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Card, Image, Button, Icon } from 'semantic-ui-react';
 
 import { adminVerifyUser, adminAdminiUser } from '../../../actions/user';
-import { selectUserManage } from '../../../reducers/selectors';
+import { selectUserManage } from '../../../reducers/selectors/adminSelectors';
 
 class AdminUserDetailsCard extends Component {
   suspendUser = (e, { value }) => {
@@ -99,8 +99,9 @@ const mapDispatchToProps = {
   adminAdminiUser
 };
 
-AdminUserDetailsCard = connect(mapStateToProps, mapDispatchToProps)(
-  AdminUserDetailsCard
-);
+AdminUserDetailsCard = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserDetailsCard);
 
 export default AdminUserDetailsCard;

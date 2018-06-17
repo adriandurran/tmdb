@@ -4,7 +4,7 @@ import { Table, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { fetchComps } from '../../actions/comps';
-import { selectCompetencies } from '../../reducers/selectors';
+import { selectCompetencies } from '../../reducers/selectors/compSelectors';
 
 class CompsTable extends Component {
   state = {
@@ -127,6 +127,9 @@ const mapDispatchToProps = {
   fetchComps
 };
 
-CompsTable = connect(mapStateToProps, mapDispatchToProps)(CompsTable);
+CompsTable = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CompsTable);
 
 export default CompsTable;

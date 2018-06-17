@@ -4,7 +4,7 @@ import { Table, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { fetchRoles } from '../../actions/roles';
-import { selectRoles } from '../../reducers/selectors';
+import { selectRoles } from '../../reducers/selectors/roleSelectors';
 
 class RolesTable extends Component {
   state = {
@@ -99,6 +99,9 @@ const mapStateToProps = state => {
   };
 };
 
-RolesTable = connect(mapStateToProps, mapDispatchToProps)(RolesTable);
+RolesTable = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RolesTable);
 
 export default RolesTable;

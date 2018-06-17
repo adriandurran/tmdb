@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Button, Menu, Icon } from 'semantic-ui-react';
 
-import { selectCurrentUser } from '../reducers/selectors';
+import { selectCurrentUser } from '../reducers/selectors/userSelectors';
 
 class Header extends Component {
   renderMenus() {

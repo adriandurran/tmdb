@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectUserRoles } from '../../reducers/selectors';
+import { selectUserRoles } from '../../reducers/selectors/userSelectors';
 
 import { Item, Header, Segment } from 'semantic-ui-react';
 

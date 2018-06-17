@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, List, Icon } from 'semantic-ui-react';
 
-import { selectCourseTypes } from '../../../reducers/selectors';
+import { selectCourseTypes } from '../../../reducers/selectors/courseSelectors';
 import { fetchCourseTypes, deleteCourseType } from '../../../actions/courses';
 
 class AdminCTList extends Component {
@@ -53,6 +53,9 @@ const mapDispatchToProps = {
   deleteCourseType
 };
 
-AdminCTList = connect(mapStateToProps, mapDispatchToProps)(AdminCTList);
+AdminCTList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminCTList);
 
 export default AdminCTList;

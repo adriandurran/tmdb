@@ -8,7 +8,7 @@ import AdminUserAccessManage from './AdminUserAccessManage';
 import AdminUsersAdmini from './AdminUsersAdmini';
 
 import { fetchAllUsers } from '../../../../actions/user';
-import { selectCurrentUser } from '../../../../reducers/selectors';
+import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
 
 class AdminUserAccess extends Component {
   componentDidMount() {
@@ -55,6 +55,9 @@ const mapStateToProps = state => {
   };
 };
 
-AdminUserAccess = connect(mapStateToProps, mapDispatchToProps)(AdminUserAccess);
+AdminUserAccess = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserAccess);
 
 export default AdminUserAccess;

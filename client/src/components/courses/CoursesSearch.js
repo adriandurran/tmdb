@@ -9,7 +9,7 @@ import {
   clearCourseSearchResult,
   fetchCourse
 } from '../../actions/courses';
-import { selectCoursesForSearch } from '../../reducers/selectors';
+import { selectCoursesForSearch } from '../../reducers/selectors/courseSelectors';
 
 class CoursesSearch extends Component {
   // when component mounts it fetches courses
@@ -93,6 +93,9 @@ const mapDispatchToProps = {
   fetchCourse
 };
 
-CoursesSearch = connect(mapStateToProps, mapDispatchToProps)(CoursesSearch);
+CoursesSearch = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CoursesSearch);
 
 export default CoursesSearch;

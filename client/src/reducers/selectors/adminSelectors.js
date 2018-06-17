@@ -1,7 +1,14 @@
 import { createSelector } from 'reselect';
+import _ from 'lodash';
 
 // all users
 export const selectAllUsers = state => state.allusers;
+
+// get the user to manage (admin function)
+export const selectUserManage = state => state.user;
+
+// this is for the user being managed
+export const selectAdminUserRoles = state => state.user.roles;
 
 // get all users that require verification
 export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
@@ -74,5 +81,16 @@ export const selectAllUsersCoursesVerify = createSelector(
       }
     });
     return VeriList;
+  }
+);
+
+// get unique competencies for a given role for a user being managed by admin
+export const selectAdminUserRoleComps = createSelector(
+  selectAdminUserRoles,
+  roles => {
+    if (roles === undefined) {
+      return null;
+    }
+    return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
   }
 );

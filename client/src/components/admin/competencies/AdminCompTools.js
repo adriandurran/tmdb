@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Header, Card, Icon } from 'semantic-ui-react';
 
 import { fetchComps } from '../../../actions/comps';
-import { selectCompetencies } from '../../../reducers/selectors';
+import { selectCompetencies } from '../../../reducers/selectors/compSelectors';
 
 class AdminCompTools extends Component {
   componentDidMount() {
@@ -47,6 +47,9 @@ const mapDispatchToProps = {
   fetchComps
 };
 
-AdminCompTools = connect(mapStateToProps, mapDispatchToProps)(AdminCompTools);
+AdminCompTools = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminCompTools);
 
 export default AdminCompTools;

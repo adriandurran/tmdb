@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import { Search } from 'semantic-ui-react';
 
-import { selectCurrentUser } from '../../../reducers/selectors';
+import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
 
 import {
   selectAllUsersForSearch,

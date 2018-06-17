@@ -13,7 +13,7 @@ import {
   selectCourses,
   selectCourseTypes,
   selectCourseLevels
-} from '../../../reducers/selectors';
+} from '../../../reducers/selectors/courseSelectors';
 
 class AdminCourseTools extends Component {
   componentDidMount() {
@@ -94,8 +94,9 @@ const mapDispatchToProps = {
   fetchCourseLevels
 };
 
-AdminCourseTools = connect(mapStateToProps, mapDispatchToProps)(
-  AdminCourseTools
-);
+AdminCourseTools = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminCourseTools);
 
 export default AdminCourseTools;

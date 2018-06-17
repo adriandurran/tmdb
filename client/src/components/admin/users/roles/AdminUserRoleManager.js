@@ -4,10 +4,8 @@ import _ from 'lodash';
 
 import { List, Icon, Button, Select } from 'semantic-ui-react';
 
-import {
-  selectUserManage,
-  selectRolesForDropDown
-} from '../../../../reducers/selectors';
+import { selectRolesForDropDown } from '../../../../reducers/selectors/roleSelectors';
+import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
 
 import { editUserRole } from '../../../../actions/user';
 import { fetchRoles } from '../../../../actions/roles';

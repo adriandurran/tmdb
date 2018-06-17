@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 
 import { Table, Header } from 'semantic-ui-react';
 
-import { selectUserCoursesVerify } from '../../../reducers/selectors';
+import { selectUserCoursesVerify } from '../../../reducers/selectors/userSelectors';
 
 class UserCoursesVerify extends Component {
   state = {

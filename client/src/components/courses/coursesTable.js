@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Table, Header } from 'semantic-ui-react';
 
 import { fetchCourses } from '../../actions/courses';
-import { selectCourses } from '../../reducers/selectors';
+import { selectCourses } from '../../reducers/selectors/courseSelectors';
 
 class CoursesTable extends Component {
   state = {

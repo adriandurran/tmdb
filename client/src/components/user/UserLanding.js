@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Header } from 'semantic-ui-react';
 
 import { fetchUser } from '../../actions/auth';
-import { selectCurrentUser } from '../../reducers/selectors';
+import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
 
 import UserDetailsCard from './UserDetailsCard';
 import UserRoles from './UserRoles';

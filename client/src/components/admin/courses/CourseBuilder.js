@@ -9,7 +9,7 @@ import semanticFormField from '../../shared/semanticFormField';
 import {
   selectCourseTypes,
   selectCourseLevels
-} from '../../../reducers/selectors';
+} from '../../../reducers/selectors/courseSelectors';
 
 import {
   fetchCourseTypes,
@@ -154,7 +154,10 @@ const mapDispatchToProps = {
   fetchCourseTypes
 };
 
-CourseBuilder = connect(mapStateToProps, mapDispatchToProps)(CourseBuilder);
+CourseBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CourseBuilder);
 
 export default reduxForm({
   form: 'coursebuilder'

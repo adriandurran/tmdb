@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { selectCompetenciesForDropDown } from '../../../reducers/selectors';
+import { selectCompetenciesForDropDown } from '../../../reducers/selectors/compSelectors';
 import { fetchComps } from '../../../actions/comps';
 import { adminAddNewRole } from '../../../actions/roles';
 
@@ -104,7 +104,10 @@ const mapStateToProps = state => {
   };
 };
 
-RoleBuilder = connect(mapStateToProps, mapDispatchToProps)(RoleBuilder);
+RoleBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RoleBuilder);
 
 export default reduxForm({
   form: 'rolebuilder'

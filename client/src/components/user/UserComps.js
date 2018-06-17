@@ -6,10 +6,10 @@ import { Item, Header, Segment } from 'semantic-ui-react';
 import {
   selectCurrentUser,
   selectUserRoleComps
-} from '../../reducers/selectors';
+} from '../../reducers/selectors/userSelectors';
 
 // import _ from 'lodash';
-import { selectUserCompetenciesCurrent } from '../../reducers/selectors';
+import { selectUserCompetenciesCurrent } from '../../reducers/selectors/userSelectors';
 
 class UserComps extends Component {
   // renderToolBar(rcomp, ucomp) {

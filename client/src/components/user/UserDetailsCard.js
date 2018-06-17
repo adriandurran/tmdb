@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { Card, Image } from 'semantic-ui-react';
 
-import { selectCurrentUser } from '../../reducers/selectors';
+import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
 
 class UserDetailsCard extends Component {
   render() {
