@@ -36,7 +36,6 @@ class LoginUser extends Component {
                 validate={[required, email]}
                 icon="user"
                 iconPosition="left"
-                type="email"
               />
 
               <Field
