@@ -54,8 +54,24 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
 export const selectAllUsersCoursesVerify = createSelector(
   selectAllUsers,
   allusers => {
-    return allusers.filter(user => {
+    const usersVerifyCourses = allusers.filter(user => {
       return user.courses.length > 0 && !user.courses.verified;
     });
+    const VeriList = [];
+    usersVerifyCourses.map(user => {
+      for (let course in user.courses) {
+        if (!course.verified) {
+          let tmpC = {
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            course: user.courses[course]
+          };
+
+          VeriList.push(tmpC);
+        }
+      }
+    });
+    return VeriList;
   }
 );

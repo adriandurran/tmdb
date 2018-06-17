@@ -8,7 +8,7 @@ import { selectAllUsersCoursesVerify } from '../../../../reducers/selectors/admi
 class AdminUserCoursesManager extends Component {
   renderCourseList() {
     const { courses } = this.props;
-
+    console.log(courses);
     return courses.map((course, index) => {
       return (
         <List.Item key={index}>
@@ -20,8 +20,8 @@ class AdminUserCoursesManager extends Component {
               {course.firstName} {course.lastName}
             </List.Header>
             <List.Description>
-              {course.courses[0]._course.courseName} completed{' '}
-              <Moment fromNow>{course.courses[0].passDate}</Moment>
+              {course.course._course.courseName} completed &nbsp;
+              <Moment fromNow>{course.course.passDate}</Moment>
             </List.Description>
           </List.Content>
         </List.Item>
