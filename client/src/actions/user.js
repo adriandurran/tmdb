@@ -19,6 +19,19 @@ export const addUserCourse = (user, course) => async dispatch => {
   // return res.data;
 };
 
+export const adminVerifyUserCourse = (user, course) => async dispatch => {
+  const res = await axios.patch(`/api/tmdb/user/${user}/verify-course`, {
+    course
+  });
+  if (res.status === 200) {
+    // update redux
+    dispatch({ type: ADMIN_USER_META, payload: res.data });
+  } else {
+    // do nothing but need to communicate this soon
+    console.log(res.data);
+  }
+};
+
 export const fetchUserRoles = roles => async dispatch => {
   dispatch({ type: FETCH_USER_ROLES, payload: roles });
 };

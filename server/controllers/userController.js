@@ -29,13 +29,40 @@ module.exports = {
     res.send(dbUser);
   },
 
+  verifyUserCourse: async (req, res) => {
+    const { course } = req.body;
+    try {
+      const thisUser = await User.findOneAndUpdate(
+        { _id: req.params.id, 'courses._id': course },
+        { $set: { 'courses.$.verified': true } },
+        { new: true }
+      )
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+      return res.status(200).send(thisUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   addUserCourse: async (req, res) => {
     const { course } = req.body;
-    // use the array helper to add
     try {
       const thisUser = await User.findById(req.params.id);
       const courseSet = [...thisUser.courses, course];
-      console.log(courseSet);
+      // console.log(courseSet);
       const newCourse = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { courses: courseSet } },

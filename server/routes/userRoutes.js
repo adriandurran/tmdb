@@ -20,6 +20,14 @@ router.patch(
   userController.editUserRole
 );
 
+// add user course
 router.patch('/:id/course', requireLogin, userController.addUserCourse);
+
+// verify a user course
+router.patch(
+  '/:id/verify-course',
+  requireAdmin,
+  userController.verifyUserCourse
+);
 
 module.exports = router;

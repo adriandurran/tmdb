@@ -59,13 +59,14 @@ export const selectAllUsersCoursesVerify = createSelector(
     });
     const VeriList = [];
     usersVerifyCourses.map(user => {
-      for (let course in user.courses) {
-        if (!course.verified) {
-          let tmpC = {
+      for (let x in user.courses) {
+        let tmpC = {};
+        if (!user.courses[x].verified) {
+          tmpC = {
             _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
-            course: user.courses[course]
+            course: user.courses[x]
           };
 
           VeriList.push(tmpC);

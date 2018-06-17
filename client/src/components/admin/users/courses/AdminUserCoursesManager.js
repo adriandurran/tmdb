@@ -3,25 +3,35 @@ import { connect } from 'react-redux';
 import { Header, List, Button } from 'semantic-ui-react';
 import Moment from 'react-moment';
 
+import { adminVerifyUserCourse } from '../../../../actions/user';
 import { selectAllUsersCoursesVerify } from '../../../../reducers/selectors/adminSelectors';
 
 class AdminUserCoursesManager extends Component {
+  verifyCourse = (e, { value }) => {
+    const { adminVerifyUserCourse } = this.props;
+    adminVerifyUserCourse(value.userId, value.userCourseId);
+  };
+
   renderCourseList() {
-    const { courses } = this.props;
-    console.log(courses);
-    return courses.map((course, index) => {
+    const { users } = this.props;
+    return users.map((user, index) => {
       return (
         <List.Item key={index}>
           <List.Content floated="right">
-            <Button>Verify</Button>
+            <Button
+              onClick={this.verifyCourse}
+              value={{ userCourseId: user.course._id, userId: user._id }}
+            >
+              Verify
+            </Button>
           </List.Content>
           <List.Content>
             <List.Header>
-              {course.firstName} {course.lastName}
+              {user.firstName} {user.lastName}
             </List.Header>
             <List.Description>
-              {course.course._course.courseName} completed &nbsp;
-              <Moment fromNow>{course.course.passDate}</Moment>
+              {user.course._course.courseName} completed &nbsp;
+              <Moment fromNow>{user.course.passDate}</Moment>
             </List.Description>
           </List.Content>
         </List.Item>
@@ -41,12 +51,19 @@ class AdminUserCoursesManager extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  adminVerifyUserCourse
+};
+
 const mapStateToProps = state => {
   return {
-    courses: selectAllUsersCoursesVerify(state)
+    users: selectAllUsersCoursesVerify(state)
   };
 };
 
-AdminUserCoursesManager = connect(mapStateToProps)(AdminUserCoursesManager);
+AdminUserCoursesManager = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserCoursesManager);
 
 export default AdminUserCoursesManager;
