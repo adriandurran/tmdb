@@ -4,11 +4,13 @@ import _ from 'lodash';
 
 import { Search } from 'semantic-ui-react';
 
+import { selectCurrentUser } from '../../../reducers/selectors';
+
 import {
   selectAllUsersForSearch,
-  selectAllUsersForSearchNoAdmins,
-  selectCurrentUser
-} from '../../../reducers/selectors';
+  selectAllUsersForSearchNoAdmins
+} from '../../../reducers/selectors/adminSelectors';
+
 import {
   fetchAllUsers,
   fetchUser,
@@ -105,6 +107,9 @@ const mapStateToProps = state => {
   };
 };
 
-AdminUserSearch = connect(mapStateToProps, mapDispatchToProps)(AdminUserSearch);
+AdminUserSearch = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserSearch);
 
 export default AdminUserSearch;

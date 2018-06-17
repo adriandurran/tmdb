@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import { Header, Card, Icon } from 'semantic-ui-react';
 
 import { fetchAllUsers } from '../../../actions/user';
+
 import {
   selectAllUsers,
+  selectAllUsersCoursesVerify,
   selectAllUsersVerify
-} from '../../../reducers/selectors';
+} from '../../../reducers/selectors/adminSelectors';
 
 class AdminUserTools extends Component {
   componentDidMount() {
@@ -16,7 +18,7 @@ class AdminUserTools extends Component {
     fetchAllUsers();
   }
   render() {
-    const { allusers, allusersverify } = this.props;
+    const { allusers, allusersverify, allcoursesverify } = this.props;
     return (
       <Card.Group itemsPerRow={3}>
         <Card as={Link} to="/admin/user-access-manager" raised>
@@ -48,6 +50,17 @@ class AdminUserTools extends Component {
             <Header as="h5">User Courses Manager</Header>
           </Card.Content>
           <Card.Content description="Verify User Courses" />
+          <Card.Content extra>
+            {allcoursesverify.length > 0 ? (
+              <span>
+                <Icon name="users" color="red" />
+                {allcoursesverify.length} &nbsp; User Courses waiting for
+                verification
+              </span>
+            ) : (
+              <span>No Courses need verification</span>
+            )}
+          </Card.Content>
         </Card>
       </Card.Group>
     );
@@ -61,7 +74,8 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
   return {
     allusers: selectAllUsers(state),
-    allusersverify: selectAllUsersVerify(state)
+    allusersverify: selectAllUsersVerify(state),
+    allcoursesverify: selectAllUsersCoursesVerify(state)
   };
 };
 

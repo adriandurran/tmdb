@@ -110,56 +110,53 @@ export const selectCourseLevels = state => state.courseLevels;
 // get the current user.....t
 export const selectCurrentUser = state => state.auth.user;
 
-// get all the users (admin function)
-export const selectAllUsers = state => state.allusers;
-
 // get the user to manage (admin function)
 export const selectUserManage = state => state.user;
 
-// get all users that require verification
-export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
-  allusers.filter(user => user.verified === false)
-);
+// // get all users that require verification
+// export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
+//   allusers.filter(user => user.verified === false)
+// );
 
-// get all users that are verified
-export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
-  allusers.filter(user => user.verified === true)
-);
+// // get all users that are verified
+// export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
+//   allusers.filter(user => user.verified === true)
+// );
 
-// get the users for the search that are active
-export const selectAllUsersForSearch = createSelector(
-  selectAllUsersActive,
-  allusers => {
-    return allusers.map(user => {
-      return {
-        title: `${user.firstName} ${user.lastName}`,
-        description: user.username,
-        key: user._id
-      };
-    });
-  }
-);
+// // get the users for the search that are active
+// export const selectAllUsersForSearch = createSelector(
+//   selectAllUsersActive,
+//   allusers => {
+//     return allusers.map(user => {
+//       return {
+//         title: `${user.firstName} ${user.lastName}`,
+//         description: user.username,
+//         key: user._id
+//       };
+//     });
+//   }
+// );
 
-// all active users for serach but not admins
-export const selectAllUsersForSearchNoAdmins = createSelector(
-  selectAllUsersActive,
-  allusers => {
-    return allusers
-      .filter(user => !user.isAdmin && !user.isSuperAdmin)
-      .map(user => {
-        return {
-          title: `${user.firstName} ${user.lastName}`,
-          description: user.username,
-          key: user._id
-        };
-      });
-  }
-);
+// // all active users for serach but not admins
+// export const selectAllUsersForSearchNoAdmins = createSelector(
+//   selectAllUsersActive,
+//   allusers => {
+//     return allusers
+//       .filter(user => !user.isAdmin && !user.isSuperAdmin)
+//       .map(user => {
+//         return {
+//           title: `${user.firstName} ${user.lastName}`,
+//           description: user.username,
+//           key: user._id
+//         };
+//       });
+//   }
+// );
 
-// get all users that are admins && active
-export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
-  allusers.filter(user => user.verified === true && user.isAdmin === true)
-);
+// // get all users that are admins && active
+// export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
+//   allusers.filter(user => user.verified === true && user.isAdmin === true)
+// );
 
 // get the user roles for the current/logged in user
 export const selectUserRoles = state => state.auth.user.roles;

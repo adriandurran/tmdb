@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
-import { selectAllUsersAdmins } from '../../../../reducers/selectors';
+import { selectAllUsersAdmins } from '../../../../reducers/selectors/adminSelectors';
 import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
 
 class AdminUsersAdmini extends Component {
@@ -88,8 +88,9 @@ const mapDispatchToProps = {
   adminVerifyUser
 };
 
-AdminUsersAdmini = connect(mapStateToProps, mapDispatchToProps)(
-  AdminUsersAdmini
-);
+AdminUsersAdmini = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUsersAdmini);
 
 export default AdminUsersAdmini;
