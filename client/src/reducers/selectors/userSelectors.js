@@ -82,7 +82,6 @@ export const selectUserCompetenciesCurrent = createSelector(
         let arrCompCoursesId = comp.courses.map(course => course._id);
 
         let compare = _.intersection(arrUserCoursesId, arrCompCoursesId);
-
         if (compare.length >= comp.courses.length) {
           return true;
         }

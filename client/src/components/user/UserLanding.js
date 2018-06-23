@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Grid, Header } from 'semantic-ui-react';
 
 import { fetchUser } from '../../actions/auth';
+import { fetchRoles } from '../../actions/roles';
+import { fetchComps } from '../../actions/comps';
+import { fetchCourses } from '../../actions/courses';
 import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
 
 import UserDetailsCard from './UserDetailsCard';
@@ -14,8 +17,11 @@ import UserCompetencies from './UserComps';
 class UserLanding extends Component {
   componentDidMount() {
     const empId = this.props.match.params.id;
-    const { fetchUser } = this.props;
+    const { fetchUser, fetchRoles, fetchComps, fetchCourses } = this.props;
     fetchUser(empId);
+    fetchRoles();
+    fetchComps();
+    fetchCourses();
   }
 
   render() {
@@ -60,7 +66,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  fetchUser
+  fetchUser,
+  fetchRoles,
+  fetchComps,
+  fetchCourses
 };
 
 UserLanding = connect(

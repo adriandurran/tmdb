@@ -1,51 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import _ from 'lodash';
 
-import { Item, Header, Segment } from 'semantic-ui-react';
+import { Item, Header, Segment, Icon } from 'semantic-ui-react';
 
 import {
-  selectCurrentUser,
+  selectUserCompetenciesCurrent,
   selectUserRoleComps
 } from '../../reducers/selectors/userSelectors';
 
-// import _ from 'lodash';
-import { selectUserCompetenciesCurrent } from '../../reducers/selectors/userSelectors';
+import { compExist } from '../../utils/arrayhelpers';
 
 class UserComps extends Component {
-  // renderToolBar(rcomp, ucomp) {
-  //   let compComp = _.intersection(rcomp, ucomp);
-  //   return (
-  //     <Toolbar>
-  //       <div style={{ flex: '1' }}>
-  //         <Typography variant="title">Competencies</Typography>
-  //       </div>
-  //       {compComp.length < rcomp.length && (
-  //         <Tooltip
-  //           id="comp-warning"
-  //           title="User does not have the required competencies for this role!"
-  //         >
-  //           <WarningIcon style={{ color: 'red' }} />
-  //         </Tooltip>
-  //       )}
-  //       {compComp.length >= rcomp.length && (
-  //         <Tooltip
-  //           id="comp-ok"
-  //           title="User has the required competencies for this role"
-  //         >
-  //           <CheckCircleIcon style={{ color: 'green' }} />
-  //         </Tooltip>
-  //       )}
-  //     </Toolbar>
-  //   );
-  // }
-
   renderReqComps() {
-    const { reqComps } = this.props;
+    const { reqComps, currentComps } = this.props;
     return reqComps.map(comp => {
       return (
         <Item key={comp._id}>
           <Item.Content>
-            <Item.Header>{comp.compName}</Item.Header>
+            <Item.Header>
+              {compExist(comp, currentComps) ? (
+                <Icon name="check circle" color="green" />
+              ) : (
+                <Icon name="exclamation circle" color="red" />
+              )}
+              {comp.compName}
+            </Item.Header>
+            {compExist(comp, currentComps) ? (
+              ''
+            ) : (
+              <Item.Description style={{ color: 'red' }}>
+                You do not have this Competency or the required courses for this
+                Competency are out of date.
+              </Item.Description>
+            )}
             <Item.Extra>
               {comp.courses.length} Courses required for this Competency
             </Item.Extra>
@@ -55,13 +43,14 @@ class UserComps extends Component {
     });
   }
 
+  // add a line for when the comp expires
   renderCurrentComps() {
     const { currentComps } = this.props;
     return currentComps.map(comp => {
       return (
         <Item key={comp._id}>
           <Item.Content>
-            <Item.Header>{comp._id}</Item.Header>
+            <Item.Header>{comp.compName}</Item.Header>
             {/* <Item.Extra>
               {comp.courses.length} Courses required for this Competency
             </Item.Extra> */}
@@ -95,11 +84,11 @@ class UserComps extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: selectCurrentUser(state),
     reqComps: selectUserRoleComps(state),
     currentComps: selectUserCompetenciesCurrent(state)
   };
 };
 
 UserComps = connect(mapStateToProps)(UserComps);
+
 export default UserComps;
