@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import _ from 'lodash';
-
+import Moment from 'react-moment';
 import { Item, Header, Segment, Icon } from 'semantic-ui-react';
 
 import {
   selectUserCompetenciesCurrent,
-  selectUserRoleComps
+  selectUserRoleComps,
+  selectUserCoursesCurrent
 } from '../../reducers/selectors/userSelectors';
 
-import { compExist } from '../../utils/arrayhelpers';
+import { compExist, getUserCoursesForComp } from '../../utils/arrayhelpers';
+import { checkCompExpireDate, expireDate } from '../../utils/datehelpers';
 
 class UserComps extends Component {
   renderReqComps() {
@@ -18,14 +19,18 @@ class UserComps extends Component {
       return (
         <Item key={comp._id}>
           <Item.Content>
-            <Item.Header>
-              {compExist(comp, currentComps) ? (
+            {compExist(comp, currentComps) ? (
+              <Item.Header>
                 <Icon name="check circle" color="green" />
-              ) : (
+                {comp.compName}
+              </Item.Header>
+            ) : (
+              <Item.Header style={{ color: 'red' }}>
                 <Icon name="exclamation circle" color="red" />
-              )}
-              {comp.compName}
-            </Item.Header>
+                {comp.compName}
+              </Item.Header>
+            )}
+
             {compExist(comp, currentComps) ? (
               ''
             ) : (
@@ -43,17 +48,50 @@ class UserComps extends Component {
     });
   }
 
+  renderCompCourses(comp) {
+    const { userCourses } = this.props;
+    let ucs = getUserCoursesForComp(comp, userCourses);
+    return ucs.map(uc => {
+      return (
+        <Item.Extra key={uc._id}>
+          {uc._course.courseName} &nbsp; expires &nbsp;
+          <Moment fromNow>
+            {expireDate(uc.passDate, uc._course.validity)}
+          </Moment>
+        </Item.Extra>
+      );
+    });
+  }
+
   // add a line for when the comp expires
   renderCurrentComps() {
-    const { currentComps } = this.props;
+    const { currentComps, userCourses } = this.props;
+
     return currentComps.map(comp => {
       return (
         <Item key={comp._id}>
           <Item.Content>
-            <Item.Header>{comp.compName}</Item.Header>
-            {/* <Item.Extra>
-              {comp.courses.length} Courses required for this Competency
-            </Item.Extra> */}
+            <Item.Header>
+              {checkCompExpireDate(comp, userCourses) ? (
+                <Icon name="warning" color="orange" />
+              ) : (
+                ''
+              )}
+              {comp.compName}
+            </Item.Header>
+            <Item.Description>
+              {checkCompExpireDate(comp, userCourses) ? (
+                <span style={{ color: 'orange' }}>
+                  One of the required courses for this Competency is due to
+                  expire in 3 or less months
+                </span>
+              ) : (
+                `All ${
+                  comp.courses.length
+                } courses required for this Competency are in date`
+              )}
+            </Item.Description>
+            {this.renderCompCourses(comp)}
           </Item.Content>
         </Item>
       );
@@ -85,7 +123,8 @@ class UserComps extends Component {
 const mapStateToProps = state => {
   return {
     reqComps: selectUserRoleComps(state),
-    currentComps: selectUserCompetenciesCurrent(state)
+    currentComps: selectUserCompetenciesCurrent(state),
+    userCourses: selectUserCoursesCurrent(state)
   };
 };
 

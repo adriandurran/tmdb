@@ -8,3 +8,19 @@ export const compExist = (req, curs) => {
   }
   return false;
 };
+
+// should this be on a selector?????
+export const getUserCoursesForComp = (comp, usercourses) => {
+  let arrCompCoursesId = comp.courses.map(course => course._id);
+  let arrUCourse = [];
+  for (let x in arrCompCoursesId) {
+    let uCourse = usercourses.filter(
+      course => course._course._id === arrCompCoursesId[x]
+    );
+
+    if (uCourse) {
+      arrUCourse.push(uCourse);
+    }
+  }
+  return _.flatten(arrUCourse);
+};
