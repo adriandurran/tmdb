@@ -73,11 +73,16 @@ export const selectUserRoleComps = createSelector(selectUserRoles, roles => {
 export const selectUserCompetenciesCurrent = createSelector(
   selectUserCoursesCurrent,
   selectCompetencies,
-  (curcourses, comps) => {
-    let curlength = curcourses.length;
+  (usercourses, comps) => {
+    let arrUserCoursesId = usercourses.map(course => course._course._id);
+    let curlength = arrUserCoursesId.length;
+
     return comps.filter(comp => {
       if (comp.courses.length <= curlength) {
-        let compare = _.intersection(curcourses, comp.courses);
+        let arrCompCoursesId = comp.courses.map(course => course._id);
+
+        let compare = _.intersection(arrUserCoursesId, arrCompCoursesId);
+
         if (compare.length >= comp.courses.length) {
           return true;
         }

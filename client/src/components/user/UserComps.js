@@ -72,7 +72,6 @@ class UserComps extends Component {
   }
 
   render() {
-    // const { user, userCurrentComps } = this.props;
     return (
       <div>
         <Segment padded>
