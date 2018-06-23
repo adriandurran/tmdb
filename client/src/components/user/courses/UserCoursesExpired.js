@@ -80,8 +80,6 @@ class UserCoursesExpired extends Component {
     const { courses } = this.props;
     const { column, direction } = this.state;
 
-    console.log(courses);
-
     return (
       <div>
         {courses.length > 0 ? (
