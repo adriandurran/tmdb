@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { Table, Header } from 'semantic-ui-react';
 
-import { selectUserCoursesExpired } from '../../../reducers/selectors';
+import { selectUserCoursesExpired } from '../../../reducers/selectors/userSelectors';
 
 class UserCoursesExpired extends Component {
   state = {
@@ -62,11 +62,11 @@ class UserCoursesExpired extends Component {
           <Table.Cell>{_course.level}</Table.Cell>
           <Table.Cell>
             <Moment
+              fromNow
               diff={moment(passDate, 'YYYY-MM-DD').add(
                 _course.validity,
                 'months'
               )}
-              units="days"
             >
               {nowDate}
             </Moment>
@@ -77,10 +77,18 @@ class UserCoursesExpired extends Component {
   }
 
   render() {
+    const { courses } = this.props;
+    const { column, direction } = this.state;
+
+    console.log(courses);
+
     return (
       <div>
         {courses.length > 0 ? (
           <div>
+            <Header as="h3" textAlign="center">
+              Expired Courses
+            </Header>
             <Table sortable celled fixed structured>
               <Table.Header>
                 <Table.Row>

@@ -30,10 +30,10 @@ export const selectUserCoursesCurrent = createSelector(
       .filter(course => {
         if (
           (moment(course.passDate, 'YYYY-MM-DD')
-            .add(course.validity, 'months')
+            .add(course._course.validity, 'months')
             .isAfter(today) &&
             course.verified) ||
-          (course.validity === undefined && course.verified)
+          (course._course.validity === undefined && course.verified)
         ) {
           return true;
         }
@@ -50,7 +50,7 @@ export const selectUserCoursesExpired = createSelector(
   usercourses => {
     return usercourses.filter(course =>
       moment(course.passDate, 'YYYY-MM-DD')
-        .add(course.validity, 'months')
+        .add(course._course.validity, 'months')
         .isBefore(Date.now())
     );
   }
