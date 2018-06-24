@@ -31,3 +31,6 @@ export const FETCH_COMPS = 'fetch_competencies';
 export const FETCH_COMP_TYPES = 'fetch_comp_types';
 export const ADD_COMP_TYPE = 'add_comp_type';
 export const DELETE_COMP_TYPE = 'delete_comp_type';
+
+export const CLEAR_COMPETENCY = 'clear_competency';
+export const FETCH_COMPETENCY = 'fetch_competency';

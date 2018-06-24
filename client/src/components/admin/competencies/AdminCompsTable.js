@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import { Table, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-import { fetchComps } from '../../actions/comps';
-import { selectCompetencies } from '../../reducers/selectors/compSelectors';
+import { fetchComps, fetchCompetency } from '../../../actions/comps';
+import {
+  selectCompetencies,
+  selectCompetency
+} from '../../../reducers/selectors/compSelectors';
 
 class CompsTable extends Component {
   state = {
@@ -35,6 +38,7 @@ class CompsTable extends Component {
   rowClick = id => {
     // console.log(id);
     this.setState({ openModal: true });
+    this.props.fetchCompetency(id);
   };
 
   onCloseModal = () => {
@@ -119,12 +123,14 @@ class CompsTable extends Component {
 
 const mapStateToProps = state => {
   return {
-    comps: selectCompetencies(state)
+    comps: selectCompetencies(state),
+    comp: selectCompetency(state)
   };
 };
 
 const mapDispatchToProps = {
-  fetchComps
+  fetchComps,
+  fetchCompetency
 };
 
 CompsTable = connect(

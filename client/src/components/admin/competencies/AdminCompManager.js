@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import CompBuilder from './CompBuilder';
-import CompsTable from '../../competencies/compsTable';
+import AdminCompsTable from './AdminCompsTable';
 import AdminCompTypes from './AdminCompTypes';
 
 const AdminCompManager = props => {
@@ -19,7 +19,7 @@ const AdminCompManager = props => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column>
-          <CompsTable />
+          <AdminCompsTable />
         </Grid.Column>
       </Grid.Row>
     </Grid>

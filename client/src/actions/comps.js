@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
 
-import { FETCH_COMPS, DELETE_COMP_TYPE, FETCH_COMP_TYPES } from './types';
+import {
+  FETCH_COMPS,
+  DELETE_COMP_TYPE,
+  FETCH_COMP_TYPES,
+  CLEAR_COMPETENCY,
+  FETCH_COMPETENCY
+} from './types';
 
 export const adminAddNewComp = comp => async dispatch => {
   const res = await axios.post('/api/tmdb/competencies', comp);
@@ -43,4 +49,13 @@ export const adminDeleteCompType = id => async dispatch => {
   } else {
     console.log('not deleted');
   }
+};
+
+export const fetchCompetency = id => async dispatch => {
+  // clear the competency
+  dispatch({ type: CLEAR_COMPETENCY });
+  // add the competency
+  const res = await axios.get(`/api/tmdb/competencies/${id}`);
+
+  dispatch({ type: FETCH_COMPETENCY, payload: res.data });
 };

@@ -6,6 +6,9 @@ import { selectRoles } from './roleSelectors';
 // competencies
 export const selectCompetencies = state => state.comps;
 
+// competency
+export const selectCompetency = state => state.comp;
+
 export const selectCompetenciesForDropDown = createSelector(
   selectCompetencies,
   comps => {

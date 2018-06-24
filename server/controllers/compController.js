@@ -33,5 +33,12 @@ module.exports = {
     } else {
       res.sendStatus(418);
     }
+  },
+
+  getCompetency: async (req, res) => {
+    const dbComp = await Competency.findById(req.params.id)
+      .populate('courses')
+      .populate('compType');
+    res.send(dbComp);
   }
 };
