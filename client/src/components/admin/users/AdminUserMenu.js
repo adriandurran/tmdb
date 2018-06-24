@@ -26,7 +26,7 @@ const AdminUserMenu = props => {
           <Dropdown.Item
             name="User Course Manager"
             as={Link}
-            to="/admin/user-course-manager"
+            to="/admin/user-courses-manager"
           >
             <Icon name="user circle outline" />
             User Course Manager

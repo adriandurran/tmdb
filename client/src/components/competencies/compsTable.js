@@ -33,7 +33,7 @@ class CompsTable extends Component {
   }
 
   rowClick = id => {
-    console.log(id);
+    // console.log(id);
     this.setState({ openModal: true });
   };
 
