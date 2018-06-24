@@ -10,10 +10,7 @@ import {
   selectUserManageCompetenciesCurrent
 } from '../../../../reducers/selectors/adminSelectors';
 
-import {
-  compExist,
-  getUserCoursesForComp
-} from '../../../../utils/arrayhelpers';
+import { compExist } from '../../../../utils/arrayhelpers';
 
 import { fetchComps } from '../../../../actions/comps';
 

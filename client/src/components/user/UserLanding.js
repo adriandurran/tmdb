@@ -12,7 +12,8 @@ import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
 import UserDetailsCard from './UserDetailsCard';
 import UserRoles from './UserRoles';
 import UserCourses from './courses/UserCourses';
-import UserCompetencies from './UserComps';
+import UserComps from './comps/UserComps';
+import UserReqComps from './comps/UserReqComps';
 
 class UserLanding extends Component {
   componentDidMount() {
@@ -43,7 +44,12 @@ class UserLanding extends Component {
                 <UserRoles />
               </Grid.Column>
               <Grid.Column>
-                <UserCompetencies />
+                <UserReqComps />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <UserComps />
               </Grid.Column>
             </Grid.Row>
 
