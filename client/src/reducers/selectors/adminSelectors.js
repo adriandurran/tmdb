@@ -127,7 +127,7 @@ export const selectUserManageCoursesExpired = createSelector(
 );
 
 // courses waiting for verification
-export const SelectUserManageCoursesVerify = createSelector(
+export const selectUserManageCoursesVerify = createSelector(
   selectUserManageCourses,
   usercourses => {
     return coursesVerify(usercourses);

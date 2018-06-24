@@ -79,6 +79,7 @@ class AdminUserComps extends Component {
     });
   }
 
+  // TODO ---- need to add in check on the courses to see if any expire within 3 months
   renderCurrentComps() {
     const { currentComps, user } = this.props;
     if (_.isEmpty(user)) {
