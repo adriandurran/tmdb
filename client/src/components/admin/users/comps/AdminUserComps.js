@@ -9,7 +9,13 @@ import {
   selectAdminUserRoleComps
 } from '../../../../reducers/selectors/adminSelectors';
 
+import { fetchComps } from '../../../../actions/comps';
+
 class AdminUserComps extends Component {
+  componentDidMount() {
+    this.props.fetchComps();
+  }
+
   renderCompCourses(courses) {
     return courses.map(course => {
       return (
@@ -63,6 +69,10 @@ class AdminUserComps extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  fetchComps
+};
+
 const mapStateToProps = state => {
   return {
     reqComps: selectAdminUserRoleComps(state),
@@ -70,6 +80,9 @@ const mapStateToProps = state => {
   };
 };
 
-AdminUserComps = connect(mapStateToProps)(AdminUserComps);
+AdminUserComps = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminUserComps);
 
 export default AdminUserComps;

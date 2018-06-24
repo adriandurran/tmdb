@@ -2,6 +2,12 @@ import { createSelector } from 'reselect';
 import _ from 'lodash';
 import moment from 'moment';
 
+import {
+  coursesCurrentVerified,
+  coursesExpired,
+  coursesVerify
+} from './utils/courseFilters';
+
 import { selectCompetencies } from './compSelectors';
 
 // get the current user.....t
@@ -25,22 +31,7 @@ export const selectUserCourses = state => state.auth.user.courses;
 export const selectUserCoursesCurrent = createSelector(
   selectUserCourses,
   usercourses => {
-    let today = moment(new Date(), 'YYYY-MM-DD').format();
-    return usercourses
-      .filter(course => {
-        if (
-          (moment(course.passDate, 'YYYY-MM-DD')
-            .add(course._course.validity, 'months')
-            .isAfter(today) &&
-            course.verified) ||
-          (course._course.validity === undefined && course.verified)
-        ) {
-          return true;
-        }
-
-        return false;
-      })
-      .map(course => course);
+    return coursesCurrentVerified(usercourses);
   }
 );
 
@@ -48,11 +39,7 @@ export const selectUserCoursesCurrent = createSelector(
 export const selectUserCoursesExpired = createSelector(
   selectUserCourses,
   usercourses => {
-    return usercourses.filter(course =>
-      moment(course.passDate, 'YYYY-MM-DD')
-        .add(course._course.validity, 'months')
-        .isBefore(Date.now())
-    );
+    return coursesExpired(usercourses);
   }
 );
 
@@ -60,11 +47,12 @@ export const selectUserCoursesExpired = createSelector(
 export const selectUserCoursesVerify = createSelector(
   selectUserCourses,
   usercourses => {
-    return usercourses.filter(course => !course.verified);
+    return coursesVerify(usercourses);
   }
 );
 
 // get unique competencies for a given role for a user
+// need to filter by required competencies
 export const selectUserRoleComps = createSelector(selectUserRoles, roles => {
   return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
 });

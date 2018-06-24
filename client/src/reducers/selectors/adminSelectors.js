@@ -1,14 +1,15 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
+import moment from 'moment';
+
+import {
+  coursesCurrentVerified,
+  coursesExpired,
+  coursesVerify
+} from './utils/courseFilters';
 
 // all users
 export const selectAllUsers = state => state.allusers;
-
-// get the user to manage (admin function)
-export const selectUserManage = state => state.user;
-
-// this is for the user being managed
-export const selectAdminUserRoles = state => state.user.roles;
 
 // get all users that require verification
 export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
@@ -84,7 +85,18 @@ export const selectAllUsersCoursesVerify = createSelector(
   }
 );
 
+// MANAGED USER MANAGED USER
+
+// get the user to manage (admin function)
+export const selectUserManage = state => state.user;
+// get the courses for the current managed user
+export const selectUserManageCourses = state => state.user.courses;
+
+// this is for the user being managed
+export const selectAdminUserRoles = state => state.user.roles;
+
 // get unique competencies for a given role for a user being managed by admin
+// need to filter by required ----- doing this on the component already
 export const selectAdminUserRoleComps = createSelector(
   selectAdminUserRoles,
   roles => {
@@ -94,3 +106,30 @@ export const selectAdminUserRoleComps = createSelector(
     return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
   }
 );
+
+// Current and verified courses
+export const selectUserManageCoursesCurrent = createSelector(
+  selectUserManageCourses,
+  usercourses => {
+    return coursesCurrentVerified(usercourses);
+  }
+);
+
+//  expired courses
+export const selectUserManageCoursesExpired = createSelector(
+  selectUserManageCourses,
+  usercourses => {
+    return coursesExpired(usercourses);
+  }
+);
+
+// courses waiting for verification
+export const SelectUserManageCoursesVerify = createSelector(
+  selectUserManageCourses,
+  usercourses => {
+    return coursesVerify(usercourses);
+  }
+);
+
+// compare users current courses to competencies to find what competencies he has
+export const selectUserManageCompetenciesCurrent = createSelector();
