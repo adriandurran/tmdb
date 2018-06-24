@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { Item, Header, Segment, Icon } from 'semantic-ui-react';
+import { Header, Segment, Icon, Card } from 'semantic-ui-react';
+
+// change this to a card group
 
 import {
   selectUserCompetenciesCurrent,
@@ -18,12 +20,12 @@ class UserComps extends Component {
     let ucs = getUserCoursesForComp(comp, userCourses);
     return ucs.map(uc => {
       return (
-        <Item.Extra key={uc._id}>
+        <Card.Content extra key={uc._id}>
           {uc._course.courseName} &nbsp; expires &nbsp;
           <Moment fromNow>
             {expireDate(uc.passDate, uc._course.validity)}
           </Moment>
-        </Item.Extra>
+        </Card.Content>
       );
     });
   }
@@ -34,17 +36,15 @@ class UserComps extends Component {
 
     return currentComps.map(comp => {
       return (
-        <Item key={comp._id}>
-          <Item.Content>
-            <Item.Header>
-              {checkCompExpireDate(comp, userCourses) ? (
-                <Icon name="warning" color="orange" />
-              ) : (
-                ''
-              )}
-              {comp.compName}
-            </Item.Header>
-            <Item.Description>
+        <Card key={comp._id}>
+          <Card.Content>
+            {checkCompExpireDate(comp, userCourses) ? (
+              <Icon floated="right" name="warning" color="orange" />
+            ) : (
+              ''
+            )}
+            <Card.Header>{comp.compName}</Card.Header>
+            <Card.Description>
               {checkCompExpireDate(comp, userCourses) ? (
                 <span style={{ color: 'orange' }}>
                   One of the required courses for this Competency is due to
@@ -55,10 +55,10 @@ class UserComps extends Component {
                   comp.courses.length
                 } courses required for this Competency are in date`
               )}
-            </Item.Description>
+            </Card.Description>
             {this.renderCompCourses(comp)}
-          </Item.Content>
-        </Item>
+          </Card.Content>
+        </Card>
       );
     });
   }
@@ -71,7 +71,7 @@ class UserComps extends Component {
             Competencies
             <Header.Subheader>Current</Header.Subheader>
           </Header>
-          <Item.Group>{this.renderCurrentComps()}</Item.Group>
+          <Card.Group>{this.renderCurrentComps()}</Card.Group>
         </Segment>
       </div>
     );
