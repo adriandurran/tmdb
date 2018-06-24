@@ -1,6 +1,10 @@
 import moment from 'moment';
 
 export const coursesCurrentVerified = courses => {
+  if (courses === undefined) {
+    return null;
+  }
+
   let today = moment(new Date(), 'YYYY-MM-DD').format();
   return courses
     .filter(course => {
@@ -20,6 +24,9 @@ export const coursesCurrentVerified = courses => {
 };
 
 export const coursesExpired = courses => {
+  if (courses === undefined) {
+    return null;
+  }
   return courses.filter(course =>
     moment(course.passDate, 'YYYY-MM-DD')
       .add(course._course.validity, 'months')
@@ -28,5 +35,8 @@ export const coursesExpired = courses => {
 };
 
 export const coursesVerify = courses => {
+  if (courses === undefined) {
+    return null;
+  }
   return courses.filter(course => !course.verified);
 };

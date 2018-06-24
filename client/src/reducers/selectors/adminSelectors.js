@@ -1,12 +1,15 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
-import moment from 'moment';
 
 import {
   coursesCurrentVerified,
   coursesExpired,
   coursesVerify
 } from './utils/courseFilters';
+
+import { compsUserCurrent } from './utils/compHelpers';
+
+import { selectCompetencies } from './compSelectors';
 
 // all users
 export const selectAllUsers = state => state.allusers;
@@ -132,4 +135,10 @@ export const SelectUserManageCoursesVerify = createSelector(
 );
 
 // compare users current courses to competencies to find what competencies he has
-export const selectUserManageCompetenciesCurrent = createSelector();
+export const selectUserManageCompetenciesCurrent = createSelector(
+  selectUserManageCoursesCurrent,
+  selectCompetencies,
+  (courses, comps) => {
+    return compsUserCurrent(courses, comps);
+  }
+);

@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { List } from 'semantic-ui-react';
+import { List, Header } from 'semantic-ui-react';
 
 import {
   selectUserManage,
-  selectAdminUserRoleComps
+  selectAdminUserRoleComps,
+  selectUserManageCompetenciesCurrent
 } from '../../../../reducers/selectors/adminSelectors';
+
+import {
+  compExist,
+  getUserCoursesForComp
+} from '../../../../utils/arrayhelpers';
 
 import { fetchComps } from '../../../../actions/comps';
 
@@ -30,7 +36,7 @@ class AdminUserComps extends Component {
   }
 
   renderReqComps() {
-    const { reqComps, user } = this.props;
+    const { reqComps, user, currentComps } = this.props;
     if (_.isEmpty(user)) {
       return <List.Content description="No User Roles" />;
     }
@@ -44,6 +50,21 @@ class AdminUserComps extends Component {
       }
       return (
         <List.Item key={comp._id}>
+          {compExist(comp, currentComps) ? (
+            <List.Icon
+              name="check circle"
+              color="green"
+              size="large"
+              verticalAlign="middle"
+            />
+          ) : (
+            <List.Icon
+              name="exclamation circle"
+              color="red"
+              size="large"
+              verticalAlign="middle"
+            />
+          )}
           <List.Content>
             <List.Header>
               {comp.compName} {comp.compType && compSt}
@@ -58,11 +79,40 @@ class AdminUserComps extends Component {
     });
   }
 
+  renderCurrentComps() {
+    const { currentComps, user } = this.props;
+    if (_.isEmpty(user)) {
+      return <List.Content description="No User selected" />;
+    }
+    if (currentComps.length === 0) {
+      return <List.Content description="No User Competencies" />;
+    }
+
+    return currentComps.map(comp => {
+      return (
+        <List.Item key={comp._id}>
+          <List.Content>
+            <List.Header>{comp.compName}</List.Header>
+            <List.Description>
+              {comp.courses.length} Courses required for Competency
+            </List.Description>
+          </List.Content>
+        </List.Item>
+      );
+    });
+  }
+
   render() {
     return (
       <div>
         <List divided verticalAlign="middle">
           {this.renderReqComps()}
+        </List>
+        <Header as="h4" textAlign="center">
+          Current Competencies
+        </Header>
+        <List divided verticalAlign="middle">
+          {this.renderCurrentComps()}
         </List>
       </div>
     );
@@ -76,7 +126,8 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
   return {
     reqComps: selectAdminUserRoleComps(state),
-    user: selectUserManage(state)
+    user: selectUserManage(state),
+    currentComps: selectUserManageCompetenciesCurrent(state)
   };
 };
 

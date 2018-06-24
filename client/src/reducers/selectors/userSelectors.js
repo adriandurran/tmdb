@@ -1,12 +1,13 @@
 import { createSelector } from 'reselect';
 import _ from 'lodash';
-import moment from 'moment';
 
 import {
   coursesCurrentVerified,
   coursesExpired,
   coursesVerify
 } from './utils/courseFilters';
+
+import { compsUserCurrent } from './utils/compHelpers';
 
 import { selectCompetencies } from './compSelectors';
 
@@ -62,19 +63,6 @@ export const selectUserCompetenciesCurrent = createSelector(
   selectUserCoursesCurrent,
   selectCompetencies,
   (usercourses, comps) => {
-    let arrUserCoursesId = usercourses.map(course => course._course._id);
-    let curlength = arrUserCoursesId.length;
-
-    return comps.filter(comp => {
-      if (comp.courses.length <= curlength) {
-        let arrCompCoursesId = comp.courses.map(course => course._id);
-
-        let compare = _.intersection(arrUserCoursesId, arrCompCoursesId);
-        if (compare.length >= comp.courses.length) {
-          return true;
-        }
-      }
-      return false;
-    });
+    return compsUserCurrent(usercourses, comps);
   }
 );
