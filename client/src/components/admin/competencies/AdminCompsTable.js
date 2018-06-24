@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Table, Header, Modal } from 'semantic-ui-react';
+import { Table, Header, Modal, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
 
 import { fetchComps, fetchCompetency } from '../../../actions/comps';
 import {
@@ -9,12 +10,15 @@ import {
   selectCompetency
 } from '../../../reducers/selectors/compSelectors';
 
-class CompsTable extends Component {
+import semanticFormField from '../../shared/semanticFormField';
+
+class AdminCompsTable extends Component {
   state = {
     column: null,
     data: [],
     direction: null,
-    openModal: false
+    openModal: false,
+    comp: {}
   };
 
   componentDidMount() {
@@ -36,13 +40,20 @@ class CompsTable extends Component {
   }
 
   rowClick = id => {
-    // console.log(id);
-    this.setState({ openModal: true });
-    this.props.fetchCompetency(id);
+    const { comp, fetchCompetency } = this.props;
+    fetchCompetency(id).then(() => {
+      this.setState({
+        comp,
+        openModal: true
+      });
+    });
   };
 
   onCloseModal = () => {
-    this.setState({ openModal: false });
+    this.setState({
+      comp: {},
+      openModal: false
+    });
   };
 
   handleSort = clickedColumn => () => {
@@ -64,8 +75,37 @@ class CompsTable extends Component {
     });
   };
 
+  editComp = values => {};
+
+  renderCompsForm() {
+    const { handleSubmit, submitting, pristine } = this.props;
+    return (
+      <Form onSubmit={handleSubmit(values => this.editComp(values))}>
+        <Form.Group>
+          <Field
+            fluid
+            component={semanticFormField}
+            as={Form.Input}
+            type="text"
+            name="shortName"
+            placeholder="Short name"
+          />
+          <Field
+            fluid
+            name="compName"
+            component={semanticFormField}
+            as={Form.Input}
+            type="text"
+            placeholder="Competency Name"
+          />
+        </Form.Group>
+      </Form>
+    );
+  }
+
   render() {
     const { column, data, direction } = this.state;
+    const { comp } = this.props;
 
     return (
       <div>
@@ -109,11 +149,18 @@ class CompsTable extends Component {
         <Modal open={this.state.openModal} onClose={this.onCloseModal}>
           <Modal.Header>Edit Competency</Modal.Header>
           <Modal.Content>
-            <Modal.Description>
-              <Header>Edit Competency</Header>
-              <p>This is still in development.</p>
-              <p>Coming soon</p>
-            </Modal.Description>
+            {!_.isEmpty(comp) ? (
+              <Modal.Description>
+                <Header>
+                  {comp.shortName} - {comp.compName}
+                </Header>
+                {this.renderCompsForm()}
+              </Modal.Description>
+            ) : (
+              <Modal.Description>
+                <Header>No Competency selected</Header>
+              </Modal.Description>
+            )}
           </Modal.Content>
         </Modal>
       </div>
@@ -133,9 +180,17 @@ const mapDispatchToProps = {
   fetchCompetency
 };
 
-CompsTable = connect(
+AdminCompsTable = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CompsTable);
+)(AdminCompsTable);
 
-export default CompsTable;
+AdminCompsTable = connect(state => ({ initialValues: state.comp }))(
+  AdminCompsTable
+);
+
+export default reduxForm({
+  form: 'compeditor'
+})(AdminCompsTable);
+
+// state => ({ initialValues: state.comp }),

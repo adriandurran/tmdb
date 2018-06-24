@@ -30,7 +30,7 @@ class CompBuilder extends Component {
     });
   };
 
-  submitNewComp(values, dispatch) {
+  submitNewComp(values) {
     const { adminAddNewComp } = this.props;
     let newComp = {
       compName: values.compName,
