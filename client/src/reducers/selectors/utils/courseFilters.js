@@ -40,3 +40,17 @@ export const coursesVerify = courses => {
   }
   return courses.filter(course => !course.verified);
 };
+
+// returns the user id and only their active courses
+export const coursesActiveUser = users => {
+  return users.reduce((result, user) => {
+    let currentCourses = coursesCurrentVerified(user.courses);
+    if (currentCourses.length > 0) {
+      result.push({
+        _id: user._id,
+        currentCourses
+      });
+    }
+    return result;
+  }, []);
+};

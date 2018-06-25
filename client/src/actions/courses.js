@@ -75,6 +75,7 @@ export const clearCourseSearchResult = () => dispatch => {
 };
 
 export const fetchCourse = id => async dispatch => {
+  dispatch(clearCourseSearchResult());
   const res = await axios.get(`/api/tmdb/courses/${id}`);
   dispatch({ type: FETCH_COURSE, payload: res.data });
 };

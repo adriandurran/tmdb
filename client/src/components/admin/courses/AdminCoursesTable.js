@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Table, Header } from 'semantic-ui-react';
 
-import { fetchCourses } from '../../../actions/courses';
+import { fetchCourses, fetchCourse } from '../../../actions/courses';
 import { selectCourses } from '../../../reducers/selectors/courseSelectors';
 
 class CoursesTable extends Component {
@@ -53,8 +53,10 @@ class CoursesTable extends Component {
   };
 
   rowClick = id => {
-    const { history } = this.props;
-    history.push(`/admin/course-manager/view/${id}`);
+    const { history, fetchCourse } = this.props;
+    fetchCourse(id).then(() => {
+      history.push(`/admin/course-manager/view/${id}`);
+    });
   };
 
   renderTableBody() {
@@ -137,7 +139,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  fetchCourses
+  fetchCourses,
+  fetchCourse
 };
 
 CoursesTable = connect(

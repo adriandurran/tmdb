@@ -4,12 +4,14 @@ import _ from 'lodash';
 import {
   coursesCurrentVerified,
   coursesExpired,
-  coursesVerify
+  coursesVerify,
+  coursesActiveUser
 } from './utils/courseFilters';
 
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 
 import { selectCompetencies, selectCompetency } from './compSelectors';
+import { selectCourse } from './courseSelectors';
 
 // all users
 export const selectAllUsers = state => state.allusers;
@@ -150,16 +152,7 @@ export const selectUsersCompetencyHolders = createSelector(
   (users, comp) => {
     // first of all get a list of all users that have current courses.
     // return only current courses
-    let allUsersCurrent = users.reduce((result, user) => {
-      let currentCourses = coursesCurrentVerified(user.courses);
-      if (currentCourses.length > 0) {
-        result.push({
-          _id: user._id,
-          currentCourses
-        });
-      }
-      return result;
-    }, []);
+    let allUsersCurrent = coursesActiveUser(users);
     // compare ?intersection? with competency courses to see if they have the comp
     let compHolders = allUsersCurrent
       .filter(user => compsHolderCheck(user.currentCourses, comp))
@@ -168,6 +161,26 @@ export const selectUsersCompetencyHolders = createSelector(
     // return these users. full details
     return users.filter(user => {
       return _.includes(compHolders, user._id);
+    });
+  }
+);
+
+export const selectUsersCourseHolders = createSelector(
+  selectAllUsersActive,
+  selectCourse,
+  (users, course) => {
+    // get all the indate courses for a user
+    let allUsersCurrent = coursesActiveUser(users);
+
+    // return only users who have the course
+    let courseHolders = allUsersCurrent
+      .filter(user => {
+        return _.includes(user.courses.map(course => course._id), course._id);
+      })
+      .map(user => user._id);
+
+    return users.filter(user => {
+      return _.includes(courseHolders, user._id);
     });
   }
 );
