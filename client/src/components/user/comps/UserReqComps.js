@@ -16,25 +16,44 @@ class UserReqComps extends Component {
   renderReqComps() {
     const { reqComps, currentComps } = this.props;
     return reqComps.map(comp => {
+      let cType = 'Required';
+      if (comp.compType) {
+        cType = comp.compType.compType;
+      }
       return (
         <Item key={comp._id}>
           <Item.Content>
             {compExist(comp, currentComps) ? (
               <Item.Header>
                 <Icon name="check circle" color="green" />
-                {comp.compName}
+                {comp.compName} - {cType}
               </Item.Header>
             ) : (
-              <Item.Header style={{ color: 'red' }}>
-                <Icon name="exclamation circle" color="red" />
-                {comp.compName}
+              <Item.Header
+                style={
+                  cType === 'Required' ? { color: 'red' } : { color: 'orange' }
+                }
+              >
+                <Icon
+                  name={
+                    cType === 'Required'
+                      ? 'exclamation circle'
+                      : 'exclamation triangle'
+                  }
+                  color={cType === 'Required' ? 'red' : 'orange'}
+                />
+                {comp.compName} - {cType}
               </Item.Header>
             )}
 
             {compExist(comp, currentComps) ? (
               ''
             ) : (
-              <Item.Description style={{ color: 'red' }}>
+              <Item.Description
+                style={
+                  cType === 'Required' ? { color: 'red' } : { color: 'orange' }
+                }
+              >
                 You do not have this Competency or the required courses for this
                 Competency are out of date.
               </Item.Description>
@@ -69,7 +88,6 @@ class UserReqComps extends Component {
         <Segment padded>
           <Header as="h2" textAlign="center">
             Competencies
-            <Header.Subheader>Required</Header.Subheader>
           </Header>
           <Item.Group>{this.renderReqComps()}</Item.Group>
         </Segment>

@@ -38,12 +38,14 @@ class UserComps extends Component {
       return (
         <Card key={comp._id}>
           <Card.Content>
-            {checkCompExpireDate(comp, userCourses) ? (
-              <Icon floated="right" name="warning" color="orange" />
-            ) : (
-              ''
-            )}
-            <Card.Header>{comp.compName}</Card.Header>
+            <Card.Header>
+              {checkCompExpireDate(comp, userCourses) ? (
+                <Icon name="warning" color="orange" />
+              ) : (
+                ''
+              )}
+              {comp.compName}
+            </Card.Header>
             <Card.Description>
               {checkCompExpireDate(comp, userCourses) ? (
                 <span style={{ color: 'orange' }}>
