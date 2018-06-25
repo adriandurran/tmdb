@@ -7,9 +7,9 @@ import {
   coursesVerify
 } from './utils/courseFilters';
 
-import { compsUserCurrent } from './utils/compHelpers';
+import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 
-import { selectCompetencies } from './compSelectors';
+import { selectCompetencies, selectCompetency } from './compSelectors';
 
 // all users
 export const selectAllUsers = state => state.allusers;
@@ -140,5 +140,34 @@ export const selectUserManageCompetenciesCurrent = createSelector(
   selectCompetencies,
   (courses, comps) => {
     return compsUserCurrent(courses, comps);
+  }
+);
+
+// find all users who hold a given competency
+export const selectUsersCompetencyHolders = createSelector(
+  selectAllUsersActive,
+  selectCompetency,
+  (users, comp) => {
+    // first of all get a list of all users that have current courses.
+    // return only current courses
+    let allUsersCurrent = users.reduce((result, user) => {
+      let currentCourses = coursesCurrentVerified(user.courses);
+      if (currentCourses.length > 0) {
+        result.push({
+          _id: user._id,
+          currentCourses
+        });
+      }
+      return result;
+    }, []);
+    // compare ?intersection? with competency courses to see if they have the comp
+    let compHolders = allUsersCurrent
+      .filter(user => compsHolderCheck(user.currentCourses, comp))
+      .map(user => user._id);
+
+    // return these users. full details
+    return users.filter(user => {
+      return _.includes(compHolders, user._id);
+    });
   }
 );
