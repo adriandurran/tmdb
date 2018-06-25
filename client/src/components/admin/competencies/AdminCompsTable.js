@@ -36,7 +36,7 @@ class AdminCompsTable extends Component {
     const { fetchCompetency, history } = this.props;
     fetchCompetency(id).then(() => {
       // open new page
-      history.push(`/admin/comp-manager/edit/${id}`);
+      history.push(`/admin/comp-manager/view/${id}`);
     });
   };
 
