@@ -7,6 +7,8 @@ import { Table, Header } from 'semantic-ui-react';
 
 import { selectUserCoursesCurrent } from '../../../reducers/selectors/userSelectors';
 
+import { expireDate } from '../../../utils/datehelpers';
+
 class UserCoursesCurrent extends Component {
   state = {
     column: null,
@@ -69,6 +71,9 @@ class UserCoursesCurrent extends Component {
           <Table.Cell>
             <Moment fromNow>{passDate}</Moment>
           </Table.Cell>
+          <Table.Cell>
+            <Moment fromNow>{expireDate(passDate, _course.validity)}</Moment>
+          </Table.Cell>
         </Table.Row>
       );
     });
@@ -117,6 +122,12 @@ class UserCoursesCurrent extends Component {
                     onClick={this.handleSort('passDate')}
                   >
                     Passed
+                  </Table.HeaderCell>
+                  <Table.HeaderCell
+                    sorted={column === 'expireDate' ? direction : null}
+                    onClick={this.handleSort('expireDate')}
+                  >
+                    Expires
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
