@@ -12,7 +12,11 @@ import {
 } from '../../../reducers/selectors/userSelectors';
 
 import { getUserCoursesForComp } from '../../../utils/arrayhelpers';
-import { checkCompExpireDate, expireDate } from '../../../utils/datehelpers';
+import {
+  checkCompExpireDate,
+  expireDate,
+  expireMonths
+} from '../../../utils/datehelpers';
 
 class UserComps extends Component {
   renderCompCourses(comp) {
@@ -20,7 +24,17 @@ class UserComps extends Component {
     let ucs = getUserCoursesForComp(comp, userCourses);
     return ucs.map(uc => {
       return (
-        <Card.Content extra key={uc._id}>
+        <Card.Content
+          extra
+          key={uc._id}
+          style={
+            expireMonths(uc.passDate, uc._course.validity) <= 3
+              ? {
+                  color: 'orange'
+                }
+              : { color: 'black' }
+          }
+        >
           {uc._course.courseName} &nbsp; expires &nbsp;
           <Moment fromNow>
             {expireDate(uc.passDate, uc._course.validity)}
@@ -73,7 +87,7 @@ class UserComps extends Component {
             Competencies
             <Header.Subheader>Current</Header.Subheader>
           </Header>
-          <Card.Group>{this.renderCurrentComps()}</Card.Group>
+          <Card.Group centered>{this.renderCurrentComps()}</Card.Group>
         </Segment>
       </div>
     );

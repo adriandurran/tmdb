@@ -33,3 +33,8 @@ export const checkCompExpireDate = (comp, usercourses) => {
 export const expireDate = (date1, valid) => {
   return moment(date1).add(valid, 'months');
 };
+
+export const expireMonths = (date1, valid) => {
+  let expDate = moment(date1).add(valid, 'months');
+  return expDate.diff(moment(Date.now()), 'months');
+};

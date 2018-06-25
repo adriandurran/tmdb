@@ -41,9 +41,9 @@ class AdminUserComps extends Component {
       return <List.Content description="No User Roles" />;
     }
     return reqComps.map(comp => {
-      let compSt = '';
-      if (!_.isEmpty(comp.compType)) {
-        compSt = `-- ${comp.compType.compType}`;
+      let compSt = 'Required';
+      if (comp.compType) {
+        compSt = comp.compType.compType;
       }
       return (
         <List.Item key={comp._id}>
@@ -56,15 +56,19 @@ class AdminUserComps extends Component {
             />
           ) : (
             <List.Icon
-              name="exclamation circle"
-              color="red"
+              name={
+                compSt === 'Required'
+                  ? 'exclamation circle'
+                  : 'exclamation triangle'
+              }
+              color={compSt === 'Required' ? 'red' : 'orange'}
               size="large"
               verticalAlign="middle"
             />
           )}
           <List.Content>
             <List.Header>
-              {comp.compName} {comp.compType && compSt}
+              {comp.compName} - {compSt}
             </List.Header>
             <List.Description>
               {comp.courses.length} Courses required for Competency
