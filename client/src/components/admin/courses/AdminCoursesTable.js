@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { withRouter } from 'react-router-dom';
 
 import { Table, Header } from 'semantic-ui-react';
 
-import { fetchCourses } from '../../actions/courses';
-import { selectCourses } from '../../reducers/selectors/courseSelectors';
+import { fetchCourses } from '../../../actions/courses';
+import { selectCourses } from '../../../reducers/selectors/courseSelectors';
 
 class CoursesTable extends Component {
   state = {
@@ -51,6 +52,11 @@ class CoursesTable extends Component {
     });
   };
 
+  rowClick = id => {
+    const { history } = this.props;
+    history.push(`/admin/course-manager/view/${id}`);
+  };
+
   renderTableBody() {
     const { data } = this.state;
     return data.map(({ _id, courseName, validity, type, level }) => {
@@ -66,7 +72,11 @@ class CoursesTable extends Component {
       }
 
       return (
-        <Table.Row key={_id} negative={validity === 0}>
+        <Table.Row
+          key={_id}
+          negative={validity === 0}
+          onClick={() => this.rowClick(_id)}
+        >
           <Table.Cell>{courseName}</Table.Cell>
           <Table.Cell textAlign="right">{validText}</Table.Cell>
           <Table.Cell>{type}</Table.Cell>
@@ -84,7 +94,7 @@ class CoursesTable extends Component {
         <Header as="h2" textAlign="center">
           Courses
         </Header>
-        <Table sortable celled fixed structured>
+        <Table sortable celled fixed structured selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell
@@ -135,4 +145,4 @@ CoursesTable = connect(
   mapDispatchToProps
 )(CoursesTable);
 
-export default CoursesTable;
+export default withRouter(CoursesTable);

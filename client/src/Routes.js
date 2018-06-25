@@ -17,12 +17,15 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import AdminCourseManager from './components/admin/courses/AdminCourseManager';
 import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
 import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
+import AdminUserCoursesManager from './components/admin/users/courses/AdminUserCoursesManager';
+import AdminCourseView from './components/admin/courses/AdminCourseView';
+
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
 import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
+
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
-import AdminUserCoursesManager from './components/admin/users/courses/AdminUserCoursesManager';
 
 const Routes = () => {
   return (
@@ -51,6 +54,11 @@ const Routes = () => {
             exact
             path="/admin/course-levels"
             component={AdminCourseLevels}
+          />
+          <Route
+            exact
+            path="/admin/course-manager/view/:id"
+            component={AdminCourseView}
           />
           <Route
             exact
