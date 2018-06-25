@@ -51,9 +51,13 @@ export const adminDeleteCompType = id => async dispatch => {
   }
 };
 
+export const clearCompetency = () => dispatch => {
+  dispatch({ type: CLEAR_COMPETENCY });
+};
+
 export const fetchCompetency = id => async dispatch => {
   // clear the competency
-  dispatch({ type: CLEAR_COMPETENCY });
+  dispatch(clearCompetency());
   // add the competency
   const res = await axios.get(`/api/tmdb/competencies/${id}`);
 

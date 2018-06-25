@@ -1,24 +1,17 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Table, Header, Modal, Form } from 'semantic-ui-react';
+import { Table, Header, Form } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 
 import { fetchComps, fetchCompetency } from '../../../actions/comps';
-import {
-  selectCompetencies,
-  selectCompetency
-} from '../../../reducers/selectors/compSelectors';
-
-import semanticFormField from '../../shared/semanticFormField';
+import { selectCompetencies } from '../../../reducers/selectors/compSelectors';
 
 class AdminCompsTable extends Component {
   state = {
     column: null,
     data: [],
-    direction: null,
-    openModal: false,
-    comp: {}
+    direction: null
   };
 
   componentDidMount() {
@@ -40,19 +33,10 @@ class AdminCompsTable extends Component {
   }
 
   rowClick = id => {
-    const { comp, fetchCompetency } = this.props;
+    const { fetchCompetency, history } = this.props;
     fetchCompetency(id).then(() => {
-      this.setState({
-        comp,
-        openModal: true
-      });
-    });
-  };
-
-  onCloseModal = () => {
-    this.setState({
-      comp: {},
-      openModal: false
+      // open new page
+      history.push(`/admin/comp-manager/edit/${id}`);
     });
   };
 
@@ -74,34 +58,6 @@ class AdminCompsTable extends Component {
       direction: direction === 'ascending' ? 'descending' : 'ascending'
     });
   };
-
-  editComp = values => {};
-
-  renderCompsForm() {
-    const { handleSubmit, submitting, pristine } = this.props;
-    return (
-      <Form onSubmit={handleSubmit(values => this.editComp(values))}>
-        <Form.Group>
-          <Field
-            fluid
-            component={semanticFormField}
-            as={Form.Input}
-            type="text"
-            name="shortName"
-            placeholder="Short name"
-          />
-          <Field
-            fluid
-            name="compName"
-            component={semanticFormField}
-            as={Form.Input}
-            type="text"
-            placeholder="Competency Name"
-          />
-        </Form.Group>
-      </Form>
-    );
-  }
 
   render() {
     const { column, data, direction } = this.state;
@@ -145,24 +101,6 @@ class AdminCompsTable extends Component {
             ))}
           </Table.Body>
         </Table>
-        {/* this is better off as a seperate....comp */}
-        <Modal open={this.state.openModal} onClose={this.onCloseModal}>
-          <Modal.Header>Edit Competency</Modal.Header>
-          <Modal.Content>
-            {!_.isEmpty(comp) ? (
-              <Modal.Description>
-                <Header>
-                  {comp.shortName} - {comp.compName}
-                </Header>
-                {this.renderCompsForm()}
-              </Modal.Description>
-            ) : (
-              <Modal.Description>
-                <Header>No Competency selected</Header>
-              </Modal.Description>
-            )}
-          </Modal.Content>
-        </Modal>
       </div>
     );
   }
@@ -170,8 +108,7 @@ class AdminCompsTable extends Component {
 
 const mapStateToProps = state => {
   return {
-    comps: selectCompetencies(state),
-    comp: selectCompetency(state)
+    comps: selectCompetencies(state)
   };
 };
 
@@ -185,12 +122,4 @@ AdminCompsTable = connect(
   mapDispatchToProps
 )(AdminCompsTable);
 
-AdminCompsTable = connect(state => ({ initialValues: state.comp }))(
-  AdminCompsTable
-);
-
-export default reduxForm({
-  form: 'compeditor'
-})(AdminCompsTable);
-
-// state => ({ initialValues: state.comp }),
+export default withRouter(AdminCompsTable);

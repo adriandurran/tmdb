@@ -18,6 +18,7 @@ import AdminCourseManager from './components/admin/courses/AdminCourseManager';
 import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
 import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
+import AdminEditCompetency from './components/admin/competencies/AdminEditCompetency';
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
@@ -55,6 +56,11 @@ const Routes = () => {
             exact
             path="/admin/comp-manager"
             component={AdminCompManager}
+          />
+          <Route
+            exact
+            path="/admin/comp-manager/edit/:id"
+            component={AdminEditCompetency}
           />
           <Route
             exact
