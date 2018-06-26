@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 
-import { Header, Form, Dropdown, Button } from 'semantic-ui-react';
+import { Header, Form, Dropdown, Button, Message } from 'semantic-ui-react';
 
 import semanticFormField from '../../shared/semanticFormField';
 
@@ -17,7 +17,12 @@ import {
 class AdminEditCompetency extends Component {
   state = {
     cForC: [],
-    cForCType: ''
+    cForCType: '',
+    message: {
+      visible: true
+      // positive: false,
+      // negative: false
+    }
   };
 
   componentDidMount() {
@@ -27,9 +32,12 @@ class AdminEditCompetency extends Component {
         cForC: []
       });
     } else {
+      let message = { ...this.state.message };
+      message.header = `Edit ${comp.compName}`;
       this.setState({
         cForC: comp.courses.map(course => course._id),
-        cForCType: !comp.compType ? '' : comp.compType._id
+        cForCType: !comp.compType ? '' : comp.compType._id,
+        message
       });
     }
   }
@@ -50,6 +58,15 @@ class AdminEditCompetency extends Component {
     });
   };
 
+  resetMessageState() {
+    const { comp } = this.props;
+    let message = {};
+    message.header = `Edit ${comp.compName}`;
+    setTimeout(() => {
+      this.setState({ message });
+    }, 3000);
+  }
+
   updateCompetency(values) {
     const { comp, adminUpdateComp } = this.props;
     let upComp = {
@@ -58,19 +75,50 @@ class AdminEditCompetency extends Component {
       courses: this.state.cForC,
       compType: this.state.cForCType
     };
-    adminUpdateComp(comp._id, upComp).then(() => {
+    adminUpdateComp(comp._id, upComp).then(res => {
       // need to think about this a little
+      // this is just temp i want to use redux for this
+      // with some redux middleware
+      let message = { ...this.state.message };
+
+      if (res.status === 200) {
+        message.header = 'Success!';
+        message.content = `${res.data.compName} was successfully updated`;
+        message.positive = true;
+      } else {
+        message.header = 'Ooops!';
+        message.content = `Something went wrong updating this Competency. Error: ${
+          res.data
+        }`;
+        message.negative = true;
+      }
+      this.setState({
+        message
+      });
+      this.resetMessageState();
     });
   }
 
   render() {
     const { courses, compTypes, handleSubmit, submitting } = this.props;
+    const { message } = this.state;
     return (
       <div>
         <Header as="h3" textAlign="center">
           Edit Competency
         </Header>
-        <Form onSubmit={handleSubmit(values => this.updateCompetency(values))}>
+        <Message
+          attached
+          header={message.header}
+          content={message.content}
+          visible={message.visible}
+          positive={message.positive}
+          negative={message.negative}
+        />
+        <Form
+          onSubmit={handleSubmit(values => this.updateCompetency(values))}
+          className="attached fluid segment"
+        >
           <Form.Group inline widths="equal">
             <Field
               fluid
