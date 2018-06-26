@@ -15,36 +15,43 @@ import {
 } from '../../../reducers/selectors/compSelectors';
 
 class AdminEditCompetency extends Component {
+  state = {
+    cForC: [],
+    cForCType: ''
+  };
+
+  componentDidMount() {
+    const { comp } = this.props;
+    if (_.isEmpty(comp)) {
+      this.setState({
+        cForC: []
+      });
+    } else {
+      this.setState({
+        cForC: comp.courses.map(course => course._id),
+        cForCType: !comp.compType ? '' : comp.compType._id
+      });
+    }
+  }
+
   componentWillUnmount() {
     this.props.clearCompetency();
   }
 
-  selectedCompType() {
-    const { comp } = this.props;
-    if (_.isEmpty(comp) || !comp.compType) {
-      return '';
-    }
+  handleSelectChange = (e, item) => {
+    this.setState({
+      cForC: item.value
+    });
+  };
 
-    return comp.compType._id;
-  }
-
-  selectedCourses() {
-    const { comp } = this.props;
-    if (_.isEmpty(comp)) {
-      return [];
-    }
-
-    return comp.courses.map(course => course._id);
-  }
+  handleSelectCompChange = (e, item) => {
+    this.setState({
+      cForCType: item.value
+    });
+  };
 
   render() {
-    const {
-      courses,
-      compTypes,
-      handleSubmit,
-      submitting,
-      pristine
-    } = this.props;
+    const { courses, compTypes, handleSubmit, submitting } = this.props;
     return (
       <div>
         <Header as="h3" textAlign="center">
@@ -76,7 +83,7 @@ class AdminEditCompetency extends Component {
               options={compTypes}
               placeholder="Select a Competency Type"
               onChange={this.handleSelectCompChange}
-              value={this.selectedCompType()}
+              value={this.state.cForCType}
             />
           </Form.Group>
           <Form.Group>
@@ -88,24 +95,14 @@ class AdminEditCompetency extends Component {
               options={courses}
               placeholder="Select a Course"
               onChange={this.handleSelectChange}
-              value={this.selectedCourses()}
+              value={this.state.cForC}
             />
           </Form.Group>
           <Form.Group>
-            <Button
-              fluid
-              disabled={pristine || submitting}
-              type="submit"
-              size="medium"
-            >
+            <Button fluid disabled={submitting} type="submit" size="medium">
               Update Competency
             </Button>
-            <Button
-              fluid
-              disabled={pristine || submitting}
-              type="submit"
-              size="medium"
-            >
+            <Button fluid disabled={submitting} type="submit" size="medium">
               Reset
             </Button>
           </Form.Group>
@@ -123,15 +120,19 @@ const mapStateToProps = state => {
   return {
     comp: selectCompetency(state),
     courses: selectCoursesForDropDown(state),
-    compTypes: selectCompetencyTypesForDropDown(state)
+    compTypes: selectCompetencyTypesForDropDown(state),
+    initialValues: selectCompetency(state)
   };
 };
+
+AdminEditCompetency = reduxForm({
+  form: 'editComp',
+  enableReinitialize: true
+})(AdminEditCompetency);
 
 AdminEditCompetency = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdminEditCompetency);
 
-export default reduxForm({
-  form: 'editComp'
-})(AdminEditCompetency);
+export default AdminEditCompetency;
