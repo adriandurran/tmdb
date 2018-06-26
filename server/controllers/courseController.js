@@ -47,18 +47,22 @@ module.exports = {
 
   //   Courses
   getCourses: async (req, res) => {
-    const dbCourses = await Course.find({});
+    const dbCourses = await Course.find({}).populate('notes.notesBy');
     res.send(dbCourses);
   },
 
   addCourses: async (req, res) => {
     const newCourse = req.body;
-    const newCourseCreated = await Course.create(newCourse);
+    const newCourseCreated = await Course.create(newCourse).populate(
+      'notes.notesBy'
+    );
     res.send(newCourseCreated);
   },
 
   getCourse: async (req, res) => {
-    const dbCourse = await Course.findById(req.params.id);
+    const dbCourse = await Course.findById(req.params.id).populate(
+      'notes.notesBy'
+    );
     res.send(dbCourse);
   },
 
@@ -68,7 +72,7 @@ module.exports = {
         req.params.id,
         { $set: req.body },
         { new: true }
-      );
+      ).populate('notes.notesBy');
       res.send(upCourse);
     } catch (error) {
       res.sendStatus(418).send(error);
