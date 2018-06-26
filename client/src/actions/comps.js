@@ -19,6 +19,19 @@ export const adminAddNewComp = comp => async dispatch => {
   }
 };
 
+export const adminUpdateComp = (id, comp) => async dispatch => {
+  const res = await axios.put(`/api/tmdb/competencies/${id}`, comp);
+  if (res.status === 200) {
+    // add comp to comp reducer
+    dispatch({ type: FETCH_COMPETENCY, payload: res.data });
+    // fetch all the comps (in the background)
+    dispatch(fetchComps());
+    // send message?
+  } else {
+    // change nothing but send message if it has failed
+  }
+};
+
 export const fetchComps = () => async dispatch => {
   const res = await axios.get('/api/tmdb/competencies');
   dispatch({ type: FETCH_COMPS, payload: res.data });

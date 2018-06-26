@@ -12,6 +12,7 @@ router.get('/type', requireLogin, compController.getCompTypes);
 router.post('/type', requireAdmin, compController.addCompType);
 router.delete('/type', requireAdmin, compController.deleteCompType);
 
-router.get('/:id', requireAdmin, compController.getCompetency);
+router.get('/:id', requireLogin, compController.getCompetency);
+router.put('/:id', requireAdmin, compController.updateCompetency);
 
 module.exports = router;

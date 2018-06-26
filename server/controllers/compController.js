@@ -40,5 +40,17 @@ module.exports = {
       .populate('courses')
       .populate('compType');
     res.send(dbComp);
+  },
+
+  updateCompetency: async (req, res) => {
+    const upComp = await Competency.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    )
+      .populate('courses')
+      .populate('compType');
+
+    res.send(upComp);
   }
 };

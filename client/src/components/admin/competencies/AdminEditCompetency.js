@@ -7,7 +7,7 @@ import { Header, Form, Dropdown, Button } from 'semantic-ui-react';
 
 import semanticFormField from '../../shared/semanticFormField';
 
-import { clearCompetency } from '../../../actions/comps';
+import { clearCompetency, adminUpdateComp } from '../../../actions/comps';
 import { selectCoursesForDropDown } from '../../../reducers/selectors/courseSelectors';
 import {
   selectCompetency,
@@ -50,6 +50,19 @@ class AdminEditCompetency extends Component {
     });
   };
 
+  updateCompetency(values) {
+    const { comp, adminUpdateComp } = this.props;
+    let upComp = {
+      compName: values.compName,
+      shortName: values.shortName.toUpperCase(),
+      courses: this.state.cForC,
+      compType: this.state.cForCType
+    };
+    adminUpdateComp(comp._id, upComp).then(() => {
+      // need to think about this a little
+    });
+  }
+
   render() {
     const { courses, compTypes, handleSubmit, submitting } = this.props;
     return (
@@ -57,7 +70,7 @@ class AdminEditCompetency extends Component {
         <Header as="h3" textAlign="center">
           Edit Competency
         </Header>
-        <Form>
+        <Form onSubmit={handleSubmit(values => this.updateCompetency(values))}>
           <Form.Group inline widths="equal">
             <Field
               fluid
@@ -102,9 +115,9 @@ class AdminEditCompetency extends Component {
             <Button fluid disabled={submitting} type="submit" size="medium">
               Update Competency
             </Button>
-            <Button fluid disabled={submitting} type="submit" size="medium">
+            {/* <Button fluid disabled={submitting} size="medium">
               Reset
-            </Button>
+            </Button> */}
           </Form.Group>
         </Form>
       </div>
@@ -113,7 +126,8 @@ class AdminEditCompetency extends Component {
 }
 
 const mapDispatchToProps = {
-  clearCompetency
+  clearCompetency,
+  adminUpdateComp
 };
 
 const mapStateToProps = state => {
