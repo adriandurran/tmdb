@@ -43,14 +43,18 @@ module.exports = {
   },
 
   updateCompetency: async (req, res) => {
-    const upComp = await Competency.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    )
-      .populate('courses')
-      .populate('compType');
+    try {
+      const upComp = await Competency.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      )
+        .populate('courses')
+        .populate('compType');
 
-    res.send(upComp);
+      res.send(upComp);
+    } catch (error) {
+      res.sendStatus(418).send(error);
+    }
   }
 };

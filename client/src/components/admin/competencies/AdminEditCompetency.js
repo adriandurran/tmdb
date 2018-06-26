@@ -20,8 +20,6 @@ class AdminEditCompetency extends Component {
     cForCType: '',
     message: {
       visible: true
-      // positive: false,
-      // negative: false
     }
   };
 
