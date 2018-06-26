@@ -14,6 +14,7 @@ import {
   selectCourseLevelsForDropDown,
   selectCourse
 } from '../../../reducers/selectors/courseSelectors';
+import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
 
 class AdminEditCourse extends Component {
   state = {
@@ -21,7 +22,8 @@ class AdminEditCourse extends Component {
     type: '',
     message: {
       visible: true
-    }
+    },
+    notes: ''
   };
 
   componentDidMount() {
@@ -62,13 +64,29 @@ class AdminEditCourse extends Component {
     });
   };
 
+  handleNotesChange = (e, item) => {
+    this.setState({
+      notes: item.value
+    });
+  };
+
   updateCourse(values) {
-    const { course, adminUpdateCourse } = this.props;
+    const { course, adminUpdateCourse, user } = this.props;
+    const { level, type, notes } = this.state;
+    const newNote = {
+      noteDate: Date.now(),
+      noteText: notes,
+      noteBy: user._id
+    };
+    const allNotes = [...course.notes, newNote];
+
+    console.log(allNotes);
     let upCourse = {
       courseName: values.courseName,
       validity: values.validity,
-      level: this.state.level,
-      type: this.state.type
+      level,
+      type,
+      notes: allNotes
     };
 
     adminUpdateCourse(course._id, upCourse).then(res => {
@@ -91,7 +109,7 @@ class AdminEditCourse extends Component {
 
   render() {
     const { levels, types, handleSubmit, submitting } = this.props;
-    const { message } = this.state;
+    const { message, notes } = this.state;
     return (
       <div>
         <Header as="h3" textAlign="center">
@@ -148,6 +166,13 @@ class AdminEditCourse extends Component {
               value={this.state.level}
             />
           </Form.Group>
+          <Form.TextArea
+            autoHeight
+            onChange={this.handleNotesChange}
+            value={notes}
+            placeholder="Enter notes here...."
+            rows={3}
+          />
           <Form.Group>
             <Button fluid disabled={submitting} type="submit" size="medium">
               Update Course
@@ -169,6 +194,7 @@ const mapStateToProps = state => {
     levels: selectCourseLevelsForDropDown(state),
     types: selectCourseTypesForDropDown(state),
     course: selectCourse(state),
+    user: selectCurrentUser(state),
     initialValues: selectCourse(state)
   };
 };
