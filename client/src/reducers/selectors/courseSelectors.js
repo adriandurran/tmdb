@@ -8,8 +8,31 @@ export const selectCourse = state => state.course;
 
 // get course types
 export const selectCourseTypes = state => state.courseTypes;
+
+export const selectCourseTypesForDropDown = createSelector(
+  selectCourseTypes,
+  types => {
+    return types.map(type => {
+      return { key: type._id, value: type.courseType, text: type.courseType };
+    });
+  }
+);
+
 // get the course levels
 export const selectCourseLevels = state => state.courseLevels;
+
+export const selectCourseLevelsForDropDown = createSelector(
+  selectCourseLevels,
+  levels => {
+    return levels.map(level => {
+      return {
+        key: level._id,
+        value: level.courseLevel,
+        text: level.courseLevel
+      };
+    });
+  }
+);
 
 export const selectCoursesForSearch = createSelector(selectCourses, courses => {
   return courses

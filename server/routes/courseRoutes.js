@@ -34,5 +34,6 @@ router.get('/', requireLogin, courseController.getCourses);
 router.post('/', requireAdmin, courseController.addCourses);
 
 router.get('/:id', requireLogin, courseController.getCourse);
+router.put('/:id', requireLogin, courseController.updateCourse);
 
 module.exports = router;

@@ -175,7 +175,10 @@ export const selectUsersCourseHolders = createSelector(
     // return only users who have the course
     let courseHolders = allUsersCurrent
       .filter(user => {
-        return _.includes(user.courses.map(course => course._id), course._id);
+        return _.includes(
+          user.currentCourses.map(course => course._course._id),
+          course._id
+        );
       })
       .map(user => user._id);
 

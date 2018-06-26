@@ -27,11 +27,9 @@ export const adminUpdateComp = (id, comp) => async dispatch => {
     // fetch all the comps (in the background)
     dispatch(fetchComps());
     // send message?
-    return res;
-  } else {
-    // change nothing but send message if it has failed
-    return res;
   }
+  // change nothing but send message if it has failed
+  return res;
 };
 
 export const fetchComps = () => async dispatch => {

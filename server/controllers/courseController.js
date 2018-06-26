@@ -60,5 +60,18 @@ module.exports = {
   getCourse: async (req, res) => {
     const dbCourse = await Course.findById(req.params.id);
     res.send(dbCourse);
+  },
+
+  updateCourse: async (req, res) => {
+    try {
+      const upCourse = await Course.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+      res.send(upCourse);
+    } catch (error) {
+      res.sendStatus(418).send(error);
+    }
   }
 };

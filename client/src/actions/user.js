@@ -8,13 +8,13 @@ import {
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
   ADMIN_EDIT_USER_ROLE,
-  CLEAR_COURSE_SEARCH
+  CLEAR_COURSE
 } from './types';
 
 export const addUserCourse = (user, course) => async dispatch => {
   const res = await axios.patch(`/api/tmdb/user/${user}/course`, { course });
   dispatch({ type: FETCH_USER, payload: res.data });
-  dispatch({ type: CLEAR_COURSE_SEARCH });
+  dispatch({ type: CLEAR_COURSE });
   dispatch(reset('newUserCourse'));
   // return res.data;
 };

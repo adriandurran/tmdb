@@ -11,7 +11,7 @@ import {
   DELETE_COURSE_TYPE,
   ADD_COURSE_LEVEL,
   DELETE_COURSE_LEVEL,
-  CLEAR_COURSE_SEARCH
+  CLEAR_COURSE
 } from './types';
 
 export const fetchCourses = () => async dispatch => {
@@ -71,11 +71,30 @@ export const adminAddNewCourse = course => async dispatch => {
 };
 
 export const clearCourseSearchResult = () => dispatch => {
-  dispatch({ type: CLEAR_COURSE_SEARCH });
+  dispatch({ type: CLEAR_COURSE });
+};
+
+export const clearCourse = () => dispatch => {
+  dispatch({ type: CLEAR_COURSE });
 };
 
 export const fetchCourse = id => async dispatch => {
-  dispatch(clearCourseSearchResult());
+  dispatch(clearCourse());
   const res = await axios.get(`/api/tmdb/courses/${id}`);
   dispatch({ type: FETCH_COURSE, payload: res.data });
+};
+
+export const adminUpdateCourse = (id, course) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/tmdb/courses/${id}`, course);
+    if (res.status === 200) {
+      dispatch({ type: FETCH_COURSE, payload: res.data });
+
+      // load all the courses up
+      dispatch(fetchCourses());
+      return res;
+    }
+  } catch (error) {
+    return error;
+  }
 };

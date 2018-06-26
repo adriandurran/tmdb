@@ -22,7 +22,7 @@ export const DELETE_COURSE_TYPE = 'delete_course_type';
 export const FETCH_COURSE_LEVEL = 'fetch_course_level';
 export const ADD_COURSE_LEVEL = 'add_course_level';
 export const DELETE_COURSE_LEVEL = 'delete_course_level';
-export const CLEAR_COURSE_SEARCH = 'clear_course_search';
+export const CLEAR_COURSE = 'clear_course';
 
 export const ADD_USER_COURSE = 'add_user_course';
 

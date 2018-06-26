@@ -2,7 +2,7 @@ import {
   FETCH_COURSES,
   ADD_NEW_COURSE,
   FETCH_COURSE,
-  CLEAR_COURSE_SEARCH
+  CLEAR_COURSE
 } from '../../actions/types';
 
 const INITIAL_STATE_A = [];
@@ -24,7 +24,7 @@ export const courseReducer = (state = INITIAL_STATE_O, action) => {
   switch (action.type) {
     case FETCH_COURSE:
       return action.payload;
-    case CLEAR_COURSE_SEARCH:
+    case CLEAR_COURSE:
       return INITIAL_STATE_O;
 
     default:
