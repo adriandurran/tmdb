@@ -14,6 +14,9 @@ import {
   CLEAR_COURSE
 } from './types';
 
+import { fetchAllUsers } from './user';
+import { fetchUser } from './auth';
+
 export const fetchCourses = () => async dispatch => {
   const res = await axios.get('/api/tmdb/courses');
   dispatch({ type: FETCH_COURSES, payload: res.data });
@@ -92,6 +95,14 @@ export const adminUpdateCourse = (id, course) => async dispatch => {
 
       // load all the courses up
       dispatch(fetchCourses());
+      // can't think of a better way to do this
+      // I need to update the courses for the users in state
+      // what has the greater cost?
+      // looping through all the users in state to find users who have the course?
+      // or just update state from the db
+      dispatch(fetchAllUsers());
+      // update the logged in user also....edge case I know
+      dispatch(fetchUser());
       return res;
     }
   } catch (error) {

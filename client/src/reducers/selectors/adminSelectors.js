@@ -170,6 +170,8 @@ export const selectUsersCourseHolders = createSelector(
   selectCourse,
   (users, course) => {
     // get all the indate courses for a user
+    // need to think about the courses on the users.....if it changes they have historical course
+    // until all users are updated.......incl current user.....done this in actions
     let allUsersCurrent = coursesActiveUser(users);
 
     // return only users who have the course
