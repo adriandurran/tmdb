@@ -9,6 +9,7 @@ import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
 import UserLanding from './components/user/UserLanding';
+import UserProfile from './components/user/profile/UserProfile';
 import CoursesHome from './components/user/CoursesHome';
 import CompsHome from './components/user/CompsHome';
 
@@ -38,6 +39,7 @@ const Routes = () => {
           <Route exact path="/auth/login" component={LoginUser} />
           <Route exact path="/auth/register" component={RegisterUser} />
           <Route exact path="/users/:id" component={UserLanding} />
+          <Route exact path="/users/:id/profile" component={UserProfile} />
           <Route exact path="/users/:id/courses" component={CoursesHome} />
           <Route exact path="/users/:id/competencies" component={CompsHome} />
           <Route exact path="/admin/dashboard" component={AdminDashboard} />

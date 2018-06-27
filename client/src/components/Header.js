@@ -10,18 +10,11 @@ class Header extends Component {
   renderMenus() {
     const { authUser } = this.props;
     if (authUser) {
-      const {
-        firstName,
-        lastName,
-        // userId,
-        // isAdmin,
-        // isSuperAdmin,
-        verified
-      } = authUser;
+      const { firstName, lastName, verified, userId } = authUser;
       return (
         <Menu.Menu position="right">
           {verified ? (
-            <Menu.Item header>
+            <Menu.Item header as={Link} to={`/users/${userId}/profile`}>
               <Icon name="user circle" />
               {firstName} {lastName}
             </Menu.Item>
@@ -72,6 +65,13 @@ class Header extends Component {
               <Menu.Item as={Link} to={`/admin/dashboard`}>
                 Admin Dashboard
               </Menu.Item>
+            )}
+            {authUser.verified && (
+              <Menu.Item
+                icon="home"
+                as={Link}
+                to={`/users/${authUser.userId}`}
+              />
             )}
             {authUser.verified && (
               <Menu.Item
