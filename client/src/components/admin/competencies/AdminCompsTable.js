@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Table, Header, Form } from 'semantic-ui-react';
+import { Table, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -61,7 +61,6 @@ class AdminCompsTable extends Component {
 
   render() {
     const { column, data, direction } = this.state;
-    const { comp } = this.props;
 
     return (
       <div>
