@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Moment from 'react-moment';
-import moment from 'moment';
 
 import { Table, Header } from 'semantic-ui-react';
 

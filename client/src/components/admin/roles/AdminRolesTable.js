@@ -58,8 +58,31 @@ class AdminRolesTable extends Component {
     });
   };
 
+  renderTableCells(role) {
+    return role.competencies.map((comp, index) => {
+      return (
+        <span key={index}>
+          {comp.compName}
+          <br />
+        </span>
+      );
+    });
+  }
+
+  renderTableRows() {
+    const { data } = this.state;
+    return data.map(role => {
+      return (
+        <Table.Row key={role._id} onClick={() => this.rowClick(role._id)}>
+          <Table.Cell>{role.roleName}</Table.Cell>
+          <Table.Cell>{this.renderTableCells(role)}</Table.Cell>
+        </Table.Row>
+      );
+    });
+  }
+
   render() {
-    const { column, data, direction } = this.state;
+    const { column, direction } = this.state;
 
     return (
       <div>
@@ -83,14 +106,7 @@ class AdminRolesTable extends Component {
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body>
-            {_.map(data, ({ _id, roleName, competencies }) => (
-              <Table.Row key={_id} onClick={() => this.rowClick(_id)}>
-                <Table.Cell>{roleName}</Table.Cell>
-                <Table.Cell>Coming soon</Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
+          <Table.Body>{this.renderTableRows()}</Table.Body>
         </Table>
       </div>
     );

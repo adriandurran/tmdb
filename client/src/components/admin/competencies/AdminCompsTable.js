@@ -59,8 +59,35 @@ class AdminCompsTable extends Component {
     });
   };
 
+  renderTableCells(comp) {
+    return comp.courses.map((course, index) => {
+      return (
+        <span key={index}>
+          {course.courseName}
+          <br />
+        </span>
+      );
+    });
+  }
+
+  renderTableRows() {
+    const { data } = this.state;
+    return data.map(comp => {
+      return (
+        <Table.Row key={comp._id} onClick={() => this.rowClick(comp._id)}>
+          <Table.Cell>{comp.shortName}</Table.Cell>
+          <Table.Cell>{comp.compName}</Table.Cell>
+          <Table.Cell>{comp.compType.compType}</Table.Cell>
+          <Table.Cell verticalAlign="top">
+            {this.renderTableCells(comp)}
+          </Table.Cell>
+        </Table.Row>
+      );
+    });
+  }
+
   render() {
-    const { column, data, direction } = this.state;
+    const { column, direction } = this.state;
 
     return (
       <div>
@@ -88,17 +115,15 @@ class AdminCompsTable extends Component {
               >
                 Competency Type
               </Table.HeaderCell>
+              <Table.HeaderCell
+                sorted={column === 'courses' ? direction : null}
+                onClick={this.handleSort('courses')}
+              >
+                Courses
+              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body>
-            {_.map(data, ({ _id, shortName, compName, compType }) => (
-              <Table.Row key={_id} onClick={() => this.rowClick(_id)}>
-                <Table.Cell>{shortName}</Table.Cell>
-                <Table.Cell>{compName}</Table.Cell>
-                {compType && <Table.Cell>{compType.compType}</Table.Cell>}
-              </Table.Row>
-            ))}
-          </Table.Body>
+          <Table.Body>{this.renderTableRows()}</Table.Body>
         </Table>
       </div>
     );
