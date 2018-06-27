@@ -94,7 +94,7 @@ class AdminCompsTable extends Component {
         <Header as="h2" textAlign="center">
           Competencies
         </Header>
-        <Table sortable celled fixed structured selectable>
+        <Table sortable celled striped selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell

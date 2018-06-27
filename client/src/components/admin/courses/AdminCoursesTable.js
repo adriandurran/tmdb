@@ -96,7 +96,7 @@ class CoursesTable extends Component {
         <Header as="h2" textAlign="center">
           Courses
         </Header>
-        <Table sortable celled fixed structured selectable>
+        <Table sortable celled striped selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell
