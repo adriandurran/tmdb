@@ -13,7 +13,6 @@ class RegisterUser extends Component {
     return (
       <div>
         <Field
-          required
           component={semanticFormField}
           as={Form.Input}
           type="text"
@@ -68,7 +67,7 @@ class RegisterUser extends Component {
     );
   }
 
-  submitUser(values, dispatch) {
+  submitUser(values) {
     const { submitNewUser, history } = this.props;
 
     submitNewUser(values).then(result => {
