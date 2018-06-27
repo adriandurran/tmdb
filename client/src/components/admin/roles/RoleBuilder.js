@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { selectCompetencies } from '../../../reducers/selectors';
+import { selectCompetenciesForDropDown } from '../../../reducers/selectors/compSelectors';
 import { fetchComps } from '../../../actions/comps';
 import { adminAddNewRole } from '../../../actions/roles';
 
@@ -21,18 +21,7 @@ class RoleBuilder extends Component {
     });
   };
 
-  makeCompOptions() {
-    return this.props.comps.map(comp => {
-      let statComp = {
-        key: comp._id,
-        value: comp._id,
-        text: comp.compName
-      };
-      return statComp;
-    });
-  }
-
-  submitNewRole(values, dispatch) {
+  submitNewRole(values) {
     const { adminAddNewRole } = this.props;
     let newRole = {
       roleName: values.roleName,
@@ -42,7 +31,7 @@ class RoleBuilder extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, comps } = this.props;
     return (
       <div>
         <Header as="h2" textAlign="center">
@@ -50,43 +39,40 @@ class RoleBuilder extends Component {
         </Header>
 
         <Grid centered>
-          <Grid.Row>
-            <Grid.Column>
-              <Form
-                onSubmit={handleSubmit(values => this.submitNewRole(values))}
-              >
-                <Form.Group inline widths="equal">
-                  <Field
-                    fluid
-                    component={semanticFormField}
-                    as={Form.Input}
-                    type="text"
-                    name="roleName"
-                    placeholder="Role name"
-                  />
-                </Form.Group>
+          <Grid.Column>
+            <Form onSubmit={handleSubmit(values => this.submitNewRole(values))}>
+              <Form.Group>
+                <Field
+                  component={semanticFormField}
+                  as={Form.Input}
+                  type="text"
+                  name="roleName"
+                  placeholder="Role name"
+                />
+              </Form.Group>
+              <Form.Group>
                 <Dropdown
                   fluid
                   selection
                   multiple
                   name="roleComps"
-                  options={this.makeCompOptions()}
+                  options={comps}
                   placeholder="Select competencies"
                   onChange={this.handleSelectChange}
                 />
-                <Form.Group>
-                  <Button
-                    fluid
-                    disabled={pristine || submitting}
-                    type="submit"
-                    size="medium"
-                  >
-                    Add Role
-                  </Button>
-                </Form.Group>
-              </Form>
-            </Grid.Column>
-          </Grid.Row>
+              </Form.Group>
+              <Form.Group>
+                <Button
+                  fluid
+                  disabled={pristine || submitting}
+                  type="submit"
+                  size="medium"
+                >
+                  Add Role
+                </Button>
+              </Form.Group>
+            </Form>
+          </Grid.Column>
         </Grid>
       </div>
     );
@@ -100,11 +86,14 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
   return {
-    comps: selectCompetencies(state)
+    comps: selectCompetenciesForDropDown(state)
   };
 };
 
-RoleBuilder = connect(mapStateToProps, mapDispatchToProps)(RoleBuilder);
+RoleBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RoleBuilder);
 
 export default reduxForm({
   form: 'rolebuilder'

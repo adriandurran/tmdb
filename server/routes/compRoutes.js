@@ -1,9 +1,18 @@
+const express = require('express');
+const router = express.Router();
+
 const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');
 const compController = require('../controllers/compController');
 
-module.exports = app => {
-  app.get('/api/competencies', requireLogin, compController.getComps);
+router.get('/', requireLogin, compController.getComps);
+router.post('/', requireAdmin, compController.addComps);
 
-  app.post('/api/competencies', requireAdmin, compController.addComps);
-};
+router.get('/type', requireLogin, compController.getCompTypes);
+router.post('/type', requireAdmin, compController.addCompType);
+router.delete('/type', requireAdmin, compController.deleteCompType);
+
+router.get('/:id', requireLogin, compController.getCompetency);
+router.put('/:id', requireAdmin, compController.updateCompetency);
+
+module.exports = router;

@@ -46,10 +46,15 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
+  joinDate: {
+    type: Date
+  },
   courses: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Course',
+      _course: {
+        type: Schema.Types.ObjectId,
+        ref: 'Course'
+      },
       passDate: { type: Date },
       verified: { type: Boolean, default: false }
     }

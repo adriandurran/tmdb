@@ -1,47 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectUserRoleNames } from '../../reducers/selectors';
+import { selectUserRoles } from '../../reducers/selectors/userSelectors';
 
-import Toolbar from 'material-ui/Toolbar';
-import Paper from 'material-ui/Paper';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-
-let EnhancedListToolbar = () => {
-  return (
-    <Toolbar>
-      <div style={{ flex: '0 0 auto' }}>
-        <Typography variant="title">Roles</Typography>
-      </div>
-    </Toolbar>
-  );
-};
+import { Item, Header, Segment } from 'semantic-ui-react';
 
 class UserRoles extends Component {
-  renderRoles(roles) {
-    return roles.map((role, index) => {
+  renderUserRoles() {
+    const { userRoles } = this.props;
+    return userRoles.map(role => {
       return (
-        <ListItem key={index} dense>
-          <ListItemText primary={role.rolename} />
-        </ListItem>
+        <Item key={role._id}>
+          <Item.Content>
+            <Item.Header>{role.roleName}</Item.Header>
+            <Item.Extra>
+              {role.competencies.length} Competencies required for this Role
+            </Item.Extra>
+          </Item.Content>
+        </Item>
       );
     });
   }
 
   render() {
     return (
-      <Paper>
-        <EnhancedListToolbar />
-        <List disablePadding>{this.renderRoles(this.props.userRoles)}</List>
-      </Paper>
+      <div>
+        <Segment padded>
+          <Header as="h2" textAlign="center">
+            Roles
+          </Header>
+          <Item.Group>{this.renderUserRoles()}</Item.Group>
+        </Segment>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    userRoles: selectUserRoleNames(state)
+    userRoles: selectUserRoles(state)
   };
 };
 
-export default connect(mapStateToProps)(UserRoles);
+UserRoles = connect(mapStateToProps)(UserRoles);
+
+export default UserRoles;

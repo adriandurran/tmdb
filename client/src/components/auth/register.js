@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { Form, Button, Header, Grid } from 'semantic-ui-react';
 
 import { submitNewUser } from '../../actions/auth';
-import RegisterField from './registerField';
+import semanticFormField from '../shared/semanticFormField';
+import { required, email } from '../../utils/validation';
 
 class RegisterUser extends Component {
   renderRegFields() {
@@ -13,43 +14,52 @@ class RegisterUser extends Component {
       <div>
         <Field
           required
-          component={RegisterField}
+          component={semanticFormField}
+          as={Form.Input}
           type="text"
           name="firstName"
-          label="First name"
+          placeholder="First name"
           icon="user"
           iconPosition="left"
+          validate={required}
         />
         <Field
-          required
-          component={RegisterField}
+          validate={required}
+          component={semanticFormField}
+          as={Form.Input}
           type="text"
-          label="Last name"
+          placeholder="Last name"
           name="lastName"
           icon="user"
           iconPosition="left"
         />
 
         <Field
-          required
-          component={RegisterField}
-          type="text"
-          label="Email address"
+          validate={[required, email]}
+          component={semanticFormField}
+          as={Form.Input}
+          type="email"
+          placeholder="Email address"
           name="email"
+          icon="envelope"
+          iconPosition="left"
         />
 
         <Field
-          required
-          component={RegisterField}
+          validate={required}
+          component={semanticFormField}
+          as={Form.Input}
           type="text"
-          label="Employee number"
+          placeholder="Employee number"
           name="userId"
         />
 
         <Field
-          component={RegisterField}
+          validate={required}
+          component={semanticFormField}
+          as={Form.Input}
           type="password"
-          label="Password"
+          placeholder="Password"
           name="password"
           icon="key"
           iconPosition="left"
@@ -81,6 +91,7 @@ class RegisterUser extends Component {
               <Button
                 fluid
                 disabled={pristine || submitting}
+                loading={submitting}
                 type="submit"
                 style={{ marginTop: '15px' }}
               >
@@ -94,37 +105,6 @@ class RegisterUser extends Component {
   }
 }
 
-function validate(values) {
-  const errors = {};
-
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  }
-  if (!values.lastName) {
-    errors.lastName = 'Required';
-  }
-
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-
-  if (!values.userId) {
-    errors.userId = 'Required';
-  }
-
-  if (!values.passwordd) {
-    errors.pwd = 'Required';
-  } else if (values.pwd.length < 8) {
-    errors.pwd = 'Password must be 8 to 25 characters';
-  } else if (values.pwd.length > 25) {
-    errors.pwd = 'Password must be more 8 to 25 characters';
-  }
-
-  return errors;
-}
-
 const mapStateToProps = state => {
   return {};
 };
@@ -133,9 +113,12 @@ const mapDispatchToProps = {
   submitNewUser
 };
 
-RegisterUser = connect(mapStateToProps, mapDispatchToProps)(RegisterUser);
+RegisterUser = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterUser);
 
 export default reduxForm({
   form: 'registerForm',
-  validate
+  enableReinitialize: true
 })(RegisterUser);

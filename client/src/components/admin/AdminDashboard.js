@@ -4,6 +4,7 @@ import { Grid, Header, Icon } from 'semantic-ui-react';
 import AdminCourseTools from './courses/AdminCourseTools';
 import AdminCompTools from './competencies/AdminCompTools';
 import AdminRoleTools from './roles/AdminRoleTools';
+import AdminUserTools from './users/AdminUserTools';
 
 const AdminDashboard = props => {
   return (
@@ -21,15 +22,13 @@ const AdminDashboard = props => {
             <AdminCourseTools />
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
+        <Grid.Row columns={2}>
           <Grid.Column>
             <Header as="h2" textAlign="center">
               Competency Tools
             </Header>
             <AdminCompTools />
           </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
           <Grid.Column>
             <Header as="h2" textAlign="center">
               Role Tools
@@ -37,11 +36,13 @@ const AdminDashboard = props => {
             <AdminRoleTools />
           </Grid.Column>
         </Grid.Row>
+
         <Grid.Row>
           <Grid.Column>
             <Header as="h2" textAlign="center">
-              User Manager Tools
+              User Tools
             </Header>
+            <AdminUserTools />
           </Grid.Column>
         </Grid.Row>
       </Grid>

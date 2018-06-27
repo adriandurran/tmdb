@@ -1,10 +1,13 @@
 import React from 'react';
-import { Form, Input } from 'semantic-ui-react';
+import { Form, Input, Message } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 export default function semanticFormField({
   input,
   type,
   label,
+  icon,
+  iconPosition,
   placeholder,
   meta: { touched, error, warning },
   as: As = Input,
@@ -23,18 +26,29 @@ export default function semanticFormField({
         label={label}
         placeholder={placeholder}
         onChange={handleChange}
+        icon={icon}
+        iconPosition={iconPosition}
       />
       {touched &&
         ((error && (
-          <span>
-            <i>{error}</i>
-          </span>
+          <Message negative>
+            <Message.Header>{error}</Message.Header>
+          </Message>
         )) ||
           (warning && (
-            <span>
-              <i>{warning}</i>
-            </span>
+            <Message warning>
+              <Message.Header>{warning}</Message.Header>
+            </Message>
           )))}
     </Form.Field>
   );
 }
+
+semanticFormField.propTypes = {
+  as: PropTypes.any,
+  input: PropTypes.object,
+  type: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  meta: PropTypes.object
+};

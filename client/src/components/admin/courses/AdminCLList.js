@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, List, Icon } from 'semantic-ui-react';
 
-import { selectCourseLevels } from '../../../reducers/selectors';
+import { selectCourseLevels } from '../../../reducers/selectors/courseSelectors';
 import { fetchCourseLevels, deleteCourseLevel } from '../../../actions/courses';
 
 class AdminCLList extends Component {
@@ -53,6 +53,9 @@ const mapDispatchToProps = {
   deleteCourseLevel
 };
 
-AdminCLList = connect(mapStateToProps, mapDispatchToProps)(AdminCLList);
+AdminCLList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminCLList);
 
 export default AdminCLList;

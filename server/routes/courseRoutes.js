@@ -1,37 +1,39 @@
+const express = require('express');
+const router = express.Router();
+
 const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');
 
 const courseController = require('../controllers/courseController');
 
-module.exports = app => {
-  // Course Types
-  app.get('/api/course-types', requireLogin, courseController.getCourseTypes);
+// Course Types
+router.get('/course-types', requireLogin, courseController.getCourseTypes);
 
-  app.post('/api/course-types', requireAdmin, courseController.addCourseTypes);
+router.post('/course-types', requireAdmin, courseController.addCourseTypes);
 
-  app.delete(
-    '/api/course-types',
-    requireAdmin,
-    courseController.deleteCourseTypes
-  );
+router.delete(
+  '/course-types',
+  requireAdmin,
+  courseController.deleteCourseTypes
+);
 
-  // Course Levels
-  app.get('/api/course-levels', requireLogin, courseController.getCourseLevels);
+// Course Levels
+router.get('/course-levels', requireLogin, courseController.getCourseLevels);
 
-  app.post(
-    '/api/course-levels',
-    requireAdmin,
-    courseController.addCourseLevels
-  );
+router.post('/course-levels', requireAdmin, courseController.addCourseLevels);
 
-  app.delete(
-    '/api/course-levels',
-    requireAdmin,
-    courseController.deleteCourseLevels
-  );
+router.delete(
+  '/course-levels',
+  requireAdmin,
+  courseController.deleteCourseLevels
+);
 
-  // Courses
-  app.get('/api/courses', requireLogin, courseController.getCourses);
+// Courses
+router.get('/', requireLogin, courseController.getCourses);
 
-  app.post('/api/courses', requireAdmin, courseController.addCourses);
-};
+router.post('/', requireAdmin, courseController.addCourses);
+
+router.get('/:id', requireLogin, courseController.getCourse);
+router.put('/:id', requireLogin, courseController.updateCourse);
+
+module.exports = router;

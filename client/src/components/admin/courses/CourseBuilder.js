@@ -7,9 +7,9 @@ import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 import semanticFormField from '../../shared/semanticFormField';
 
 import {
-  selectCourseTypes,
-  selectCourseLevels
-} from '../../../reducers/selectors';
+  selectCourseTypesForDropDown,
+  selectCourseLevelsForDropDown
+} from '../../../reducers/selectors/courseSelectors';
 
 import {
   fetchCourseTypes,
@@ -30,33 +30,11 @@ class CourseBuilder extends Component {
     });
   };
 
-  makeLevelOptions() {
-    return this.props.courseLevels.map(level => {
-      let newLvl = {
-        key: level._id,
-        value: level.courseLevel,
-        text: level.courseLevel
-      };
-      return newLvl;
-    });
-  }
-
   handleTypeChange = (e, item) => {
     this.setState({
       type: item.value
     });
   };
-
-  makeTypeOptions() {
-    return this.props.courseTypes.map(type => {
-      let newType = {
-        key: type._id,
-        value: type.courseType,
-        text: type.courseType
-      };
-      return newType;
-    });
-  }
 
   submitNewCourse(values, dispatch) {
     const { adminAddNewCourse } = this.props;
@@ -71,7 +49,7 @@ class CourseBuilder extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, levels, types } = this.props;
 
     return (
       <div>
@@ -108,7 +86,7 @@ class CourseBuilder extends Component {
                     fluid
                     inline
                     name="type"
-                    options={this.makeTypeOptions()}
+                    options={types}
                     placeholder="Select a Course Type"
                     onChange={this.handleTypeChange}
                   />
@@ -117,7 +95,7 @@ class CourseBuilder extends Component {
                     fluid
                     inline
                     name="level"
-                    options={this.makeLevelOptions()}
+                    options={levels}
                     placeholder="Select a Course Level"
                     onChange={this.handleLevelChange}
                   />
@@ -143,8 +121,8 @@ class CourseBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    courseTypes: selectCourseTypes(state),
-    courseLevels: selectCourseLevels(state)
+    types: selectCourseTypesForDropDown(state),
+    levels: selectCourseLevelsForDropDown(state)
   };
 };
 
@@ -154,7 +132,10 @@ const mapDispatchToProps = {
   fetchCourseTypes
 };
 
-CourseBuilder = connect(mapStateToProps, mapDispatchToProps)(CourseBuilder);
+CourseBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CourseBuilder);
 
 export default reduxForm({
   form: 'coursebuilder'

@@ -9,8 +9,4 @@ const auth = (state = { user: {} }, action) => {
   }
 };
 
-export const selectUserName = state => {
-  return `${state.user.firstname} ${state.user.lastname}`;
-};
-
 export default auth;

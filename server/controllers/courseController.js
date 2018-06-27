@@ -47,13 +47,35 @@ module.exports = {
 
   //   Courses
   getCourses: async (req, res) => {
-    const dbCourses = await Course.find({});
+    const dbCourses = await Course.find({}).populate('notes.noteBy');
     res.send(dbCourses);
   },
 
   addCourses: async (req, res) => {
     const newCourse = req.body;
-    const newCourseCreated = await Course.create(newCourse);
+    const newCourseCreated = await Course.create(newCourse).populate(
+      'notes.noteBy'
+    );
     res.send(newCourseCreated);
+  },
+
+  getCourse: async (req, res) => {
+    const dbCourse = await Course.findById(req.params.id).populate(
+      'notes.noteBy'
+    );
+    res.send(dbCourse);
+  },
+
+  updateCourse: async (req, res) => {
+    try {
+      const upCourse = await Course.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      ).populate('notes.noteBy');
+      res.send(upCourse);
+    } catch (error) {
+      res.sendStatus(418).send(error);
+    }
   }
 };

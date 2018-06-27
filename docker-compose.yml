@@ -5,18 +5,22 @@ services:
     build:
       context: ./server
     volumes:
-     - ./server:/usr/src/app
-     - /usr/src/app/node_modules/
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules/
     ports:
       - 3050:3050
     depends_on:
       - db
     command: ["nodemon", "./bin/www"]
+    networks:
+      - tmdb
 
   db:
     image: mongo:latest
     volumes:
-     - ./docker/data/db:/data/db
+      - ./docker/data/db:/data/db
+    networks:
+      - tmdb
 
 networks:
   tmdb:

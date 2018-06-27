@@ -1,14 +1,15 @@
 import {
-  FETCH_COMPS
-  // ADD_COURSE_FOR_COMPBUILDER,
-  // REMOVE_COURSE_FOR_COMPBUILDER,
-  // CLEAR_COURSES_FROM_COMPBUILDER,
-  // ADD_NEW_COMP
+  FETCH_COMPS,
+  DELETE_COMP_TYPE,
+  FETCH_COMP_TYPES,
+  FETCH_COMPETENCY,
+  CLEAR_COMPETENCY
 } from '../../actions/types';
 
-const INITIAL_STATE = [];
+const INITIAL_STATE_A = [];
+const INITIAL_STATE_O = {};
 
-export const compsReducer = (state = INITIAL_STATE, action) => {
+export const compsReducer = (state = INITIAL_STATE_A, action) => {
   switch (action.type) {
     case FETCH_COMPS:
       return action.payload;
@@ -17,15 +18,25 @@ export const compsReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-// export const compBuilderCourses = (state = INITIAL_STATE, action) => {
-//   switch (action.type) {
-//     case ADD_COURSE_FOR_COMPBUILDER:
-//       return [...state, action.payload];
-//     case REMOVE_COURSE_FOR_COMPBUILDER:
-//       return state.filter(({ _id }) => _id !== action.payload);
-//     case CLEAR_COURSES_FROM_COMPBUILDER:
-//       return INITIAL_STATE;
-//     default:
-//       return state;
-//   }
-// };
+export const compTypesReducer = (state = INITIAL_STATE_A, action) => {
+  switch (action.type) {
+    case FETCH_COMP_TYPES:
+      return action.payload;
+    case DELETE_COMP_TYPE:
+      return state.filter(type => type._id !== action.payload);
+    default:
+      return state;
+  }
+};
+
+export const competencyReducer = (state = INITIAL_STATE_O, action) => {
+  switch (action.type) {
+    case CLEAR_COMPETENCY:
+      return INITIAL_STATE_O;
+    case FETCH_COMPETENCY:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};

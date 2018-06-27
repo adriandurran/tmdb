@@ -4,15 +4,18 @@ import { connect } from 'react-redux';
 
 import { Grid, Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
-import { selectCourses } from '../../../reducers/selectors';
+import { selectCoursesForDropDown } from '../../../reducers/selectors/courseSelectors';
+import { selectCompetencyTypesForDropDown } from '../../../reducers/selectors/compSelectors';
 import { fetchCourses } from '../../../actions/courses';
-import { adminAddNewComp } from '../../../actions/comps';
+import { adminAddNewComp, fetchCompTypes } from '../../../actions/comps';
 
 import semanticFormField from '../../shared/semanticFormField';
 
 class CompBuilder extends Component {
   componentDidMount() {
-    this.props.fetchCourses();
+    const { fetchCompTypes, fetchCourses } = this.props;
+    fetchCourses();
+    fetchCompTypes();
   }
 
   handleSelectChange = (e, item) => {
@@ -21,29 +24,33 @@ class CompBuilder extends Component {
     });
   };
 
-  submitNewComp(values, dispatch) {
+  handleSelectCompChange = (e, item) => {
+    this.setState({
+      cForCType: item.value
+    });
+  };
+
+  submitNewComp(values) {
     const { adminAddNewComp } = this.props;
     let newComp = {
       compName: values.compName,
       shortName: values.shortName.toUpperCase(),
-      courses: this.state.cForC
+      courses: this.state.cForC,
+      compType: this.state.cForCType
     };
-    adminAddNewComp(newComp).then(() => this.setState({ cForC: [] }));
-  }
-
-  makeCourseOptions() {
-    return this.props.courses.map(course => {
-      let statCourse = {
-        key: course._id,
-        value: course._id,
-        text: course.courseName
-      };
-      return statCourse;
-    });
+    adminAddNewComp(newComp).then(() =>
+      this.setState({ cForC: [], cForCType: '' })
+    );
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      pristine,
+      courses,
+      compTypes
+    } = this.props;
 
     return (
       <div>
@@ -73,6 +80,13 @@ class CompBuilder extends Component {
                     type="text"
                     placeholder="Competency Name"
                   />
+                  <Dropdown
+                    selection
+                    name="compTypes"
+                    options={compTypes}
+                    placeholder="Select a Competency Type"
+                    onChange={this.handleSelectCompChange}
+                  />
                 </Form.Group>
                 {/* <Form.Group inline> */}
                 <Dropdown
@@ -80,7 +94,7 @@ class CompBuilder extends Component {
                   selection
                   multiple
                   name="compCourses"
-                  options={this.makeCourseOptions()}
+                  options={courses}
                   placeholder="Select a Course"
                   onChange={this.handleSelectChange}
                 />
@@ -107,16 +121,21 @@ class CompBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    courses: selectCourses(state)
+    courses: selectCoursesForDropDown(state),
+    compTypes: selectCompetencyTypesForDropDown(state)
   };
 };
 
 const mapDispatchToProps = {
   adminAddNewComp,
-  fetchCourses
+  fetchCourses,
+  fetchCompTypes
 };
 
-CompBuilder = connect(mapStateToProps, mapDispatchToProps)(CompBuilder);
+CompBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CompBuilder);
 
 export default reduxForm({
   form: 'compbuilder'

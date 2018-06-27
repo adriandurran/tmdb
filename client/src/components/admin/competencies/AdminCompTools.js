@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Header, Card, Icon } from 'semantic-ui-react';
 
 import { fetchComps } from '../../../actions/comps';
-import { selectCompetencies } from '../../../reducers/selectors';
+import { selectCompetencies } from '../../../reducers/selectors/compSelectors';
 
 class AdminCompTools extends Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ class AdminCompTools extends Component {
   render() {
     const { comps } = this.props;
     return (
-      <Card.Group itemsPerRow={2} centered>
+      <Card.Group itemsPerRow={1} centered>
         <Card as={Link} to="/admin/comp-manager" raised>
           <Card.Content>
             <Header as="h5">Competency Manager</Header>
@@ -47,6 +47,9 @@ const mapDispatchToProps = {
   fetchComps
 };
 
-AdminCompTools = connect(mapStateToProps, mapDispatchToProps)(AdminCompTools);
+AdminCompTools = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminCompTools);
 
 export default AdminCompTools;

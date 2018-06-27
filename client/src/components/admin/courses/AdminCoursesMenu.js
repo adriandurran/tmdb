@@ -33,6 +33,8 @@ const AdminCoursesMenu = props => {
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      <Menu.Item name="Competency Manager" as={Link} to="/admin/comp-manager" />
+      <Menu.Item name="Role Manager" as={Link} to="/admin/role-manager" />
     </Menu>
   );
 };

@@ -18,7 +18,7 @@ import { withStyles } from 'material-ui/styles';
 import withRoot from '../../withRoot';
 import rootStyles from '../../styles/rootStyle';
 
-import { selectRoles } from '../../reducers/selectors';
+import { selectRoles } from '../../reducers/selectors/roleSelectors';
 
 const columnData = [
   {

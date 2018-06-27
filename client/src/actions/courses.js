@@ -3,35 +3,40 @@ import { reset } from 'redux-form';
 
 import {
   FETCH_COURSES,
+  FETCH_COURSE,
   FETCH_COURSE_TYPE,
   FETCH_COURSE_LEVEL,
   ADD_NEW_COURSE,
-  // ADD_COURSE_FOR_COMPBUILDER,
-  // REMOVE_COURSE_FOR_COMPBUILDER,
   ADD_COURSE_TYPE,
   DELETE_COURSE_TYPE,
   ADD_COURSE_LEVEL,
-  DELETE_COURSE_LEVEL
+  DELETE_COURSE_LEVEL,
+  CLEAR_COURSE
 } from './types';
 
+import { fetchAllUsers } from './user';
+import { fetchUser } from './auth';
+
 export const fetchCourses = () => async dispatch => {
-  const res = await axios.get('/api/courses');
+  const res = await axios.get('/api/tmdb/courses');
   dispatch({ type: FETCH_COURSES, payload: res.data });
 };
 
 export const fetchCourseTypes = () => async dispatch => {
-  const res = await axios.get('/api/course-types');
+  const res = await axios.get('/api/tmdb/courses/course-types');
   dispatch({ type: FETCH_COURSE_TYPE, payload: res.data });
 };
 
 export const addCourseType = type => async dispatch => {
-  const res = await axios.post('/api/course-types', type);
+  const res = await axios.post('/api/tmdb/courses/course-types', type);
   dispatch({ type: ADD_COURSE_TYPE, payload: res.data });
   dispatch(reset('courseTypes'));
 };
 
 export const deleteCourseType = id => async dispatch => {
-  const res = await axios.delete('/api/course-types', { params: { id } });
+  const res = await axios.delete('/api/tmdb/courses/course-types', {
+    params: { id }
+  });
   if (res.status === 200) {
     dispatch({ type: DELETE_COURSE_TYPE, payload: id });
   } else {
@@ -40,18 +45,20 @@ export const deleteCourseType = id => async dispatch => {
 };
 
 export const fetchCourseLevels = () => async dispatch => {
-  const res = await axios.get('/api/course-levels');
+  const res = await axios.get('/api/tmdb/courses/course-levels');
   dispatch({ type: FETCH_COURSE_LEVEL, payload: res.data });
 };
 
 export const addCourseLevel = level => async dispatch => {
-  const res = await axios.post('/api/course-levels', level);
+  const res = await axios.post('/api/tmdb/courses/course-levels', level);
   dispatch({ type: ADD_COURSE_LEVEL, payload: res.data });
   dispatch(reset('courseLevels'));
 };
 
 export const deleteCourseLevel = id => async dispatch => {
-  const res = await axios.delete('/api/course-levels', { params: { id } });
+  const res = await axios.delete('/api/tmdb/courses/course-levels', {
+    params: { id }
+  });
   if (res.status === 200) {
     dispatch({ type: DELETE_COURSE_LEVEL, payload: id });
   } else {
@@ -60,16 +67,45 @@ export const deleteCourseLevel = id => async dispatch => {
 };
 
 export const adminAddNewCourse = course => async dispatch => {
-  const res = await axios.post('/api/courses', course);
+  const res = await axios.post('/api/tmdb/courses', course);
 
   dispatch({ type: ADD_NEW_COURSE, payload: res.data });
   dispatch(reset('coursebuilder'));
 };
 
-// export const addCourseForCompBuilder = id => async dispatch => {
-//   dispatch({ type: ADD_COURSE_FOR_COMPBUILDER, payload: { id } });
-// };
+export const clearCourseSearchResult = () => dispatch => {
+  dispatch({ type: CLEAR_COURSE });
+};
 
-// export const removeCourseForCompBuilder = id => async dispatch => {
-//   dispatch({ type: REMOVE_COURSE_FOR_COMPBUILDER, payload: id });
-// };
+export const clearCourse = () => dispatch => {
+  dispatch({ type: CLEAR_COURSE });
+};
+
+export const fetchCourse = id => async dispatch => {
+  dispatch(clearCourse());
+  const res = await axios.get(`/api/tmdb/courses/${id}`);
+  dispatch({ type: FETCH_COURSE, payload: res.data });
+};
+
+export const adminUpdateCourse = (id, course) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/tmdb/courses/${id}`, course);
+    if (res.status === 200) {
+      dispatch({ type: FETCH_COURSE, payload: res.data });
+
+      // load all the courses up
+      dispatch(fetchCourses());
+      // can't think of a better way to do this
+      // I need to update the courses for the users in state
+      // what has the greater cost?
+      // looping through all the users in state to find users who have the course?
+      // or just update state from the db
+      dispatch(fetchAllUsers());
+      // update the logged in user also....edge case I know
+      dispatch(fetchUser());
+      return res;
+    }
+  } catch (error) {
+    return error;
+  }
+};
