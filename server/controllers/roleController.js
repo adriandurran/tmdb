@@ -23,5 +23,21 @@ module.exports = {
     });
 
     res.send(dbRole);
+  },
+
+  updateRole: async (req, res) => {
+    try {
+      const upRole = await Role.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      ).populate({
+        path: 'competencies',
+        populate: [{ path: 'courses' }, { path: 'compType' }]
+      });
+      res.send(upRole);
+    } catch (error) {
+      res.sendStatus(418).send(error);
+    }
   }
 };

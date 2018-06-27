@@ -10,5 +10,6 @@ router.get('/', requireLogin, roleController.getRoles);
 router.post('/', requireAdmin, roleController.addRoles);
 
 router.get('/:id', requireLogin, roleController.getRole);
+router.put('/:id', requireAdmin, roleController.updateRole);
 
 module.exports = router;
