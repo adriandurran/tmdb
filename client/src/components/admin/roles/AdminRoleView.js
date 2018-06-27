@@ -7,7 +7,7 @@ import { Header, Grid, Breadcrumb } from 'semantic-ui-react';
 
 import { selectRole } from '../../../reducers/selectors/roleSelectors';
 
-import AdminRoleEdit from './AdminRoleEdit';
+import AdminEditRole from './AdminEditRole';
 import AdminRoleHolders from './AdminRoleHolders';
 
 class AdminRoleView extends Component {
@@ -34,7 +34,7 @@ class AdminRoleView extends Component {
         <Grid columns={2} centered>
           <Grid.Column>
             <Grid.Column>
-              <AdminRoleEdit />
+              <AdminEditRole />
             </Grid.Column>
           </Grid.Column>
           <Grid.Column>

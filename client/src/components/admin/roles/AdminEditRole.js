@@ -18,7 +18,7 @@ import { selectCompetenciesForDropDown } from '../../../reducers/selectors/compS
 
 import semanticFormField from '../../shared/semanticFormField';
 
-class AdminRoleEdit extends Component {
+class AdminEditRole extends Component {
   state = {
     cForR: [],
     message: {
@@ -121,7 +121,7 @@ class AdminRoleEdit extends Component {
             </Form.Group>
             <Form.Group>
               <Button fluid disabled={submitting} type="submit" size="medium">
-                Add Role
+                Update Role
               </Button>
             </Form.Group>
           </Form>
@@ -144,14 +144,14 @@ const mapStateToProps = state => {
   };
 };
 
-AdminRoleEdit = reduxForm({
+AdminEditRole = reduxForm({
   form: 'editRole',
   enableReinitialize: true
-})(AdminRoleEdit);
+})(AdminEditRole);
 
-AdminRoleEdit = connect(
+AdminEditRole = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminRoleEdit);
+)(AdminEditRole);
 
-export default AdminRoleEdit;
+export default AdminEditRole;
