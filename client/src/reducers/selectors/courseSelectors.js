@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import _ from 'lodash';
 
 // courses
 export const selectCourses = state => state.courses;
@@ -6,7 +7,6 @@ export const selectCourses = state => state.courses;
 // course
 export const selectCourse = state => state.course;
 
-// course notes
 export const selectCourseNotes = state => state.course.notes;
 
 // get course types
@@ -80,5 +80,13 @@ export const selectCoursesForDropDown = createSelector(
         disabled: disFlag
       };
     });
+  }
+);
+
+// course notes
+export const selectCourseNotesOrdered = createSelector(
+  selectCourseNotes,
+  notes => {
+    return _.orderBy(notes, 'noteDate', 'desc');
   }
 );

@@ -80,7 +80,6 @@ class AdminEditCourse extends Component {
     };
     const allNotes = [...course.notes, newNote];
 
-    console.log(allNotes);
     let upCourse = {
       courseName: values.courseName,
       validity: values.validity,
@@ -101,7 +100,8 @@ class AdminEditCourse extends Component {
         message.negative = true;
       }
       this.setState({
-        message
+        message,
+        notes: ''
       });
       this.resetMessageState();
     });

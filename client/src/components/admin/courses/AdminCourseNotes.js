@@ -4,14 +4,14 @@ import Moment from 'react-moment';
 
 import { Header, Segment, Feed } from 'semantic-ui-react';
 
-import { selectCourseNotes } from '../../../reducers/selectors/courseSelectors';
+import { selectCourseNotesOrdered } from '../../../reducers/selectors/courseSelectors';
 
 class AdminCourseNotes extends Component {
   renderFeed() {
     const { notes } = this.props;
     return notes.map(note => {
       return (
-        <Feed.Event>
+        <Feed.Event key={note._id}>
           <Feed.Label image="http://lorempixel.com/400/400/people" />
           <Feed.Content>
             <Feed.Summary>
@@ -33,14 +33,13 @@ class AdminCourseNotes extends Component {
     return (
       <div stye={{ marginTop: '2em' }}>
         {notes.length > 0 ? (
-          <div>
+          <Segment stye={{ marginTop: '2em' }}>
             <Header as="h3" textAlign="center">
               Course Notes
             </Header>
-            <Segment stye={{ marginTop: '2em' }}>
-              <Feed>{this.renderFeed()}</Feed>
-            </Segment>
-          </div>
+
+            <Feed>{this.renderFeed()}</Feed>
+          </Segment>
         ) : (
           <Header as="h3" textAlign="center">
             No Course Notes
@@ -53,7 +52,7 @@ class AdminCourseNotes extends Component {
 
 const mapStateToProps = state => {
   return {
-    notes: selectCourseNotes(state)
+    notes: selectCourseNotesOrdered(state)
   };
 };
 
