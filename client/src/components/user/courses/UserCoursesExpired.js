@@ -53,9 +53,6 @@ class UserCoursesExpired extends Component {
   renderTableBody() {
     const { data } = this.state;
     return data.map(({ _id, _course, passDate }) => {
-      console.log('pass', passDate);
-      console.log('valid', _course.validity);
-      console.log('expire', expireDate(passDate, _course.validity));
       return (
         <Table.Row key={_id}>
           <Table.Cell>{_course.courseName}</Table.Cell>
