@@ -10,6 +10,7 @@ import {
 
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 
+import { selectRole } from './roleSelectors';
 import { selectCompetencies, selectCompetency } from './compSelectors';
 import { selectCourse } from './courseSelectors';
 
@@ -186,6 +187,16 @@ export const selectUsersCourseHolders = createSelector(
 
     return users.filter(user => {
       return _.includes(courseHolders, user._id);
+    });
+  }
+);
+
+export const selectUsersRoleHolders = createSelector(
+  selectAllUsersActive,
+  selectRole,
+  (users, role) => {
+    return users.filter(user => {
+      return _.includes(user.roles.map(role => role._id), role._id);
     });
   }
 );
