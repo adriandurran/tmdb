@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Table, Header } from 'semantic-ui-react';
 
 import { selectUserCoursesExpired } from '../../../reducers/selectors/userSelectors';
+import { expireDate } from '../../../utils/datehelpers';
 
 class UserCoursesExpired extends Component {
   state = {
@@ -53,23 +54,16 @@ class UserCoursesExpired extends Component {
   renderTableBody() {
     const { data } = this.state;
     return data.map(({ _id, _course, passDate }) => {
-      let nowDate = Date.now();
-
+      console.log('pass', passDate);
+      console.log('valid', _course.validity);
+      console.log('expire', expireDate(passDate, _course.validity));
       return (
         <Table.Row key={_id}>
           <Table.Cell>{_course.courseName}</Table.Cell>
           <Table.Cell>{_course.type}</Table.Cell>
           <Table.Cell>{_course.level}</Table.Cell>
           <Table.Cell>
-            <Moment
-              fromNow
-              diff={moment(passDate, 'YYYY-MM-DD').add(
-                _course.validity,
-                'months'
-              )}
-            >
-              {nowDate}
-            </Moment>
+            <Moment fromNow>{expireDate(passDate, _course.validity)}</Moment>
           </Table.Cell>
         </Table.Row>
       );

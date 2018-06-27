@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Moment from 'react-moment';
-import moment from 'moment';
 
 import { Table, Header } from 'semantic-ui-react';
 
 import { selectUserManageCoursesExpired } from '../../../../reducers/selectors/adminSelectors';
+import { expireDate } from '../../../../utils/datehelpers';
 
 class AdminUserCoursesExpired extends Component {
   state = {
@@ -53,23 +53,13 @@ class AdminUserCoursesExpired extends Component {
   renderTableBody() {
     const { data } = this.state;
     return data.map(({ _id, _course, passDate }) => {
-      let nowDate = Date.now();
-
       return (
         <Table.Row key={_id}>
           <Table.Cell>{_course.courseName}</Table.Cell>
           <Table.Cell>{_course.type}</Table.Cell>
           <Table.Cell>{_course.level}</Table.Cell>
           <Table.Cell>
-            <Moment
-              fromNow
-              diff={moment(passDate, 'YYYY-MM-DD').add(
-                _course.validity,
-                'months'
-              )}
-            >
-              {nowDate}
-            </Moment>
+            <Moment fromNow>{expireDate(passDate, _course.validity)}</Moment>
           </Table.Cell>
         </Table.Row>
       );
