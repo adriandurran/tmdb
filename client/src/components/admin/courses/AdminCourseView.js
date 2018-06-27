@@ -9,6 +9,7 @@ import { selectCourse } from '../../../reducers/selectors/courseSelectors';
 
 import AdminEditCourse from './AdminEditCourse';
 import AdminCourseHolders from './AdminCourseHolders';
+import AdminCourseNotes from './AdminCourseNotes';
 
 class AdminCourseView extends Component {
   render() {
@@ -33,9 +34,19 @@ class AdminCourseView extends Component {
               : `Details for ${course.courseName}`}
           </Breadcrumb.Section>
         </Breadcrumb>
+
         <Grid columns={2} centered>
           <Grid.Column>
-            <AdminEditCourse />
+            <Grid.Row>
+              <Grid.Column>
+                <AdminEditCourse />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <AdminCourseNotes />
+              </Grid.Column>
+            </Grid.Row>
           </Grid.Column>
           <Grid.Column>
             <AdminCourseHolders />

@@ -6,6 +6,9 @@ export const selectCourses = state => state.courses;
 // course
 export const selectCourse = state => state.course;
 
+// course notes
+export const selectCourseNotes = state => state.course.notes;
+
 // get course types
 export const selectCourseTypes = state => state.courseTypes;
 
