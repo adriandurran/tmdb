@@ -12,3 +12,7 @@ export const selectRolesForDropDown = createSelector(selectRoles, roles => {
     };
   });
 });
+
+// role
+
+export const selectRole = state => state.role;

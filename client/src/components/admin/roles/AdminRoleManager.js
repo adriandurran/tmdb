@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import RoleBuilder from './RoleBuilder';
-import RolesTable from '../../roles/rolesTable';
+import AdminRolesTable from './AdminRolesTable';
 
 const AdminRoleManager = props => {
   return (
@@ -15,7 +15,7 @@ const AdminRoleManager = props => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column>
-          <RolesTable />
+          <AdminRolesTable />
         </Grid.Column>
       </Grid.Row>
     </Grid>

@@ -37,16 +37,10 @@ class AdminCourseView extends Component {
 
         <Grid columns={2} centered>
           <Grid.Column>
-            <Grid.Row>
-              <Grid.Column>
-                <AdminEditCourse />
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <AdminCourseNotes />
-              </Grid.Column>
-            </Grid.Row>
+            <Grid.Column>
+              <AdminEditCourse />
+              <AdminCourseNotes />
+            </Grid.Column>
           </Grid.Column>
           <Grid.Column>
             <AdminCourseHolders />

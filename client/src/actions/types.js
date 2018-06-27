@@ -8,6 +8,7 @@ export const ADMIN_SEARCH_RESULT = 'admin_search_result';
 export const ADMIN_CLEAR_SEARCH = 'admin_clear_search';
 // roles
 export const FETCH_ROLE = 'fetch_role';
+export const CLEAR_ROLE = 'clear_role';
 export const FETCH_ROLES = 'fetch_roles';
 export const FETCH_USER_ROLES = 'fetch_user_roles';
 export const ADMIN_EDIT_USER_ROLE = 'admin_edit_user_role';

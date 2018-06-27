@@ -24,6 +24,7 @@ import AdminCompManager from './components/admin/competencies/AdminCompManager';
 import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
 
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
+import AdminRoleView from './components/admin/roles/AdminRoleView';
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 
@@ -74,6 +75,11 @@ const Routes = () => {
             exact
             path="/admin/role-manager"
             component={AdminRoleManager}
+          />
+          <Route
+            exact
+            path="/admin/role-manager/view/:id"
+            component={AdminRoleView}
           />
           <Route
             exact

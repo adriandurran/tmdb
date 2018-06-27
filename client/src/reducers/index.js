@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as reduxForm } from 'redux-form';
 
 import authReducer from './users/authUser';
-import { rolesReducer } from './roles/roles';
+import { rolesReducer, roleReducer } from './roles/roles';
 import {
   compsReducer,
   compTypesReducer,
@@ -18,6 +18,7 @@ const reducer = combineReducers({
   allusers: allUsersReducer,
   user: userSearchResultReducer,
   roles: rolesReducer,
+  role: roleReducer,
   comps: compsReducer,
   comp: competencyReducer,
   compTypes: compTypesReducer,

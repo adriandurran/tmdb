@@ -2,11 +2,12 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { Table, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { fetchRoles } from '../../actions/roles';
-import { selectRoles } from '../../reducers/selectors/roleSelectors';
+import { fetchRoles, fetchRole } from '../../../actions/roles';
+import { selectRoles } from '../../../reducers/selectors/roleSelectors';
 
-class RolesTable extends Component {
+class AdminRolesTable extends Component {
   state = {
     column: null,
     data: [],
@@ -50,6 +51,13 @@ class RolesTable extends Component {
     });
   };
 
+  rowClick = id => {
+    const { history, fetchRole } = this.props;
+    fetchRole(id).then(() => {
+      history.push(`/admin/role-manager/view/${id}`);
+    });
+  };
+
   render() {
     const { column, data, direction } = this.state;
 
@@ -58,7 +66,7 @@ class RolesTable extends Component {
         <Header as="h2" textAlign="center">
           Roles
         </Header>
-        <Table sortable celled fixed structured>
+        <Table sortable celled fixed structured selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell
@@ -77,7 +85,7 @@ class RolesTable extends Component {
           </Table.Header>
           <Table.Body>
             {_.map(data, ({ _id, roleName, competencies }) => (
-              <Table.Row key={_id}>
+              <Table.Row key={_id} onClick={() => this.rowClick(_id)}>
                 <Table.Cell>{roleName}</Table.Cell>
                 <Table.Cell>Coming soon</Table.Cell>
               </Table.Row>
@@ -90,7 +98,8 @@ class RolesTable extends Component {
 }
 
 const mapDispatchToProps = {
-  fetchRoles
+  fetchRoles,
+  fetchRole
 };
 
 const mapStateToProps = state => {
@@ -99,9 +108,9 @@ const mapStateToProps = state => {
   };
 };
 
-RolesTable = connect(
+AdminRolesTable = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RolesTable);
+)(AdminRolesTable);
 
-export default RolesTable;
+export default withRouter(AdminRolesTable);

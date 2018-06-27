@@ -14,5 +14,14 @@ module.exports = {
     const newRole = req.body;
     const newRoleCreated = await Role.create(newRole);
     res.send(newRoleCreated);
+  },
+
+  getRole: async (req, res) => {
+    const dbRole = await Role.findById(req.params.id).populate({
+      path: 'competencies',
+      populate: [{ path: 'courses' }, { path: 'compType' }]
+    });
+
+    res.send(dbRole);
   }
 };

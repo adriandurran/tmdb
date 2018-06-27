@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import _ from 'lodash';
 
-import { Header, Form, Dropdown, Button, Message } from 'semantic-ui-react';
+import {
+  Header,
+  Form,
+  Dropdown,
+  Button,
+  Message,
+  Segment
+} from 'semantic-ui-react';
 
 import semanticFormField from '../../shared/semanticFormField';
 
@@ -116,69 +123,68 @@ class AdminEditCourse extends Component {
           Edit Course
         </Header>
         <Message
-          attached
+          attached="top"
           header={message.header}
           content={message.content}
           visible={message.visible}
           positive={message.positive}
           negative={message.negative}
         />
-        <Form
-          onSubmit={handleSubmit(values => this.updateCourse(values))}
-          className="attached fluid segment"
-        >
-          <Form.Group inline widths="equal">
-            <Field
-              fluid
-              component={semanticFormField}
-              as={Form.Input}
-              type="text"
-              name="courseName"
-              placeholder="Course name"
+        <Segment attached>
+          <Form onSubmit={handleSubmit(values => this.updateCourse(values))}>
+            <Form.Group inline widths="equal">
+              <Field
+                fluid
+                component={semanticFormField}
+                as={Form.Input}
+                type="text"
+                name="courseName"
+                placeholder="Course name"
+              />
+              <Field
+                fluid
+                name="validity"
+                component={semanticFormField}
+                as={Form.Input}
+                type="number"
+                placeholder="Course Validity"
+              />
+            </Form.Group>
+            <Form.Group inline widths="equal">
+              <Dropdown
+                selection
+                inline
+                name="type"
+                options={types}
+                placeholder="Select a Course Type"
+                onChange={this.handleTypeChange}
+                style={{ marginRight: '1em' }}
+                value={this.state.type}
+              />
+              <Dropdown
+                selection
+                inline
+                name="level"
+                options={levels}
+                placeholder="Select a Course Level"
+                onChange={this.handleLevelChange}
+                value={this.state.level}
+              />
+            </Form.Group>
+            <Form.TextArea
+              autoHeight
+              onChange={this.handleNotesChange}
+              value={notes}
+              placeholder="Enter notes here...."
+              rows={3}
             />
-            <Field
-              fluid
-              name="validity"
-              component={semanticFormField}
-              as={Form.Input}
-              type="number"
-              placeholder="Course Validity"
-            />
-          </Form.Group>
-          <Form.Group inline widths="equal">
-            <Dropdown
-              selection
-              inline
-              name="type"
-              options={types}
-              placeholder="Select a Course Type"
-              onChange={this.handleTypeChange}
-              style={{ marginRight: '1em' }}
-              value={this.state.type}
-            />
-            <Dropdown
-              selection
-              inline
-              name="level"
-              options={levels}
-              placeholder="Select a Course Level"
-              onChange={this.handleLevelChange}
-              value={this.state.level}
-            />
-          </Form.Group>
-          <Form.TextArea
-            autoHeight
-            onChange={this.handleNotesChange}
-            value={notes}
-            placeholder="Enter notes here...."
-            rows={3}
-          />
-          <Form.Group>
-            <Button fluid disabled={submitting} type="submit" size="medium">
-              Update Course
-            </Button>
-          </Form.Group>
-        </Form>
+            <Form.Group>
+              <Button fluid disabled={submitting} type="submit" size="medium">
+                Update Course
+              </Button>
+            </Form.Group>
+          </Form>
+        </Segment>
       </div>
     );
   }

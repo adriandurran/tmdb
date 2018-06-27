@@ -31,9 +31,9 @@ class AdminCourseNotes extends Component {
     const { notes } = this.props;
 
     return (
-      <div stye={{ marginTop: '2em' }}>
+      <div>
         {notes.length > 0 ? (
-          <Segment stye={{ marginTop: '2em' }}>
+          <Segment attached="bottom">
             <Header as="h3" textAlign="center">
               Course Notes
             </Header>
@@ -41,9 +41,7 @@ class AdminCourseNotes extends Component {
             <Feed>{this.renderFeed()}</Feed>
           </Segment>
         ) : (
-          <Header as="h3" textAlign="center">
-            No Course Notes
-          </Header>
+          <div />
         )}
       </div>
     );
