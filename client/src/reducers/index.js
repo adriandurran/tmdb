@@ -12,7 +12,7 @@ import { coursesReducer, courseReducer } from './courses/courses';
 import courseLevelsReducer from './courses/course-levels';
 import courseTypesReducer from './courses/course-types';
 import { allUsersReducer, userSearchResultReducer } from './users/users';
-import { deptsReducer } from './dept/deptReducer';
+import { deptsReducer, deptReducer } from './dept/deptReducer';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -28,6 +28,7 @@ const reducer = combineReducers({
   courseTypes: courseTypesReducer,
   courseLevels: courseLevelsReducer,
   depts: deptsReducer,
+  dept: deptReducer,
   form: reduxForm
 });
 

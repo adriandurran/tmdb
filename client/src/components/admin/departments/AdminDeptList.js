@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { List, Header, Icon, Button } from 'semantic-ui-react';
 
 import { selectDepts } from '../../../reducers/selectors/deptSelectors';
+import { fetchDept } from '../../../actions/dept';
 
 class AdminDeptList extends Component {
   renderDeptList() {
@@ -26,8 +28,11 @@ class AdminDeptList extends Component {
   }
 
   handleListClick = (e, { value }) => {
-    console.log(value);
     // I think  launch modal to edit....just a small form
+    const { fetchDept, history } = this.props;
+    fetchDept(value).then(() => {
+      history.push(`/admin/department-manager/view/${value}`);
+    });
   };
 
   render() {
@@ -44,12 +49,19 @@ class AdminDeptList extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  fetchDept
+};
+
 const mapStateToProps = state => {
   return {
     depts: selectDepts(state)
   };
 };
 
-AdminDeptList = connect(mapStateToProps)(AdminDeptList);
+AdminDeptList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminDeptList);
 
-export default AdminDeptList;
+export default withRouter(AdminDeptList);

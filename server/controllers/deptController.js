@@ -10,6 +10,15 @@ module.exports = {
     }
   },
 
+  getDept: async (req, res) => {
+    try {
+      const dbDept = await Department.findById(req.params.id);
+      res.send(dbDept);
+    } catch (error) {
+      return res.status(418).send(error);
+    }
+  },
+
   addDept: async (req, res) => {
     try {
       const newDept = await Department.create(req.body);

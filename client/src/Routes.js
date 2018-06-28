@@ -29,6 +29,7 @@ import AdminRoleView from './components/admin/roles/AdminRoleView';
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
+import AdminDeptView from './components/admin/departments/AdminDeptView';
 
 const Routes = () => {
   return (
@@ -103,6 +104,11 @@ const Routes = () => {
             exact
             path="/admin/department-manager"
             component={AdminDeptManager}
+          />
+          <Route
+            exact
+            path="/admin/department-manager/view/:id"
+            component={AdminDeptView}
           />
         </Container>
       </div>
