@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 
 const Course = require('./course');
 const Role = require('./role');
+const Deptartment = require('./departments');
 
 const saltRounds = 10;
 
@@ -48,6 +49,10 @@ const userSchema = new Schema({
   },
   joinDate: {
     type: Date
+  },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: 'Department'
   },
   courses: [
     {

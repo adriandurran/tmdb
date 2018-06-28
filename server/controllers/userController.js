@@ -5,6 +5,7 @@ const arrayHelp = require('../utils/arrayHelpers');
 module.exports = {
   allUsers: async (req, res) => {
     const dbAllUsers = await User.find({})
+      .populate('department')
       .populate('courses._course')
       .populate({
         path: 'roles',
@@ -18,6 +19,7 @@ module.exports = {
 
   getUser: async (req, res) => {
     const dbUser = await User.findById(req.params.id)
+      .populate('department')
       .populate('courses._course')
       .populate({
         path: 'roles',
@@ -37,6 +39,7 @@ module.exports = {
         { $set: { 'courses.$.verified': true } },
         { new: true }
       )
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
@@ -68,6 +71,7 @@ module.exports = {
         { $set: { courses: courseSet } },
         { new: true }
       )
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
@@ -108,6 +112,7 @@ module.exports = {
         },
         { new: true }
       )
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
@@ -166,6 +171,7 @@ module.exports = {
       res.send(req.user);
     } else {
       const currUser = await User.findById(req.user._id)
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
