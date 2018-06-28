@@ -6,7 +6,7 @@ module.exports = {
       const dbDepts = await Department.find({});
       res.send(dbDepts);
     } catch (error) {
-      res.send(error);
+      return res.status(418).send(error);
     }
   },
 
@@ -15,7 +15,7 @@ module.exports = {
       const newDept = await Department.create(req.body);
       res.send(newDept);
     } catch (error) {
-      res.send(error);
+      return res.status(418).send(error);
     }
   },
   updateDept: async (req, res) => {
@@ -27,7 +27,7 @@ module.exports = {
       );
       res.send(upDept);
     } catch (error) {
-      res.send(error);
+      return res.status(418).send(error);
     }
   }
 };

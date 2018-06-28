@@ -60,6 +60,33 @@ module.exports = {
     }
   },
 
+  addUserDept: async (req, res) => {
+    try {
+      const userDept = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { department: req.body } },
+        { new: true }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+      return res.send(userDept);
+    } catch (error) {
+      return res.status(418).send(error);
+    }
+  },
+
   addUserCourse: async (req, res) => {
     const { course } = req.body;
     try {
