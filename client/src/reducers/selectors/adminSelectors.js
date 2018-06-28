@@ -13,6 +13,7 @@ import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 import { selectRole } from './roleSelectors';
 import { selectCompetencies, selectCompetency } from './compSelectors';
 import { selectCourse } from './courseSelectors';
+import { selectDept } from './deptSelectors';
 
 // all users
 export const selectAllUsers = state => state.allusers;
@@ -198,5 +199,20 @@ export const selectUsersRoleHolders = createSelector(
     return users.filter(user => {
       return _.includes(user.roles.map(role => role._id), role._id);
     });
+  }
+);
+
+export const selectUsersInDept = createSelector(
+  selectAllUsersActive,
+  selectDept,
+  (users, dept) => {
+    return users.filter(user => user.department === dept._id);
+  }
+);
+
+export const selectAllUsersActiveNoDept = createSelector(
+  selectAllUsersActive,
+  users => {
+    return users.filter(user => _.isEmpty(user.department));
   }
 );
