@@ -14,13 +14,16 @@ const AdminUserMenu = props => {
         as={Link}
         to="/admin/user-access-manager"
       />
-
       <Menu.Item name="User Manager" as={Link} to="/admin/user-manager" />
-
       <Menu.Item
         name="User Course Manager"
         as={Link}
         to="/admin/user-courses-manager"
+      />
+      <Menu.Item
+        name="Department Manager"
+        as={Link}
+        to="/admin/department-manager"
       />
     </Menu>
   );

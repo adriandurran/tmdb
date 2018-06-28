@@ -5,7 +5,8 @@ const departmentSchema = new Schema({
   departmentCode: {
     required: true,
     type: String,
-    trim: true
+    trim: true,
+    uppercase: true
   },
   departmentName: {
     required: true,

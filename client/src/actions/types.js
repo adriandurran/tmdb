@@ -35,3 +35,7 @@ export const DELETE_COMP_TYPE = 'delete_comp_type';
 
 export const CLEAR_COMPETENCY = 'clear_competency';
 export const FETCH_COMPETENCY = 'fetch_competency';
+
+// departments
+export const FETCH_DEPTS = 'fetch_departments';
+export const ADMIN_ADD_DEPT = 'admin_add_dept';

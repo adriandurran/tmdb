@@ -8,7 +8,8 @@ const compSchema = new Schema({
   shortName: {
     required: true,
     type: String,
-    trim: true
+    trim: true,
+    uppercase: true
   },
   compName: {
     required: true,

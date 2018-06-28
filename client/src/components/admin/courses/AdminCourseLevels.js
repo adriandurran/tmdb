@@ -7,6 +7,7 @@ import AdminCLList from './AdminCLList';
 import { addCourseLevel } from '../../../actions/courses';
 import AdminCoursesMenu from './AdminCoursesMenu';
 
+// need to remove this and import my semantic one
 const renderInputField = ({ input, label, type, meta: { touched, error } }) => (
   <Form.Input
     required
@@ -74,7 +75,10 @@ const mapDispatchToProps = {
   addCourseLevel
 };
 
-AdminCourseLevels = connect(null, mapDispatchToProps)(AdminCourseLevels);
+AdminCourseLevels = connect(
+  null,
+  mapDispatchToProps
+)(AdminCourseLevels);
 
 export default reduxForm({
   form: 'courseLevels'

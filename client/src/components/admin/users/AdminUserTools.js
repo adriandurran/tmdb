@@ -5,22 +5,25 @@ import { connect } from 'react-redux';
 import { Header, Card, Icon } from 'semantic-ui-react';
 
 import { fetchAllUsers } from '../../../actions/user';
+import { fetchDepts } from '../../../actions/dept';
 
 import {
   selectAllUsers,
   selectAllUsersCoursesVerify,
   selectAllUsersVerify
 } from '../../../reducers/selectors/adminSelectors';
+import { selectDepts } from '../../../reducers/selectors/deptSelectors';
 
 class AdminUserTools extends Component {
   componentDidMount() {
     const { fetchAllUsers } = this.props;
     fetchAllUsers();
+    fetchDepts();
   }
   render() {
-    const { allusers, allusersverify, allcoursesverify } = this.props;
+    const { allusers, allusersverify, allcoursesverify, depts } = this.props;
     return (
-      <Card.Group itemsPerRow={3}>
+      <Card.Group itemsPerRow={4}>
         <Card as={Link} to="/admin/user-access-manager" raised>
           <Card.Content>
             <Header as="h5">User Access Manager</Header>
@@ -30,7 +33,7 @@ class AdminUserTools extends Component {
             {allusers.length > 0 ? (
               <span>
                 <Icon name="users" />
-                {allusers.length} Users loaded &nbsp;
+                {allusers.length} Users loaded &nbsp;<br />
                 <Icon name="user plus" color="red" />
                 {allusersverify.length} Users require verification
               </span>
@@ -62,20 +65,32 @@ class AdminUserTools extends Component {
             )}
           </Card.Content>
         </Card>
+        <Card as={Link} to="/admin/department-manager" raised>
+          <Card.Content>
+            <Header as="h5">Department Manager</Header>
+          </Card.Content>
+          <Card.Content description="Add & Manage Departments" />
+          <Card.Content extra>
+            <Icon name="factory" />
+            {depts.length} &nbsp; Departments Listed
+          </Card.Content>
+        </Card>
       </Card.Group>
     );
   }
 }
 
 const mapDispatchToProps = {
-  fetchAllUsers
+  fetchAllUsers,
+  fetchDepts
 };
 
 const mapStateToProps = state => {
   return {
     allusers: selectAllUsers(state),
     allusersverify: selectAllUsersVerify(state),
-    allcoursesverify: selectAllUsersCoursesVerify(state)
+    allcoursesverify: selectAllUsersCoursesVerify(state),
+    depts: selectDepts(state)
   };
 };
 
