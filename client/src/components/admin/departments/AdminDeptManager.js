@@ -4,6 +4,7 @@ import { Header, Grid } from 'semantic-ui-react';
 
 import AdminUserMenu from '../users/AdminUserMenu';
 import AdminDeptAdd from './AdminDeptAdd';
+import AdminDeptList from './AdminDeptList';
 
 const AdminDeptManager = () => {
   return (
@@ -22,7 +23,9 @@ const AdminDeptManager = () => {
         <Grid.Column>
           <AdminDeptAdd />
         </Grid.Column>
-        <Grid.Column>view delete dept</Grid.Column>
+        <Grid.Column>
+          <AdminDeptList />
+        </Grid.Column>
       </Grid>
     </div>
   );

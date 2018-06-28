@@ -16,7 +16,7 @@ import { selectDepts } from '../../../reducers/selectors/deptSelectors';
 
 class AdminUserTools extends Component {
   componentDidMount() {
-    const { fetchAllUsers } = this.props;
+    const { fetchAllUsers, fetchDepts } = this.props;
     fetchAllUsers();
     fetchDepts();
   }

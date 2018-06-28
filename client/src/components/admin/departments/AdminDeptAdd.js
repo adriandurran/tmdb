@@ -13,6 +13,7 @@ class AdminDeptAdd extends Component {
   addNewDept(values) {
     const { adminAddDept } = this.props;
     adminAddDept(values);
+    // add messaging?
   }
 
   render() {
