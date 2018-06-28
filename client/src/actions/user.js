@@ -87,3 +87,20 @@ export const adminAdminiUser = (user, admin) => async dispatch => {
     console.log(res.data);
   }
 };
+
+export const adminAssignDept = (user, department) => async dispatch => {
+  try {
+    const res = await axios.patch(
+      `/api/tmdb/user/admin/users/${user}/department`,
+      { department }
+    );
+    // update the user......hate this const
+    dispatch({ type: ADMIN_SEARCH_RESULT, payload: res.data });
+    // get all users......and then edge case current user
+    dispatch(fetchAllUsers());
+    // hate this is so confusing
+    dispatch({ type: FETCH_USER, payload: res.data });
+  } catch (error) {
+    console.log(error);
+  }
+};

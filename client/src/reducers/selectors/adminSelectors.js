@@ -202,17 +202,24 @@ export const selectUsersRoleHolders = createSelector(
   }
 );
 
-export const selectUsersInDept = createSelector(
-  selectAllUsersActive,
-  selectDept,
-  (users, dept) => {
-    return users.filter(user => user.department === dept._id);
-  }
-);
-
 export const selectAllUsersActiveNoDept = createSelector(
   selectAllUsersActive,
   users => {
     return users.filter(user => _.isEmpty(user.department));
+  }
+);
+
+export const selectAllUsersActiveDept = createSelector(
+  selectAllUsersActive,
+  users => {
+    return users.filter(user => !_.isEmpty(user.department));
+  }
+);
+
+export const selectUsersInDept = createSelector(
+  selectAllUsersActiveDept,
+  selectDept,
+  (users, dept) => {
+    return users.filter(user => user.department._id === dept._id);
   }
 );

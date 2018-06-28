@@ -64,7 +64,7 @@ module.exports = {
     try {
       const userDept = await User.findByIdAndUpdate(
         req.params.id,
-        { $set: { department: req.body } },
+        { $set: req.body },
         { new: true }
       )
         .populate('department')
