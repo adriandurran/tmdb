@@ -30,3 +30,16 @@ export const adminAddDept = dept => async dispatch => {
     console.log(error);
   }
 };
+
+export const adminUpdateDept = (id, dept) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/tmdb/dept/${id}`, dept);
+    if (res.status === 200) {
+      dispatch({ type: FETCH_DEPT, payload: res.data });
+      dispatch(fetchDepts());
+    }
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
