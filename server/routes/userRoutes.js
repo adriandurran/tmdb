@@ -19,6 +19,12 @@ router.patch(
   requireAdmin,
   userController.editUserRole
 );
+// add user dept
+router.patch(
+  '/admin/users/:id/department',
+  requireAdmin,
+  userController.addUserDept
+);
 
 // add user course
 router.patch('/:id/course', requireLogin, userController.addUserCourse);
