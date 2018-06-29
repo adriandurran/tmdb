@@ -228,6 +228,14 @@ module.exports = {
     }
   },
 
+  addUserProfileImage: async (req, res) => {
+    // work to be done in here
+  },
+
+  getUserProfileImage: async (req, res) => {
+    // get the profile image
+  },
+
   currentUser: async (req, res) => {
     if (req.user === undefined) {
       res.send(req.user);

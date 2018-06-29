@@ -3,6 +3,7 @@ import React from 'react';
 import { Grid, Header } from 'semantic-ui-react';
 
 import UserDetailsEdit from './UserDetailsEdit';
+import UserImageAdd from './UserImageAdd';
 
 const UserProfile = () => {
   return (
@@ -15,7 +16,9 @@ const UserProfile = () => {
           <Grid.Column>
             <UserDetailsEdit />
           </Grid.Column>
-          <Grid.Column>Upload Image</Grid.Column>
+          <Grid.Column>
+            <UserImageAdd />
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={2}>
           <Grid.Column>Reset Password</Grid.Column>

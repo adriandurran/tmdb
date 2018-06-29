@@ -8,7 +8,8 @@ import {
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
   ADMIN_EDIT_USER_ROLE,
-  CLEAR_COURSE
+  CLEAR_COURSE,
+  ADD_USER_PROFILE_IMAGE
 } from './types';
 
 export const addUserCourse = (user, course) => async dispatch => {
@@ -112,6 +113,39 @@ export const updateUserProfile = (id, profile) => async dispatch => {
       dispatch({ type: FETCH_USER, payload: res.data });
       return res;
     }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const addUserProfileImage = (id, image) => async dispatch => {
+  const formData = new FormData();
+  formData.append('id', id);
+  formData.append('userImage', image);
+  try {
+    const res = await axios.post(`/api/tmdb/user/${id}/image`, formData);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getUserProfileImage = (id, imageId) => async dispatch => {
+  try {
+    const res = await axios.get(`/api/tmdb/user/image/${imageId}`, {
+      responseType: 'arraybuffer'
+    });
+
+    const imgFile = new Blob([res.data]);
+    const imgUrl = URL.createObjectURL(imgFile);
+
+    const payload = {
+      id,
+      imgUrl
+    };
+
+    dispatch({ type: ADD_USER_PROFILE_IMAGE, payload });
   } catch (error) {
     console.log(error);
     return error;

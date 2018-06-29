@@ -6,6 +6,9 @@ const requireAdmin = require('../middlewares/requireAdmin');
 const userController = require('../controllers/userController');
 
 router.patch('/:id', requireLogin, userController.updateUserProfile);
+router.post('/:id/image', requireLogin, userController.addUserProfileImage);
+
+router.get('/image/:imageId', requireLogin, userController.getUserProfileImage);
 
 router.get('/admin/allusers', requireAdmin, userController.allUsers);
 router.patch(

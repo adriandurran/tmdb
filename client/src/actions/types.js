@@ -11,6 +11,7 @@ export const FETCH_ROLE = 'fetch_role';
 export const CLEAR_ROLE = 'clear_role';
 export const FETCH_ROLES = 'fetch_roles';
 export const FETCH_USER_ROLES = 'fetch_user_roles';
+export const ADD_USER_PROFILE_IMAGE = 'add_user_profile_image';
 export const ADMIN_EDIT_USER_ROLE = 'admin_edit_user_role';
 
 // courses
