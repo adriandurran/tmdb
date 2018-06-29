@@ -65,7 +65,7 @@ class UserDetailsEdit extends Component {
 
   render() {
     const { message } = this.state;
-    const { submitting, handleSubmit, pristine, user } = this.props;
+    const { submitting, handleSubmit, pristine } = this.props;
     return (
       <div>
         <Header as="h3" textAlign="center">
