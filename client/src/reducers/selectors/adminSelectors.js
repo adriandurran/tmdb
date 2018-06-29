@@ -5,7 +5,8 @@ import {
   coursesCurrentVerified,
   coursesExpired,
   coursesVerify,
-  coursesActiveUser
+  coursesActiveUser,
+  coursesExpiredActiveUser
 } from './utils/courseFilters';
 
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
@@ -175,6 +176,31 @@ export const selectUsersCourseHolders = createSelector(
     // need to think about the courses on the users.....if it changes they have historical course
     // until all users are updated.......incl current user.....done this in actions
     let allUsersCurrent = coursesActiveUser(users);
+
+    // return only users who have the course
+    let courseHolders = allUsersCurrent
+      .filter(user => {
+        return _.includes(
+          user.currentCourses.map(course => course._course._id),
+          course._id
+        );
+      })
+      .map(user => user._id);
+
+    return users.filter(user => {
+      return _.includes(courseHolders, user._id);
+    });
+  }
+);
+
+export const selectUsersCourseHoldersExpired = createSelector(
+  selectAllUsersActive,
+  selectCourse,
+  (users, course) => {
+    // get all the indate courses for a user
+    // need to think about the courses on the users.....if it changes they have historical course
+    // until all users are updated.......incl current user.....done this in actions
+    let allUsersCurrent = coursesExpiredActiveUser(users);
 
     // return only users who have the course
     let courseHolders = allUsersCurrent

@@ -9,6 +9,7 @@ import { selectCourse } from '../../../reducers/selectors/courseSelectors';
 
 import AdminEditCourse from './AdminEditCourse';
 import AdminCourseHolders from './AdminCourseHolders';
+import AdminCourseHoldersExpired from './AdminCourseHoldersExpired';
 import AdminCourseNotes from './AdminCourseNotes';
 
 class AdminCourseView extends Component {
@@ -35,7 +36,7 @@ class AdminCourseView extends Component {
           </Breadcrumb.Section>
         </Breadcrumb>
 
-        <Grid columns={2} centered>
+        <Grid columns={3} centered>
           <Grid.Column>
             <Grid.Column>
               <AdminEditCourse />
@@ -44,6 +45,9 @@ class AdminCourseView extends Component {
           </Grid.Column>
           <Grid.Column>
             <AdminCourseHolders />
+          </Grid.Column>
+          <Grid.Column>
+            <AdminCourseHoldersExpired />
           </Grid.Column>
         </Grid>
       </div>
