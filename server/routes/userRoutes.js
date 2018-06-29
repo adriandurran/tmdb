@@ -5,6 +5,8 @@ const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');
 const userController = require('../controllers/userController');
 
+router.patch('/:id', requireLogin, userController.updateUserProfile);
+
 router.get('/admin/allusers', requireAdmin, userController.allUsers);
 router.patch(
   '/admin/users/:id/verify',

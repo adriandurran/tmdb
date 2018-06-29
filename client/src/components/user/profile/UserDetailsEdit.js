@@ -8,6 +8,8 @@ import { Header, Message, Segment, Form, Button } from 'semantic-ui-react';
 import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
 import { required, email } from '../../../utils/validation';
 
+import { updateUserProfile } from '../../../actions/user';
+
 import semanticFormField from '../../shared/semanticFormField';
 
 class UserDetailsEdit extends Component {
@@ -22,15 +24,43 @@ class UserDetailsEdit extends Component {
     if (!_.isEmpty(user)) {
       let message = { ...this.state.message };
       message.header = `Edit ${user.firstName} ${user.lastName}`;
-      this.setState({
-        message
-      });
+      this.setState({ message });
     }
   }
 
+  resetMessageState() {
+    const { user } = this.props;
+    let message = {};
+    message.header = `Edit ${user.firstName}`;
+    setTimeout(() => {
+      this.setState({ message });
+    }, 3000);
+  }
+
   updateUser(values) {
+    const { user, updateUserProfile } = this.props;
     //   update the user
-    // need to think about this
+    const profile = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      username: values.username,
+      userId: values.userId
+    };
+    updateUserProfile(user._id, profile).then(res => {
+      let message = { ...this.state.message };
+
+      if (res.status === 200) {
+        message.header = 'Success!';
+        message.content = `${res.data.firstName} was successfully updated`;
+        message.positive = true;
+      } else {
+        message.header = 'Ooops!';
+        message.content = `Something went wrong updating this Course. Error: ${res}`;
+        message.negative = true;
+      }
+      this.setState({ message });
+      this.resetMessageState();
+    });
   }
 
   render() {
@@ -122,11 +152,18 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = {
+  updateUserProfile
+};
+
 UserDetailsEdit = reduxForm({
   form: 'editUser',
   enableReinitialize: true
 })(UserDetailsEdit);
 
-UserDetailsEdit = connect(mapStateToProps)(UserDetailsEdit);
+UserDetailsEdit = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserDetailsEdit);
 
 export default UserDetailsEdit;

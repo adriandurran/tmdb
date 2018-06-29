@@ -188,6 +188,41 @@ module.exports = {
       return res.status(200).send(adminiUser);
     } catch (error) {
       console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
+  updateUserProfile: async (req, res) => {
+    const { username, userId, lastName, firstName } = req.body.profile;
+    try {
+      const newProf = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            username,
+            userId,
+            firstName,
+            lastName
+          }
+        },
+        { new: true }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+      res.send(newProf);
+    } catch (error) {
       console.log(error);
       return res.status(400).send(error);
     }

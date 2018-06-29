@@ -104,3 +104,16 @@ export const adminAssignDept = (user, department) => async dispatch => {
     console.log(error);
   }
 };
+
+export const updateUserProfile = (id, profile) => async dispatch => {
+  try {
+    const res = await axios.patch(`/api/tmdb/user/${id}`, { profile });
+    if (res.status === 200) {
+      dispatch({ type: FETCH_USER, payload: res.data });
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
