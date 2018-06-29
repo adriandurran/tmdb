@@ -36,19 +36,23 @@ class AdminCourseView extends Component {
           </Breadcrumb.Section>
         </Breadcrumb>
 
-        <Grid columns={3} centered>
-          <Grid.Column>
+        <Grid>
+          <Grid.Row columns={2} centered>
             <Grid.Column>
               <AdminEditCourse />
+            </Grid.Column>
+            <Grid.Column>
               <AdminCourseNotes />
             </Grid.Column>
-          </Grid.Column>
-          <Grid.Column>
-            <AdminCourseHolders />
-          </Grid.Column>
-          <Grid.Column>
-            <AdminCourseHoldersExpired />
-          </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2} centered>
+            <Grid.Column>
+              <AdminCourseHolders />
+            </Grid.Column>
+            <Grid.Column>
+              <AdminCourseHoldersExpired />
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </div>
     );

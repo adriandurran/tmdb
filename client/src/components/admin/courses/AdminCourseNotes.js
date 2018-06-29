@@ -33,13 +33,14 @@ class AdminCourseNotes extends Component {
     return (
       <div>
         {notes.length > 0 ? (
-          <Segment attached="bottom">
+          <div>
             <Header as="h3" textAlign="center">
               Course Notes
             </Header>
-
-            <Feed>{this.renderFeed()}</Feed>
-          </Segment>
+            <Segment>
+              <Feed>{this.renderFeed()}</Feed>
+            </Segment>
+          </div>
         ) : (
           <div />
         )}
