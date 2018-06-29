@@ -65,7 +65,7 @@ class UserDetailsEdit extends Component {
 
   render() {
     const { message } = this.state;
-    const { submitting, handleSubmit, pristine } = this.props;
+    const { submitting, handleSubmit, pristine, reset } = this.props;
     return (
       <div>
         <Header as="h3" textAlign="center">
@@ -130,11 +130,7 @@ class UserDetailsEdit extends Component {
               >
                 Update
               </Button>
-              <Button
-                fluid
-                disabled={pristine || submitting}
-                loading={submitting}
-              >
+              <Button fluid disabled={pristine || submitting} onClick={reset}>
                 Reset
               </Button>
             </Form.Group>
