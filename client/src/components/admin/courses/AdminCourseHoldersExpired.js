@@ -4,12 +4,12 @@ import Moment from 'react-moment';
 
 import { Header, Item } from 'semantic-ui-react';
 
-import { selectUsersCourseHolders } from '../../../reducers/selectors/adminSelectors';
+import { selectUsersCourseHoldersExpired } from '../../../reducers/selectors/adminSelectors';
 import { selectCourse } from '../../../reducers/selectors/courseSelectors';
 
-import { expireDate, expireMonths } from '../../../utils/datehelpers';
+import { expireDate } from '../../../utils/datehelpers';
 
-class AdminCourseHolders extends Component {
+class AdminCourseHoldersExpired extends Component {
   renderRelCourse(usercourses) {
     const { course } = this.props;
     let relCourse = usercourses.filter(
@@ -21,21 +21,17 @@ class AdminCourseHolders extends Component {
     let cName = relCourse[0]._course.courseName;
     return (
       <Item.Description
-        style={
-          expireMonths(cPass, cValid) <= 3
-            ? {
-                color: 'orange'
-              }
-            : { color: 'black' }
-        }
+        style={{
+          color: 'red'
+        }}
       >
-        {cName} &nbsp; expires &nbsp;
+        {cName} &nbsp; expired &nbsp;
         <Moment fromNow>{expireDate(cPass, cValid)}</Moment>
       </Item.Description>
     );
   }
 
-  renderCourseHolders() {
+  renderCourseHoldersExpired() {
     const { users } = this.props;
     return users.map(user => {
       return (
@@ -62,9 +58,9 @@ class AdminCourseHolders extends Component {
     return (
       <div>
         <Header as="h3" textAlign="center">
-          Users who are current in this Course
+          Users where Course has expired
         </Header>
-        <Item.Group>{this.renderCourseHolders()}</Item.Group>
+        <Item.Group>{this.renderCourseHoldersExpired()}</Item.Group>
       </div>
     );
   }
@@ -72,11 +68,11 @@ class AdminCourseHolders extends Component {
 
 const mapStateToProps = state => {
   return {
-    users: selectUsersCourseHolders(state),
+    users: selectUsersCourseHoldersExpired(state),
     course: selectCourse(state)
   };
 };
 
-AdminCourseHolders = connect(mapStateToProps)(AdminCourseHolders);
+AdminCourseHoldersExpired = connect(mapStateToProps)(AdminCourseHoldersExpired);
 
-export default AdminCourseHolders;
+export default AdminCourseHoldersExpired;

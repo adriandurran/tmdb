@@ -23,6 +23,7 @@ class AdminUserSearch extends Component {
   }
   componentWillUnmount() {
     this.resetComponent();
+    this.props.clearSearchResult();
   }
   componentWillMount() {
     this.resetComponent();
@@ -30,7 +31,9 @@ class AdminUserSearch extends Component {
 
   resetComponent = () => {
     this.setState({ isLoading: false, results: [], value: '' });
-    this.props.clearSearchResult();
+    // this.props.clearSearchResult();
+    // this is temp when refering from another comp like users no dept table
+    // not sure what  to do about this
   };
 
   handleResultSelect = (e, { result }) => {

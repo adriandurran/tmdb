@@ -80,12 +80,17 @@ class AdminEditCourse extends Component {
   updateCourse(values) {
     const { course, adminUpdateCourse, user } = this.props;
     const { level, type, notes } = this.state;
-    const newNote = {
-      noteDate: Date.now(),
-      noteText: notes,
-      noteBy: user._id
-    };
-    const allNotes = [...course.notes, newNote];
+
+    let allNotes = course.notes;
+
+    if (notes !== '') {
+      const newNote = {
+        noteDate: Date.now(),
+        noteText: notes,
+        noteBy: user._id
+      };
+      allNotes = [...allNotes, newNote];
+    }
 
     let upCourse = {
       courseName: values.courseName,
@@ -150,10 +155,9 @@ class AdminEditCourse extends Component {
                 placeholder="Course Validity"
               />
             </Form.Group>
-            <Form.Group inline widths="equal">
+            <Form.Group>
               <Dropdown
                 selection
-                inline
                 name="type"
                 options={types}
                 placeholder="Select a Course Type"
@@ -161,9 +165,10 @@ class AdminEditCourse extends Component {
                 style={{ marginRight: '1em' }}
                 value={this.state.type}
               />
+            </Form.Group>
+            <Form.Group>
               <Dropdown
                 selection
-                inline
                 name="level"
                 options={levels}
                 placeholder="Select a Course Level"

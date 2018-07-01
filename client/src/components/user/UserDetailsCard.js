@@ -11,7 +11,7 @@ class UserDetailsCard extends Component {
     return (
       <div>
         <Card centered>
-          <Image src="http://lorempixel.com/400/400/people" />
+          <Image src={user.imageUrl} />
           <Card.Content>
             <Card.Header>
               {user.firstName} {user.lastName}

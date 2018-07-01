@@ -7,10 +7,6 @@ const AdminCoursesMenu = props => {
     <Menu attached="top">
       <Dropdown item icon="wrench" simple>
         <Dropdown.Menu>
-          <Dropdown.Item name="Dashboard" as={Link} to="/admin/dashboard">
-            <Icon name="home" />
-            Dashboard
-          </Dropdown.Item>
           <Dropdown.Item
             name="Course Manager"
             as={Link}
@@ -33,6 +29,10 @@ const AdminCoursesMenu = props => {
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      <Menu.Item name="Dashboard" as={Link} to="/admin/dashboard">
+        <Icon name="home" />
+        Admin Dashboard
+      </Menu.Item>
       <Menu.Item name="Competency Manager" as={Link} to="/admin/comp-manager" />
       <Menu.Item name="Role Manager" as={Link} to="/admin/role-manager" />
     </Menu>

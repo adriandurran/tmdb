@@ -5,7 +5,8 @@ import {
   coursesCurrentVerified,
   coursesExpired,
   coursesVerify,
-  coursesActiveUser
+  coursesActiveUser,
+  coursesExpiredActiveUser
 } from './utils/courseFilters';
 
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
@@ -13,6 +14,7 @@ import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 import { selectRole } from './roleSelectors';
 import { selectCompetencies, selectCompetency } from './compSelectors';
 import { selectCourse } from './courseSelectors';
+import { selectDept } from './deptSelectors';
 
 // all users
 export const selectAllUsers = state => state.allusers;
@@ -191,6 +193,31 @@ export const selectUsersCourseHolders = createSelector(
   }
 );
 
+export const selectUsersCourseHoldersExpired = createSelector(
+  selectAllUsersActive,
+  selectCourse,
+  (users, course) => {
+    // get all the indate courses for a user
+    // need to think about the courses on the users.....if it changes they have historical course
+    // until all users are updated.......incl current user.....done this in actions
+    let allUsersCurrent = coursesExpiredActiveUser(users);
+
+    // return only users who have the course
+    let courseHolders = allUsersCurrent
+      .filter(user => {
+        return _.includes(
+          user.currentCourses.map(course => course._course._id),
+          course._id
+        );
+      })
+      .map(user => user._id);
+
+    return users.filter(user => {
+      return _.includes(courseHolders, user._id);
+    });
+  }
+);
+
 export const selectUsersRoleHolders = createSelector(
   selectAllUsersActive,
   selectRole,
@@ -198,5 +225,27 @@ export const selectUsersRoleHolders = createSelector(
     return users.filter(user => {
       return _.includes(user.roles.map(role => role._id), role._id);
     });
+  }
+);
+
+export const selectAllUsersActiveNoDept = createSelector(
+  selectAllUsersActive,
+  users => {
+    return users.filter(user => _.isEmpty(user.department));
+  }
+);
+
+export const selectAllUsersActiveDept = createSelector(
+  selectAllUsersActive,
+  users => {
+    return users.filter(user => !_.isEmpty(user.department));
+  }
+);
+
+export const selectUsersInDept = createSelector(
+  selectAllUsersActiveDept,
+  selectDept,
+  (users, dept) => {
+    return users.filter(user => user.department._id === dept._id);
   }
 );

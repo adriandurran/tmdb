@@ -1,3 +1,7 @@
+// non aligned
+export const UPDATE_PROGRESS = 'update_progress';
+export const CLEAR_PROGRESS = 'clear_progress';
+
 // users
 export const FETCH_USER = 'fetch_user';
 export const FETCH_ALL_USERS = 'fetch_all_users';
@@ -11,6 +15,7 @@ export const FETCH_ROLE = 'fetch_role';
 export const CLEAR_ROLE = 'clear_role';
 export const FETCH_ROLES = 'fetch_roles';
 export const FETCH_USER_ROLES = 'fetch_user_roles';
+export const ADD_USER_PROFILE_IMAGE = 'add_user_profile_image';
 export const ADMIN_EDIT_USER_ROLE = 'admin_edit_user_role';
 
 // courses
@@ -35,3 +40,9 @@ export const DELETE_COMP_TYPE = 'delete_comp_type';
 
 export const CLEAR_COMPETENCY = 'clear_competency';
 export const FETCH_COMPETENCY = 'fetch_competency';
+
+// departments
+export const FETCH_DEPTS = 'fetch_departments';
+export const FETCH_DEPT = 'fetch_dept';
+export const CLEAR_DEPT = 'clear_dept';
+export const ADMIN_ADD_DEPT = 'admin_add_dept';

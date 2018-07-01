@@ -8,7 +8,9 @@ import {
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
   ADMIN_EDIT_USER_ROLE,
-  CLEAR_COURSE
+  CLEAR_COURSE,
+  UPDATE_PROGRESS,
+  CLEAR_PROGRESS
 } from './types';
 
 export const addUserCourse = (user, course) => async dispatch => {
@@ -85,5 +87,60 @@ export const adminAdminiUser = (user, admin) => async dispatch => {
   } else {
     // do nothing but need to communicate this soon
     console.log(res.data);
+  }
+};
+
+export const adminAssignDept = (user, department) => async dispatch => {
+  try {
+    const res = await axios.patch(
+      `/api/tmdb/user/admin/users/${user}/department`,
+      { department }
+    );
+    // update the user......hate this const
+    dispatch({ type: ADMIN_SEARCH_RESULT, payload: res.data });
+    // get all users......and then edge case current user
+    dispatch(fetchAllUsers());
+    // hate this is so confusing
+    dispatch({ type: FETCH_USER, payload: res.data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUserProfile = (id, profile) => async dispatch => {
+  try {
+    const res = await axios.patch(`/api/tmdb/user/${id}`, { profile });
+    if (res.status === 200) {
+      dispatch({ type: FETCH_USER, payload: res.data });
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+// temp I am using cloudinary whilst in dev mode.....if moved to
+// production this will need an seperate file store
+// but this would depend on the eventual location of the app
+export const addUserProfileImage = (id, image) => async dispatch => {
+  dispatch({ type: CLEAR_PROGRESS });
+  const formData = new FormData();
+  formData.append('id', id);
+  formData.append('userImage', image);
+  try {
+    const res = await axios.post(`/api/tmdb/user/${id}/image`, formData, {
+      onUploadProgress: progressEvent => {
+        let prog = Math.round(
+          (progressEvent.loaded / progressEvent.total) * 100
+        );
+        dispatch({ type: UPDATE_PROGRESS, payload: prog });
+      }
+    });
+    dispatch({ type: FETCH_USER, payload: res.data });
+    return res;
+  } catch (error) {
+    console.log(error);
+    return error;
   }
 };

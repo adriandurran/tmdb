@@ -6,6 +6,7 @@ import AdminUserDetailsCard from '../AdminUserDetailsCard';
 import AdminUserRoleManager from './AdminUserRoleManager';
 import AdminUserComps from '../comps/AdminUserComps';
 import AdminUserCourseTable from '../courses/AdminUserCoursesTable';
+import AdminUserAddDept from '../dept/AdminUserAddDept';
 
 class AdminUserRCTools extends Component {
   render() {
@@ -14,7 +15,16 @@ class AdminUserRCTools extends Component {
         <Grid>
           <Grid.Row columns={3}>
             <Grid.Column>
-              <AdminUserDetailsCard />
+              <Grid.Row>
+                <Grid.Column>
+                  <AdminUserDetailsCard />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <AdminUserAddDept />
+                </Grid.Column>
+              </Grid.Row>
             </Grid.Column>
             <Grid.Column>
               <Header as="h3" textAlign="center">

@@ -1,10 +1,20 @@
 const User = require('../models/user');
 const keys = require('../config/keys');
 const arrayHelp = require('../utils/arrayHelpers');
+const cloudinary = require('cloudinary');
+const dataUri = require('datauri');
+const path = require('path');
+
+cloudinary.config({
+  cloud_name: keys.cloudinary.cloud_name,
+  api_key: keys.cloudinary.api_key,
+  api_secret: keys.cloudinary.api_secret
+});
 
 module.exports = {
   allUsers: async (req, res) => {
     const dbAllUsers = await User.find({})
+      .populate('department')
       .populate('courses._course')
       .populate({
         path: 'roles',
@@ -18,6 +28,7 @@ module.exports = {
 
   getUser: async (req, res) => {
     const dbUser = await User.findById(req.params.id)
+      .populate('department')
       .populate('courses._course')
       .populate({
         path: 'roles',
@@ -37,6 +48,7 @@ module.exports = {
         { $set: { 'courses.$.verified': true } },
         { new: true }
       )
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
@@ -57,6 +69,33 @@ module.exports = {
     }
   },
 
+  addUserDept: async (req, res) => {
+    try {
+      const userDept = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+      return res.send(userDept);
+    } catch (error) {
+      return res.status(418).send(error);
+    }
+  },
+
   addUserCourse: async (req, res) => {
     const { course } = req.body;
     try {
@@ -68,6 +107,7 @@ module.exports = {
         { $set: { courses: courseSet } },
         { new: true }
       )
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
@@ -108,6 +148,7 @@ module.exports = {
         },
         { new: true }
       )
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',
@@ -156,6 +197,84 @@ module.exports = {
       return res.status(200).send(adminiUser);
     } catch (error) {
       console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
+  updateUserProfile: async (req, res) => {
+    const { username, userId, lastName, firstName } = req.body.profile;
+    try {
+      const newProf = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            username,
+            userId,
+            firstName,
+            lastName
+          }
+        },
+        { new: true }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+      res.send(newProf);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
+  // temp I am using cloudinary whilst in dev mode.....if moved to
+  // production this will need an seperate file store
+  // but this would depend on the eventual location of the app
+  addUserProfileImage: async (req, res) => {
+    let dUri = new dataUri();
+    try {
+      dUri.format(
+        path.extname(req.file.originalname).toString(),
+        req.file.buffer
+      );
+
+      const cloudRes = await cloudinary.v2.uploader.upload(dUri.content, {
+        folder: 'tmdb'
+      });
+      // update user with image url
+      const imgUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { imageUrl: cloudRes.secure_url } },
+        { new: true }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+
+      // return image user object
+      res.send(imgUser);
+    } catch (error) {
       console.log(error);
       return res.status(400).send(error);
     }
@@ -166,6 +285,7 @@ module.exports = {
       res.send(req.user);
     } else {
       const currUser = await User.findById(req.user._id)
+        .populate('department')
         .populate('courses._course')
         .populate({
           path: 'roles',

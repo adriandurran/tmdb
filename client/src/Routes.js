@@ -9,6 +9,7 @@ import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
 import UserLanding from './components/user/UserLanding';
+import UserProfile from './components/user/profile/UserProfile';
 import CoursesHome from './components/user/CoursesHome';
 import CompsHome from './components/user/CompsHome';
 
@@ -27,6 +28,8 @@ import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 import AdminRoleView from './components/admin/roles/AdminRoleView';
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
+import AdminDeptManager from './components/admin/departments/AdminDeptManager';
+import AdminDeptView from './components/admin/departments/AdminDeptView';
 
 const Routes = () => {
   return (
@@ -38,6 +41,7 @@ const Routes = () => {
           <Route exact path="/auth/login" component={LoginUser} />
           <Route exact path="/auth/register" component={RegisterUser} />
           <Route exact path="/users/:id" component={UserLanding} />
+          <Route exact path="/users/:id/profile" component={UserProfile} />
           <Route exact path="/users/:id/courses" component={CoursesHome} />
           <Route exact path="/users/:id/competencies" component={CompsHome} />
           <Route exact path="/admin/dashboard" component={AdminDashboard} />
@@ -95,6 +99,16 @@ const Routes = () => {
             exact
             path="/admin/user-courses-manager"
             component={AdminUserCoursesManager}
+          />
+          <Route
+            exact
+            path="/admin/department-manager"
+            component={AdminDeptManager}
+          />
+          <Route
+            exact
+            path="/admin/department-manager/view/:id"
+            component={AdminDeptView}
           />
         </Container>
       </div>
