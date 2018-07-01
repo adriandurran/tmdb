@@ -4,7 +4,9 @@ module.exports = {
   cloudinary: {
     cloud_name: 'dhvoxp5tn',
     api_key: '699737557426214',
-    api_secret: 'KH-IE5t9Su_SvmcnlPVuXLXfVOo'
+    api_secret: 'KH-IE5t9Su_SvmcnlPVuXLXfVOo',
+    cloudinary_url:
+      'CLOUDINARY_URL=cloudinary://699737557426214:KH-IE5t9Su_SvmcnlPVuXLXfVOo@dhvoxp5tn'
   },
   seedAdmin: {
     userId: 'SUA668800',
