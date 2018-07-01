@@ -14,6 +14,8 @@ import courseTypesReducer from './courses/course-types';
 import { allUsersReducer, userSearchResultReducer } from './users/users';
 import { deptsReducer, deptReducer } from './dept/deptReducer';
 
+import { progressReducer } from './shared/sharedReducers';
+
 const reducer = combineReducers({
   auth: authReducer,
   allusers: allUsersReducer,
@@ -29,6 +31,7 @@ const reducer = combineReducers({
   courseLevels: courseLevelsReducer,
   depts: deptsReducer,
   dept: deptReducer,
+  progress: progressReducer,
   form: reduxForm
 });
 

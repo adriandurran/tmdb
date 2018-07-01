@@ -8,7 +8,8 @@ import {
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
   ADMIN_EDIT_USER_ROLE,
-  CLEAR_COURSE
+  CLEAR_COURSE,
+  UPDATE_PROGRESS
 } from './types';
 
 export const addUserCourse = (user, course) => async dispatch => {
@@ -107,7 +108,19 @@ export const adminAssignDept = (user, department) => async dispatch => {
 
 export const updateUserProfile = (id, profile) => async dispatch => {
   try {
-    const res = await axios.patch(`/api/tmdb/user/${id}`, { profile });
+    const res = await axios.patch(
+      `/api/tmdb/user/${id}`,
+      { profile },
+      {
+        onUploadProgress: progressEvent => {
+          let prog = Math.round(
+            (progressEvent.loaded / progressEvent.total) * 100
+          );
+          console.log(prog);
+          dispatch({ type: UPDATE_PROGRESS, payload: prog });
+        }
+      }
+    );
     if (res.status === 200) {
       dispatch({ type: FETCH_USER, payload: res.data });
       return res;

@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Grid, Button, Header, Image, Form } from 'semantic-ui-react';
+import {
+  Grid,
+  Button,
+  Header,
+  Image,
+  Form,
+  Message,
+  Progress
+} from 'semantic-ui-react';
 
 import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
+import { selectProgress } from '../../../reducers/selectors/sharedSelectors';
 import { addUserProfileImage } from '../../../actions/user';
 
 class UserImageAdd extends Component {
   state = {
     selectedFile: null,
-    selectedFileUrl: null
+    selectedFileUrl: null,
+    message: {
+      visible: false
+    }
   };
 
   componentDidMount() {
@@ -26,13 +38,36 @@ class UserImageAdd extends Component {
     this.setState({ selectedFile: event.target.files[0] });
   };
 
+  resetMessageState() {
+    let message = {};
+    message.visible = false;
+    setTimeout(() => {
+      this.setState({ message });
+    }, 3000);
+  }
+
   submitUserImage = event => {
     const { addUserProfileImage, user } = this.props;
-    addUserProfileImage(user._id, this.state.selectedFile);
+    addUserProfileImage(user._id, this.state.selectedFile).then(res => {
+      let message = { ...this.state.message };
+      if (res.status === 200) {
+        message.header = 'Success!';
+        message.content = `Your profile photo was successfully uploaded`;
+        message.positive = true;
+        this.setState({ selectedFileUrl: user.imageUrl });
+      } else {
+        message.header = 'Ooops!';
+        message.content = `Something went wrong updating this Course. Error: ${res}`;
+        message.negative = true;
+      }
+      this.setState({ message });
+      this.resetMessageState();
+    });
   };
 
   render() {
-    const { selectedFileUrl } = this.state;
+    const { selectedFileUrl, message } = this.state;
+    const { progress } = this.props;
     return (
       <div>
         <Header as="h3" textAlign="center">
@@ -51,21 +86,32 @@ class UserImageAdd extends Component {
             )}
           </Grid.Column>
           <Grid.Column>
-            <Form onSubmit={this.submitUserImage}>
+            <Form
+              onSubmit={this.submitUserImage}
+              style={{ marginBottom: '1em' }}
+            >
               <Form.Field>
                 <Form.Input
                   icon="star"
                   iconPosition="left"
-                  label="Analyst image...."
-                  placeholder="Analyst image"
+                  label="User image...."
+                  placeholder="User image"
                   name="AnalystImage"
                   type="file"
                   onChange={this.fileChangedHandler}
                 />
               </Form.Field>
+
               <Button type="submit">Submit</Button>
             </Form>
-            {/* put message in here or progress... */}
+            <Progress percent={progress} autoSuccess />
+            <Message
+              header={message.header}
+              content={message.content}
+              visible={message.visible}
+              positive={message.positive}
+              negative={message.negative}
+            />
           </Grid.Column>
         </Grid>
       </div>
@@ -75,7 +121,8 @@ class UserImageAdd extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: selectCurrentUser(state)
+    user: selectCurrentUser(state),
+    progress: selectProgress(state)
   };
 };
 
