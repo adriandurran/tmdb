@@ -1,6 +1,13 @@
 const User = require('../models/user');
 const keys = require('../config/keys');
 const arrayHelp = require('../utils/arrayHelpers');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: keys.cloudinary.cloud_name,
+  api_key: keys.cloudinary.api_key,
+  api_secret: keys.cloudinary.api_secret
+});
 
 module.exports = {
   allUsers: async (req, res) => {
@@ -228,7 +235,11 @@ module.exports = {
     }
   },
 
+  // temp I am using cloudinary whilst in dev mode.....if moved to
+  // production this will need an seperate file store
+  // but this would depend on the eventual location of the app
   addUserProfileImage: async (req, res) => {
+    console.log(req);
     // work to be done in here
   },
 

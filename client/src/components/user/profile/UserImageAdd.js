@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Button, Header, Image, Form } from 'semantic-ui-react';
 
 import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
+import { addUserProfileImage } from '../../../actions/user';
 
 class UserImageAdd extends Component {
   state = {
@@ -18,6 +19,11 @@ class UserImageAdd extends Component {
     };
     reader.readAsDataURL(event.target.files[0]);
     this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  submitUserImage = event => {
+    const { addUserProfileImage, user } = this.props;
+    addUserProfileImage(user._id, this.state.selectedFile);
   };
 
   render() {
@@ -67,7 +73,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  addUserProfileImage
+};
 
 UserImageAdd = connect(
   mapStateToProps,

@@ -119,6 +119,9 @@ export const updateUserProfile = (id, profile) => async dispatch => {
   }
 };
 
+// temp I am using cloudinary whilst in dev mode.....if moved to
+// production this will need an seperate file store
+// but this would depend on the eventual location of the app
 export const addUserProfileImage = (id, image) => async dispatch => {
   const formData = new FormData();
   formData.append('id', id);
@@ -131,23 +134,27 @@ export const addUserProfileImage = (id, image) => async dispatch => {
   }
 };
 
-export const getUserProfileImage = (id, imageId) => async dispatch => {
-  try {
-    const res = await axios.get(`/api/tmdb/user/image/${imageId}`, {
-      responseType: 'arraybuffer'
-    });
+// this is going to be too expensive in terms of iterating through all the users
+// downloading their images and turning into blobs
+// needs a remote file store S3 or something
 
-    const imgFile = new Blob([res.data]);
-    const imgUrl = URL.createObjectURL(imgFile);
+// export const getUserProfileImage = (id, imageId) => async dispatch => {
+//   try {
+//     const res = await axios.get(`/api/tmdb/user/image/${imageId}`, {
+//       responseType: 'arraybuffer'
+//     });
 
-    const payload = {
-      id,
-      imgUrl
-    };
+//     const imgFile = new Blob([res.data]);
+//     const imgUrl = URL.createObjectURL(imgFile);
 
-    dispatch({ type: ADD_USER_PROFILE_IMAGE, payload });
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
+//     const payload = {
+//       id,
+//       imgUrl
+//     };
+
+//     dispatch({ type: ADD_USER_PROFILE_IMAGE, payload });
+//   } catch (error) {
+//     console.log(error);
+//     return error;
+//   }
+// };
