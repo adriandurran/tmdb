@@ -1,6 +1,11 @@
 module.exports = {
   mongoURI: 'mongodb://tmdb_db_1:27017/tmdb_db',
   cookieKey: 'uwZF6uEFAq.y2*BTonPaam#CERLg4KUR+yXnaQZ7C8Ane=CYwr',
+  cloudinary: {
+    cloud_name: 'dhvoxp5tn',
+    api_key: '699737557426214',
+    api_secret: 'KH-IE5t9Su_SvmcnlPVuXLXfVOo'
+  },
   seedAdmin: {
     userId: 'SUA668800',
     firstName: 'Super',
