@@ -54,7 +54,7 @@ class UserImageAdd extends Component {
         message.header = 'Success!';
         message.content = `Your profile photo was successfully uploaded`;
         message.positive = true;
-        this.setState({ selectedFileUrl: user.imageUrl });
+        this.setState({ selectedFileUrl: res.data.imageUrl });
       } else {
         message.header = 'Ooops!';
         message.content = `Something went wrong updating this Course. Error: ${res}`;

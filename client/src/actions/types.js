@@ -1,5 +1,6 @@
 // non aligned
 export const UPDATE_PROGRESS = 'update_progress';
+export const CLEAR_PROGRESS = 'clear_progress';
 
 // users
 export const FETCH_USER = 'fetch_user';

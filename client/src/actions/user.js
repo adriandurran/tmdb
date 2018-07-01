@@ -9,7 +9,8 @@ import {
   ADMIN_CLEAR_SEARCH,
   ADMIN_EDIT_USER_ROLE,
   CLEAR_COURSE,
-  UPDATE_PROGRESS
+  UPDATE_PROGRESS,
+  CLEAR_PROGRESS
 } from './types';
 
 export const addUserCourse = (user, course) => async dispatch => {
@@ -108,19 +109,7 @@ export const adminAssignDept = (user, department) => async dispatch => {
 
 export const updateUserProfile = (id, profile) => async dispatch => {
   try {
-    const res = await axios.patch(
-      `/api/tmdb/user/${id}`,
-      { profile },
-      {
-        onUploadProgress: progressEvent => {
-          let prog = Math.round(
-            (progressEvent.loaded / progressEvent.total) * 100
-          );
-          console.log(prog);
-          dispatch({ type: UPDATE_PROGRESS, payload: prog });
-        }
-      }
-    );
+    const res = await axios.patch(`/api/tmdb/user/${id}`, { profile });
     if (res.status === 200) {
       dispatch({ type: FETCH_USER, payload: res.data });
       return res;
@@ -135,11 +124,19 @@ export const updateUserProfile = (id, profile) => async dispatch => {
 // production this will need an seperate file store
 // but this would depend on the eventual location of the app
 export const addUserProfileImage = (id, image) => async dispatch => {
+  dispatch({ type: CLEAR_PROGRESS });
   const formData = new FormData();
   formData.append('id', id);
   formData.append('userImage', image);
   try {
-    const res = await axios.post(`/api/tmdb/user/${id}/image`, formData);
+    const res = await axios.post(`/api/tmdb/user/${id}/image`, formData, {
+      onUploadProgress: progressEvent => {
+        let prog = Math.round(
+          (progressEvent.loaded / progressEvent.total) * 100
+        );
+        dispatch({ type: UPDATE_PROGRESS, payload: prog });
+      }
+    });
     dispatch({ type: FETCH_USER, payload: res.data });
     return res;
   } catch (error) {
