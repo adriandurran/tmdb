@@ -12,6 +12,11 @@ class UserImageAdd extends Component {
     selectedFileUrl: null
   };
 
+  componentDidMount() {
+    const { user } = this.props;
+    this.setState({ selectedFileUrl: user.imageUrl });
+  }
+
   fileChangedHandler = event => {
     let reader = new FileReader();
     reader.onload = e => {
@@ -27,7 +32,7 @@ class UserImageAdd extends Component {
   };
 
   render() {
-    const { selectedFile, selectedFileUrl } = this.state;
+    const { selectedFileUrl } = this.state;
     return (
       <div>
         <Header as="h3" textAlign="center">
@@ -35,7 +40,7 @@ class UserImageAdd extends Component {
         </Header>
         <Grid columns={2}>
           <Grid.Column>
-            {selectedFile && (
+            {selectedFileUrl && (
               <Image
                 src={selectedFileUrl}
                 alt="No image selected"
@@ -60,6 +65,7 @@ class UserImageAdd extends Component {
               </Form.Field>
               <Button type="submit">Submit</Button>
             </Form>
+            {/* put message in here or progress... */}
           </Grid.Column>
         </Grid>
       </div>

@@ -12,7 +12,7 @@ class AdminCourseNotes extends Component {
     return notes.map(note => {
       return (
         <Feed.Event key={note._id}>
-          <Feed.Label image="http://lorempixel.com/400/400/people" />
+          <Feed.Label image={note.noteBy.imageUrl} />
           <Feed.Content>
             <Feed.Summary>
               {note.noteBy.firstName} {note.noteBy.lastName}

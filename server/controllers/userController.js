@@ -2,6 +2,8 @@ const User = require('../models/user');
 const keys = require('../config/keys');
 const arrayHelp = require('../utils/arrayHelpers');
 const cloudinary = require('cloudinary');
+const dataUri = require('datauri');
+const path = require('path');
 
 cloudinary.config({
   cloud_name: keys.cloudinary.cloud_name,
@@ -239,12 +241,43 @@ module.exports = {
   // production this will need an seperate file store
   // but this would depend on the eventual location of the app
   addUserProfileImage: async (req, res) => {
-    console.log(req);
-    // work to be done in here
-  },
+    let dUri = new dataUri();
+    try {
+      dUri.format(
+        path.extname(req.file.originalname).toString(),
+        req.file.buffer
+      );
 
-  getUserProfileImage: async (req, res) => {
-    // get the profile image
+      const cloudRes = await cloudinary.v2.uploader.upload(dUri.content, {
+        folder: 'tmdb'
+      });
+      // update user with image url
+      const imgUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { imageUrl: cloudRes.secure_url } },
+        { new: true }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+
+      // return image user object
+      res.send(imgUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
   },
 
   currentUser: async (req, res) => {

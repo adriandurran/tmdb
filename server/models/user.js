@@ -31,6 +31,9 @@ const userSchema = new Schema({
     unique: true,
     trim: true
   },
+  imageUrl: {
+    type: String
+  },
   passwordHash: {
     type: String,
     required: true

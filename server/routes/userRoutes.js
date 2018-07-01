@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');
 const userController = require('../controllers/userController');
 
 router.patch('/:id', requireLogin, userController.updateUserProfile);
-router.post('/:id/image', requireLogin, userController.addUserProfileImage);
-router.get('/image/:imageId', requireLogin, userController.getUserProfileImage);
+router.post(
+  '/:id/image',
+  upload.single('userImage'),
+  requireLogin,
+  userController.addUserProfileImage
+);
 
 router.get('/admin/allusers', requireAdmin, userController.allUsers);
 router.patch(

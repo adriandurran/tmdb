@@ -13,7 +13,7 @@ class AdminCompetencyHolders extends Component {
     return users.map(user => {
       return (
         <Item key={user._id}>
-          <Item.Image size="small" src="http://lorempixel.com/400/400/people" />
+          <Item.Image size="small" src={user.imageUrl} />
           <Item.Content>
             <Item.Header>
               {user.firstName} {user.lastName}
