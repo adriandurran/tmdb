@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { reset } from 'redux-form';
+
 import { FETCH_USER } from './types';
 import { fetchCourses, fetchCourseLevels, fetchCourseTypes } from './courses';
 
@@ -36,4 +38,22 @@ export const loginUser = values => async dispatch => {
     dispatch(fetchCourseTypes);
   }
   return res.data;
+};
+
+export const resetUserPassword = (id, password) => async dispatch => {
+  try {
+    const res = await axios.post(`/api/tmdb/user/${id}/password/reset`, {
+      password
+    });
+    if (res.status === 200) {
+      console.log(res.data);
+      dispatch(reset('resetPwd'));
+      // send message password changed
+      // log out -
+      // also clear redux form
+    }
+  } catch (error) {
+    console.log(error);
+    // send message about error
+  }
 };

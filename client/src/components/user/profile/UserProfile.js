@@ -4,6 +4,7 @@ import { Grid, Header } from 'semantic-ui-react';
 
 import UserDetailsEdit from './UserDetailsEdit';
 import UserImageAdd from './UserImageAdd';
+import UserResetPassword from './UserResetPassword';
 
 const UserProfile = () => {
   return (
@@ -21,7 +22,9 @@ const UserProfile = () => {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={2}>
-          <Grid.Column>Reset Password</Grid.Column>
+          <Grid.Column>
+            <UserResetPassword />
+          </Grid.Column>
           <Grid.Column>Possibly Messaging</Grid.Column>
         </Grid.Row>
       </Grid>

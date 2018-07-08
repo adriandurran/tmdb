@@ -365,6 +365,44 @@ module.exports = {
     }
   },
 
+  resetPassword: async (req, res) => {
+    const { password } = req.body;
+    let restP = new User();
+
+    try {
+      const newP = await restP.generateHash(password.password);
+
+      const resetP = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { passwordHash: newP } },
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+
+      // return image user object
+      res.send(resetP);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   loginUser: (req, res) => {
     res.send(req.user);
   },
