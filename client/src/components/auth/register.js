@@ -71,7 +71,9 @@ class RegisterUser extends Component {
     const { submitNewUser, history } = this.props;
 
     submitNewUser(values).then(result => {
-      history.push(`/auth/login`);
+      // need to clear out the auth user in redux here....
+      // logout perhaps?
+      history.push(`/api/tmdb/auth/logout`);
     });
   }
 
