@@ -16,6 +16,7 @@ router.post(
   requireLogin,
   userController.addUserProfileImage
 );
+router.post('/:id/password/reset', requireLogin, userController.resetPassword);
 
 router.get('/admin/allusers', requireAdmin, userController.allUsers);
 router.patch(

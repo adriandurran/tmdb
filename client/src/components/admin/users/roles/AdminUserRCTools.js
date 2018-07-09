@@ -7,6 +7,7 @@ import AdminUserRoleManager from './AdminUserRoleManager';
 import AdminUserComps from '../comps/AdminUserComps';
 import AdminUserCourseTable from '../courses/AdminUserCoursesTable';
 import AdminUserAddDept from '../dept/AdminUserAddDept';
+import AdminUserResetPassword from '../access/AdminUserResetPassword';
 
 class AdminUserRCTools extends Component {
   render() {
@@ -23,6 +24,11 @@ class AdminUserRCTools extends Component {
               <Grid.Row>
                 <Grid.Column>
                   <AdminUserAddDept />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <AdminUserResetPassword />
                 </Grid.Column>
               </Grid.Row>
             </Grid.Column>

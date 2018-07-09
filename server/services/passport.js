@@ -9,7 +9,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
+  User.findOne({ _id: id }, { passwordHash: 0 }).then(user => {
     // need to not return the password hash here.....
     done(null, user);
   });

@@ -14,6 +14,7 @@ cloudinary.config({
 module.exports = {
   allUsers: async (req, res) => {
     const dbAllUsers = await User.find({})
+      .select({ passwordHash: 0 })
       .populate('department')
       .populate('courses._course')
       .populate({
@@ -27,7 +28,10 @@ module.exports = {
   },
 
   getUser: async (req, res) => {
-    const dbUser = await User.findById(req.params.id)
+    const dbUser = await User.findOne(
+      { _id: req.params.id },
+      { passwordHash: 0 }
+    )
       .populate('department')
       .populate('courses._course')
       .populate({
@@ -46,7 +50,10 @@ module.exports = {
       const thisUser = await User.findOneAndUpdate(
         { _id: req.params.id, 'courses._id': course },
         { $set: { 'courses.$.verified': true } },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       )
         .populate('department')
         .populate('courses._course')
@@ -74,7 +81,10 @@ module.exports = {
       const userDept = await User.findByIdAndUpdate(
         req.params.id,
         { $set: req.body },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       )
         .populate('department')
         .populate('courses._course')
@@ -105,7 +115,10 @@ module.exports = {
       const newCourse = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { courses: courseSet } },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       )
         .populate('department')
         .populate('courses._course')
@@ -146,7 +159,10 @@ module.exports = {
         {
           $set: { roles: roleSet }
         },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       )
         .populate('department')
         .populate('courses._course')
@@ -177,7 +193,10 @@ module.exports = {
         {
           $set: { verified: verify }
         },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       );
       return res.status(200).send(veriUser);
     } catch (error) {
@@ -192,7 +211,10 @@ module.exports = {
       const adminiUser = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { isAdmin: admin } },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       );
       return res.status(200).send(adminiUser);
     } catch (error) {
@@ -214,7 +236,10 @@ module.exports = {
             lastName
           }
         },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       )
         .populate('department')
         .populate('courses._course')
@@ -255,7 +280,10 @@ module.exports = {
       const imgUser = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { imageUrl: cloudRes.secure_url } },
-        { new: true }
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
       )
         .populate('department')
         .populate('courses._course')
@@ -284,7 +312,10 @@ module.exports = {
     if (req.user === undefined) {
       res.send(req.user);
     } else {
-      const currUser = await User.findById(req.user._id)
+      const currUser = await User.findOne(
+        { _id: req.user._id },
+        { passwordHash: 0 }
+      )
         .populate('department')
         .populate('courses._course')
         .populate({
@@ -328,6 +359,44 @@ module.exports = {
       })
         .then(user => res.status(200).send(user))
         .catch(err => res.status(400).send(err));
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
+  resetPassword: async (req, res) => {
+    const { password } = req.body;
+    let restP = new User();
+
+    try {
+      const newP = await restP.generateHash(password.password);
+
+      const resetP = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: { passwordHash: newP } },
+        {
+          fields: { passwordHash: 0 },
+          new: true
+        }
+      )
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
+
+      // return image user object
+      res.send(resetP);
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);
