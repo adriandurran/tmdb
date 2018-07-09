@@ -3,25 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/api/*": {
+    "/api/tmdb/*": {
       "target": "http://localhost:3050"
     }
   },
   "dependencies": {
-    "axios": "^0.17.1",
-    "eslint": "^4.17.0",
+    "axios": "^0.18.0",
     "lodash": "^4.17.5",
-    "materialize-css": "^0.100.2",
     "moment": "^2.20.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-moment": "^0.7.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.1",
+    "react-scripts": "latest",
     "redux": "^3.7.2",
+    "redux-form": "^7.2.3",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "semantic-ui-css": "latest",
+    "semantic-ui-react": "^0.79.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,6 +31,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "redux-devtools": "^3.4.1"
+    "eslint": "^4.19.1",
+    "redux-devtools": "^3.4.1",
+    "redux-devtools-extension": "^2.13.2"
   }
 }

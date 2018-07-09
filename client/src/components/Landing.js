@@ -1,17 +1,16 @@
 import React from 'react';
+import { Container, Header } from 'semantic-ui-react';
 
-const Landing = () => {
+const Landing = props => {
   return (
-    <div className="row">
-      <div className="col s12 m8 offset-m2">
-        <div className="card-panel blue-grey darken-1 center-align">
-          <span className="white-text">
-            <h2>Training Management Database</h2>
-            Manage your Training Needs
-          </span>
-        </div>
-      </div>
-    </div>
+    <Container text>
+      <Header
+        as="h1"
+        content="Training Manager"
+        style={{ fontSize: '4em', marginTop: '3em' }}
+        textAlign="center"
+      />
+    </Container>
   );
 };
 
