@@ -46,7 +46,6 @@ export const resetUserPassword = (id, password) => async dispatch => {
       password
     });
     if (res.status === 200) {
-      console.log(res.data);
       // also clear redux form
       dispatch(reset('resetPwd'));
       // send message password changed

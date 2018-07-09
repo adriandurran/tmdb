@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { Header, Form, Button, Segment, Message } from 'semantic-ui-react';
-import semanticFormField from '../../shared/semanticFormField';
+import semanticFormField from '../../../shared/semanticFormField';
 
-import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
-import { resetUserPassword } from '../../../actions/auth';
-import { required } from '../../../utils/validation';
+import { required } from '../../../../utils/validation';
 
-class UserResetPassword extends Component {
+import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
+import { resetUserPassword } from '../../../../actions/auth';
+
+class AdminUserResetPassword extends Component {
   state = {
     message: {
-      visible: true
+      visible: false
     }
   };
 
@@ -24,10 +26,10 @@ class UserResetPassword extends Component {
     }, 3000);
   }
 
-  resetPWD(newP) {
+  resetUserPWD(newPwd) {
     const { user, resetUserPassword } = this.props;
     // reset here and log out?
-    resetUserPassword(user._id, newP).then(res => {
+    resetUserPassword(user._id, newPwd).then(res => {
       let message = { ...this.state.message };
       message.visible = true;
       if (res.status === 200) {
@@ -45,16 +47,21 @@ class UserResetPassword extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { user, handleSubmit, submitting, pristine } = this.props;
     const { message } = this.state;
-
     return (
       <div>
-        <Segment attached>
-          <Header as="h3" textAlign="center">
-            Reset Password
-          </Header>
-          <Form onSubmit={handleSubmit(values => this.resetPWD(values))}>
+        <Segment attached style={{ marginTop: '1em' }}>
+          {_.isEmpty(user) ? (
+            <Header as="h3" textAlign="center">
+              No User Selected
+            </Header>
+          ) : (
+            <Header as="h3" textAlign="center">
+              Reset Password
+            </Header>
+          )}
+          <Form onSubmit={handleSubmit(values => this.resetUserPWD(values))}>
             <Field
               name="password"
               type="password"
@@ -91,19 +98,17 @@ class UserResetPassword extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: selectCurrentUser(state)
+    user: selectUserManage(state)
   };
 };
 
-const mapDispatchToProps = {
-  resetUserPassword
-};
+const mapDispatchToProps = { resetUserPassword };
 
-UserResetPassword = connect(
+AdminUserResetPassword = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserResetPassword);
+)(AdminUserResetPassword);
 
 export default reduxForm({
   form: 'resetPwd'
-})(UserResetPassword);
+})(AdminUserResetPassword);
