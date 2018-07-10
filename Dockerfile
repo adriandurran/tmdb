@@ -1,6 +1,5 @@
 FROM node:10
 LABEL maintainer="adrian.durran@digital.cabinet-office.gov.uk"
-RUN npm install nodemon -g
 RUN mkdir -p /usr/src/app/client
 COPY server/. /usr/src/app
 WORKDIR /usr/src/app
