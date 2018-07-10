@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
 
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const keys = require('./config/keys');
 
@@ -20,7 +20,10 @@ const deptRoutes = require('./routes/deptRoutes');
 
 // conenct to mongo db
 mongoose
-  .connect(keys.mongoURI)
+  .connect(
+    keys.mongoURI,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log('Database connection successful'))
   .catch(err => console.log('Unable to connect to database', err));
 
@@ -39,7 +42,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // routes
 app.use('/api/tmdb/auth', authRoutes);
@@ -49,25 +52,11 @@ app.use('/api/tmdb/roles', roleRoutes);
 app.use('/api/tmdb/user', userRoutes);
 app.use('/api/tmdb/dept', deptRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'));
-  const path = require('path');
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-  });
-}
-
-// development error handler
-// will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//       message: err.message,
-//       error: err
-//     });
-//   });
-// }
+app.use(express.static('client/build'));
+const path = require('path');
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 // production error handler
 // no stacktraces leaked to user
@@ -78,5 +67,9 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+const PORT = process.env.PORT || 3050;
+
+app.listen(PORT);
 
 module.exports = app;

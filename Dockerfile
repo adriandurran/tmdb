@@ -1,15 +1,14 @@
-FROM node:latest
+FROM node:10
 LABEL maintainer="adrian.durran@digital.cabinet-office.gov.uk"
-ENV NPM_CONFIG_LOGLEVEL warn
-ENV NODE_ENV production
-RUN mkdir -p /usr/src/app
-COPY /server/. /usr/src/app
-COPY /client /usr/src/app
+RUN npm install nodemon -g
+RUN mkdir -p /usr/src/app/client
+COPY server/. /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install
+COPY client /usr/src/app/client
 WORKDIR /usr/src/app/client
 RUN npm install
-RUN npm run build --production
+RUN npm run build
 WORKDIR /usr/src/app
 EXPOSE 3050
-CMD ["node", "./bin/www"]
+CMD ["nodemon", "index.js"]
