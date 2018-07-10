@@ -409,10 +409,18 @@ module.exports = {
 
   logoutUser: (req, res) => {
     req.logout();
-    res.redirect('/');
+    req.session.destroy(err => {
+      console.log(err);
+      res.redirect('/');
+    });
   },
 
   seedSuperAdmin: async (req, res) => {
+    const isSuper = await User.find({ isSuperAdmin: true });
+    if (isSuper.length > 1) {
+      return res.status(418).send('There is only one Queen');
+    }
+
     try {
       const {
         userId,
