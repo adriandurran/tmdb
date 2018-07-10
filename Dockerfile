@@ -10,4 +10,4 @@ RUN npm install
 RUN npm run build
 WORKDIR /usr/src/app
 EXPOSE 3050
-CMD ["nodemon", "index.js"]
+CMD ["node", "index.js"]
