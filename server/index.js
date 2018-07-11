@@ -31,12 +31,28 @@ const app = express();
 
 // middleware
 app.use(helmet());
+app.use(helmet.hsts({ maxAge: 7776000000 }));
+app.use(helmet.frameguard('SAMEORIGIN'));
+app.use(helmet.xssFilter({ setOnOldIE: true }));
+app.use(helmet.noSniff());
+app.use(
+  helmet.csp({
+    directives: {
+      'default-src': ["'self'"],
+      'img-src': ['res.cloudinary.com', 'cloudinary.com']
+    }
+  })
+);
 app.use(bodyParser.json());
 app.use(
   cookieSession({
     name: 'tmdb',
     maxAge: 1 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
+    keys: [keys.cookieKey],
+    cookie: {
+      httpOnly: true,
+      secure: true
+    }
   })
 );
 app.use(passport.initialize());
@@ -56,16 +72,6 @@ app.use(express.static('client/build'));
 const path = require('path');
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
 });
 
 const PORT = process.env.PORT || 3050;

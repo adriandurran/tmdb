@@ -20,7 +20,10 @@ passport.use(
   new CustomStrategy(async (req, done) => {
     const { username, password } = req.body;
     try {
-      const existingUser = await User.findOne({ username });
+      const existingUser = await User.findOne(
+        { username },
+        { passwordHash: 0 }
+      );
 
       if (
         !existingUser ||
