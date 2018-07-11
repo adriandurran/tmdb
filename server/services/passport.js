@@ -20,10 +20,21 @@ passport.use(
   new CustomStrategy(async (req, done) => {
     const { username, password } = req.body;
     try {
-      const existingUser = await User.findOne(
-        { username },
-        { passwordHash: 0 }
-      );
+      const existingUser = await User.findOne({ username })
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
 
       if (
         !existingUser ||

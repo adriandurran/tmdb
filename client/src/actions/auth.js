@@ -2,7 +2,6 @@ import axios from 'axios';
 import { reset } from 'redux-form';
 
 import { FETCH_USER } from './types';
-import { fetchCourses, fetchCourseLevels, fetchCourseTypes } from './courses';
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get(`/api/tmdb/auth/current_user`);
@@ -30,13 +29,7 @@ export const loginUser = values => async dispatch => {
   const userDet = { username: email, password: password };
 
   const res = await axios.post('/api/tmdb/auth/login', userDet);
-  dispatch(fetchUser());
-  if (res.data.verified) {
-    // load up the courses, course types , roles, and competencies
-    dispatch(fetchCourses);
-    dispatch(fetchCourseLevels);
-    dispatch(fetchCourseTypes);
-  }
+  dispatch({ type: FETCH_USER, payload: res.data });
   return res.data;
 };
 
