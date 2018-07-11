@@ -30,13 +30,8 @@ export const loginUser = values => async dispatch => {
   const userDet = { username: email, password: password };
 
   const res = await axios.post('/api/tmdb/auth/login', userDet);
-  dispatch(fetchUser());
-  if (res.data.verified) {
-    // load up the courses, course types , roles, and competencies
-    dispatch(fetchCourses);
-    dispatch(fetchCourseLevels);
-    dispatch(fetchCourseTypes);
-  }
+  dispatch({ type: FETCH_USER, payload: res.data });
+  // need to do something about incorrect passwords etc....
   return res.data;
 };
 
