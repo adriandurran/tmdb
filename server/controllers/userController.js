@@ -411,6 +411,7 @@ module.exports = {
     req.logout();
     req.session.destroy(err => {
       console.log(err);
+      res.clearCookie('sid', { path: '/' });
       res.redirect('/');
     });
   },
