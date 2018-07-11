@@ -36,7 +36,7 @@ app.use(helmet.frameguard('SAMEORIGIN'));
 app.use(helmet.xssFilter({ setOnOldIE: true }));
 app.use(helmet.noSniff());
 app.use(
-  helmet.csp({
+  helmet.contentSecurityPolicy({
     directives: {
       'default-src': ["'self'"],
       'img-src': ['res.cloudinary.com', 'cloudinary.com']
