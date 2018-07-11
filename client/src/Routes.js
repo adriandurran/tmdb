@@ -31,6 +31,8 @@ import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptView from './components/admin/departments/AdminDeptView';
 
+// add in protected routes
+
 const Routes = () => {
   return (
     <BrowserRouter>
