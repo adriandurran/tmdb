@@ -1,5 +1,5 @@
 const passport = require('passport');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const CustomStrategy = require('passport-custom');
 
 const User = require('../models/user');
@@ -10,7 +10,6 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findOne({ _id: id }, { passwordHash: 0 }).then(user => {
-    // need to not return the password hash here.....
     done(null, user);
   });
 });
@@ -20,7 +19,21 @@ passport.use(
   new CustomStrategy(async (req, done) => {
     const { username, password } = req.body;
     try {
-      const existingUser = await User.findOne({ username });
+      const existingUser = await User.findOne({ username })
+        .populate('department')
+        .populate('courses._course')
+        .populate({
+          path: 'roles',
+          populate: {
+            path: 'competencies',
+            populate: [
+              {
+                path: 'courses'
+              },
+              { path: 'compType' }
+            ]
+          }
+        });
 
       if (
         !existingUser ||

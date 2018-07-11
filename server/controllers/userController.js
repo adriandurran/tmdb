@@ -436,7 +436,8 @@ module.exports = {
         passwordHash,
         verified,
         isAdmin,
-        isSuperAdmin
+        isSuperAdmin,
+        joinDate: Date.now()
       })
         .then(user => res.status(200).send(user))
         .catch(err => {

@@ -7,6 +7,7 @@ import { Item, Header, Segment } from 'semantic-ui-react';
 class UserRoles extends Component {
   renderUserRoles() {
     const { userRoles } = this.props;
+
     return userRoles.map(role => {
       return (
         <Item key={role._id}>
