@@ -1,5 +1,7 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 
 import { Container } from 'semantic-ui-react';
 
@@ -31,89 +33,186 @@ import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptView from './components/admin/departments/AdminDeptView';
 
-const Routes = () => {
-  return (
-    <BrowserRouter>
-      <div>
-        <Header />
-        <Container style={{ marginTop: '7em' }}>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/auth/login" component={LoginUser} />
-          <Route exact path="/auth/register" component={RegisterUser} />
-          <Route exact path="/users/:id" component={UserLanding} />
-          <Route exact path="/users/:id/profile" component={UserProfile} />
-          <Route exact path="/users/:id/courses" component={CoursesHome} />
-          <Route exact path="/users/:id/competencies" component={CompsHome} />
-          <Route exact path="/admin/dashboard" component={AdminDashboard} />
-          <Route
-            exact
-            path="/admin/course-manager"
-            component={AdminCourseManager}
-          />
-          <Route
-            exact
-            path="/admin/course-types"
-            component={AdminCourseTypes}
-          />
-          <Route
-            exact
-            path="/admin/course-levels"
-            component={AdminCourseLevels}
-          />
-          <Route
-            exact
-            path="/admin/course-manager/view/:id"
-            component={AdminCourseView}
-          />
-          <Route
-            exact
-            path="/admin/comp-manager"
-            component={AdminCompManager}
-          />
-          <Route
-            exact
-            path="/admin/comp-manager/view/:id"
-            component={AdminCompetencyView}
-          />
-          <Route
-            exact
-            path="/admin/role-manager"
-            component={AdminRoleManager}
-          />
-          <Route
-            exact
-            path="/admin/role-manager/view/:id"
-            component={AdminRoleView}
-          />
-          <Route
-            exact
-            path="/admin/user-access-manager"
-            component={AdminUserAccess}
-          />
-          <Route
-            exact
-            path="/admin/user-manager"
-            component={AdminUserManager}
-          />
-          <Route
-            exact
-            path="/admin/user-courses-manager"
-            component={AdminUserCoursesManager}
-          />
-          <Route
-            exact
-            path="/admin/department-manager"
-            component={AdminDeptManager}
-          />
-          <Route
-            exact
-            path="/admin/department-manager/view/:id"
-            component={AdminDeptView}
-          />
-        </Container>
-      </div>
-    </BrowserRouter>
-  );
+import { selectCurrentUser } from './reducers/selectors/userSelectors';
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      checkAuth(rest.user) === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/auth/login" />
+      )
+    }
+  />
+);
+
+const PrivateAdminRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      checkAdmin(rest.user) === true ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/" />
+      )
+    }
+  />
+);
+
+const checkAuth = user => {
+  if (!isEmpty(user)) {
+    if (user.verified) {
+      return true;
+    }
+  }
+
+  return false;
 };
+
+const checkAdmin = user => {
+  if (checkAuth(user)) {
+    if (user.isAdmin || user.isSuperAdmin) {
+      return true;
+    }
+  }
+  return false;
+};
+
+class Routes extends Component {
+  render() {
+    const { user } = this.props;
+
+    return (
+      <BrowserRouter>
+        <div>
+          <Header />
+          <Container style={{ marginTop: '7em' }}>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/auth/login" component={LoginUser} />
+            <Route exact path="/auth/register" component={RegisterUser} />
+            <PrivateRoute
+              user={user}
+              exact
+              path="/users/:id"
+              component={UserLanding}
+            />
+            <PrivateRoute
+              user={user}
+              exact
+              path="/users/:id/profile"
+              component={UserProfile}
+            />
+            <PrivateRoute
+              user={user}
+              exact
+              path="/users/:id/courses"
+              component={CoursesHome}
+            />
+            <PrivateRoute
+              user={user}
+              exact
+              path="/users/:id/competencies"
+              component={CompsHome}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/dashboard"
+              component={AdminDashboard}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/course-manager"
+              component={AdminCourseManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/course-types"
+              component={AdminCourseTypes}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/course-levels"
+              component={AdminCourseLevels}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/course-manager/view/:id"
+              component={AdminCourseView}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/comp-manager"
+              component={AdminCompManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/comp-manager/view/:id"
+              component={AdminCompetencyView}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/role-manager"
+              component={AdminRoleManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/role-manager/view/:id"
+              component={AdminRoleView}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/user-access-manager"
+              component={AdminUserAccess}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/user-manager"
+              component={AdminUserManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/user-courses-manager"
+              component={AdminUserCoursesManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/department-manager"
+              component={AdminDeptManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/department-manager/view/:id"
+              component={AdminDeptView}
+            />
+          </Container>
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: selectCurrentUser(state)
+  };
+};
+
+Routes = connect(mapStateToProps)(Routes);
 
 export default Routes;
