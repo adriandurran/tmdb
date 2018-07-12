@@ -2,7 +2,6 @@ import axios from 'axios';
 import { reset } from 'redux-form';
 
 import { FETCH_USER } from './types';
-import { fetchCourses, fetchCourseLevels, fetchCourseTypes } from './courses';
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get(`/api/tmdb/auth/current_user`);

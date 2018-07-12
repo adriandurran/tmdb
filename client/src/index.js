@@ -10,10 +10,6 @@ import reducers from './reducers';
 
 import registerServiceWorker from './registerServiceWorker';
 
-// dev only
-// import axios from 'axios';
-// window.axios = axios;
-
 const store = createStore(
   reducers,
   composeWithDevTools(applyMiddleware(reduxThunk))
