@@ -8,6 +8,11 @@ module.exports = {
     res.send(dbVersion);
   },
 
+  getVersionLatest: async (req, res) => {
+    const lastVersion = Version.findOne({}, {}, { sort: { _id: -1 } });
+    res.send(lastVersion);
+  },
+
   addVersionDetails: async (req, res) => {
     const newVersion = await Version.create(req.body);
     res.send(newVersion);
