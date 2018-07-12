@@ -20,7 +20,10 @@ const deptRoutes = require('./routes/deptRoutes');
 
 // conenct to mongo db
 mongoose
-  .connect(keys.mongoURI)
+  .connect(
+    keys.mongoURI,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log('Database connection successful'))
   .catch(err => console.log('Unable to connect to database', err));
 
@@ -32,15 +35,15 @@ app.use(helmet.hsts({ maxAge: 7776000000 }));
 app.use(helmet.frameguard('SAMEORIGIN'));
 app.use(helmet.xssFilter({ setOnOldIE: true }));
 app.use(helmet.noSniff());
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      'default-src': ["'self'"],
-      'img-src': ['res.cloudinary.com', 'cloudinary.com'],
-      'style-src': ['fonts.googleapis.com']
-    }
-  })
-);
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       'default-src': ["'self'"],
+//       'img-src': ['res.cloudinary.com', 'cloudinary.com'],
+//       'style-src': ['fonts.googleapis.com']
+//     }
+//   })
+// );
 app.use(bodyParser.json());
 app.use(
   cookieSession({
