@@ -19,6 +19,7 @@ export const addNewVersion = version => async dispatch => {
     if (res.status === 200) {
       dispatch(fetchVersions());
       dispatch(reset('addVersion'));
+      dispatch(fetchLatestVersion());
     }
   } catch (error) {
     console.log(error);
