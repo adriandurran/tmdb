@@ -412,7 +412,7 @@ module.exports = {
     req.session = null;
     req.session.destroy(err => {
       console.log(err);
-      res.clearCookie('sid', { path: '/' });
+      res.clearCookie('tmdb', { path: '/' });
       res.redirect('/');
     });
   },
