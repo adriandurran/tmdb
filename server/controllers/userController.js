@@ -409,12 +409,10 @@ module.exports = {
 
   logoutUser: (req, res) => {
     req.logOut();
+
     req.session = null;
-    req.session.destroy(err => {
-      console.log(err);
-      res.clearCookie('tmdb', { path: '/' });
-      res.redirect('/');
-    });
+    res.clearCookie('tmdb', { path: '/' });
+    res.redirect('/');
   },
 
   seedSuperAdmin: async (req, res) => {
