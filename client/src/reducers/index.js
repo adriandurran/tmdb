@@ -16,6 +16,8 @@ import { deptsReducer, deptReducer } from './dept/deptReducer';
 
 import { progressReducer } from './shared/sharedReducers';
 
+import { versionReducer } from './extra/version';
+
 const reducer = combineReducers({
   auth: authReducer,
   allusers: allUsersReducer,
@@ -32,6 +34,7 @@ const reducer = combineReducers({
   depts: deptsReducer,
   dept: deptReducer,
   progress: progressReducer,
+  version: versionReducer,
   form: reduxForm
 });
 
