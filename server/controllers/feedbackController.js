@@ -20,12 +20,14 @@ module.exports = {
   },
 
   getFeedBack: async (req, res) => {
-    const dbFeedback = await FeedBack.find({});
+    const dbFeedback = await FeedBack.find({}).populate('feedBackUser');
     res.send(dbFeedback);
   },
 
   addFeedBack: async (req, res) => {
-    const newFeedback = await FeedBack.create(req.body);
+    const newFeedback = await FeedBack.create(req.body).populate(
+      'feedBackUser'
+    );
     res.send(newFeedback);
   },
 
