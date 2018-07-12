@@ -49,3 +49,4 @@ export const ADMIN_ADD_DEPT = 'admin_add_dept';
 
 // versions
 export const FETCH_VERSION = 'fetch_version';
+export const FETCH_VERSIONS = 'fetch_versions';
