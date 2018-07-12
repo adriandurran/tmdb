@@ -32,6 +32,7 @@ import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptView from './components/admin/departments/AdminDeptView';
+import AppVersion from './components/version/AppVersion';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
@@ -92,6 +93,12 @@ class Routes extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/auth/login" component={LoginUser} />
             <Route exact path="/auth/register" component={RegisterUser} />
+            <PrivateRoute
+              user={user}
+              exact
+              path="/application/version"
+              component={AppVersion}
+            />
             <PrivateRoute
               user={user}
               exact
