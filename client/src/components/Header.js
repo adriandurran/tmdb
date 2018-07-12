@@ -62,7 +62,7 @@ class Header extends Component {
           <Menu.Item
             header
             as={Link}
-            to={authUser ? `/users/${authUser.userId}` : '/'}
+            to={authUser ? `/application/version` : '/'}
           >
             TMDB -{' '}
             {!isEmpty(version)
