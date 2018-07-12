@@ -14,6 +14,7 @@ module.exports = {
   },
 
   addVersionDetails: async (req, res) => {
+    // console.log(req.body);
     const newVersion = await Version.create(req.body);
     res.send(newVersion);
   },

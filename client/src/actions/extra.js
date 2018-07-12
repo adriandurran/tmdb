@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { reset } from 'redux-form';
 
 import { FETCH_VERSION, FETCH_VERSIONS } from './types';
 
@@ -10,4 +11,16 @@ export const fetchLatestVersion = () => async dispatch => {
 export const fetchVersions = () => async dispatch => {
   const res = await axios.get('/api/tmdb/extra/version');
   dispatch({ type: FETCH_VERSIONS, payload: res.data });
+};
+
+export const addNewVersion = version => async dispatch => {
+  try {
+    const res = await axios.post('/api/tmdb/extra/version', version);
+    if (res.status === 200) {
+      dispatch(fetchVersions());
+      dispatch(reset('addVersion'));
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

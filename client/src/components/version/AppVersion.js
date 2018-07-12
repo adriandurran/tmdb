@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import { Header, Grid } from 'semantic-ui-react';
 
 import AppVersionList from './AppVersionList';
+import AppVersionAdd from './AppVersionAdd';
 
 import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
 
@@ -24,7 +25,9 @@ class AppVersion extends Component {
           {!isEmpty(user) &&
             user.isAdmin && (
               <Grid.Row>
-                <Grid.Column>App version entry</Grid.Column>
+                <Grid.Column>
+                  <AppVersionAdd />
+                </Grid.Column>
               </Grid.Row>
             )}
         </Grid>

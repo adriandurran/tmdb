@@ -16,13 +16,13 @@ class AppVersionList extends Component {
     const { versions } = this.props;
     return versions.map(version => {
       return (
-        <Item>
+        <Item key={version._id}>
           <Item.Content>
             <Item.Header>Version {version.versionNumber}</Item.Header>
             <Item.Meta>
               <Moment fromNow>{version.versionDate}</Moment>
             </Item.Meta>
-            <Item.Desciption>{version.versionNotes}</Item.Desciption>
+            <Item.Description>{version.versionNotes}</Item.Description>
           </Item.Content>
         </Item>
       );
