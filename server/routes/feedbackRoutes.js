@@ -12,7 +12,8 @@ router.post('/feedback', requireLogin, feedbackController.addFeedBack);
 router.get('/feedbacktype', requireLogin, feedbackController.getFeedBackType);
 router.post('/feedbacktype', requireAdmin, feedbackController.addFeedBackType);
 
-router.get('/version', feedbackController.getVersionDetails);
+router.get('/version', requireLogin, feedbackController.getVersionDetails);
+router.get('/version/latest', feedbackController.getVersionLatest);
 router.post('/version', requireAdmin, feedbackController.addVersionDetails);
 
 module.exports = router;

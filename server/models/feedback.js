@@ -30,8 +30,8 @@ const feedbackTypeSchema = new Schema({
   }
 });
 
-const FeedBack = mongoose.model('FeedBack', feedbackTypeSchema);
-const FeedBackType = mongoose.model('FeedBackType', fee);
+const FeedBack = mongoose.model('FeedBack', feedbackSchema);
+const FeedBackType = mongoose.model('FeedBackType', feedbackTypeSchema);
 
 module.exports = FeedBack;
 module.exports = FeedBackType;
