@@ -9,7 +9,7 @@ module.exports = {
   },
 
   getVersionLatest: async (req, res) => {
-    const lastVersion = Version.findOne({}, {}, { sort: { _id: -1 } });
+    const lastVersion = await Version.findOne({}, {}, { sort: { _id: -1 } });
     res.send(lastVersion);
   },
 

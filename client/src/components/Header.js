@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 
 import { Button, Menu, Icon } from 'semantic-ui-react';
 
 import { selectCurrentUser } from '../reducers/selectors/userSelectors';
+import { selectLatestVersion } from '../reducers/selectors/extraSelectors';
+import { fetchLatestVersion } from '../actions/extra';
 
 class Header extends Component {
+  componentDidMount() {
+    this.props.fetchLatestVersion();
+  }
+
   renderMenus() {
     const { authUser } = this.props;
     if (authUser) {
@@ -48,8 +55,7 @@ class Header extends Component {
   }
 
   render() {
-    const { authUser } = this.props;
-
+    const { authUser, version } = this.props;
     return (
       <div>
         <Menu size="huge" inverted borderless fixed="top">
@@ -58,7 +64,10 @@ class Header extends Component {
             as={Link}
             to={authUser ? `/users/${authUser.userId}` : '/'}
           >
-            TMDB
+            TMDB -{' '}
+            {!isEmpty(version)
+              ? `Version ${version.versionNumber}`
+              : 'No version information'}
           </Menu.Item>
           <Menu.Menu position="right">
             {authUser.isAdmin && (
@@ -94,10 +103,18 @@ class Header extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  fetchLatestVersion
+};
+
 const mapStateToProps = state => {
   return {
-    authUser: selectCurrentUser(state)
+    authUser: selectCurrentUser(state),
+    version: selectLatestVersion(state)
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
