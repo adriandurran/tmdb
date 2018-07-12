@@ -32,7 +32,10 @@ import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptView from './components/admin/departments/AdminDeptView';
+
+// feed back and versions
 import AppVersion from './components/version/AppVersion';
+import AppFeedback from './components/feedback/AppFeedback';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
@@ -98,6 +101,12 @@ class Routes extends Component {
               exact
               path="/application/version"
               component={AppVersion}
+            />
+            <PrivateRoute
+              user={user}
+              exact
+              path="/application/feedback"
+              component={AppFeedback}
             />
             <PrivateRoute
               user={user}
