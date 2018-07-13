@@ -341,7 +341,10 @@ module.exports = {
         firstName,
         lastName,
         username,
-        password
+        password,
+        verified,
+        isAdmin,
+        isSuperAdmin
       } = req.body.data.newUser;
 
       const joinDate = Date.now();
@@ -355,7 +358,10 @@ module.exports = {
         firstName,
         lastName,
         passwordHash,
-        joinDate
+        joinDate,
+        verified,
+        isAdmin,
+        isSuperAdmin
       })
         .then(user => res.status(200).send(user))
         .catch(err => res.status(400).send(err));
@@ -404,7 +410,6 @@ module.exports = {
   },
 
   loginUser: (req, res) => {
-    console.log(req.user);
     res.send(req.user);
   },
 

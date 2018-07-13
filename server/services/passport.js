@@ -38,14 +38,21 @@ passport.use(
         });
 
       if (!existingUser) {
+        console.log('no user found');
         return done(null, false);
       }
 
-      if (!newLog.validPassword(existingUser, password)) {
-        return done(null, false);
+      if (existingUser) {
+        const passwordGood = await existingUser.validPassword(
+          existingUser,
+          password
+        );
+        if (!passwordGood) {
+          return done(null, false);
+        } else {
+          return done(null, existingUser);
+        }
       }
-
-      return done(null, existingUser);
     } catch (error) {
       return done(error);
     }
