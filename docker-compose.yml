@@ -11,7 +11,7 @@ services:
       - 3050:3050
     depends_on:
       - db
-    command: ["nodemon", "./bin/www"]
+    command: ["nodemon", "index.js"]
     networks:
       - tmdb
 

@@ -1,0 +1,15 @@
+server/node_modules
+server/config/dev.js
+server/package-lock.json
+server/.gitignore
+
+client/node_modules
+client/.gitignore
+client/package-lock.json
+
+docker
+resources
+
+Dockerfile
+.dockerignore
+docker-compose.yml

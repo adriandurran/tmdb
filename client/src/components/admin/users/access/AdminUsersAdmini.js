@@ -21,7 +21,7 @@ class AdminUsersAdmini extends Component {
     return admins.map(user => {
       return (
         <Item key={user._id}>
-          <Item.Image size="tiny" src="http://lorempixel.com/400/400/people" />
+          <Item.Image size="tiny" src={user.imageUrl} />
           <Item.Content verticalAlign="middle">
             <Item.Header>
               {user.firstName} {user.lastName} &nbsp;

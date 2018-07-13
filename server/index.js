@@ -49,8 +49,10 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     name: 'tmdb',
-    maxAge: 8 * 60 * 60 * 1000, // 8 hours temp may reduce to 1
-    keys: [keys.cookieKey]
+    maxAge: 1 * 60 * 60 * 1000,
+    keys: [keys.cookieKey],
+    httpOnly: true,
+    secure: true
   })
 );
 app.use(passport.initialize());
@@ -74,5 +76,9 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+const PORT = process.env.PORT || 3050;
+
+app.listen(PORT);
 
 module.exports = app;
