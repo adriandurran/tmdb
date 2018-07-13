@@ -404,6 +404,7 @@ module.exports = {
   },
 
   loginUser: (req, res) => {
+    console.log(req.user);
     res.send(req.user);
   },
 

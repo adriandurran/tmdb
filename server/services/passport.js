@@ -5,6 +5,7 @@ const CustomStrategy = require('passport-custom');
 const User = require('../models/user');
 
 passport.serializeUser((user, done) => {
+  console.log('user', user);
   done(null, user.id);
 });
 
@@ -18,6 +19,7 @@ passport.use(
   'tmdb',
   new CustomStrategy(async (req, done) => {
     const { username, password } = req.body;
+    const newLog = new User();
     try {
       const existingUser = await User.findOne({ username })
         .populate('department')
@@ -35,14 +37,15 @@ passport.use(
           }
         });
 
-      if (
-        !existingUser ||
-        !existingUser.validPassword(existingUser, password)
-      ) {
+      if (!existingUser) {
         return done(null, false);
-      } else {
-        return done(null, existingUser);
       }
+
+      if (newLog.validPassword(existingUser, password)) {
+        return done(null, false);
+      }
+
+      return done(null, existingUser);
     } catch (error) {
       return done(error);
     }
