@@ -16,10 +16,7 @@ export const submitNewUser = values => async dispatch => {
     firstName,
     lastName,
     username: email,
-    password,
-    verified: true,
-    isAdmin: true,
-    isSuperAdmin: true
+    password
   };
   const res = await axios.post(`/api/tmdb/auth/register`, {
     data: { newUser }

@@ -428,10 +428,7 @@ module.exports = {
         firstName,
         lastName,
         username,
-        password,
-        verified,
-        isAdmin,
-        isSuperAdmin
+        password
       } = keys.seedAdmin;
 
       let seedyA = new User();
@@ -443,9 +440,7 @@ module.exports = {
         firstName,
         lastName,
         passwordHash,
-        verified,
-        isAdmin,
-        isSuperAdmin,
+
         joinDate: Date.now()
       })
         .then(user => res.status(200).send(user))
