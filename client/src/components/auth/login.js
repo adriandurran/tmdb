@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { Form, Button, Header, Grid, Message } from 'semantic-ui-react';
+import {
+  Form,
+  Button,
+  Header,
+  Grid,
+  Message,
+  Segment
+} from 'semantic-ui-react';
 
 import semanticFormField from '../shared/semanticFormField';
 import { required, email } from '../../utils/validation';
@@ -51,40 +58,43 @@ class LoginUser extends Component {
             <Header as="h3" textAlign="center">
               Login to Training Manager
             </Header>
-            <Form onSubmit={handleSubmit(values => this.userLogin(values))}>
-              <Field
-                name="email"
-                type="email"
-                placeholder="Enter an email address"
-                component={semanticFormField}
-                as={Form.Input}
-                validate={[required, email]}
-                icon="user"
-                iconPosition="left"
-              />
+            <Segment attached>
+              <Form onSubmit={handleSubmit(values => this.userLogin(values))}>
+                <Field
+                  name="email"
+                  type="email"
+                  placeholder="Enter an email address"
+                  component={semanticFormField}
+                  as={Form.Input}
+                  validate={[required, email]}
+                  icon="user"
+                  iconPosition="left"
+                />
 
-              <Field
-                name="password"
-                type="password"
-                iconPosition="left"
-                icon="lock"
-                placeholder="Enter your password"
-                component={semanticFormField}
-                as={Form.Input}
-                validate={required}
-              />
+                <Field
+                  name="password"
+                  type="password"
+                  iconPosition="left"
+                  icon="lock"
+                  placeholder="Enter your password"
+                  component={semanticFormField}
+                  as={Form.Input}
+                  validate={required}
+                />
 
-              <Button
-                fluid
-                disabled={pristine || submitting}
-                loading={submitting}
-                type="submit"
-                size="large"
-              >
-                Login
-              </Button>
-            </Form>
+                <Button
+                  fluid
+                  disabled={pristine || submitting}
+                  loading={submitting}
+                  type="submit"
+                  size="large"
+                >
+                  Login
+                </Button>
+              </Form>
+            </Segment>
             <Message
+              attached="bottom"
               header={message.header}
               content={message.content}
               visible={message.visible}
