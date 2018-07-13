@@ -9,5 +9,6 @@ WORKDIR /usr/src/app/client
 RUN npm install
 RUN npm run build
 WORKDIR /usr/src/app
+ENV NODE_ENV production
 EXPOSE 3050
 CMD ["node", "index.js"]
