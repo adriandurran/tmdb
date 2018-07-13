@@ -28,10 +28,20 @@ export const loginUser = values => async dispatch => {
   const { email, password } = values;
   const userDet = { username: email, password: password };
 
-  const res = await axios.post('/api/tmdb/auth/login', userDet);
-  dispatch({ type: FETCH_USER, payload: res.data });
-  // need to do something about incorrect passwords etc....
-  return res.data;
+  try {
+    const res = await axios.post('/api/tmdb/auth/login', userDet);
+    console.log(res.status);
+    if (res.status === 200) {
+      dispatch({ type: FETCH_USER, payload: res.data });
+      // need to do something about incorrect passwords etc....
+      return res;
+    } else {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 };
 
 export const resetUserPassword = (id, password) => async dispatch => {

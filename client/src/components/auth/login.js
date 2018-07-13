@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { Form, Button, Header, Grid } from 'semantic-ui-react';
+import { Form, Button, Header, Grid, Message } from 'semantic-ui-react';
 
 import semanticFormField from '../shared/semanticFormField';
 import { required, email } from '../../utils/validation';
@@ -10,15 +10,41 @@ import { required, email } from '../../utils/validation';
 import { loginUser } from '../../actions/auth';
 
 class LoginUser extends Component {
+  state = {
+    message: {
+      visible: false
+    }
+  };
   userLogin(values) {
     const { history, loginUser } = this.props;
     loginUser(values).then(result => {
-      history.push(`/users/${result.userId}`);
+      let message = { ...this.state.message };
+      if (result.status !== 200) {
+        message.header = 'Ooops!';
+        message.content = `Something incorrect User name or password.
+        }`;
+        message.negative = true;
+        message.visible = true;
+        this.setState({ message });
+        this.resetMessageState();
+      } else {
+        history.push(`/users/${result.userId}`);
+      }
     });
+  }
+
+  resetMessageState() {
+    let message = {};
+    message.visible = false;
+    setTimeout(() => {
+      this.setState({ message });
+    }, 3000);
   }
 
   render() {
     const { handleSubmit, submitting, pristine } = this.props;
+    const { message } = this.state;
+
     return (
       <div>
         <Grid textAlign="center" verticalAlign="middle">
@@ -59,6 +85,13 @@ class LoginUser extends Component {
                 Login
               </Button>
             </Form>
+            <Message
+              header={message.header}
+              content={message.content}
+              visible={message.visible}
+              positive={message.positive}
+              negative={message.negative}
+            />
           </Grid.Column>
         </Grid>
       </div>
