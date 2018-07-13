@@ -50,9 +50,9 @@ app.use(
   cookieSession({
     name: 'tmdb',
     maxAge: 1 * 60 * 60 * 1000,
-    keys: [keys.cookieKey],
-    httpOnly: true,
-    secure: true
+    keys: [keys.cookieKey]
+    // httpOnly: true,
+    // secure: true
   })
 );
 app.use(passport.initialize());
