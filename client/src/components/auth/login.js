@@ -21,7 +21,7 @@ class LoginUser extends Component {
       let message = { ...this.state.message };
       if (result.status !== 200) {
         message.header = 'Ooops!';
-        message.content = `Something incorrect User name or password.`;
+        message.content = `Something went wrong. Incorrect User name or password.`;
         message.negative = true;
         message.visible = true;
         this.setState({ message });
