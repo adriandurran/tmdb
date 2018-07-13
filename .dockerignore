@@ -10,6 +10,7 @@ client/package-lock.json
 docker
 resources
 .gitignore
+server.env
 
 Dockerfile
 .dockerignore
