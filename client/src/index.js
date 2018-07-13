@@ -21,4 +21,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+// this will work
 registerServiceWorker();
