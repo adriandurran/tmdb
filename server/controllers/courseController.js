@@ -53,10 +53,12 @@ module.exports = {
 
   addCourses: async (req, res) => {
     const newCourse = req.body;
-    const newCourseCreated = await Course.create(newCourse).populate(
-      'notes.noteBy'
-    );
-    res.send(newCourseCreated);
+    try {
+      const newCourseCreated = await Course.create(newCourse);
+      res.send(newCourseCreated);
+    } catch (error) {
+      res.send(error);
+    }
   },
 
   getCourse: async (req, res) => {
