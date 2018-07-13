@@ -50,15 +50,15 @@ app.use(
   cookieSession({
     name: 'tmdb',
     maxAge: 1 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
-    // httpOnly: true,
-    // secure: true
+    keys: [keys.cookieKey],
+    httpOnly: true,
+    secure: true
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // routes
 app.use('/api/tmdb/auth', authRoutes);

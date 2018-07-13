@@ -8,7 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './components/App';
 import reducers from './reducers';
 
-// import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 
@@ -19,4 +19,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 // this will work
-// registerServiceWorker();
+registerServiceWorker();
