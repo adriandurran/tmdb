@@ -8,9 +8,12 @@ import { required } from '../../utils/validation';
 
 import AppFeedbackTypeList from './AppFeedbackTypeList';
 
+import { addFeedbackType } from '../../actions/extra';
+
 class AppFeedbackType extends Component {
   newFeedbackType(values) {
     // new feedback
+    this.props.addFeedbackType(values);
   }
 
   render() {
@@ -57,6 +60,15 @@ class AppFeedbackType extends Component {
     );
   }
 }
+
+const mapDispatchToProps = {
+  addFeedbackType
+};
+
+AppFeedbackType = connect(
+  null,
+  mapDispatchToProps
+)(AppFeedbackType);
 
 export default reduxForm({
   form: 'addFeedbackType'
