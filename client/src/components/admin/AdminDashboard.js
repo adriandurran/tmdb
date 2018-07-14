@@ -5,6 +5,7 @@ import AdminCourseTools from './courses/AdminCourseTools';
 import AdminCompTools from './competencies/AdminCompTools';
 import AdminRoleTools from './roles/AdminRoleTools';
 import AdminUserTools from './users/AdminUserTools';
+import AdminApplicationTools from './apptools/AdminApplicationTools';
 
 const AdminDashboard = props => {
   return (
@@ -43,6 +44,14 @@ const AdminDashboard = props => {
               User Tools
             </Header>
             <AdminUserTools />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
+              Application Tools
+            </Header>
+            <AdminApplicationTools />
           </Grid.Column>
         </Grid.Row>
       </Grid>
