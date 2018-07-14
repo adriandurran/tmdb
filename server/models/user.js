@@ -6,7 +6,7 @@ const Course = require('./course');
 const Role = require('./role');
 const Deptartment = require('./departments');
 
-const saltRounds = 10;
+const saltRounds = 16;
 
 const userSchema = new Schema({
   userId: {

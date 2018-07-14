@@ -16,7 +16,7 @@ module.exports = {
     isSuperAdmin: process.env.SEEDADMIN_ISSUPER,
     password: process.env.SEEDADMIN_PWD
   },
-  seedAdmin: {
+  seedAdminIT: {
     userId: process.env.SEEDADMIN_IT_ID,
     firstName: process.env.SEEDADMIN_IT_FN,
     lastName: process.env.SEEDADMIN_IT_LN,
