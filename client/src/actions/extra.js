@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
 
-import { FETCH_VERSION, FETCH_VERSIONS, FETCH_FEEDBACK_TYPES } from './types';
+import {
+  FETCH_VERSION,
+  FETCH_VERSIONS,
+  FETCH_FEEDBACK_TYPES,
+  FETCH_FEEDBACK
+} from './types';
 
 export const fetchLatestVersion = () => async dispatch => {
   const res = await axios.get('/api/tmdb/extra/version/latest');
@@ -52,4 +57,21 @@ export const deleteFeedbackType = id => async dispatch => {
 export const fetchFeedbackTypes = () => async dispatch => {
   const res = await axios.get('/api/tmdb/extra/feedbacktype');
   dispatch({ type: FETCH_FEEDBACK_TYPES, payload: res.data });
+};
+
+export const fetchFeedback = () => async dispatch => {
+  const res = await axios.get('/api/tmdb/extra/feedback');
+  dispatch({ type: FETCH_FEEDBACK, payload: res.data });
+};
+
+export const addFeedback = fb => async dispatch => {
+  try {
+    const res = await axios.post('/api/tmdb/extra/feedback', fb);
+    if (res.status === 200) {
+      dispatch(fetchFeedback());
+      dispatch(reset('newFeedback'));
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

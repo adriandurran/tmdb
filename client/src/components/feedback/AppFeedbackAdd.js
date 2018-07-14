@@ -16,11 +16,29 @@ import semanticFormTextArea from '../shared/semanticFormTextArea';
 import { required } from '../../utils/validation';
 
 import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
-import { selectLatestVersion } from '../../reducers/selectors/extraSelectors';
+import {
+  selectLatestVersion,
+  selectFeedbackTypesForDropDown
+} from '../../reducers/selectors/extraSelectors';
+
+import { fetchFeedbackTypes, addFeedback } from '../../actions/extra';
 
 class AppFeedbackAdd extends Component {
+  componentDidMount() {
+    this.props.fetchFeedbackTypes();
+  }
+
   submitAppFeedback(values) {
+    const { user, version, addFeedback } = this.props;
+    const { type } = this.state;
     // submit feedback
+    let newFB = {
+      feedbackUser: user._id,
+      feedbackDate: Date.now(),
+      feedbackType: type,
+      feedbackNotes: values.feedbackNotes
+    };
+    addFeedback(newFB);
   }
 
   handleTypeChange = (e, item) => {
@@ -30,7 +48,14 @@ class AppFeedbackAdd extends Component {
   };
 
   render() {
-    const { handleSubmit, submitting, pristine, version, user } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      pristine,
+      version,
+      user,
+      types
+    } = this.props;
 
     return (
       <div>
@@ -53,7 +78,7 @@ class AppFeedbackAdd extends Component {
               fluid
               inline
               name="type"
-              //   options={types}
+              options={types}
               placeholder="Select Feedback Type"
               onChange={this.handleTypeChange}
             />
@@ -83,11 +108,20 @@ class AppFeedbackAdd extends Component {
 const mapStateToProps = state => {
   return {
     user: selectCurrentUser(state),
-    version: selectLatestVersion(state)
+    version: selectLatestVersion(state),
+    types: selectFeedbackTypesForDropDown(state)
   };
 };
 
-AppFeedbackAdd = connect(mapStateToProps)(AppFeedbackAdd);
+const mapDispatchToProps = {
+  fetchFeedbackTypes,
+  addFeedback
+};
+
+AppFeedbackAdd = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppFeedbackAdd);
 
 export default reduxForm({
   form: 'newFeedback'

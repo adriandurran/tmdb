@@ -26,6 +26,7 @@ module.exports = {
   },
 
   addFeedBack: async (req, res) => {
+    console.log(req.body);
     const newFeedback = await FeedBack.create(req.body);
     res.send(newFeedback);
   },
