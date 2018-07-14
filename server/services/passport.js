@@ -5,7 +5,6 @@ const CustomStrategy = require('passport-custom');
 const User = require('../models/user');
 
 passport.serializeUser((user, done) => {
-  console.log('user', user);
   done(null, user.id);
 });
 

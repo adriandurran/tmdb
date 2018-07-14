@@ -49,7 +49,7 @@ app.use(bodyParser.json());
 app.use(
   cookieSession({
     name: 'tmdb',
-    maxAge: 1 * 60 * 60 * 1000,
+    maxAge: 8 * 60 * 60 * 1000, //temp while in dev
     keys: [keys.cookieKey]
     // httpOnly: true,
     // secure: true
