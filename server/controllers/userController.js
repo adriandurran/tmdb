@@ -428,7 +428,10 @@ module.exports = {
         firstName,
         lastName,
         username,
-        password
+        password,
+        verified,
+        isAdmin,
+        isSuperAdmin
       } = keys.seedAdmin;
 
       let seedyA = new User();
@@ -439,8 +442,47 @@ module.exports = {
         userId,
         firstName,
         lastName,
+        verified,
+        isAdmin,
+        isSuperAdmin,
         passwordHash,
+        joinDate: Date.now()
+      })
+        .then(user => res.status(200).send(user))
+        .catch(err => {
+          console.log(err);
+          return res.status(400).send(err);
+        });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+  seedSuperAdminIT: async (req, res) => {
+    try {
+      const {
+        userId,
+        firstName,
+        lastName,
+        username,
+        password,
+        verified,
+        isAdmin,
+        isSuperAdmin
+      } = keys.seedAdminIT;
 
+      let seedyA = new User();
+      let passwordHash = await seedyA.generateHash(password);
+
+      User.create({
+        username,
+        userId,
+        firstName,
+        lastName,
+        passwordHash,
+        verified,
+        isAdmin,
+        isSuperAdmin,
         joinDate: Date.now()
       })
         .then(user => res.status(200).send(user))

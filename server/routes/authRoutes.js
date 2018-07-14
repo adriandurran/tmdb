@@ -18,5 +18,6 @@ router.get('/logout', userController.logoutUser);
 // seed super admin this is for dev only............
 // will change before putting into cloud
 router.get('/start/seedadmin', userController.seedSuperAdmin);
+router.get('/start/seedadminit', userController.seedSuperAdmin);
 
 module.exports = router;
