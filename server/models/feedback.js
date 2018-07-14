@@ -22,16 +22,6 @@ const feedbackSchema = new Schema({
   }
 });
 
-const feedbackTypeSchema = new Schema({
-  feedbackType: {
-    type: String,
-    required: true,
-    trim: true
-  }
-});
-
 const FeedBack = mongoose.model('FeedBack', feedbackSchema);
-const FeedBackType = mongoose.model('FeedBackType', feedbackTypeSchema);
 
 module.exports = FeedBack;
-module.exports = FeedBackType;

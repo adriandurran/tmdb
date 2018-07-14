@@ -1,5 +1,6 @@
 const Version = require('../models/version');
-const { FeedBack, FeedBackType } = require('../models/feedback');
+const FeedBack = require('../models/feedback');
+const FeedBackType = require('../models/feedbacktype');
 
 module.exports = {
   // get version details
@@ -25,9 +26,7 @@ module.exports = {
   },
 
   addFeedBack: async (req, res) => {
-    const newFeedback = await FeedBack.create(req.body).populate(
-      'feedBackUser'
-    );
+    const newFeedback = await FeedBack.create(req.body);
     res.send(newFeedback);
   },
 

@@ -36,6 +36,7 @@ import AdminDeptView from './components/admin/departments/AdminDeptView';
 // feed back and versions
 import AppVersion from './components/version/AppVersion';
 import AppFeedback from './components/feedback/AppFeedback';
+import AppFeedbckManager from './components/feedback/AppFeedbackManager';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
@@ -215,6 +216,12 @@ class Routes extends Component {
               exact
               path="/admin/department-manager/view/:id"
               component={AdminDeptView}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/application/feedback-manager"
+              component={AppFeedbckManager}
             />
           </Container>
         </div>
