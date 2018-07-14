@@ -19,7 +19,7 @@ const userRoutes = require('./routes/userRoutes');
 const deptRoutes = require('./routes/deptRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 
-// conenct to mongo db
+// connect to mongo db
 mongoose
   .connect(
     keys.mongoURI,
@@ -69,10 +69,10 @@ app.use('/api/tmdb/user', userRoutes);
 app.use('/api/tmdb/dept', deptRoutes);
 app.use('/api/tmdb/extra', feedbackRoutes);
 
-app.use(express.static('client/build'));
+app.use(express.static('client'));
 const path = require('path');
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3050;

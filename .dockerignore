@@ -13,5 +13,6 @@ resources
 server.env
 
 Dockerfile
+Dockerfile.dev
 .dockerignore
 docker-compose.yml
