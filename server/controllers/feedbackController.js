@@ -36,6 +36,7 @@ module.exports = {
   },
 
   addFeedBackType: async (req, res) => {
+    console.log(req.body);
     const newFeedbackType = await FeedBackType.create(req.body);
     res.send(newFeedbackType);
   }

@@ -12,3 +12,7 @@ export const selectVersionsDateDesc = createSelector(
     return _.orderBy(versions, 'versionDate', 'desc');
   }
 );
+
+// feedbacktype
+
+export const selectFeedbackTypes = state => state.feedbackTypes;
