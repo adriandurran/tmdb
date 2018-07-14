@@ -7,7 +7,7 @@ const AdminApplicationTools = () => {
   return (
     <div>
       <Card.Group itemsPerRow={2}>
-        <Card raised as={Link} to="/application/feedback">
+        <Card raised as={Link} to="/application/feedback-manager">
           <Card.Content>
             <Header as="h5">Feedback Manager</Header>
           </Card.Content>
