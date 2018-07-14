@@ -21,7 +21,10 @@ module.exports = {
   },
 
   getFeedBack: async (req, res) => {
-    const dbFeedback = await FeedBack.find({}).populate('feedBackUser');
+    const dbFeedback = await FeedBack.find({})
+      .populate('feedbackUser')
+      .populate('feedbackType')
+      .populate('feedbackAppVersion');
     res.send(dbFeedback);
   },
 

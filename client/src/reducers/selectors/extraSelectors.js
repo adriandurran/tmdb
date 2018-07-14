@@ -28,3 +28,13 @@ export const selectFeedbackTypesForDropDown = createSelector(
     });
   }
 );
+
+// feedback
+
+export const selectFeedBack = state => state.feedback;
+export const selectFeedBackDateDesc = createSelector(
+  selectFeedBack,
+  feedback => {
+    return _.orderBy(feedback, 'feedbackDate', 'desc');
+  }
+);

@@ -17,8 +17,14 @@ const feedbackSchema = new Schema({
     ref: 'FeedBackType'
   },
   feedbackNotes: {
+    required: true,
     type: String,
     required: true
+  },
+  feedbackAppVersion: {
+    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'AppVersion'
   }
 });
 

@@ -36,6 +36,7 @@ class AppFeedbackAdd extends Component {
       feedbackUser: user._id,
       feedbackDate: Date.now(),
       feedbackType: type,
+      feedbackAppVersion: version._id,
       feedbackNotes: values.feedbackNotes
     };
     addFeedback(newFB);
