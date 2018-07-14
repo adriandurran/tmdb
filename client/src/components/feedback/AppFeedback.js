@@ -1,4 +1,6 @@
 import React from 'react';
+import AppFeedbackAdd from './AppFeedbackAdd';
+import AppFeedbackList from './AppFeedbackList';
 
 import { Header, Grid } from 'semantic-ui-react';
 
@@ -10,10 +12,14 @@ const AppFeedback = () => {
       </Header>
       <Grid>
         <Grid.Row>
-          <Grid.Column>Add feedback</Grid.Column>
+          <Grid.Column>
+            <AppFeedbackAdd />
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column>list feedback</Grid.Column>
+          <Grid.Column>
+            <AppFeedbackList />
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </div>
