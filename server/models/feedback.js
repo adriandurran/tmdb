@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const feedbackSchema = new Schema({
-  feedBackUser: {
+  feedbackUser: {
     required: true,
     type: Schema.Types.ObjectId,
     ref: 'User'
