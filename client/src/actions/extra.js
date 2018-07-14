@@ -38,6 +38,17 @@ export const addFeedbackType = type => async dispatch => {
   }
 };
 
+export const deleteFeedbackType = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/tmdb/extra/feedbacktype/${id}`);
+    if (res.status === 200) {
+      dispatch(fetchFeedbackTypes());
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchFeedbackTypes = () => async dispatch => {
   const res = await axios.get('/api/tmdb/extra/feedbacktype');
   dispatch({ type: FETCH_FEEDBACK_TYPES, payload: res.data });

@@ -3,8 +3,17 @@ import { connect } from 'react-redux';
 import { Button, List, Icon } from 'semantic-ui-react';
 
 import { selectFeedbackTypes } from '../../reducers/selectors/extraSelectors';
+import { deleteFeedbackType, fetchFeedbackTypes } from '../../actions/extra';
 
 class AppFeedbackTypeList extends Component {
+  componentDidMount() {
+    this.props.fetchFeedbackTypes();
+  }
+
+  handleClick = (e, { value }) => {
+    this.props.deleteFeedbackType(value);
+  };
+
   renderFeedbackTypes() {
     const { types } = this.props;
     return types.map(type => {
@@ -38,6 +47,14 @@ const mapStateToProps = state => {
   };
 };
 
-AppFeedbackTypeList = connect(mapStateToProps)(AppFeedbackTypeList);
+const mapDispatchToProps = {
+  deleteFeedbackType,
+  fetchFeedbackTypes
+};
+
+AppFeedbackTypeList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppFeedbackTypeList);
 
 export default AppFeedbackTypeList;

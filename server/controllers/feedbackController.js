@@ -36,8 +36,20 @@ module.exports = {
   },
 
   addFeedBackType: async (req, res) => {
-    console.log(req.body);
     const newFeedbackType = await FeedBackType.create(req.body);
     res.send(newFeedbackType);
+  },
+
+  deleteFeedBackType: async (req, res) => {
+    try {
+      const delFeedbackType = await FeedBackType.remove({ _id: req.params.id });
+      if (delFeedbackType.ok > 0) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(418);
+      }
+    } catch (error) {
+      res.send(error);
+    }
   }
 };
