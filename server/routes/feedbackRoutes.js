@@ -11,6 +11,11 @@ router.post('/feedback', requireLogin, feedbackController.addFeedBack);
 
 router.get('/feedbacktype', requireLogin, feedbackController.getFeedBackType);
 router.post('/feedbacktype', requireAdmin, feedbackController.addFeedBackType);
+router.delete(
+  '/feedbacktype/:id',
+  requireAdmin,
+  feedbackController.deleteFeedBackType
+);
 
 router.get('/version', requireLogin, feedbackController.getVersionDetails);
 router.get('/version/latest', feedbackController.getVersionLatest);

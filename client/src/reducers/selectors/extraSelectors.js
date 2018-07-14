@@ -16,3 +16,15 @@ export const selectVersionsDateDesc = createSelector(
 // feedbacktype
 
 export const selectFeedbackTypes = state => state.feedbackTypes;
+export const selectFeedbackTypesForDropDown = createSelector(
+  selectFeedbackTypes,
+  types => {
+    return types.map(type => {
+      return {
+        key: type._id,
+        value: type._id,
+        text: type.feedbackType
+      };
+    });
+  }
+);
