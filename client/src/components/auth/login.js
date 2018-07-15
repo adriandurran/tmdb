@@ -109,7 +109,7 @@ class LoginUser extends Component {
               </Form>
               <Dimmer inverted active={loader.active}>
                 <Loader indeterminate size="big">
-                  Checking your login credentials
+                  Checking your login credentials.....
                 </Loader>
               </Dimmer>
             </Segment>
