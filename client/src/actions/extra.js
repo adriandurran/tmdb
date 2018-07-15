@@ -5,8 +5,7 @@ import {
   FETCH_VERSION,
   FETCH_VERSIONS,
   FETCH_FEEDBACK_TYPES,
-  FETCH_FEEDBACK,
-  FETCH_FEEDBACK_FILTER
+  FETCH_FEEDBACK
 } from './types';
 
 export const fetchLatestVersion = () => async dispatch => {

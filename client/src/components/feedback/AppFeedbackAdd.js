@@ -8,7 +8,6 @@ import {
   Button,
   Form,
   Dropdown,
-  Message,
   Label
 } from 'semantic-ui-react';
 
