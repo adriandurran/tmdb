@@ -113,7 +113,15 @@ class RegisterUser extends Component {
         this.setState({ message });
         this.resetMessageState();
       } else {
-        history.push(`/api/tmdb/auth/logout`);
+        message.header = 'Registration Successful';
+        message.content = `Thank you for registering as soon as you account is verified you will be able to use the system.`;
+        message.positive = true;
+        message.visible = true;
+        this.setState({ message });
+        this.resetMessageState();
+        setTimeout(() => {
+          history.push(`/`);
+        }, 3000);
       }
     });
   }
