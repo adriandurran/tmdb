@@ -5,7 +5,8 @@ import {
   FETCH_VERSION,
   FETCH_VERSIONS,
   FETCH_FEEDBACK_TYPES,
-  FETCH_FEEDBACK
+  FETCH_FEEDBACK,
+  FETCH_FEEDBACK_FILTER
 } from './types';
 
 export const fetchLatestVersion = () => async dispatch => {
@@ -74,4 +75,9 @@ export const addFeedback = fb => async dispatch => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const filterFeedback = id => async dispatch => {
+  const res = await axios.get(`/api/tmdb/extra/feedback/type/${id}`);
+  dispatch({ type: FETCH_FEEDBACK, payload: res.data });
 };

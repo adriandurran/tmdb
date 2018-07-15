@@ -2,22 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 
-import { Item, Header } from 'semantic-ui-react';
+import { Item, Header, Segment, Dropdown } from 'semantic-ui-react';
 
-import { selectFeedBackDateDesc } from '../../reducers/selectors/extraSelectors';
-import { fetchFeedback } from '../../actions/extra';
+import {
+  selectFeedBackDateDesc,
+  selectFeedbackTypesForDropDown
+} from '../../reducers/selectors/extraSelectors';
+import {
+  fetchFeedback,
+  fetchFeedbackTypes,
+  filterFeedback
+} from '../../actions/extra';
 
 class AppFeedbackList extends Component {
   componentDidMount() {
-    this.props.fetchFeedback();
+    const { fetchFeedback, fetchFeedbackTypes } = this.props;
+    fetchFeedback();
+    fetchFeedbackTypes();
   }
+
+  handleTypeChange = (e, item) => {
+    this.props.filterFeedback(item.value);
+  };
 
   renderFeedbackItems() {
     const { feedback } = this.props;
     return feedback.map(fb => {
       return (
         <Item key={fb._id}>
-          <Item.Image size="small" src={fb.feedbackUser.imageUrl} />
+          <Item.Image size="tiny" src={fb.feedbackUser.imageUrl} />
           <Item.Content>
             <Item.Header>{fb.feedbackType.feedbackType}</Item.Header>
             {fb.feedbackAppVersion && (
@@ -38,11 +51,24 @@ class AppFeedbackList extends Component {
   }
 
   render() {
+    const { types } = this.props;
     return (
       <div>
         <Header as="h3" textAlign="center">
           Feedback
         </Header>
+        <Segment style={{ marginBottom: '1em' }}>
+          <Dropdown
+            button
+            className="icon"
+            icon="search"
+            floating
+            labeled
+            options={types}
+            text="Select feedback type"
+            onChange={this.handleTypeChange}
+          />
+        </Segment>
         <Item.Group>{this.renderFeedbackItems()}</Item.Group>
       </div>
     );
@@ -51,12 +77,15 @@ class AppFeedbackList extends Component {
 
 const mapStateToProps = state => {
   return {
-    feedback: selectFeedBackDateDesc(state)
+    feedback: selectFeedBackDateDesc(state),
+    types: selectFeedbackTypesForDropDown(state)
   };
 };
 
 const mapDispatchToProps = {
-  fetchFeedback
+  fetchFeedback,
+  fetchFeedbackTypes,
+  filterFeedback
 };
 
 AppFeedbackList = connect(
