@@ -21,7 +21,7 @@ export const submitNewUser = values => async dispatch => {
   const res = await axios.post(`/api/tmdb/auth/register`, {
     data: { newUser }
   });
-  return res.data;
+  return res;
 };
 
 export const loginUser = values => async dispatch => {
