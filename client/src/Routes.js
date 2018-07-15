@@ -109,12 +109,7 @@ class Routes extends Component {
               path="/application/feedback"
               component={AppFeedback}
             />
-            <PrivateRoute
-              user={user}
-              exact
-              path="/users/:id"
-              component={UserLanding}
-            />
+            <Route exact path="/users/:id" component={UserLanding} />
             <PrivateRoute
               user={user}
               exact
