@@ -6,6 +6,7 @@ import { Card, Dropdown, Button } from 'semantic-ui-react';
 
 import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
 import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelectors';
+import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
 import { adminAssignDept } from '../../../../actions/user';
 
 class AdminUserAddDept extends Component {
@@ -18,8 +19,8 @@ class AdminUserAddDept extends Component {
   };
 
   assignDept = () => {
-    const { user, adminAssignDept } = this.props;
-    adminAssignDept(user._id, this.state.department);
+    const { curr, user, adminAssignDept } = this.props;
+    adminAssignDept(curr._id, user._id, this.state.department);
   };
 
   render() {
@@ -74,7 +75,8 @@ const mapDispatchToProps = { adminAssignDept };
 const mapStateToProps = state => {
   return {
     user: selectUserManage(state),
-    depts: selectDeptsForDropDown(state)
+    depts: selectDeptsForDropDown(state),
+    curr: selectCurrentUser(state)
   };
 };
 

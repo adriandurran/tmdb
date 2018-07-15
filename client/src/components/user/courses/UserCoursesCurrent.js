@@ -72,7 +72,9 @@ class UserCoursesCurrent extends Component {
             <Moment fromNow>{passDate}</Moment>
           </Table.Cell>
           <Table.Cell>
-            <Moment fromNow>{expireDate(passDate, _course.validity)}</Moment>
+            {_course.validity && (
+              <Moment fromNow>{expireDate(passDate, _course.validity)}</Moment>
+            )}
           </Table.Cell>
         </Table.Row>
       );

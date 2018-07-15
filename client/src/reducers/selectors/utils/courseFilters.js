@@ -27,11 +27,14 @@ export const coursesExpired = courses => {
   if (courses === undefined) {
     return null;
   }
-  return courses.filter(course =>
-    moment(course.passDate, 'YYYY-MM-DD')
-      .add(course._course.validity, 'months')
-      .isBefore(Date.now())
-  );
+  return courses.filter(course => {
+    return (
+      course.validity &&
+      moment(course.passDate, 'YYYY-MM-DD')
+        .add(course._course.validity, 'months')
+        .isBefore(Date.now())
+    );
+  });
 };
 
 export const coursesVerify = courses => {
