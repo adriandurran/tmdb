@@ -28,8 +28,16 @@ module.exports = {
     res.send(dbFeedback);
   },
 
+  filterFeedBack: async (req, res) => {
+    const filterFB = await FeedBack.find({ feedbackType: req.params.id })
+      .populate('feedbackUser')
+      .populate('feedbackType')
+      .populate('feedbackAppVersion');
+
+    res.send(filterFB);
+  },
+
   addFeedBack: async (req, res) => {
-    console.log(req.body);
     const newFeedback = await FeedBack.create(req.body);
     res.send(newFeedback);
   },

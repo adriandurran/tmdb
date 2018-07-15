@@ -54,3 +54,4 @@ export const FETCH_VERSIONS = 'fetch_versions';
 // feedback
 export const FETCH_FEEDBACK_TYPES = 'fetch_feedback_types';
 export const FETCH_FEEDBACK = 'fetch_feedback';
+export const FETCH_FEEDBACK_FILTER = 'fetch_feedback_filter';
