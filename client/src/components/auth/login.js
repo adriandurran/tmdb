@@ -8,7 +8,9 @@ import {
   Header,
   Grid,
   Message,
-  Segment
+  Segment,
+  Dimmer,
+  Loader
 } from 'semantic-ui-react';
 
 import semanticFormField from '../shared/semanticFormField';
@@ -20,12 +22,24 @@ class LoginUser extends Component {
   state = {
     message: {
       visible: false
+    },
+    loader: {
+      active: false
     }
   };
   userLogin(values) {
     const { history, loginUser } = this.props;
+    // loader
+    let loader = { ...this.state.loader };
+    loader.active = true;
+    this.setState({ loader });
+
     loginUser(values).then(result => {
       let message = { ...this.state.message };
+      // loader
+      loader.active = false;
+      this.setState({ loader });
+      // message
       if (result.status !== 200) {
         message.header = 'Ooops!';
         message.content = `Something went wrong. Incorrect User name or password.`;
@@ -49,7 +63,7 @@ class LoginUser extends Component {
 
   render() {
     const { handleSubmit, submitting, pristine } = this.props;
-    const { message } = this.state;
+    const { message, loader } = this.state;
 
     return (
       <div>
@@ -58,6 +72,7 @@ class LoginUser extends Component {
             <Header as="h3" textAlign="center">
               Login to Training Manager
             </Header>
+
             <Segment attached>
               <Form onSubmit={handleSubmit(values => this.userLogin(values))}>
                 <Field
@@ -92,7 +107,13 @@ class LoginUser extends Component {
                   Login
                 </Button>
               </Form>
+              <Dimmer inverted active={loader.active}>
+                <Loader indeterminate size="big">
+                  Checking your login credentials
+                </Loader>
+              </Dimmer>
             </Segment>
+
             <Message
               attached="bottom"
               header={message.header}
