@@ -14,6 +14,7 @@ import {
 import { getUserCoursesForComp } from '../../../utils/arrayhelpers';
 import {
   checkCompExpireDate,
+  checkCourseHasExpireDate,
   expireDate,
   expireMonths
 } from '../../../utils/datehelpers';
@@ -35,10 +36,16 @@ class UserComps extends Component {
               : { color: 'black' }
           }
         >
-          {uc._course.courseName} &nbsp; expires &nbsp;
-          <Moment fromNow>
-            {expireDate(uc.passDate, uc._course.validity)}
-          </Moment>
+          {checkCourseHasExpireDate(uc._course) ? (
+            <span>
+              {uc._course.courseName} &nbsp; expires &nbsp;
+              <Moment fromNow>
+                {expireDate(uc.passDate, uc._course.validity)}
+              </Moment>)
+            </span>
+          ) : (
+            <span>{uc._course.courseName} &nbsp; does not expire </span>
+          )}
         </Card.Content>
       );
     });

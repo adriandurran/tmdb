@@ -1,6 +1,18 @@
 import moment from 'moment';
 import _ from 'lodash';
 
+export const checkCourseHasExpireDate = course => {
+  if (
+    course.validity === undefined ||
+    course.validity === '' ||
+    course.validity === null
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 export const checkCompExpireDate = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map(course => course._id);
   let arrUCourse = [];
@@ -16,6 +28,10 @@ export const checkCompExpireDate = (comp, usercourses) => {
   arrUCourse = _.flatten(arrUCourse);
 
   for (let x in arrUCourse) {
+    if (!checkCourseHasExpireDate(arrUCourse[x]._course)) {
+      return false;
+    }
+
     let dateCheck = moment(arrUCourse[x].passDate).add(
       arrUCourse[x]._course.validity,
       'months'
@@ -35,6 +51,9 @@ export const expireDate = (date1, valid) => {
 };
 
 export const expireMonths = (date1, valid) => {
+  if (valid === undefined || valid === '' || valid === null) {
+    return 99;
+  }
   let expDate = moment(date1).add(valid, 'months');
   return expDate.diff(moment(Date.now()), 'months');
 };
