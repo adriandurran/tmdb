@@ -28,6 +28,11 @@ export const adminVerifyUserCourse = (user, course) => async dispatch => {
   if (res.status === 200) {
     // update redux
     dispatch({ type: ADMIN_USER_META, payload: res.data });
+    if (user === res.data._id) {
+      // console.log('user', curr);
+      // console.log('data', res.data);
+      dispatch({ type: FETCH_USER, payload: res.data });
+    }
   } else {
     // do nothing but need to communicate this soon
     console.log(res.data);
@@ -102,8 +107,8 @@ export const adminAssignDept = (curr, user, department) => async dispatch => {
     dispatch(fetchAllUsers());
     // hate this is so confusing
     if (curr === res.data._id) {
-      console.log('user', curr);
-      console.log('data', res.data);
+      // console.log('user', curr);
+      // console.log('data', res.data);
       dispatch({ type: FETCH_USER, payload: res.data });
     }
   } catch (error) {
