@@ -17,7 +17,6 @@ class AdminUserCoursesManager extends Component {
     return users.map((user, index) => {
       return (
         <List.Item key={index}>
-          <Image avatar src={user.imageUrl} />
           <List.Content floated="right">
             <Button
               onClick={this.verifyCourse}
@@ -26,6 +25,7 @@ class AdminUserCoursesManager extends Component {
               Verify
             </Button>
           </List.Content>
+          <Image avatar src={user.imageUrl} />
           <List.Content>
             <List.Header>
               {user.firstName} {user.lastName}
