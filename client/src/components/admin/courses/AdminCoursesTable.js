@@ -63,7 +63,7 @@ class CoursesTable extends Component {
     const { data } = this.state;
     return data.map(({ _id, courseName, validity, type, level }) => {
       let validText = '';
-      if (validity === undefined) {
+      if (validity === undefined || validity === '' || validity === null) {
         validText = 'No expiry date';
       }
       if (validity === 0) {
