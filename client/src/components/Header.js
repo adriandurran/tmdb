@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 
-import { Button, Menu, Icon } from 'semantic-ui-react';
+import { Button, Menu, Icon, Image } from 'semantic-ui-react';
 
 import { selectCurrentUser } from '../reducers/selectors/userSelectors';
 import { selectLatestVersion } from '../reducers/selectors/extraSelectors';
@@ -17,12 +17,16 @@ class Header extends Component {
   renderMenus() {
     const { authUser } = this.props;
     if (authUser) {
-      const { firstName, lastName, verified, userId } = authUser;
+      const { firstName, lastName, verified, userId, imageUrl } = authUser;
       return (
         <Menu.Menu position="right">
           {verified ? (
             <Menu.Item header as={Link} to={`/users/${userId}/profile`}>
-              <Icon name="user circle" />
+              {imageUrl ? (
+                <Image avatar src={imageUrl} style={{ marginRight: '10px' }} />
+              ) : (
+                <Icon name="user circle" style={{ marginRight: '10px' }} />
+              )}
               {firstName} {lastName}
             </Menu.Item>
           ) : (
