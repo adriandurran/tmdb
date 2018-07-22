@@ -13,9 +13,10 @@ export const coursesCurrentVerified = courses => {
           .add(course._course.validity, 'months')
           .isAfter(today) &&
           course.verified) ||
-        (course._course.validity === undefined ||
+        ((course._course.validity === undefined ||
           course._course.validity === null ||
-          (course._course.validity === '' && course.verified))
+          course._course.validity === '') &&
+          course.verified)
       ) {
         return true;
       }
