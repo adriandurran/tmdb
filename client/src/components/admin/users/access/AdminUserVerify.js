@@ -29,14 +29,11 @@ class AdminUserVerify extends Component {
             <Item.Extra>
               <Button
                 floated="right"
-                animated="vertical"
                 onClick={this.verifiyUser}
                 value={user._id}
               >
-                <Button.Content hidden>Verify</Button.Content>
-                <Button.Content visible>
-                  <Icon name="checkmark" color="green" />
-                </Button.Content>
+                <Icon name="checkmark" color="green" />
+                Verify
               </Button>
             </Item.Extra>
           </Item.Content>

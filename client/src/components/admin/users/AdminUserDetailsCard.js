@@ -42,38 +42,27 @@ class AdminUserDetailsCard extends Component {
               <Card.Meta>{user.username}</Card.Meta>
               <Card.Description>
                 <span style={{ marginTop: '0.25em' }}>
-                  <Button
-                    animated="vertical"
-                    onClick={this.adminiUser}
-                    value={user._id}
-                  >
+                  <Button onClick={this.adminiUser} value={user._id}>
                     {!user.isAdmin ? (
-                      <div>
-                        <Button.Content hidden>Promote</Button.Content>
-                        <Button.Content visible>
-                          <Icon name="spy" color="green" />
-                        </Button.Content>
-                      </div>
+                      <span>
+                        <Icon name="spy" color="green" />
+                        Promote
+                      </span>
                     ) : (
-                      <div>
-                        <Button.Content hidden>Demote</Button.Content>
-                        <Button.Content visible>
-                          <Icon name="ban" color="red" />
-                        </Button.Content>
-                      </div>
+                      <span>
+                        <Icon name="ban" color="red" />
+                        Demote
+                      </span>
                     )}
                   </Button>
 
                   <Button
                     floated="right"
-                    animated="vertical"
                     onClick={this.suspendUser}
                     value={user._id}
                   >
-                    <Button.Content hidden>Suspend</Button.Content>
-                    <Button.Content visible>
-                      <Icon name="ban" color="red" />
-                    </Button.Content>
+                    <Icon name="ban" color="red" />
+                    Suspend
                   </Button>
                 </span>
               </Card.Description>
