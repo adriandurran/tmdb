@@ -8,16 +8,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './components/App';
 import reducers from './reducers';
 
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 // dev only
-// const store = createStore(
-//   reducers,
-//   composeWithDevTools(applyMiddleware(reduxThunk))
-// );
+const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(reduxThunk))
+);
 
 // prod only
-const store = createStore(reducers, applyMiddleware(reduxThunk));
+// const store = createStore(reducers, applyMiddleware(reduxThunk));
 
 ReactDOM.render(
   <Provider store={store}>
