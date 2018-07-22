@@ -29,16 +29,16 @@ class AdminUserAccess extends Component {
               <AdminUserVerify />
             </Grid.Column>
           </Grid.Row>
-          {user.isSuperAdmin && (
-            <Grid.Row columns={2}>
-              <Grid.Column>
-                <AdminUserAccessManage />
-              </Grid.Column>
-              <Grid.Column>
-                <AdminUsersAdmini />
-              </Grid.Column>
-            </Grid.Row>
-          )}
+          {/* {user.isSuperAdmin && ( */}
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <AdminUserAccessManage />
+            </Grid.Column>
+            <Grid.Column>
+              <AdminUsersAdmini />
+            </Grid.Column>
+          </Grid.Row>
+          {/* )} */}
         </Grid>
       </div>
     );

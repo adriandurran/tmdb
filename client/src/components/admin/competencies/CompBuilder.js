@@ -88,17 +88,17 @@ class CompBuilder extends Component {
                     onChange={this.handleSelectCompChange}
                   />
                 </Form.Group>
-                {/* <Form.Group inline> */}
-                <Dropdown
-                  fluid
-                  selection
-                  multiple
-                  name="compCourses"
-                  options={courses}
-                  placeholder="Select a Course"
-                  onChange={this.handleSelectChange}
-                />
-                {/* </Form.Group> */}
+                <Form.Group>
+                  <Dropdown
+                    fluid
+                    selection
+                    multiple
+                    name="compCourses"
+                    options={courses}
+                    placeholder="Select a Course"
+                    onChange={this.handleSelectChange}
+                  />
+                </Form.Group>
 
                 <Form.Group>
                   <Button
