@@ -82,6 +82,7 @@ export const selectAllUsersCoursesVerify = createSelector(
             _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
+            imageUrl: user.imageUrl,
             course: user.courses[x]
           };
 

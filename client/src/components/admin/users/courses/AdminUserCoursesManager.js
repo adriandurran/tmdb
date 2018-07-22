@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Header, List, Button } from 'semantic-ui-react';
+import { Header, List, Button, Image } from 'semantic-ui-react';
 import Moment from 'react-moment';
 
 import { adminVerifyUserCourse } from '../../../../actions/user';
@@ -17,6 +17,7 @@ class AdminUserCoursesManager extends Component {
     return users.map((user, index) => {
       return (
         <List.Item key={index}>
+          <Image avatar src={user.imageUrl} />
           <List.Content floated="right">
             <Button
               onClick={this.verifyCourse}
