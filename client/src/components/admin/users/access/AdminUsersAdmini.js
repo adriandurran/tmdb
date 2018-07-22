@@ -37,26 +37,17 @@ class AdminUsersAdmini extends Component {
               Joined <Moment fromNow>{user.joinDate}</Moment>
             </Item.Meta>
             <Item.Extra>
-              <Button
-                animated="vertical"
-                onClick={this.adminiUser}
-                value={user._id}
-              >
-                <Button.Content hidden>Demote</Button.Content>
-                <Button.Content visible>
-                  <Icon name="ban" color="red" />
-                </Button.Content>
+              <Button onClick={this.adminiUser} value={user._id}>
+                <Icon name="ban" color="red" />
+                Demote
               </Button>
               <Button
                 floated="right"
-                animated="vertical"
                 onClick={this.suspendUser}
                 value={user._id}
               >
-                <Button.Content hidden>Suspend</Button.Content>
-                <Button.Content visible>
-                  <Icon name="ban" color="red" />
-                </Button.Content>
+                <Icon name="ban" color="red" />
+                Suspend
               </Button>
             </Item.Extra>
           </Item.Content>
