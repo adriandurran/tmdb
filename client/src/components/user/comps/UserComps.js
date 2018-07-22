@@ -41,7 +41,7 @@ class UserComps extends Component {
               {uc._course.courseName} &nbsp; expires &nbsp;
               <Moment fromNow>
                 {expireDate(uc.passDate, uc._course.validity)}
-              </Moment>)
+              </Moment>
             </span>
           ) : (
             <span>{uc._course.courseName} &nbsp; does not expire </span>

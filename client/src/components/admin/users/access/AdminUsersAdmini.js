@@ -5,6 +5,8 @@ import Moment from 'react-moment';
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersAdmins } from '../../../../reducers/selectors/adminSelectors';
+import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
+
 import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
 
 class AdminUsersAdmini extends Component {
@@ -17,7 +19,7 @@ class AdminUsersAdmini extends Component {
   };
 
   renderUserAdmins() {
-    const { admins } = this.props;
+    const { admins, currentUser } = this.props;
     return admins.map(user => {
       return (
         <Item key={user._id}>
@@ -37,7 +39,11 @@ class AdminUsersAdmini extends Component {
               Joined <Moment fromNow>{user.joinDate}</Moment>
             </Item.Meta>
             <Item.Extra>
-              <Button onClick={this.adminiUser} value={user._id}>
+              <Button
+                onClick={this.adminiUser}
+                value={user._id}
+                disabled={!currentUser.isSuperAdmin}
+              >
                 <Icon name="ban" color="red" />
                 Demote
               </Button>
@@ -45,6 +51,7 @@ class AdminUsersAdmini extends Component {
                 floated="right"
                 onClick={this.suspendUser}
                 value={user._id}
+                disabled={!currentUser.isSuperAdmin}
               >
                 <Icon name="ban" color="red" />
                 Suspend
@@ -70,7 +77,8 @@ class AdminUsersAdmini extends Component {
 
 const mapStateToProps = state => {
   return {
-    admins: selectAllUsersAdmins(state)
+    admins: selectAllUsersAdmins(state),
+    currentUser: selectCurrentUser(state)
   };
 };
 
