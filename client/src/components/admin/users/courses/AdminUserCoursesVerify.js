@@ -53,7 +53,11 @@ class AdminUserCoursesVerify extends Component {
     const { data } = this.state;
     return data.map(({ _id, _course, passDate }) => {
       let validText = '';
-      if (_course.validity === undefined) {
+      if (
+        _course.validity === undefined ||
+        _course.validity === '' ||
+        _course.validity === null
+      ) {
         validText = 'No expiry date';
       }
       if (_course.validity > 0) {
