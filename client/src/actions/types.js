@@ -10,6 +10,8 @@ export const SAVE_USER = 'save_user';
 export const ADMIN_USER_META = 'admin_user_meta';
 export const ADMIN_SEARCH_RESULT = 'admin_search_result';
 export const ADMIN_CLEAR_SEARCH = 'admin_clear_search';
+export const ADMIN_REMOVE_REGISTRATION = 'admin_remove_registration';
+
 // roles
 export const FETCH_ROLE = 'fetch_role';
 export const CLEAR_ROLE = 'clear_role';

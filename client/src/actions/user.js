@@ -10,10 +10,11 @@ import {
   ADMIN_EDIT_USER_ROLE,
   CLEAR_COURSE,
   UPDATE_PROGRESS,
-  CLEAR_PROGRESS
+  CLEAR_PROGRESS,
+  ADMIN_REMOVE_REGISTRATION
 } from './types';
 
-export const addUserCourse = (user, course) => async dispatch => {
+export const addUserCourse = (user, course) => async (dispatch) => {
   const res = await axios.patch(`/api/tmdb/user/${user}/course`, { course });
   dispatch({ type: FETCH_USER, payload: res.data });
   dispatch({ type: CLEAR_COURSE });
@@ -21,7 +22,7 @@ export const addUserCourse = (user, course) => async dispatch => {
   // return res.data;
 };
 
-export const adminVerifyUserCourse = (user, course) => async dispatch => {
+export const adminVerifyUserCourse = (user, course) => async (dispatch) => {
   const res = await axios.patch(`/api/tmdb/user/${user}/verify-course`, {
     course
   });
@@ -39,11 +40,11 @@ export const adminVerifyUserCourse = (user, course) => async dispatch => {
   }
 };
 
-export const fetchUserRoles = roles => async dispatch => {
+export const fetchUserRoles = (roles) => async (dispatch) => {
   dispatch({ type: FETCH_USER_ROLES, payload: roles });
 };
 
-export const editUserRole = (role, user, action) => async dispatch => {
+export const editUserRole = (role, user, action) => async (dispatch) => {
   const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/roles`, {
     role,
     action
@@ -56,21 +57,21 @@ export const editUserRole = (role, user, action) => async dispatch => {
   }
 };
 
-export const fetchAllUsers = () => async dispatch => {
+export const fetchAllUsers = () => async (dispatch) => {
   const res = await axios.get('/api/tmdb/user/admin/allusers');
   dispatch({ type: FETCH_ALL_USERS, payload: res.data });
 };
 
-export const fetchUser = id => async dispatch => {
+export const fetchUser = (id) => async (dispatch) => {
   const res = await axios.get(`/api/tmdb/user/admin/users/${id}`);
   dispatch({ type: ADMIN_SEARCH_RESULT, payload: res.data });
 };
 
-export const clearSearchResult = () => async dispatch => {
+export const clearSearchResult = () => async (dispatch) => {
   dispatch({ type: ADMIN_CLEAR_SEARCH });
 };
 
-export const adminVerifyUser = (user, verify) => async dispatch => {
+export const adminVerifyUser = (user, verify) => async (dispatch) => {
   const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/verify`, {
     verify
   });
@@ -83,7 +84,18 @@ export const adminVerifyUser = (user, verify) => async dispatch => {
   }
 };
 
-export const adminAdminiUser = (user, admin) => async dispatch => {
+export const adminRemoveRegistration = (user) => async (dispatch) => {
+  const res = await axios.delete(`/api/tmdb/user/admin/users/${user}`);
+  if (res.status === 200) {
+    // update redux
+    dispatch({ type: ADMIN_REMOVE_REGISTRATION, payload: user });
+  } else {
+    // do nothing but need to communicate this soon
+    console.log(res.data);
+  }
+};
+
+export const adminAdminiUser = (user, admin) => async (dispatch) => {
   const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/admin`, {
     admin
   });
@@ -95,7 +107,7 @@ export const adminAdminiUser = (user, admin) => async dispatch => {
   }
 };
 
-export const adminAssignDept = (curr, user, department) => async dispatch => {
+export const adminAssignDept = (curr, user, department) => async (dispatch) => {
   try {
     const res = await axios.patch(
       `/api/tmdb/user/admin/users/${user}/department`,
@@ -116,7 +128,7 @@ export const adminAssignDept = (curr, user, department) => async dispatch => {
   }
 };
 
-export const updateUserProfile = (id, profile) => async dispatch => {
+export const updateUserProfile = (id, profile) => async (dispatch) => {
   try {
     const res = await axios.patch(`/api/tmdb/user/${id}`, { profile });
     if (res.status === 200) {
@@ -132,14 +144,14 @@ export const updateUserProfile = (id, profile) => async dispatch => {
 // temp I am using cloudinary whilst in dev mode.....if moved to
 // production this will need an seperate file store
 // but this would depend on the eventual location of the app
-export const addUserProfileImage = (id, image) => async dispatch => {
+export const addUserProfileImage = (id, image) => async (dispatch) => {
   dispatch({ type: CLEAR_PROGRESS });
   const formData = new FormData();
   formData.append('id', id);
   formData.append('userImage', image);
   try {
     const res = await axios.post(`/api/tmdb/user/${id}/image`, formData, {
-      onUploadProgress: progressEvent => {
+      onUploadProgress: (progressEvent) => {
         let prog = Math.round(
           (progressEvent.loaded / progressEvent.total) * 100
         );

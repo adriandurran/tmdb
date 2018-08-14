@@ -5,15 +5,18 @@ import Moment from 'react-moment';
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersVerify } from '../../../../reducers/selectors/adminSelectors';
-import { adminVerifyUser } from '../../../../actions/user';
+import {
+  adminVerifyUser,
+  adminRemoveRegistration
+} from '../../../../actions/user';
 
 class AdminUserVerify extends Component {
   verifiyUser = (e, { value }) => {
     this.props.adminVerifyUser(value, true);
   };
 
-  removerRegistration = (e, { value }) => {
-    console.log(value);
+  removeRegistration = (e, { value }) => {
+    this.props.adminRemoveRegistration(value);
   };
 
   renderUserVerify() {
@@ -33,14 +36,13 @@ class AdminUserVerify extends Component {
             <Item.Extra>
               <Button
                 floated="right"
-                onClick={this.removerRegistration}
+                onClick={this.removeRegistration}
                 value={user._id}
               >
                 <Icon name="user delete" color="red" />
                 Remove Registration
               </Button>
               <Button
-                active
                 floated="right"
                 onClick={this.verifiyUser}
                 value={user._id}
@@ -73,7 +75,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  adminVerifyUser
+  adminVerifyUser,
+  adminRemoveRegistration
 };
 
 AdminUserVerify = connect(

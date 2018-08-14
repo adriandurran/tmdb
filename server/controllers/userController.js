@@ -205,6 +205,16 @@ module.exports = {
     }
   },
 
+  removeRegistration: async (req, res) => {
+    try {
+      const remReg = await User.deleteOne({ _id: req.params.id });
+      return res.status(200).send(remReg);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   adminUser: async (req, res) => {
     const { admin } = req.body;
     try {
@@ -363,8 +373,8 @@ module.exports = {
         isAdmin,
         isSuperAdmin
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => res.status(400).send(err));
+        .then((user) => res.status(200).send(user))
+        .catch((err) => res.status(400).send(err));
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);
@@ -448,8 +458,8 @@ module.exports = {
         passwordHash,
         joinDate: Date.now()
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => {
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
           console.log(err);
           return res.status(400).send(err);
         });
@@ -485,8 +495,8 @@ module.exports = {
         isSuperAdmin,
         joinDate: Date.now()
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => {
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
           console.log(err);
           return res.status(400).send(err);
         });
