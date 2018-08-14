@@ -10,6 +10,11 @@ const requireAdmin = require('../middlewares/requireAdmin');
 const userController = require('../controllers/userController');
 
 router.patch('/:id', requireLogin, userController.updateUserProfile);
+router.delete(
+  '/admin/users/:id',
+  requireAdmin,
+  userController.removeRegistration
+);
 router.post(
   '/:id/image',
   upload.single('userImage'),
@@ -27,6 +32,11 @@ router.patch(
 router.patch('/admin/users/:id/admin', requireAdmin, userController.adminUser);
 
 router.get('/admin/users/:id', requireAdmin, userController.getUser);
+router.delete(
+  '/admin/users/:id',
+  requireAdmin,
+  userController.removeRegistration
+);
 router.patch(
   '/admin/users/:id/roles',
   requireAdmin,
