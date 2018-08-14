@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 
-import { Button, Menu, Icon, Image } from 'semantic-ui-react';
+import { Button, Menu, Icon, Image, Dropdown } from 'semantic-ui-react';
 
 import { selectCurrentUser } from '../reducers/selectors/userSelectors';
 import { selectLatestVersion } from '../reducers/selectors/extraSelectors';
@@ -14,21 +14,41 @@ class Header extends Component {
     this.props.fetchLatestVersion();
   }
 
+  profileClick = (e, { value }) => {
+    const { history, authUser } = this.props;
+
+    if (value === authUser.userId) {
+      return history.push(`/users/${value}/profile`);
+    }
+  };
+
   renderMenus() {
     const { authUser } = this.props;
     if (authUser) {
       const { firstName, lastName, verified, userId, imageUrl } = authUser;
+      const trigger = (
+        <Menu.Item header>
+          {imageUrl ? (
+            <Image avatar src={imageUrl} style={{ marginRight: '10px' }} />
+          ) : (
+            <Icon name="user circle" style={{ marginRight: '10px' }} />
+          )}
+          {firstName} {lastName}
+        </Menu.Item>
+      );
+      const options = [
+        { key: 'user', text: 'Account', icon: 'user', value: userId }
+      ];
       return (
         <Menu.Menu position="right">
           {verified ? (
-            <Menu.Item header as={Link} to={`/users/${userId}/profile`}>
-              {imageUrl ? (
-                <Image avatar src={imageUrl} style={{ marginRight: '10px' }} />
-              ) : (
-                <Icon name="user circle" style={{ marginRight: '10px' }} />
-              )}
-              {firstName} {lastName}
-            </Menu.Item>
+            <Dropdown
+              trigger={trigger}
+              options={options}
+              pointing="top left"
+              icon={null}
+              onChange={this.profileClick}
+            />
           ) : (
             <Menu.Item header>Awaiting Verification</Menu.Item>
           )}
@@ -118,7 +138,7 @@ const mapDispatchToProps = {
   fetchLatestVersion
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     authUser: selectCurrentUser(state),
     version: selectLatestVersion(state)
@@ -128,4 +148,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header);
+)(withRouter(Header));
