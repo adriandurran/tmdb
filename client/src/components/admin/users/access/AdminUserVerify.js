@@ -12,9 +12,13 @@ class AdminUserVerify extends Component {
     this.props.adminVerifyUser(value, true);
   };
 
+  removerRegistration = (e, { value }) => {
+    console.log(value);
+  };
+
   renderUserVerify() {
     const { verify } = this.props;
-    return verify.map(user => {
+    return verify.map((user) => {
       return (
         <Item key={user._id}>
           <Item.Content verticalAlign="middle">
@@ -28,6 +32,15 @@ class AdminUserVerify extends Component {
             </Item.Meta>
             <Item.Extra>
               <Button
+                floated="right"
+                onClick={this.removerRegistration}
+                value={user._id}
+              >
+                <Icon name="user delete" color="red" />
+                Remove Registration
+              </Button>
+              <Button
+                active
                 floated="right"
                 onClick={this.verifiyUser}
                 value={user._id}
@@ -53,7 +66,7 @@ class AdminUserVerify extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     verify: selectAllUsersVerify(state)
   };
