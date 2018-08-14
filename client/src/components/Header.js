@@ -37,7 +37,7 @@ class Header extends Component {
         </Menu.Item>
       );
       const options = [
-        { key: 'user', text: 'Account', icon: 'user', value: userId }
+        { key: 'user', text: 'Profile', icon: 'user', value: userId }
       ];
       return (
         <Menu.Menu position="right">
