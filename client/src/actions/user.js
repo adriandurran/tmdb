@@ -15,7 +15,7 @@ import {
 } from './types';
 
 export const addUserCourse = (user, course) => async (dispatch) => {
-  const res = await axios.patch(`/api/tmdb/user/${user}/course`, { course });
+  const res = await axios.put(`/api/tmdb/user/${user}/course`, { course });
   dispatch({ type: FETCH_USER, payload: res.data });
   dispatch({ type: CLEAR_COURSE });
   dispatch(reset('newUserCourse'));
@@ -23,7 +23,7 @@ export const addUserCourse = (user, course) => async (dispatch) => {
 };
 
 export const adminVerifyUserCourse = (user, course) => async (dispatch) => {
-  const res = await axios.patch(`/api/tmdb/user/${user}/verify-course`, {
+  const res = await axios.put(`/api/tmdb/user/${user}/verify-course`, {
     course
   });
   if (res.status === 200) {
@@ -45,7 +45,7 @@ export const fetchUserRoles = (roles) => async (dispatch) => {
 };
 
 export const editUserRole = (role, user, action) => async (dispatch) => {
-  const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/roles`, {
+  const res = await axios.put(`/api/tmdb/user/admin/users/${user}/roles`, {
     role,
     action
   });
@@ -72,7 +72,7 @@ export const clearSearchResult = () => async (dispatch) => {
 };
 
 export const adminVerifyUser = (user, verify) => async (dispatch) => {
-  const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/verify`, {
+  const res = await axios.put(`/api/tmdb/user/admin/users/${user}/verify`, {
     verify
   });
   if (res.status === 200) {
@@ -96,7 +96,7 @@ export const adminRemoveRegistration = (user) => async (dispatch) => {
 };
 
 export const adminAdminiUser = (user, admin) => async (dispatch) => {
-  const res = await axios.patch(`/api/tmdb/user/admin/users/${user}/admin`, {
+  const res = await axios.put(`/api/tmdb/user/admin/users/${user}/admin`, {
     admin
   });
   if (res.status === 200) {
@@ -109,7 +109,7 @@ export const adminAdminiUser = (user, admin) => async (dispatch) => {
 
 export const adminAssignDept = (curr, user, department) => async (dispatch) => {
   try {
-    const res = await axios.patch(
+    const res = await axios.put(
       `/api/tmdb/user/admin/users/${user}/department`,
       { department }
     );
@@ -130,7 +130,7 @@ export const adminAssignDept = (curr, user, department) => async (dispatch) => {
 
 export const updateUserProfile = (id, profile) => async (dispatch) => {
   try {
-    const res = await axios.patch(`/api/tmdb/user/${id}`, { profile });
+    const res = await axios.put(`/api/tmdb/user/${id}`, { profile });
     if (res.status === 200) {
       dispatch({ type: FETCH_USER, payload: res.data });
       return res;
