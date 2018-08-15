@@ -16,7 +16,7 @@ class AdminUserAccess extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    // const { user } = this.props;
     return (
       <div>
         <Header as="h2" textAlign="center">
@@ -49,7 +49,7 @@ const mapDispatchToProps = {
   fetchAllUsers
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectCurrentUser(state)
   };
