@@ -20,7 +20,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import AdminCourseManager from './components/admin/courses/AdminCourseManager';
 import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
 import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
-import AdminUserCoursesManager from './components/admin/users/courses/AdminUserCoursesManager';
+import AdminUserCseManager from './components/admin/users/courses/AdminUserCseManager';
 import AdminCourseView from './components/admin/courses/AdminCourseView';
 
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
@@ -43,7 +43,7 @@ import { selectCurrentUser } from './reducers/selectors/userSelectors';
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       checkAuth(rest.user) === true ? (
         <Component {...props} />
       ) : (
@@ -56,7 +56,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const PrivateAdminRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       checkAdmin(rest.user) === true ? (
         <Component {...props} />
       ) : (
@@ -66,7 +66,7 @@ const PrivateAdminRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-const checkAuth = user => {
+const checkAuth = (user) => {
   if (!isEmpty(user)) {
     if (user.verified) {
       return true;
@@ -76,7 +76,7 @@ const checkAuth = user => {
   return false;
 };
 
-const checkAdmin = user => {
+const checkAdmin = (user) => {
   if (checkAuth(user)) {
     if (user.isAdmin || user.isSuperAdmin) {
       return true;
@@ -198,7 +198,7 @@ class Routes extends Component {
               user={user}
               exact
               path="/admin/user-courses-manager"
-              component={AdminUserCoursesManager}
+              component={AdminUserCseManager}
             />
             <PrivateAdminRoute
               user={user}
@@ -225,7 +225,7 @@ class Routes extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectCurrentUser(state)
   };

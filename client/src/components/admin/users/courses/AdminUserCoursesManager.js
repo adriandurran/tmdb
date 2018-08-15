@@ -43,9 +43,9 @@ class AdminUserCoursesManager extends Component {
   render() {
     return (
       <div>
-        <Header as="h3" textAlign="center">
+        {/* <Header as="h3" textAlign="center">
           Courses awaiting Verification
-        </Header>
+        </Header> */}
         <List verticalAlign="middle">{this.renderCourseList()}</List>
       </div>
     );
@@ -56,7 +56,7 @@ const mapDispatchToProps = {
   adminVerifyUserCourse
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: selectAllUsersCoursesVerify(state)
   };
