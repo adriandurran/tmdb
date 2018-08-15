@@ -4,7 +4,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
-const sslRedirect = require('heroku-ssl-redirect');
+// const sslRedirect = require('heroku-ssl-redirect');
 
 const morgan = require('morgan');
 
@@ -58,7 +58,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(sslRedirect(['production']));
+// app.use(sslRedirect());
 
 app.use(morgan('dev'));
 
