@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
+const sslRedirect = require('heroku-ssl-redirect');
 
 const morgan = require('morgan');
 
@@ -26,7 +27,7 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => console.log('Database connection successful'))
-  .catch(err => console.log('Unable to connect to database', err));
+  .catch((err) => console.log('Unable to connect to database', err));
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(sslRedirect(['production']));
 
 app.use(morgan('dev'));
 
