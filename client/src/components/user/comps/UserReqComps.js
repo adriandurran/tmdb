@@ -15,7 +15,7 @@ import { expireDate } from '../../../utils/datehelpers';
 class UserReqComps extends Component {
   renderReqComps() {
     const { reqComps, currentComps } = this.props;
-    return reqComps.map(comp => {
+    return reqComps.map((comp) => {
       let cType = 'Required';
       if (comp.compType) {
         cType = comp.compType.compType;
@@ -70,7 +70,7 @@ class UserReqComps extends Component {
   renderCompCourses(comp) {
     const { userCourses } = this.props;
     let ucs = getUserCoursesForComp(comp, userCourses);
-    return ucs.map(uc => {
+    return ucs.map((uc) => {
       return (
         <Item.Extra key={uc._id}>
           {uc._course.courseName} &nbsp; expires &nbsp;
@@ -87,7 +87,7 @@ class UserReqComps extends Component {
       <div>
         <Segment padded>
           <Header as="h2" textAlign="center">
-            Competencies
+            Role Competencies
           </Header>
           <Item.Group>{this.renderReqComps()}</Item.Group>
         </Segment>
@@ -96,7 +96,7 @@ class UserReqComps extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     reqComps: selectUserRoleComps(state),
     currentComps: selectUserCompetenciesCurrent(state),

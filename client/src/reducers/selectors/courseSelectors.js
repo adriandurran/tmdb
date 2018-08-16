@@ -45,7 +45,8 @@ export const selectCoursesForSearch = createSelector(
         (course) =>
           course.validity > 0 ||
           course.validity === undefined ||
-          course.validity === ''
+          course.validity === '' ||
+          course.validity === null
       )
       .map((course) => {
         let validDetails = '';
