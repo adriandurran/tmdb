@@ -6,6 +6,7 @@ import AdminUserMenu from '../users/AdminUserMenu';
 import AdminDeptAdd from './AdminDeptAdd';
 import AdminDeptList from './AdminDeptList';
 import AdminUsersNoDeptTable from '../users/dept/AdminUsersNoDeptTable';
+import AdminDeptCards from './AdminDeptCards';
 
 const AdminDeptManager = () => {
   return (
@@ -26,6 +27,11 @@ const AdminDeptManager = () => {
         <Grid.Row>
           <Grid.Column>
             <AdminUsersNoDeptTable />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <AdminDeptCards />
           </Grid.Column>
         </Grid.Row>
       </Grid>
