@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import {
@@ -11,7 +12,11 @@ import {
   Segment
 } from 'semantic-ui-react';
 
-import { clearCourse, adminUpdateCourse } from '../../../actions/courses';
+import {
+  clearCourse,
+  adminUpdateCourse,
+  adminDeleteNewCourse
+} from '../../../actions/courses';
 
 import {
   selectCourseTypesForDropDown,
@@ -19,6 +24,10 @@ import {
   selectCourse
 } from '../../../reducers/selectors/courseSelectors';
 import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
+import {
+  selectUsersCourseHolders,
+  selectUsersCourseHoldersExpired
+} from '../../../reducers/selectors/adminSelectors';
 
 class AdminEditCourse extends Component {
   constructor(props) {
@@ -173,8 +182,26 @@ class AdminEditCourse extends Component {
     });
   };
 
+  deleteCourse = (e) => {
+    const { course, adminDeleteNewCourse, history } = this.props;
+    adminDeleteNewCourse(course._id).then((res) => {
+      if (res.status === 200) {
+        return history.push('/admin/course-manager');
+      }
+      let message = { ...this.state.message };
+      message.header = 'Ooops!';
+      message.content = `Something went wrong updating this Course. Error: ${res}`;
+      message.negative = true;
+      this.setState({
+        message,
+        notes: ''
+      });
+      this.resetMessageState();
+    });
+  };
+
   render() {
-    const { levels, types } = this.props;
+    const { levels, types, courseHolder, courseHolderExpired } = this.props;
     const { message, notes } = this.state;
     return (
       <div>
@@ -192,8 +219,8 @@ class AdminEditCourse extends Component {
         <Segment attached>
           <Form>
             <Form.Input
-              fluid
-              // component={semanticFormField}
+              disabled
+              fluid // component={semanticFormField}
               // as={Form.Input}
               type="text"
               name="courseName"
@@ -249,6 +276,18 @@ class AdminEditCourse extends Component {
               >
                 Update Course
               </Button>
+              {courseHolder.length === 0 &&
+                courseHolderExpired.length === 0 && (
+                  <Button
+                    negative
+                    fluid
+                    type="submit"
+                    size="medium"
+                    onClick={this.deleteCourse}
+                  >
+                    Delete Course
+                  </Button>
+                )}
             </Form.Group>
           </Form>
         </Segment>
@@ -259,7 +298,8 @@ class AdminEditCourse extends Component {
 
 const mapDispatchToProps = {
   clearCourse,
-  adminUpdateCourse
+  adminUpdateCourse,
+  adminDeleteNewCourse
 };
 
 const mapStateToProps = (state) => {
@@ -267,7 +307,9 @@ const mapStateToProps = (state) => {
     levels: selectCourseLevelsForDropDown(state),
     types: selectCourseTypesForDropDown(state),
     course: selectCourse(state),
-    user: selectCurrentUser(state)
+    user: selectCurrentUser(state),
+    courseHolder: selectUsersCourseHolders(state),
+    courseHolderExpired: selectUsersCourseHoldersExpired(state)
   };
 };
 
@@ -276,4 +318,4 @@ AdminEditCourse = connect(
   mapDispatchToProps
 )(AdminEditCourse);
 
-export default AdminEditCourse;
+export default withRouter(AdminEditCourse);

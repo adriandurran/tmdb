@@ -61,6 +61,17 @@ module.exports = {
     }
   },
 
+  deleteCourse: async (req, res) => {
+    console.log(req.params.id);
+    try {
+      const remCourse = await Course.deleteOne({ _id: req.params.id });
+      return res.status(200).send(remCourse);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   getCourse: async (req, res) => {
     const dbCourse = await Course.findById(req.params.id).populate(
       'notes.noteBy'
