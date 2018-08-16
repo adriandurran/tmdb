@@ -122,7 +122,7 @@ class AdminEditCourse extends Component {
     }
   };
 
-  updateCourse = e => {
+  updateCourse = (e) => {
     e.preventDefault();
     const { course, adminUpdateCourse, user } = this.props;
     const { level, type, notes, noExpire, validity, courseName } = this.state;
@@ -152,9 +152,9 @@ class AdminEditCourse extends Component {
       notes: allNotes
     };
 
-    console.log(upCourse);
+    // console.log(upCourse);
 
-    adminUpdateCourse(course._id, upCourse).then(res => {
+    adminUpdateCourse(course._id, upCourse).then((res) => {
       let message = { ...this.state.message };
       if (res.status === 200) {
         message.header = 'Success!';
@@ -262,7 +262,7 @@ const mapDispatchToProps = {
   adminUpdateCourse
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     levels: selectCourseLevelsForDropDown(state),
     types: selectCourseTypesForDropDown(state),

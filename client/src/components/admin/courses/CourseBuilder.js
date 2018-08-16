@@ -18,6 +18,13 @@ import {
 } from '../../../actions/courses';
 
 class CourseBuilder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      noExpire: false
+    };
+  }
+
   componentDidMount() {
     const { fetchCourseLevels, fetchCourseTypes } = this.props;
     fetchCourseLevels();
@@ -73,7 +80,9 @@ class CourseBuilder extends Component {
           <Grid.Row>
             <Grid.Column>
               <Form
-                onSubmit={handleSubmit(values => this.submitNewCourse(values))}
+                onSubmit={handleSubmit((values) =>
+                  this.submitNewCourse(values)
+                )}
               >
                 <Form.Group inline widths="equal">
                   <Field
@@ -137,7 +146,7 @@ class CourseBuilder extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     types: selectCourseTypesForDropDown(state),
     levels: selectCourseLevelsForDropDown(state)
