@@ -31,6 +31,7 @@ export const FETCH_COURSE_LEVEL = 'fetch_course_level';
 export const ADD_COURSE_LEVEL = 'add_course_level';
 export const DELETE_COURSE_LEVEL = 'delete_course_level';
 export const CLEAR_COURSE = 'clear_course';
+export const DELETE_NEW_COURSE = 'delete_new_course';
 
 export const ADD_USER_COURSE = 'add_user_course';
 
