@@ -62,7 +62,6 @@ module.exports = {
   },
 
   deleteCourse: async (req, res) => {
-    console.log(req.params.id);
     try {
       const remCourse = await Course.deleteOne({ _id: req.params.id });
       return res.status(200).send(remCourse);
