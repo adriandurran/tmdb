@@ -96,7 +96,7 @@ class AdminEditCourse extends Component {
   };
 
   handleValidChange = (e, item) => {
-    console.log(item.value);
+    // console.log(item.value);
     if (item.value) {
       this.setState({
         validity: item.value,
