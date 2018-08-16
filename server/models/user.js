@@ -6,7 +6,7 @@ const Course = require('./course');
 const Role = require('./role');
 const Deptartment = require('./departments');
 
-const saltRounds = 16;
+const saltRounds = 12;
 
 const userSchema = new Schema({
   userId: {
@@ -75,7 +75,7 @@ userSchema.methods.validPassword = async (user, password) => {
   return res;
 };
 
-userSchema.methods.generateHash = async password => {
+userSchema.methods.generateHash = async (password) => {
   const hashy = await bcrypt.hash(password, saltRounds);
   return hashy;
 };
