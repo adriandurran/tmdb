@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
 import { Header, Icon, Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { selectDepts } from '../../../reducers/selectors/deptSelectors';
 import { selectAllUsersActive } from '../../../reducers/selectors/adminSelectors';
 import { deptUsers } from '../../../utils/deptHelpers';
 import AdminDeptMenu from './AdminDeptMenu';
 import { fetchAllUsers } from '../../../actions/user';
 
+import { fetchDept } from '../../../actions/dept';
+
 class AdminDeptCards extends Component {
   componentDidMount() {
     this.props.fetchAllUsers();
   }
 
+  handleCardClick = (e, { value }) => {
+    const { fetchDept, history } = this.props;
+    fetchDept(value).then(() => {
+      history.push(`/admin/dept-user-view/${value}`);
+    });
+  };
+
   renderDeptCards() {
     const { depts, users } = this.props;
     return depts.map((dept) => {
       return (
-        <Card raised key={dept._id}>
+        <Card
+          raised
+          key={dept._id}
+          value={dept._id}
+          onClick={this.handleCardClick}
+        >
           <Card.Content>
             <Header as="h5">{dept.departmentName}</Header>
           </Card.Content>
@@ -53,10 +69,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchAllUsers
+  fetchAllUsers,
+  fetchDept
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminDeptCards);
+)(withRouter(AdminDeptCards));

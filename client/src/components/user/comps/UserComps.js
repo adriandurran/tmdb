@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { Header, Segment, Icon, Card, List } from 'semantic-ui-react';
 
-// change this to a card group
+import { fetchRoles } from '../../../actions/roles';
+import { fetchComps } from '../../../actions/comps';
+import { fetchCourses } from '../../../actions/courses';
 
 import {
   selectUserCompetenciesCurrent,
@@ -20,6 +22,13 @@ import {
 } from '../../../utils/datehelpers';
 
 class UserComps extends Component {
+  componentDidMount() {
+    const { fetchRoles, fetchComps, fetchCourses } = this.props;
+    fetchRoles();
+    fetchComps();
+    fetchCourses();
+  }
+
   renderCompCourses(comp) {
     const { userCourses } = this.props;
     let ucs = getUserCoursesForComp(comp, userCourses);
@@ -112,6 +121,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-UserComps = connect(mapStateToProps)(UserComps);
+const mapDispatchToProps = {
+  fetchRoles,
+  fetchComps,
+  fetchCourses
+};
+
+UserComps = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserComps);
 
 export default UserComps;

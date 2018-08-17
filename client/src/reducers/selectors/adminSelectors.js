@@ -17,23 +17,23 @@ import { selectCourse } from './courseSelectors';
 import { selectDept } from './deptSelectors';
 
 // all users
-export const selectAllUsers = state => state.allusers;
+export const selectAllUsers = (state) => state.allusers;
 
 // get all users that require verification
-export const selectAllUsersVerify = createSelector(selectAllUsers, allusers =>
-  allusers.filter(user => user.verified === false)
+export const selectAllUsersVerify = createSelector(selectAllUsers, (allusers) =>
+  allusers.filter((user) => user.verified === false)
 );
 
 // get all users that are verified
-export const selectAllUsersActive = createSelector(selectAllUsers, allusers =>
-  allusers.filter(user => user.verified === true)
+export const selectAllUsersActive = createSelector(selectAllUsers, (allusers) =>
+  allusers.filter((user) => user.verified === true)
 );
 
 // get the users for the search that are active
 export const selectAllUsersForSearch = createSelector(
   selectAllUsersActive,
-  allusers => {
-    return allusers.map(user => {
+  (allusers) => {
+    return allusers.map((user) => {
       return {
         title: `${user.firstName} ${user.lastName}`,
         description: user.username,
@@ -46,10 +46,10 @@ export const selectAllUsersForSearch = createSelector(
 // all active users for serach but not admins
 export const selectAllUsersForSearchNoAdmins = createSelector(
   selectAllUsersActive,
-  allusers => {
+  (allusers) => {
     return allusers
-      .filter(user => !user.isAdmin && !user.isSuperAdmin)
-      .map(user => {
+      .filter((user) => !user.isAdmin && !user.isSuperAdmin)
+      .map((user) => {
         return {
           title: `${user.firstName} ${user.lastName}`,
           description: user.username,
@@ -60,8 +60,8 @@ export const selectAllUsersForSearchNoAdmins = createSelector(
 );
 
 // get all users that are admins && active
-export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
-  allusers.filter(user => user.verified === true && user.isAdmin === true)
+export const selectAllUsersAdmins = createSelector(selectAllUsers, (allusers) =>
+  allusers.filter((user) => user.verified === true && user.isAdmin === true)
 );
 
 // COURSES
@@ -69,12 +69,12 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, allusers =>
 // get courses awaiting verification from all users
 export const selectAllUsersCoursesVerify = createSelector(
   selectAllUsers,
-  allusers => {
-    const usersVerifyCourses = allusers.filter(user => {
+  (allusers) => {
+    const usersVerifyCourses = allusers.filter((user) => {
       return user.courses.length > 0 && !user.courses.verified;
     });
     const VeriList = [];
-    usersVerifyCourses.map(user => {
+    usersVerifyCourses.map((user) => {
       for (let x in user.courses) {
         let tmpC = {};
         if (!user.courses[x].verified) {
@@ -97,29 +97,29 @@ export const selectAllUsersCoursesVerify = createSelector(
 // MANAGED USER MANAGED USER
 
 // get the user to manage (admin function)
-export const selectUserManage = state => state.user;
+export const selectUserManage = (state) => state.user;
 // get the courses for the current managed user
-export const selectUserManageCourses = state => state.user.courses;
+export const selectUserManageCourses = (state) => state.user.courses;
 
 // this is for the user being managed
-export const selectAdminUserRoles = state => state.user.roles;
+export const selectAdminUserRoles = (state) => state.user.roles;
 
 // get unique competencies for a given role for a user being managed by admin
 // need to filter by required ----- doing this on the component already
 export const selectAdminUserRoleComps = createSelector(
   selectAdminUserRoles,
-  roles => {
+  (roles) => {
     if (roles === undefined) {
       return null;
     }
-    return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
+    return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
   }
 );
 
 // Current and verified courses
 export const selectUserManageCoursesCurrent = createSelector(
   selectUserManageCourses,
-  usercourses => {
+  (usercourses) => {
     return coursesCurrentVerified(usercourses);
   }
 );
@@ -127,7 +127,7 @@ export const selectUserManageCoursesCurrent = createSelector(
 //  expired courses
 export const selectUserManageCoursesExpired = createSelector(
   selectUserManageCourses,
-  usercourses => {
+  (usercourses) => {
     return coursesExpired(usercourses);
   }
 );
@@ -135,7 +135,7 @@ export const selectUserManageCoursesExpired = createSelector(
 // courses waiting for verification
 export const selectUserManageCoursesVerify = createSelector(
   selectUserManageCourses,
-  usercourses => {
+  (usercourses) => {
     return coursesVerify(usercourses);
   }
 );
@@ -159,11 +159,11 @@ export const selectUsersCompetencyHolders = createSelector(
     let allUsersCurrent = coursesActiveUser(users);
     // compare ?intersection? with competency courses to see if they have the comp
     let compHolders = allUsersCurrent
-      .filter(user => compsHolderCheck(user.currentCourses, comp))
-      .map(user => user._id);
+      .filter((user) => compsHolderCheck(user.currentCourses, comp))
+      .map((user) => user._id);
 
     // return these users. full details
-    return users.filter(user => {
+    return users.filter((user) => {
       return _.includes(compHolders, user._id);
     });
   }
@@ -180,15 +180,15 @@ export const selectUsersCourseHolders = createSelector(
 
     // return only users who have the course
     let courseHolders = allUsersCurrent
-      .filter(user => {
+      .filter((user) => {
         return _.includes(
-          user.currentCourses.map(course => course._course._id),
+          user.currentCourses.map((course) => course._course._id),
           course._id
         );
       })
-      .map(user => user._id);
+      .map((user) => user._id);
 
-    return users.filter(user => {
+    return users.filter((user) => {
       return _.includes(courseHolders, user._id);
     });
   }
@@ -205,15 +205,15 @@ export const selectUsersCourseHoldersExpired = createSelector(
 
     // return only users who have the course
     let courseHolders = allUsersCurrent
-      .filter(user => {
+      .filter((user) => {
         return _.includes(
-          user.currentCourses.map(course => course._course._id),
+          user.currentCourses.map((course) => course._course._id),
           course._id
         );
       })
-      .map(user => user._id);
+      .map((user) => user._id);
 
-    return users.filter(user => {
+    return users.filter((user) => {
       return _.includes(courseHolders, user._id);
     });
   }
@@ -223,23 +223,23 @@ export const selectUsersRoleHolders = createSelector(
   selectAllUsersActive,
   selectRole,
   (users, role) => {
-    return users.filter(user => {
-      return _.includes(user.roles.map(role => role._id), role._id);
+    return users.filter((user) => {
+      return _.includes(user.roles.map((role) => role._id), role._id);
     });
   }
 );
 
 export const selectAllUsersActiveNoDept = createSelector(
   selectAllUsersActive,
-  users => {
-    return users.filter(user => _.isEmpty(user.department));
+  (users) => {
+    return users.filter((user) => _.isEmpty(user.department));
   }
 );
 
 export const selectAllUsersActiveDept = createSelector(
   selectAllUsersActive,
-  users => {
-    return users.filter(user => !_.isEmpty(user.department));
+  (users) => {
+    return users.filter((user) => !_.isEmpty(user.department));
   }
 );
 
@@ -247,6 +247,13 @@ export const selectUsersInDept = createSelector(
   selectAllUsersActiveDept,
   selectDept,
   (users, dept) => {
-    return users.filter(user => user.department._id === dept._id);
+    return users.filter((user) => user.department._id === dept._id);
+  }
+);
+
+export const selectUniqueRolesInDept = createSelector(
+  selectUsersInDept,
+  (users) => {
+    return _.uniqBy(_.flatten(users.map((user) => user.roles)), '_id');
   }
 );

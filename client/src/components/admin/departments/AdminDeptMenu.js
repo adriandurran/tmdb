@@ -9,7 +9,7 @@ const AdminDeptMenu = (props) => {
         <Menu.Item
           name="Department Tools"
           as={Link}
-          to={'/admin/department-tools'}
+          to={'/admin/dept-tools'}
           icon="home"
         />
 
