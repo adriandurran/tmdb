@@ -22,16 +22,23 @@ import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
 import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
 import AdminUserCseManager from './components/admin/users/courses/AdminUserCseManager';
 import AdminCourseView from './components/admin/courses/AdminCourseView';
+import AdminCourseTools from './components/admin/courses/AdminCourseTools';
 
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
 import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
+import AdminCompTools from './components/admin/competencies/AdminCompTools';
 
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 import AdminRoleView from './components/admin/roles/AdminRoleView';
+import AdminRoleTools from './components/admin/roles/AdminRoleTools';
+
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
+import AdminUserTools from './components/admin/users/AdminUserTools';
+
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptView from './components/admin/departments/AdminDeptView';
+import AdminDeptTools from './components/admin/departments/AdminDeptTools';
 
 // feed back and versions
 import AppVersion from './components/version/AppVersion';
@@ -137,6 +144,12 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
+              path="/admin/course-tools"
+              component={AdminCourseTools}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
               path="/admin/course-manager"
               component={AdminCourseManager}
             />
@@ -161,6 +174,12 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
+              path="/admin/comp-tools"
+              component={AdminCompTools}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
               path="/admin/comp-manager"
               component={AdminCompManager}
             />
@@ -173,6 +192,12 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
+              path="/admin/role-tools"
+              component={AdminRoleTools}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
               path="/admin/role-manager"
               component={AdminRoleManager}
             />
@@ -181,6 +206,12 @@ class Routes extends Component {
               exact
               path="/admin/role-manager/view/:id"
               component={AdminRoleView}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/user-tools"
+              component={AdminUserTools}
             />
             <PrivateAdminRoute
               user={user}
@@ -204,7 +235,7 @@ class Routes extends Component {
               user={user}
               exact
               path="/admin/department-manager"
-              component={AdminDeptManager}
+              component={AdminDeptTools}
             />
             <PrivateAdminRoute
               user={user}

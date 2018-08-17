@@ -7,14 +7,13 @@ import {
   selectAllUsersCoursesVerify,
   selectAllUsersActive
 } from '../../../reducers/selectors/adminSelectors';
-import { selectDepts } from '../../../reducers/selectors/deptSelectors';
 
 const AdminUserMenu = ({ UsersWaiting, UsersActive, CoursesVerify, Depts }) => {
   return (
     <Menu compact attached="top">
-      <Menu.Item name="Dashboard" as={Link} to="/admin/dashboard">
+      <Menu.Item name="User Tools" as={Link} to="/admin/user-tools">
         <Icon name="home" />
-        Admin Dashboard
+        User Tools
       </Menu.Item>
       <Menu.Item as={Link} to="/admin/user-access-manager">
         <Label color="red" floating>
@@ -34,10 +33,6 @@ const AdminUserMenu = ({ UsersWaiting, UsersActive, CoursesVerify, Depts }) => {
         </Label>
         User Course Manager
       </Menu.Item>
-      <Menu.Item as={Link} to="/admin/department-manager">
-        <Label floating>{Depts.length}</Label>
-        Department Manager
-      </Menu.Item>
     </Menu>
   );
 };
@@ -46,8 +41,7 @@ const mapStateToProps = (state) => {
   return {
     UsersWaiting: selectAllUsersVerify(state),
     UsersActive: selectAllUsersActive(state),
-    CoursesVerify: selectAllUsersCoursesVerify(state),
-    Depts: selectDepts(state)
+    CoursesVerify: selectAllUsersCoursesVerify(state)
   };
 };
 
