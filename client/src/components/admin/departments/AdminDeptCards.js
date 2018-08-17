@@ -4,8 +4,14 @@ import { connect } from 'react-redux';
 import { selectDepts } from '../../../reducers/selectors/deptSelectors';
 import { selectAllUsersActive } from '../../../reducers/selectors/adminSelectors';
 import { deptUsers } from '../../../utils/deptHelpers';
+import AdminDeptMenu from './AdminDeptMenu';
+import { fetchAllUsers } from '../../../actions/user';
 
 class AdminDeptCards extends Component {
+  componentDidMount() {
+    this.props.fetchAllUsers();
+  }
+
   renderDeptCards() {
     const { depts, users } = this.props;
     return depts.map((dept) => {
@@ -30,7 +36,10 @@ class AdminDeptCards extends Component {
         <Header as="h2" textAlign="center">
           Department Views
         </Header>
-        <Card.Group itemsPerRow={4}>{this.renderDeptCards()}</Card.Group>
+        <AdminDeptMenu />
+        <Card.Group itemsPerRow={4} style={{ marginTop: '1em' }}>
+          {this.renderDeptCards()}
+        </Card.Group>
       </div>
     );
   }
@@ -43,4 +52,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(AdminDeptCards);
+const mapDispatchToProps = {
+  fetchAllUsers
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminDeptCards);

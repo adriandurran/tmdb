@@ -36,14 +36,16 @@ import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
 import AdminUserTools from './components/admin/users/AdminUserTools';
 
-import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptView from './components/admin/departments/AdminDeptView';
 import AdminDeptTools from './components/admin/departments/AdminDeptTools';
+import AdminDeptManager from './components/admin/departments/AdminDeptManager';
+import AdminDeptCards from './components/admin/departments/AdminDeptCards';
 
 // feed back and versions
 import AppVersion from './components/version/AppVersion';
 import AppFeedback from './components/feedback/AppFeedback';
 import AppFeedbckManager from './components/feedback/AppFeedbackManager';
+import AdminApplicationTools from './components/admin/apptools/AdminApplicationTools';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
@@ -144,6 +146,12 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
+              path="/admin/app-tools"
+              component={AdminApplicationTools}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
               path="/admin/course-tools"
               component={AdminCourseTools}
             />
@@ -234,8 +242,20 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
-              path="/admin/department-manager"
+              path="/admin/department-tools"
               component={AdminDeptTools}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/dept-manager"
+              component={AdminDeptManager}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/dept-views"
+              component={AdminDeptCards}
             />
             <PrivateAdminRoute
               user={user}

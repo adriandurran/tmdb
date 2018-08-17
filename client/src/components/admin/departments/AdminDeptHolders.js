@@ -5,14 +5,19 @@ import Moment from 'react-moment';
 import { Header, Item } from 'semantic-ui-react';
 
 import { selectUsersInDept } from '../../../reducers/selectors/adminSelectors';
+import { fetchAllUsers } from '../../../actions/user';
 
 class AdminDeptHolders extends Component {
+  componentDidMount() {
+    this.props.fetchAllUsers();
+  }
+
   renderDeptHolders() {
     const { users } = this.props;
-    return users.map(user => {
+    return users.map((user) => {
       return (
         <Item key={user._id}>
-          <Item.Image size="small" src="http://lorempixel.com/400/400/people" />
+          <Item.Image size="tiny" circular src={user.imageUrl} />
           <Item.Content>
             <Item.Header>
               {user.firstName} {user.lastName}
@@ -39,12 +44,19 @@ class AdminDeptHolders extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: selectUsersInDept(state)
   };
 };
 
-AdminDeptHolders = connect(mapStateToProps)(AdminDeptHolders);
+const mapDispatchToProps = {
+  fetchAllUsers
+};
+
+AdminDeptHolders = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminDeptHolders);
 
 export default AdminDeptHolders;

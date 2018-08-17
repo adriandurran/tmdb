@@ -19,11 +19,11 @@ class AdminDeptView extends Component {
           Department View
         </Header>
         <Breadcrumb style={{ marginBottom: '2em' }}>
-          <Breadcrumb.Section link as={Link} to="/admin/dashboard">
-            Admin Dashboard
+          <Breadcrumb.Section link as={Link} to="/admin/department-tools">
+            Department Tools
           </Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link as={Link} to="/admin/department-manager">
+          <Breadcrumb.Section link as={Link} to="/admin/dept-manager">
             Department Manager
           </Breadcrumb.Section>
           <Breadcrumb.Divider icon="right arrow" />
