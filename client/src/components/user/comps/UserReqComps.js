@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { Item, Header, Segment, Icon } from 'semantic-ui-react';
+import { Item, Header, Segment, Icon, List } from 'semantic-ui-react';
 
 import {
   selectUserCompetenciesCurrent,
@@ -10,7 +10,11 @@ import {
 } from '../../../reducers/selectors/userSelectors';
 
 import { compExist, getUserCoursesForComp } from '../../../utils/arrayhelpers';
-import { expireDate } from '../../../utils/datehelpers';
+import {
+  expireDate,
+  checkCourseHasExpireDate,
+  expireMonths
+} from '../../../utils/datehelpers';
 
 class UserReqComps extends Component {
   renderReqComps() {
@@ -59,7 +63,7 @@ class UserReqComps extends Component {
               </Item.Description>
             )}
             <Item.Extra>
-              {comp.courses.length} Courses required for this Competency
+              <List bulleted>{this.renderCompCourses(comp)}</List>
             </Item.Extra>
           </Item.Content>
         </Item>
@@ -72,12 +76,27 @@ class UserReqComps extends Component {
     let ucs = getUserCoursesForComp(comp, userCourses);
     return ucs.map((uc) => {
       return (
-        <Item.Extra key={uc._id}>
-          {uc._course.courseName} &nbsp; expires &nbsp;
-          <Moment fromNow>
-            {expireDate(uc.passDate, uc._course.validity)}
-          </Moment>
-        </Item.Extra>
+        <List.Item
+          key={uc._id}
+          style={
+            expireMonths(uc.passDate, uc._course.validity) <= 3
+              ? {
+                  color: 'orange'
+                }
+              : { color: 'black' }
+          }
+        >
+          {checkCourseHasExpireDate(uc._course) ? (
+            <span>
+              {uc._course.courseName} &nbsp; expires &nbsp;
+              <Moment fromNow>
+                {expireDate(uc.passDate, uc._course.validity)}
+              </Moment>
+            </span>
+          ) : (
+            <span>{uc._course.courseName} &nbsp; does not expire </span>
+          )}
+        </List.Item>
       );
     });
   }
@@ -89,7 +108,9 @@ class UserReqComps extends Component {
           <Header as="h2" textAlign="center">
             Role Competencies
           </Header>
-          <Item.Group>{this.renderReqComps()}</Item.Group>
+          <Item.Group style={{ marginLeft: '1em' }}>
+            {this.renderReqComps()}
+          </Item.Group>
         </Segment>
       </div>
     );

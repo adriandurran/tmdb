@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { Header, Segment, Icon, Card } from 'semantic-ui-react';
+import { Header, Segment, Icon, Card, List } from 'semantic-ui-react';
 
 // change this to a card group
 
@@ -23,10 +23,9 @@ class UserComps extends Component {
   renderCompCourses(comp) {
     const { userCourses } = this.props;
     let ucs = getUserCoursesForComp(comp, userCourses);
-    return ucs.map(uc => {
+    return ucs.map((uc) => {
       return (
-        <Card.Content
-          extra
+        <List.Item
           key={uc._id}
           style={
             expireMonths(uc.passDate, uc._course.validity) <= 3
@@ -46,7 +45,7 @@ class UserComps extends Component {
           ) : (
             <span>{uc._course.courseName} &nbsp; does not expire </span>
           )}
-        </Card.Content>
+        </List.Item>
       );
     });
   }
@@ -55,9 +54,9 @@ class UserComps extends Component {
   renderCurrentComps() {
     const { currentComps, userCourses } = this.props;
 
-    return currentComps.map(comp => {
+    return currentComps.map((comp) => {
       return (
-        <Card key={comp._id}>
+        <Card key={comp._id} fluid>
           <Card.Content>
             <Card.Header>
               {checkCompExpireDate(comp, userCourses) ? (
@@ -79,7 +78,9 @@ class UserComps extends Component {
                 } courses required for this Competency are in date`
               )}
             </Card.Description>
-            {this.renderCompCourses(comp)}
+            <Card.Content>
+              <List bulleted>{this.renderCompCourses(comp)}</List>
+            </Card.Content>
           </Card.Content>
         </Card>
       );
@@ -94,14 +95,16 @@ class UserComps extends Component {
             Competencies
             <Header.Subheader>Current</Header.Subheader>
           </Header>
-          <Card.Group centered>{this.renderCurrentComps()}</Card.Group>
+          <Card.Group centered itemsPerRow={2}>
+            {this.renderCurrentComps()}
+          </Card.Group>
         </Segment>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     reqComps: selectUserRoleComps(state),
     currentComps: selectUserCompetenciesCurrent(state),
