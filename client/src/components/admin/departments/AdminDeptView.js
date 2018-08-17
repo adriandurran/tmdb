@@ -16,10 +16,10 @@ class AdminDeptView extends Component {
     return (
       <div>
         <Header as="h2" textAlign="center">
-          Department View
+          {dept.departmentName}
         </Header>
         <Breadcrumb style={{ marginBottom: '2em' }}>
-          <Breadcrumb.Section link as={Link} to="/admin/department-tools">
+          <Breadcrumb.Section link as={Link} to="/admin/dept-tools">
             Department Tools
           </Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />

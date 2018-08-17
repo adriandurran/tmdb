@@ -60,7 +60,7 @@ class AdminDashboard extends Component {
 
         <Segment basic style={{ marginTop: '2em' }}>
           <Card.Group itemsPerRow={3}>
-            <Card as={Link} to="/admin/department-tools" raised>
+            <Card as={Link} to="/admin/dept-tools" raised>
               <Card.Content>
                 <Header as="h2">Departments</Header>
               </Card.Content>

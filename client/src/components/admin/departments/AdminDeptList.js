@@ -11,7 +11,7 @@ class AdminDeptList extends Component {
   renderDeptList() {
     const { depts } = this.props;
 
-    return depts.map(dept => {
+    return depts.map((dept) => {
       return (
         <List.Item key={dept._id}>
           <List.Content floated="right">
@@ -31,7 +31,7 @@ class AdminDeptList extends Component {
     // I think  launch modal to edit....just a small form
     const { fetchDept, history } = this.props;
     fetchDept(value).then(() => {
-      history.push(`/admin/department-manager/view/${value}`);
+      history.push(`/admin/dept-manager/view/${value}`);
     });
   };
 
@@ -53,7 +53,7 @@ const mapDispatchToProps = {
   fetchDept
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     depts: selectDepts(state)
   };

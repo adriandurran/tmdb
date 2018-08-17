@@ -40,6 +40,7 @@ import AdminDeptView from './components/admin/departments/AdminDeptView';
 import AdminDeptTools from './components/admin/departments/AdminDeptTools';
 import AdminDeptManager from './components/admin/departments/AdminDeptManager';
 import AdminDeptCards from './components/admin/departments/AdminDeptCards';
+import AdminDeptUserView from './components/admin/departments/AdminDeptUserView';
 
 // feed back and versions
 import AppVersion from './components/version/AppVersion';
@@ -242,7 +243,7 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
-              path="/admin/department-tools"
+              path="/admin/dept-tools"
               component={AdminDeptTools}
             />
             <PrivateAdminRoute
@@ -260,7 +261,13 @@ class Routes extends Component {
             <PrivateAdminRoute
               user={user}
               exact
-              path="/admin/department-manager/view/:id"
+              path="/admin/dept-user-view/:id"
+              component={AdminDeptUserView}
+            />
+            <PrivateAdminRoute
+              user={user}
+              exact
+              path="/admin/dept-manager/view/:id"
               component={AdminDeptView}
             />
             <PrivateAdminRoute
