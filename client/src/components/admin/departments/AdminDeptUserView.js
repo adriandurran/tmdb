@@ -82,7 +82,6 @@ class AdminDeptUserView extends Component {
                 Users with no Roles
               </Header>
               <Card.Group itemsPerRow={4} centered>
-                {/* {this.renderNoRoleUsers()} */}
                 <AdminDeptNoRoleUsers />
               </Card.Group>
             </Grid.Column>
