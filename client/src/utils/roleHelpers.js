@@ -12,3 +12,8 @@ export const roleUsers = (users, roleId) => {
 export const noRoleUsers = (users) => {
   return users.filter((user) => user.roles.length === 0);
 };
+
+// return a Role for an roleId
+export const getRole = (roles, roleId) => {
+  return roles.filter((role) => role._id === roleId);
+};
