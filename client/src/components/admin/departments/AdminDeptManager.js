@@ -4,7 +4,6 @@ import { Header, Grid } from 'semantic-ui-react';
 
 import AdminDeptAdd from './AdminDeptAdd';
 import AdminDeptList from './AdminDeptList';
-import AdminUsersNoDeptTable from '../users/dept/AdminUsersNoDeptTable';
 import AdminDeptMenu from './AdminDeptMenu';
 
 const AdminDeptManager = () => {
