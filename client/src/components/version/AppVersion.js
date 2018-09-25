@@ -5,6 +5,7 @@ import { Header, Grid } from 'semantic-ui-react';
 
 import AppVersionList from './AppVersionList';
 import AppVersionAdd from './AppVersionAdd';
+import AdminApplicationToolsMenu from '../admin/shared/AdminApplicationToolsMenu';
 
 import { selectCurrentUser } from '../../reducers/selectors/userSelectors';
 
@@ -16,7 +17,9 @@ class AppVersion extends Component {
         <Header as="h2" textAlign="center">
           Application Versions
         </Header>
-        <Grid>
+        {!isEmpty(user) && user.isAdmin && <AdminApplicationToolsMenu />}
+
+        <Grid centered attached="bottom" style={{ marginTop: '0.5em' }}>
           <Grid.Row>
             <Grid.Column>
               <AppVersionList />
@@ -36,7 +39,7 @@ class AppVersion extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectCurrentUser(state)
   };
