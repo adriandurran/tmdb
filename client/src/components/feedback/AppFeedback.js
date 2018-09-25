@@ -10,7 +10,7 @@ const AppFeedback = () => {
       <Header as="h2" textAlign="center">
         Application Feedback &amp; Error reporting
       </Header>
-      <Grid>
+      <Grid centered attached="bottom" style={{ marginTop: '0.5em' }}>
         <Grid.Row>
           <Grid.Column>
             <AppFeedbackAdd />
