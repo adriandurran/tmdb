@@ -1,13 +1,13 @@
 import moment from 'moment';
 
-export const coursesCurrentVerified = courses => {
+export const coursesCurrentVerified = (courses) => {
   if (courses === undefined) {
     return null;
   }
 
   let today = moment(new Date(), 'YYYY-MM-DD').format();
   return courses
-    .filter(course => {
+    .filter((course) => {
       if (
         (moment(course.passDate, 'YYYY-MM-DD')
           .add(course._course.validity, 'months')
@@ -23,14 +23,14 @@ export const coursesCurrentVerified = courses => {
 
       return false;
     })
-    .map(course => course);
+    .map((course) => course);
 };
 
-export const coursesExpired = courses => {
+export const coursesExpired = (courses) => {
   if (courses === undefined) {
     return null;
   }
-  return courses.filter(course => {
+  return courses.filter((course) => {
     return (
       course.validity &&
       moment(course.passDate, 'YYYY-MM-DD')
@@ -40,15 +40,15 @@ export const coursesExpired = courses => {
   });
 };
 
-export const coursesVerify = courses => {
+export const coursesVerify = (courses) => {
   if (courses === undefined) {
     return null;
   }
-  return courses.filter(course => !course.verified);
+  return courses.filter((course) => !course.verified);
 };
 
 // returns the user id and only their expired courses
-export const coursesExpiredActiveUser = users => {
+export const coursesExpiredActiveUser = (users) => {
   return users.reduce((result, user) => {
     let currentCourses = coursesExpired(user.courses);
     if (currentCourses.length > 0) {
@@ -62,7 +62,7 @@ export const coursesExpiredActiveUser = users => {
 };
 
 // returns the user id and only their active courses
-export const coursesActiveUser = users => {
+export const coursesActiveUser = (users) => {
   return users.reduce((result, user) => {
     let currentCourses = coursesCurrentVerified(user.courses);
     if (currentCourses.length > 0) {
@@ -73,4 +73,24 @@ export const coursesActiveUser = users => {
     }
     return result;
   }, []);
+};
+
+// return the users courses awaiting verification
+export const coursesUserVerify = (user) => {
+  const VeriList = [];
+  for (let x in user.courses) {
+    let tmpC = {};
+    if (!user.courses[x].verified) {
+      tmpC = {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        imageUrl: user.imageUrl,
+        course: user.courses[x]
+      };
+
+      VeriList.push(tmpC);
+    }
+  }
+  return VeriList;
 };
