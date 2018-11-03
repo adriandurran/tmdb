@@ -68,36 +68,17 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, (allusers) =>
 // COURSES
 
 // get courses awaiting verification from all users
-//  need to sort this out it is a bit dirty
 export const selectAllUsersCoursesVerify = createSelector(
   selectAllUsers,
   (allusers) => {
-    const usersVerifyCourses = allusers.filter((user) => {
-      return user.courses.length > 0 && !user.courses.verified;
-    });
-    const VeriList = [];
-
-    //     usersVerifyCourses.reduce((ctr, userObj) => {
-    // ctr = coursesUserVerify(userObj)
-    //     }[])
-
-    usersVerifyCourses.map((user) => {
-      for (let x in user.courses) {
-        let tmpC = {};
-        if (!user.courses[x].verified) {
-          tmpC = {
-            _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            imageUrl: user.imageUrl,
-            course: user.courses[x]
-          };
-
-          VeriList.push(tmpC);
-        }
-      }
-    });
-    return VeriList;
+    return allusers
+      .filter((user) => {
+        return user.courses.length > 0 && !user.courses.verified;
+      })
+      .reduce((ctr, userObj) => {
+        ctr = ctr.concat(coursesUserVerify(userObj));
+        return ctr;
+      }, []);
   }
 );
 
