@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 
-import { roleUsers, getRole } from '../../../utils/roleHelpers';
+import { roleUsers } from '../../../utils/roleHelpers';
 
 import { selectUsersInDept } from '../../../reducers/selectors/adminSelectors';
 import { selectRoles } from '../../../reducers/selectors/roleSelectors';
 
 class AdminDeptRoleUsers extends Component {
   render() {
-    const { deptUsers, roles, roleId } = this.props;
+    const { deptUsers, roleId } = this.props;
     const rUsers = roleUsers(deptUsers, roleId);
-    const roleComps = getRole(roles, roleId);
+    // const roleComps = getRole(roles, roleId);
     return rUsers.map((user, index) => {
       return (
         <Card key={index} fluid>
