@@ -10,6 +10,7 @@ import {
 } from './utils/courseFilters';
 
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
+import { coursesUserVerify } from './utils/courseFilters';
 
 import { selectRole } from './roleSelectors';
 import { selectCompetencies, selectCompetency } from './compSelectors';
@@ -67,6 +68,7 @@ export const selectAllUsersAdmins = createSelector(selectAllUsers, (allusers) =>
 // COURSES
 
 // get courses awaiting verification from all users
+//  need to sort this out it is a bit dirty
 export const selectAllUsersCoursesVerify = createSelector(
   selectAllUsers,
   (allusers) => {
@@ -74,6 +76,11 @@ export const selectAllUsersCoursesVerify = createSelector(
       return user.courses.length > 0 && !user.courses.verified;
     });
     const VeriList = [];
+
+    //     usersVerifyCourses.reduce((ctr, userObj) => {
+    // ctr = coursesUserVerify(userObj)
+    //     }[])
+
     usersVerifyCourses.map((user) => {
       for (let x in user.courses) {
         let tmpC = {};
