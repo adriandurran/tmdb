@@ -14,24 +14,10 @@ import Header from './components/Header';
 
 import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
-// import RegisterUser from './components/auth/register';
-// import UserLanding from './components/user/UserLanding';
-// import UserProfile from './components/user/profile/UserProfile';
-// import CoursesHome from './components/user/CoursesHome';
-// import CompsHome from './components/user/CompsHome';
 
-// admin components
-// import AdminDashboard from './components/admin/AdminDashboard';
-// import AdminCourseManager from './components/admin/courses/AdminCourseManager';
-// import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
-// import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
-// import AdminUserCseManager from './components/admin/users/courses/AdminUserCseManager';
-// import AdminCourseView from './components/admin/courses/AdminCourseView';
-// import AdminCourseTools from './components/admin/courses/AdminCourseTools';
-
-import AdminCompManager from './components/admin/competencies/AdminCompManager';
-import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
-import AdminCompTools from './components/admin/competencies/AdminCompTools';
+// import AdminCompManager from './components/admin/competencies/AdminCompManager';
+// import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
+// import AdminCompTools from './components/admin/competencies/AdminCompTools';
 
 import AdminRoleManager from './components/admin/roles/AdminRoleManager';
 import AdminRoleView from './components/admin/roles/AdminRoleView';
@@ -84,6 +70,17 @@ const AdminCourseView = lazy(() =>
 );
 const AdminCourseTools = lazy(() =>
   import('./components/admin/courses/AdminCourseTools')
+);
+
+//comps
+const AdminCompManager = lazy(() =>
+  import('./components/admin/competencies/AdminCompManager')
+);
+const AdminCompetencyView = lazy(() =>
+  import('./components/admin/competencies/AdminCompetencyView')
+);
+const AdminCompTools = lazy(() =>
+  import('./components/admin/competencies/AdminCompTools')
 );
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
