@@ -16,24 +16,6 @@ import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
 
-// import AdminCompManager from './components/admin/competencies/AdminCompManager';
-// import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
-// import AdminCompTools from './components/admin/competencies/AdminCompTools';
-
-// import AdminRoleManager from './components/admin/roles/AdminRoleManager';
-// import AdminRoleView from './components/admin/roles/AdminRoleView';
-// import AdminRoleTools from './components/admin/roles/AdminRoleTools';
-
-// import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
-// import AdminUserManager from './components/admin/users/roles/AdminUserManager';
-// import AdminUserTools from './components/admin/users/AdminUserTools';
-
-import AdminDeptView from './components/admin/departments/AdminDeptView';
-import AdminDeptTools from './components/admin/departments/AdminDeptTools';
-import AdminDeptManager from './components/admin/departments/AdminDeptManager';
-import AdminDeptCards from './components/admin/departments/AdminDeptCards';
-import AdminDeptUserView from './components/admin/departments/AdminDeptUserView';
-
 // feed back and versions
 import AppVersion from './components/version/AppVersion';
 import AppFeedback from './components/feedback/AppFeedback';
@@ -52,6 +34,23 @@ const CompsHome = lazy(() => import('./components/user/CompsHome'));
 // Admin components
 // dashboard
 const AdminDashBoard = lazy(() => import('./components/admin/AdminDashboard'));
+
+// dept
+const AdminDeptView = lazy(() =>
+  import('./components/admin/departments/AdminDeptView')
+);
+const AdminDeptTools = lazy(() =>
+  import('./components/admin/departments/AdminDeptTools')
+);
+const AdminDeptManager = lazy(() =>
+  import('./components/admin/departments/AdminDeptManager')
+);
+const AdminDeptCards = lazy(() =>
+  import('./components/admin/departments/AdminDeptCards')
+);
+const AdminDeptUserView = lazy(() =>
+  import('./components/admin/departments/AdminDeptUserView')
+);
 
 // courses
 const AdminCourseManager = lazy(() =>
