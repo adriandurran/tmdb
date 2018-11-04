@@ -24,9 +24,9 @@ import RegisterUser from './components/auth/register';
 // import AdminRoleView from './components/admin/roles/AdminRoleView';
 // import AdminRoleTools from './components/admin/roles/AdminRoleTools';
 
-import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
-import AdminUserManager from './components/admin/users/roles/AdminUserManager';
-import AdminUserTools from './components/admin/users/AdminUserTools';
+// import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
+// import AdminUserManager from './components/admin/users/roles/AdminUserManager';
+// import AdminUserTools from './components/admin/users/AdminUserTools';
 
 import AdminDeptView from './components/admin/departments/AdminDeptView';
 import AdminDeptTools from './components/admin/departments/AdminDeptTools';
@@ -93,6 +93,17 @@ const AdminRoleView = lazy(() =>
 );
 const AdminRoleTools = lazy(() =>
   import('./components/admin/roles/AdminRoleTools')
+);
+
+// user
+const AdminUserAccess = lazy(() =>
+  import('./components/admin/users/access/AdminUserAccess')
+);
+const AdminUserManager = lazy(() =>
+  import('./components/admin/users/roles/AdminUserManager')
+);
+const AdminUserTools = lazy(() =>
+  import('./components/admin/users/AdminUserTools')
 );
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
