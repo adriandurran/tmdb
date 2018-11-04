@@ -15,6 +15,7 @@ import Header from './components/Header';
 import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
+import UserLanding from './components/user/UserLanding';
 
 // feed back and versions
 import AppVersion from './components/version/AppVersion';
@@ -25,8 +26,7 @@ import AdminApplicationTools from './components/admin/apptools/AdminApplicationT
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
 // User components
-// const RegisterUser = lazy(() => import('./components/auth/register'));
-const UserLanding = lazy(() => import('./components/user/UserLanding'));
+// const UserLanding = lazy(() => import('./components/user/UserLanding'));
 const UserProfile = lazy(() => import('./components/user/profile/UserProfile'));
 const CoursesHome = lazy(() => import('./components/user/CoursesHome'));
 const CompsHome = lazy(() => import('./components/user/CompsHome'));
@@ -132,6 +132,7 @@ const PrivateAdminRoute = ({ component: Component, ...rest }) => (
 );
 
 const checkAuth = (user) => {
+  // console.log(user);
   if (!isEmpty(user)) {
     if (user.verified) {
       return true;
@@ -142,6 +143,7 @@ const checkAuth = (user) => {
 };
 
 const checkAdmin = (user) => {
+  // console.log(user);
   if (checkAuth(user)) {
     if (user.isAdmin || user.isSuperAdmin) {
       return true;
@@ -176,7 +178,7 @@ class Routes extends Component {
                   path="/application/feedback"
                   component={AppFeedback}
                 />
-                <PrivateRoute exact path="/users/:id" component={UserLanding} />
+                <Route exact path="/users/:id" component={UserLanding} />
                 <PrivateRoute
                   user={user}
                   exact
