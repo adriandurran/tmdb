@@ -1,5 +1,10 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import React, { Component, Suspense, lazy, Fragment } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 
@@ -16,13 +21,13 @@ import CoursesHome from './components/user/CoursesHome';
 import CompsHome from './components/user/CompsHome';
 
 // admin components
-import AdminDashboard from './components/admin/AdminDashboard';
-import AdminCourseManager from './components/admin/courses/AdminCourseManager';
-import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
-import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
-import AdminUserCseManager from './components/admin/users/courses/AdminUserCseManager';
-import AdminCourseView from './components/admin/courses/AdminCourseView';
-import AdminCourseTools from './components/admin/courses/AdminCourseTools';
+// import AdminDashboard from './components/admin/AdminDashboard';
+// import AdminCourseManager from './components/admin/courses/AdminCourseManager';
+// import AdminCourseTypes from './components/admin/courses/AdminCourseTypes';
+// import AdminCourseLevels from './components/admin/courses/AdminCourseLevels';
+// import AdminUserCseManager from './components/admin/users/courses/AdminUserCseManager';
+// import AdminCourseView from './components/admin/courses/AdminCourseView';
+// import AdminCourseTools from './components/admin/courses/AdminCourseTools';
 
 import AdminCompManager from './components/admin/competencies/AdminCompManager';
 import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
@@ -49,6 +54,30 @@ import AppFeedbckManager from './components/feedback/AppFeedbackManager';
 import AdminApplicationTools from './components/admin/apptools/AdminApplicationTools';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
+
+// Admin components
+
+const AdminDashBoard = lazy(() => import('./components/admin/AdminDashboard'));
+
+// courses
+const AdminCourseManager = lazy(() =>
+  import('./components/admin/courses/AdminCourseManager')
+);
+const AdminCourseTypes = lazy(() =>
+  import('./components/admin/courses/AdminCourseTypes')
+);
+const AdminCourseLevels = lazy(() =>
+  import('./components/admin/courses/AdminCourseLevels')
+);
+const AdminUserCseManager = lazy(() =>
+  import('./components/admin/users/courses/AdminUserCseManager')
+);
+const AdminCourseView = lazy(() =>
+  import('./components/admin/courses/AdminCourseView')
+);
+const AdminCourseTools = lazy(() =>
+  import('./components/admin/courses/AdminCourseTools')
+);
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -100,185 +129,189 @@ class Routes extends Component {
     const { user } = this.props;
 
     return (
-      <BrowserRouter>
-        <div>
-          <Header />
-          <Container style={{ marginTop: '7em' }}>
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/auth/login" component={LoginUser} />
-            <Route exact path="/auth/register" component={RegisterUser} />
-            <PrivateRoute
-              user={user}
-              exact
-              path="/application/version"
-              component={AppVersion}
-            />
-            <PrivateRoute
-              user={user}
-              exact
-              path="/application/feedback"
-              component={AppFeedback}
-            />
-            <Route exact path="/users/:id" component={UserLanding} />
-            <PrivateRoute
-              user={user}
-              exact
-              path="/users/:id/profile"
-              component={UserProfile}
-            />
-            <PrivateRoute
-              user={user}
-              exact
-              path="/users/:id/courses"
-              component={CoursesHome}
-            />
-            <PrivateRoute
-              user={user}
-              exact
-              path="/users/:id/competencies"
-              component={CompsHome}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/dashboard"
-              component={AdminDashboard}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/app-tools"
-              component={AdminApplicationTools}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/course-tools"
-              component={AdminCourseTools}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/course-manager"
-              component={AdminCourseManager}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/course-types"
-              component={AdminCourseTypes}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/course-levels"
-              component={AdminCourseLevels}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/course-manager/view/:id"
-              component={AdminCourseView}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/comp-tools"
-              component={AdminCompTools}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/comp-manager"
-              component={AdminCompManager}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/comp-manager/view/:id"
-              component={AdminCompetencyView}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/role-tools"
-              component={AdminRoleTools}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/role-manager"
-              component={AdminRoleManager}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/role-manager/view/:id"
-              component={AdminRoleView}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/user-tools"
-              component={AdminUserTools}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/user-access-manager"
-              component={AdminUserAccess}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/user-manager"
-              component={AdminUserManager}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/user-courses-manager"
-              component={AdminUserCseManager}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/dept-tools"
-              component={AdminDeptTools}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/dept-manager"
-              component={AdminDeptManager}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/dept-views"
-              component={AdminDeptCards}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/dept-user-view/:id"
-              component={AdminDeptUserView}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/admin/dept-manager/view/:id"
-              component={AdminDeptView}
-            />
-            <PrivateAdminRoute
-              user={user}
-              exact
-              path="/application/feedback-manager"
-              component={AppFeedbckManager}
-            />
-          </Container>
-        </div>
-      </BrowserRouter>
+      <Router>
+        <Suspense fallback={<div>Loading......</div>}>
+          <Fragment>
+            <Header />
+            <Container style={{ marginTop: '7em' }}>
+              <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/auth/login" component={LoginUser} />
+                <Route exact path="/auth/register" component={RegisterUser} />
+                <PrivateRoute
+                  user={user}
+                  exact
+                  path="/application/version"
+                  component={AppVersion}
+                />
+                <PrivateRoute
+                  user={user}
+                  exact
+                  path="/application/feedback"
+                  component={AppFeedback}
+                />
+                <Route exact path="/users/:id" component={UserLanding} />
+                <PrivateRoute
+                  user={user}
+                  exact
+                  path="/users/:id/profile"
+                  component={UserProfile}
+                />
+                <PrivateRoute
+                  user={user}
+                  exact
+                  path="/users/:id/courses"
+                  component={CoursesHome}
+                />
+                <PrivateRoute
+                  user={user}
+                  exact
+                  path="/users/:id/competencies"
+                  component={CompsHome}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/dashboard"
+                  component={AdminDashBoard}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/app-tools"
+                  component={AdminApplicationTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/course-tools"
+                  component={AdminCourseTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/course-manager"
+                  component={AdminCourseManager}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/course-types"
+                  component={AdminCourseTypes}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/course-levels"
+                  component={AdminCourseLevels}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/course-manager/view/:id"
+                  component={AdminCourseView}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/comp-tools"
+                  component={AdminCompTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/comp-manager"
+                  component={AdminCompManager}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/comp-manager/view/:id"
+                  component={AdminCompetencyView}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/role-tools"
+                  component={AdminRoleTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/role-manager"
+                  component={AdminRoleManager}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/role-manager/view/:id"
+                  component={AdminRoleView}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/user-tools"
+                  component={AdminUserTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/user-access-manager"
+                  component={AdminUserAccess}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/user-manager"
+                  component={AdminUserManager}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/user-courses-manager"
+                  component={AdminUserCseManager}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/dept-tools"
+                  component={AdminDeptTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/dept-manager"
+                  component={AdminDeptManager}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/dept-views"
+                  component={AdminDeptCards}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/dept-user-view/:id"
+                  component={AdminDeptUserView}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/admin/dept-manager/view/:id"
+                  component={AdminDeptView}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  exact
+                  path="/application/feedback-manager"
+                  component={AppFeedbckManager}
+                />
+              </Switch>
+            </Container>
+          </Fragment>
+        </Suspense>
+      </Router>
     );
   }
 }
