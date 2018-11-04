@@ -14,14 +14,15 @@ import Header from './components/Header';
 
 import Landing from './components/Landing';
 import LoginUser from './components/auth/login';
+import RegisterUser from './components/auth/register';
 
 // import AdminCompManager from './components/admin/competencies/AdminCompManager';
 // import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
 // import AdminCompTools from './components/admin/competencies/AdminCompTools';
 
-import AdminRoleManager from './components/admin/roles/AdminRoleManager';
-import AdminRoleView from './components/admin/roles/AdminRoleView';
-import AdminRoleTools from './components/admin/roles/AdminRoleTools';
+// import AdminRoleManager from './components/admin/roles/AdminRoleManager';
+// import AdminRoleView from './components/admin/roles/AdminRoleView';
+// import AdminRoleTools from './components/admin/roles/AdminRoleTools';
 
 import AdminUserAccess from './components/admin/users/access/AdminUserAccess';
 import AdminUserManager from './components/admin/users/roles/AdminUserManager';
@@ -42,7 +43,7 @@ import AdminApplicationTools from './components/admin/apptools/AdminApplicationT
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
 // User components
-const RegisterUser = lazy(() => import('./components/auth/register'));
+// const RegisterUser = lazy(() => import('./components/auth/register'));
 const UserLanding = lazy(() => import('./components/user/UserLanding'));
 const UserProfile = lazy(() => import('./components/user/profile/UserProfile'));
 const CoursesHome = lazy(() => import('./components/user/CoursesHome'));
@@ -81,6 +82,17 @@ const AdminCompetencyView = lazy(() =>
 );
 const AdminCompTools = lazy(() =>
   import('./components/admin/competencies/AdminCompTools')
+);
+
+// roles
+const AdminRoleManager = lazy(() =>
+  import('./components/admin/roles/AdminRoleManager')
+);
+const AdminRoleView = lazy(() =>
+  import('./components/admin/roles/AdminRoleView')
+);
+const AdminRoleTools = lazy(() =>
+  import('./components/admin/roles/AdminRoleTools')
 );
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -154,7 +166,7 @@ class Routes extends Component {
                   path="/application/feedback"
                   component={AppFeedback}
                 />
-                <Route exact path="/users/:id" component={UserLanding} />
+                <PrivateRoute exact path="/users/:id" component={UserLanding} />
                 <PrivateRoute
                   user={user}
                   exact
