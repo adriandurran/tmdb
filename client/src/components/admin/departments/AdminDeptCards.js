@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Header, Icon, Card } from 'semantic-ui-react';
+import { Header, Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { selectDepts } from '../../../reducers/selectors/deptSelectors';
-import { selectAllUsersActive } from '../../../reducers/selectors/adminSelectors';
-import { deptUsers } from '../../../utils/deptHelpers';
-import AdminDeptMenu from './AdminDeptMenu';
-import { fetchAllUsers } from '../../../actions/user';
+// import { selectAllUsersActive } from '../../../reducers/selectors/adminSelectors';
 
+import AdminDeptMenu from './AdminDeptMenu';
+import AdminDeptUserStatus from './AdminDeptUserStatus';
+
+import { fetchAllUsers } from '../../../actions/user';
 import { fetchDept } from '../../../actions/dept';
 
 class AdminDeptCards extends Component {
@@ -24,7 +25,7 @@ class AdminDeptCards extends Component {
   };
 
   renderDeptCards() {
-    const { depts, users } = this.props;
+    const { depts } = this.props;
     return depts.map((dept) => {
       return (
         <Card
@@ -36,11 +37,12 @@ class AdminDeptCards extends Component {
           <Card.Content>
             <Header as="h5">{dept.departmentName}</Header>
           </Card.Content>
-          <Card.Content extra>
+          <AdminDeptUserStatus dept={dept._id} />
+          {/* <Card.Content extra>
             <Icon name="users" />
             &nbsp;
             {deptUsers(users, dept._id).length} &nbsp; Users
-          </Card.Content>
+          </Card.Content> */}
         </Card>
       );
     });
@@ -63,8 +65,8 @@ class AdminDeptCards extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    depts: selectDepts(state),
-    users: selectAllUsersActive(state)
+    depts: selectDepts(state)
+    // users: selectAllUsersActive(state)
   };
 };
 

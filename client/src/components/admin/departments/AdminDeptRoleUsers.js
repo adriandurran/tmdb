@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 
 import { roleUsers, getRole } from '../../../utils/roleHelpers';
-import { checkCompExpireDate } from '../../../utils/datehelpers';
+import { checkCompExpireDate0 } from '../../../utils/datehelpers';
 
 import { selectUsersInDept } from '../../../reducers/selectors/adminSelectors';
 import { selectRoles } from '../../../reducers/selectors/roleSelectors';
@@ -18,6 +18,7 @@ class AdminDeptRoleUsers extends Component {
     };
   }
 
+  // bit rough and ready
   checkComps(courses, comps) {
     for (let x in comps.competencies) {
       if (!compsHolderCheck(courses, comps.competencies[x])) {
@@ -26,9 +27,10 @@ class AdminDeptRoleUsers extends Component {
     }
   }
 
+  // this looks at the course comps and if they expire in 0 months or less....
   checkCompExpire(courses, comps) {
     for (let x in comps.competencies) {
-      if (checkCompExpireDate(comps.competencies[x], courses)) {
+      if (checkCompExpireDate0(comps.competencies[x], courses)) {
         this.setState({ expire: true });
       }
     }
@@ -46,7 +48,7 @@ class AdminDeptRoleUsers extends Component {
         <Card
           key={index}
           fluid
-          {...(!hasComp ? { color: 'red' } : { color: 'green' })}
+          {...(!hasComp && expire ? { color: 'red' } : { color: 'green' })}
         >
           <Card.Content>
             <Image floated="right" size="mini" src={user.imageUrl} />
@@ -55,7 +57,9 @@ class AdminDeptRoleUsers extends Component {
             </Card.Header>
             <Card.Meta>{user.username}</Card.Meta>
             <Card.Description>
-              Reserved for adding in Role competencies here (and status)
+              {hasComp && !expire
+                ? 'Has required competencies and is in date'
+                : 'Either does not have the required competencies or courses have expired'}
             </Card.Description>
           </Card.Content>
         </Card>
