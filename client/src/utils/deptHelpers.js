@@ -7,8 +7,7 @@ export const deptUsers = (users, deptId) => {
     .filter((user) => user.department._id === deptId);
 };
 
-// return a distinct set of roles for a dept of users
-
+// return a distinct set of role ids for a dept of users
 export const deptRoles = (users) => {
   return users
     .filter((user) => user.roles.length > 0 && user.roles !== null)
