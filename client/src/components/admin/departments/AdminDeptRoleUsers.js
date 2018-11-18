@@ -2,19 +2,52 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 
-import { roleUsers } from '../../../utils/roleHelpers';
+import { roleUsers, getRole } from '../../../utils/roleHelpers';
+import { checkCompExpireDate } from '../../../utils/datehelpers';
 
 import { selectUsersInDept } from '../../../reducers/selectors/adminSelectors';
 import { selectRoles } from '../../../reducers/selectors/roleSelectors';
+import { compsHolderCheck } from '../../../utils/compHelpers';
 
 class AdminDeptRoleUsers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expire: false,
+      hasComp: true
+    };
+  }
+
+  checkComps(courses, comps) {
+    for (let x in comps.competencies) {
+      if (!compsHolderCheck(courses, comps.competencies[x])) {
+        this.setState({ hasComp: false });
+      }
+    }
+  }
+
+  checkCompExpire(courses, comps) {
+    for (let x in comps.competencies) {
+      if (checkCompExpireDate(comps.competencies[x], courses)) {
+        this.setState({ expire: true });
+      }
+    }
+  }
+
   render() {
-    const { deptUsers, roleId } = this.props;
+    const { deptUsers, roleId, roles } = this.props;
+    const { hasComp, expire } = this.state;
     const rUsers = roleUsers(deptUsers, roleId);
-    // const roleComps = getRole(roles, roleId);
+    const roleComps = getRole(roles, roleId);
     return rUsers.map((user, index) => {
+      this.checkComps(user.courses, roleComps[0]);
+      this.checkCompExpire(user.courses, roleComps[0]);
       return (
-        <Card key={index} fluid>
+        <Card
+          key={index}
+          fluid
+          {...(!hasComp ? { color: 'red' } : { color: 'green' })}
+        >
           <Card.Content>
             <Image floated="right" size="mini" src={user.imageUrl} />
             <Card.Header>
@@ -39,3 +72,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(AdminDeptRoleUsers);
+
+// get an array of user courses that have not expired.
+// get comps for a role and check if yes if no warn
+// check courses in comp have not expired or within 3 months
