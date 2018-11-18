@@ -34,6 +34,7 @@ class AdminDeptUserView extends Component {
 
   render() {
     const { dept, roles, deptUsers } = this.props;
+    // console.log(deptUsers);
     return (
       <div>
         <Header as="h2" textAlign="center">
