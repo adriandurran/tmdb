@@ -59,7 +59,16 @@ class AdminDashboard extends Component {
         </Header>
 
         <Segment basic style={{ marginTop: '2em' }}>
-          <Card.Group itemsPerRow={3}>
+          <Card.Group itemsPerRow={1}>
+            <Card as={Link} to="/admin/dept-tools" raised>
+              <Card.Content>
+                <Header as="h2">Unit</Header>
+              </Card.Content>
+              <Card.Content description="Unit Views & Reports" />
+              <Card.Content extra />
+            </Card>
+          </Card.Group>
+          <Card.Group itemsPerRow={2}>
             <Card as={Link} to="/admin/dept-tools" raised>
               <Card.Content>
                 <Header as="h2">Departments</Header>
@@ -74,6 +83,8 @@ class AdminDashboard extends Component {
               <Card.Content description="Add & Manage & View Users" />
               <Card.Content extra />
             </Card>
+          </Card.Group>
+          <Card.Group itemsPerRow={3}>
             <Card as={Link} to="/admin/role-tools" raised>
               <Card.Content>
                 <Header as="h2">Roles</Header>
@@ -95,6 +106,8 @@ class AdminDashboard extends Component {
               <Card.Content description="Add & Manage & View Courses" />
               <Card.Content extra />
             </Card>
+          </Card.Group>
+          <Card.Group itemsPerRow={1}>
             <Card as={Link} to="/admin/app-tools" raised>
               <Card.Content>
                 <Header as="h2">Application</Header>
