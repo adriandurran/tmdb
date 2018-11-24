@@ -24,7 +24,7 @@ class AdminDeptUserView extends Component {
           <Header as="h5" textAlign="center">
             {role.roleName}
           </Header>
-          <Card.Group itemsPerRow={3} centered>
+          <Card.Group itemsPerRow={2} centered>
             <AdminDeptRoleUsers roleId={role._id} />
           </Card.Group>
         </Grid.Column>
