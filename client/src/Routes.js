@@ -24,6 +24,7 @@ import AppFeedbckManager from './components/feedback/AppFeedbackManager';
 import AdminApplicationTools from './components/admin/apptools/AdminApplicationTools';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
+// import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
 
 // User components
 // const UserLanding = lazy(() => import('./components/user/UserLanding'));
@@ -215,6 +216,7 @@ class Routes extends Component {
                 />
                 <PrivateAdminRoute
                   user={user}
+                  exact
                   path="/admin/course-manager"
                   component={AdminCourseManager}
                 />
@@ -241,6 +243,7 @@ class Routes extends Component {
                 />
                 <PrivateAdminRoute
                   user={user}
+                  exact
                   path="/admin/comp-manager"
                   component={AdminCompManager}
                 />
@@ -255,6 +258,7 @@ class Routes extends Component {
                   component={AdminRoleTools}
                 />
                 <PrivateAdminRoute
+                  exact
                   user={user}
                   path="/admin/role-manager"
                   component={AdminRoleManager}
@@ -290,6 +294,7 @@ class Routes extends Component {
                   component={AdminDeptTools}
                 />
                 <PrivateAdminRoute
+                  exact
                   user={user}
                   path="/admin/dept-manager"
                   component={AdminDeptManager}

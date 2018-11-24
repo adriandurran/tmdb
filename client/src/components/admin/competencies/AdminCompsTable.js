@@ -32,7 +32,7 @@ class AdminCompsTable extends Component {
     });
   }
 
-  rowClick = id => {
+  rowClick = (id) => {
     const { fetchCompetency, history } = this.props;
     fetchCompetency(id).then(() => {
       // open new page
@@ -40,7 +40,7 @@ class AdminCompsTable extends Component {
     });
   };
 
-  handleSort = clickedColumn => () => {
+  handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state;
 
     if (column !== clickedColumn) {
@@ -72,7 +72,7 @@ class AdminCompsTable extends Component {
 
   renderTableRows() {
     const { data } = this.state;
-    return data.map(comp => {
+    return data.map((comp) => {
       return (
         <Table.Row key={comp._id} onClick={() => this.rowClick(comp._id)}>
           <Table.Cell>{comp.shortName}</Table.Cell>
@@ -130,7 +130,7 @@ class AdminCompsTable extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     comps: selectCompetencies(state)
   };
