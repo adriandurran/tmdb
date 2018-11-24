@@ -24,10 +24,18 @@ const feedbackRoutes = require('./routes/feedbackRoutes');
 mongoose
   .connect(
     keys.mongoURI,
-    { useNewUrlParser: true }
+    {
+      useNewUrlParser: true,
+      poolSize: 10,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+      reconnectInterval: 500 // Reconnect every 500ms
+    }
   )
   .then(() => console.log('Database connection successful'))
   .catch((err) => console.log('Unable to connect to database', err));
+// .finally(() => console.log('And yeah?'));
 
 const app = express();
 

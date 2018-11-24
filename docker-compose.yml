@@ -1,4 +1,4 @@
-version: "3"
+version: '3.5'
 
 services:
   server:
@@ -7,22 +7,23 @@ services:
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules/
+    container_name: tmdb_server
     env_file:
       - server.env
     ports:
       - 3050:3050
     depends_on:
       - db
-    command: ["nodemon", "index.js"]
-    networks:
-      - tmdb
+    command: ['nodemon', 'index.js']
+    # networks:
+    #   - tmdb
 
   db:
     image: mongo:latest
     volumes:
       - ./docker/data/db:/data/db
-    networks:
-      - tmdb
-
-networks:
-  tmdb:
+    # networks:
+    #   - tmdb
+    container_name: tmbd_db
+# networks:
+#   tmdb:
