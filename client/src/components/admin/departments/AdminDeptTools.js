@@ -3,6 +3,8 @@ import { Header, Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectDepts } from '../../../reducers/selectors/deptSelectors';
+import { selectAllUsersActiveNoDept } from '../../../reducers/selectors/adminSelectors';
+
 import { fetchDepts } from '../../../actions/dept';
 
 class AdminDeptTools extends Component {
@@ -11,7 +13,7 @@ class AdminDeptTools extends Component {
   }
 
   render() {
-    const { depts } = this.props;
+    const { depts, noDepts } = this.props;
     return (
       <div>
         <Header as="h2" textAlign="center">
@@ -35,6 +37,16 @@ class AdminDeptTools extends Component {
             <Card.Content description="View Departments" />
             <Card.Content extra />
           </Card>
+          <Card as={Link} to="/admin/users-no-dept" raised>
+            <Card.Content>
+              <Header as="h2">Department Allocator</Header>
+            </Card.Content>
+            <Card.Content description="Allocate Users to Departments" />
+            <Card.Content extra>
+              <Icon name="hand paper" />
+              {noDepts.length}&nbsp;Orphaned users
+            </Card.Content>
+          </Card>
         </Card.Group>
       </div>
     );
@@ -43,7 +55,8 @@ class AdminDeptTools extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    depts: selectDepts(state)
+    depts: selectDepts(state),
+    noDepts: selectAllUsersActiveNoDept(state)
   };
 };
 
