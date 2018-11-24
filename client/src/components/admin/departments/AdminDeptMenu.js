@@ -19,6 +19,11 @@ const AdminDeptMenu = (props) => {
           to={'/admin/dept-manager'}
         />
         <Menu.Item name="Department Views" as={Link} to={'/admin/dept-views'} />
+        <Menu.Item
+          name="Department Allocator"
+          as={Link}
+          to={'/admin/users-no-dept'}
+        />
       </Menu>
     </div>
   );

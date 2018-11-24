@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 
@@ -10,16 +10,28 @@ import { selectRoles } from '../../../reducers/selectors/roleSelectors';
 import { compsHolderCheck } from '../../../utils/compHelpers';
 
 class AdminDeptRoleUsers extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expire: false,
-      hasComp: true
-    };
+  state = {
+    expire: false,
+    hasComp: true,
+    rUsers: [],
+    roleComps: []
+  };
+
+  componentDidMount() {
+    const { deptUsers, roleId, roles } = this.props;
+    const rUsers = roleUsers(deptUsers, roleId);
+    this.setState({ rUsers });
+    const roleComps = getRole(roles, roleId);
+    console.log(roleComps);
+    for (let x in rUsers) {
+      this.checkComps(rUsers[x].courses, roleComps[0]);
+      this.checkCompExpire(rUsers[x].courses, roleComps[0]);
+    }
   }
 
   // bit rough and ready
   checkComps(courses, comps) {
+    console.log(comps);
     for (let x in comps.competencies) {
       if (!compsHolderCheck(courses, comps.competencies[x])) {
         this.setState({ hasComp: false });
@@ -36,14 +48,11 @@ class AdminDeptRoleUsers extends Component {
     }
   }
 
-  render() {
-    const { deptUsers, roleId, roles } = this.props;
-    const { hasComp, expire } = this.state;
-    const rUsers = roleUsers(deptUsers, roleId);
-    const roleComps = getRole(roles, roleId);
+  renderRoleUsers() {
+    const { hasComp, expire, rUsers } = this.state;
     return rUsers.map((user, index) => {
-      this.checkComps(user.courses, roleComps[0]);
-      this.checkCompExpire(user.courses, roleComps[0]);
+      // this.checkComps(user.courses, roleComps[0]);
+      // this.checkCompExpire(user.courses, roleComps[0]);
       return (
         <Card
           key={index}
@@ -65,6 +74,10 @@ class AdminDeptRoleUsers extends Component {
         </Card>
       );
     });
+  }
+
+  render() {
+    return <Fragment> {this.renderRoleUsers()}</Fragment>;
   }
 }
 
