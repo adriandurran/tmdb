@@ -56,16 +56,12 @@ class AdminDeptUserView extends Component {
           </Breadcrumb.Section>
         </Breadcrumb>
         {deptUsers.length > 0 ? (
-          <Grid celled centered>
+          <Grid centered>
+            <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
+              Roles
+            </Header>
             {roles.length > 0 && (
               <Grid.Row columns={roles.length}>
-                <Header
-                  as="h4"
-                  textAlign="center"
-                  style={{ marginTop: '0.5em' }}
-                >
-                  Roles
-                </Header>
                 {this.renderRoleColumns()}
               </Grid.Row>
             )}

@@ -22,7 +22,6 @@ class AdminDeptRoleUsers extends Component {
     const rUsers = roleUsers(deptUsers, roleId);
     this.setState({ rUsers });
     const roleComps = getRole(roles, roleId);
-    console.log(roleComps);
     for (let x in rUsers) {
       this.checkComps(rUsers[x].courses, roleComps[0]);
       this.checkCompExpire(rUsers[x].courses, roleComps[0]);
@@ -31,7 +30,6 @@ class AdminDeptRoleUsers extends Component {
 
   // bit rough and ready
   checkComps(courses, comps) {
-    console.log(comps);
     for (let x in comps.competencies) {
       if (!compsHolderCheck(courses, comps.competencies[x])) {
         this.setState({ hasComp: false });
@@ -57,7 +55,7 @@ class AdminDeptRoleUsers extends Component {
         <Card
           key={index}
           fluid
-          {...(!hasComp && expire ? { color: 'red' } : { color: 'green' })}
+          {...(!hasComp || expire ? { color: 'red' } : { color: 'green' })}
         >
           <Card.Content>
             <Image floated="right" size="mini" src={user.imageUrl} />
