@@ -49,8 +49,6 @@ class AdminDeptRoleUsers extends Component {
   renderRoleUsers() {
     const { hasComp, expire, rUsers } = this.state;
     return rUsers.map((user, index) => {
-      // this.checkComps(user.courses, roleComps[0]);
-      // this.checkCompExpire(user.courses, roleComps[0]);
       return (
         <Card
           key={index}
