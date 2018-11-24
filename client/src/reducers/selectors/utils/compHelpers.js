@@ -25,7 +25,7 @@ export const compsHolderCheck = (courses, comp) => {
     return null;
   }
   let arrUserCoursesId = courses.map((course) => course._course._id);
-  console.log(arrUserCoursesId);
+  // console.log(arrUserCoursesId);
   let curlength = arrUserCoursesId.length;
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   if (arrCompCoursesId.length <= curlength) {
