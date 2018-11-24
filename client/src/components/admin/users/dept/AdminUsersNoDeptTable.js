@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
+import AdminDeptMenu from '../../departments/AdminDeptMenu';
+
 import { selectAllUsersActiveNoDept } from '../../../../reducers/selectors/adminSelectors';
 import { fetchUser } from '../../../../actions/user';
 
@@ -30,7 +32,7 @@ class AdminUsersNoDeptTable extends Component {
     });
   }
 
-  handleSort = clickedColumn => () => {
+  handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state;
 
     if (column !== clickedColumn) {
@@ -49,7 +51,7 @@ class AdminUsersNoDeptTable extends Component {
     });
   };
 
-  rowClick = id => {
+  rowClick = (id) => {
     const { history, fetchUser } = this.props;
     fetchUser(id).then(() => {
       history.push(`/admin/user-manager`);
@@ -69,7 +71,7 @@ class AdminUsersNoDeptTable extends Component {
 
   renderTableRows() {
     const { data } = this.state;
-    return data.map(user => {
+    return data.map((user) => {
       return (
         <Table.Row key={user._id} onClick={() => this.rowClick(user._id)}>
           <Table.Cell>{user.firstName}</Table.Cell>
@@ -85,9 +87,10 @@ class AdminUsersNoDeptTable extends Component {
 
     return (
       <div>
-        <Header as="h3" textAlign="center">
-          Users with no Department assigned
+        <Header as="h2" textAlign="center">
+          Departments
         </Header>
+        <AdminDeptMenu />
         <Table sortable celled striped selectable>
           <Table.Header>
             <Table.Row>
@@ -118,7 +121,7 @@ class AdminUsersNoDeptTable extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: selectAllUsersActiveNoDept(state)
   };
