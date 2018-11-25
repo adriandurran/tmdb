@@ -22,16 +22,16 @@ export const addUserCourse = (user, course) => async (dispatch) => {
   // return res.data;
 };
 
-export const adminVerifyUserCourse = (user, course) => async (dispatch) => {
+export const adminVerifyUserCourse = (user, course, currUser) => async (
+  dispatch
+) => {
   const res = await axios.put(`/api/tmdb/user/${user}/verify-course`, {
     course
   });
   if (res.status === 200) {
     // update redux
     dispatch({ type: ADMIN_USER_META, payload: res.data });
-    if (user === res.data._id) {
-      // console.log('user', curr);
-      // console.log('data', res.data);
+    if (currUser === res.data._id) {
       dispatch({ type: FETCH_USER, payload: res.data });
     }
   } else {

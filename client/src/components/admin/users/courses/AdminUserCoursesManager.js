@@ -5,11 +5,12 @@ import Moment from 'react-moment';
 
 import { adminVerifyUserCourse } from '../../../../actions/user';
 import { selectAllUsersCoursesVerify } from '../../../../reducers/selectors/adminSelectors';
+import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
 
 class AdminUserCoursesManager extends Component {
   verifyCourse = (e, { value }) => {
-    const { adminVerifyUserCourse } = this.props;
-    adminVerifyUserCourse(value.userId, value.userCourseId);
+    const { adminVerifyUserCourse, currUser } = this.props;
+    adminVerifyUserCourse(value.userId, value.userCourseId, currUser._id);
   };
 
   renderCourseList() {
@@ -55,7 +56,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   return {
-    users: selectAllUsersCoursesVerify(state)
+    users: selectAllUsersCoursesVerify(state),
+    currUser: selectCurrentUser(state)
   };
 };
 

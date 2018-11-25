@@ -24,10 +24,8 @@ import AppFeedbckManager from './components/feedback/AppFeedbackManager';
 import AdminApplicationTools from './components/admin/apptools/AdminApplicationTools';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
-// import AdminCompetencyView from './components/admin/competencies/AdminCompetencyView';
 
 // User components
-// const UserLanding = lazy(() => import('./components/user/UserLanding'));
 const UserProfile = lazy(() => import('./components/user/profile/UserProfile'));
 const CoursesHome = lazy(() => import('./components/user/CoursesHome'));
 const CompsHome = lazy(() => import('./components/user/CompsHome'));
