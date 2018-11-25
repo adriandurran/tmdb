@@ -50,12 +50,20 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
+  isManager: {
+    type: Boolean,
+    default: false
+  },
   joinDate: {
     type: Date
   },
   department: {
     type: Schema.Types.ObjectId,
     ref: 'Department'
+  },
+  lineReport: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   courses: [
     {
