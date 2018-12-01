@@ -351,13 +351,9 @@ module.exports = {
         firstName,
         lastName,
         username,
-        password,
-        verified,
-        isAdmin,
-        isSuperAdmin
+        password
       } = req.body.data.newUser;
 
-      const joinDate = Date.now();
       let newUser = new User();
 
       let passwordHash = await newUser.generateHash(password);
@@ -367,11 +363,7 @@ module.exports = {
         userId,
         firstName,
         lastName,
-        passwordHash,
-        joinDate,
-        verified,
-        isAdmin,
-        isSuperAdmin
+        passwordHash
       })
         .then((user) => res.status(200).send(user))
         .catch((err) => res.status(400).send(err));
