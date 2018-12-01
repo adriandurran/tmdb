@@ -1,7 +1,6 @@
 docker/data/db
+docker/data/demo_db
 docker/data/.DS_Store
 docker/.DS_Store
-server/config/dev.js
 .DS_Store
-server.env
 
