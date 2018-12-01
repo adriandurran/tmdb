@@ -6,5 +6,12 @@ module.exports = {
       fakeId += possibles.charAt(Math.floor(Math.random() * possibles.length));
     }
     return fakeId;
+  },
+  shortName: (name, lng) => {
+    return name.substring(0, lng);
+  },
+
+  randomNumberRange: (start, end) => {
+    return Math.floor(Math.random() * end) + start;
   }
 };
