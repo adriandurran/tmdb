@@ -17,6 +17,7 @@ const roleRoutes = require('./routes/roleRoutes');
 const userRoutes = require('./routes/userRoutes');
 const deptRoutes = require('./routes/deptRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
+const demoDataRoutes = require('./routes/demoDataRoutes');
 
 // connect to mongo db
 mongoose
@@ -75,6 +76,7 @@ app.use('/api/tmdb/roles', roleRoutes);
 app.use('/api/tmdb/user', userRoutes);
 app.use('/api/tmdb/dept', deptRoutes);
 app.use('/api/tmdb/extra', feedbackRoutes);
+app.use('/api/tmdb/demo', demoDataRoutes);
 
 app.use(express.static('client'));
 const path = require('path');

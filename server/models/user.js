@@ -55,7 +55,8 @@ const userSchema = new Schema({
     default: false
   },
   joinDate: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   department: {
     type: Schema.Types.ObjectId,
