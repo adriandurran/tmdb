@@ -35,7 +35,6 @@ mongoose
   )
   .then(() => console.log('Database connection successful'))
   .catch((err) => console.log('Unable to connect to database', err));
-// .finally(() => console.log('And yeah?'));
 
 const app = express();
 
