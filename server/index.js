@@ -8,8 +8,6 @@ const sslRedirect = require('heroku-ssl-redirect');
 
 const morgan = require('morgan');
 
-const keys = require('./config/keys');
-
 require('./models/user');
 require('./services/passport');
 const authRoutes = require('./routes/authRoutes');
@@ -23,7 +21,7 @@ const feedbackRoutes = require('./routes/feedbackRoutes');
 // connect to mongo db
 mongoose
   .connect(
-    keys.mongoURI,
+    process.env.MONGODB_URI,
     {
       useNewUrlParser: true,
       poolSize: 10,
@@ -58,7 +56,7 @@ app.use(
   cookieSession({
     name: 'tmdb',
     maxAge: 3 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
+    keys: [process.env.COOKIE_KEY]
     // httpOnly: true,
     // secure: true
   })
@@ -86,6 +84,8 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 3050;
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`Server up and connected on PORT: ${PORT}`);
+});
 
 module.exports = app;
