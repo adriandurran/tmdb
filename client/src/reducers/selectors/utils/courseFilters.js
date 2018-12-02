@@ -4,7 +4,6 @@ export const coursesCurrentVerified = (courses) => {
   if (courses === undefined) {
     return null;
   }
-
   let today = moment(new Date(), 'YYYY-MM-DD').format();
   return courses
     .filter((course) => {

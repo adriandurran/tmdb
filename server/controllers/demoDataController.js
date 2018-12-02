@@ -16,6 +16,12 @@ const courseLevels = ['Practioner', 'Foundation', 'Expert'];
 
 module.exports = {
   demoUsers: async (req, res) => {
+    try {
+      await User.deleteMany({});
+    } catch (error) {
+      console.log(error);
+      res.status(418).send(error);
+    }
     //  drop the Users who are not superAdmin
     User.deleteMany({ isSuperAdmin: false }, (err) => {
       if (err) {
