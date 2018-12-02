@@ -175,7 +175,7 @@ module.exports = {
       const compTypeIds = compTypeEntries.map((compType) => compType._id);
 
       for (let i = 0; i < 20; i++) {
-        let compName = faker.name.jobTitle();
+        let compName = `${faker.company.catchPhraseAdjective()} ${faker.company.bsNoun()} ${faker.commerce.product()} ${faker.name.jobType()}`;
         let shortName = demoHelpers.shortName(compName, 3);
         //    get a random comptype id
         let compType =
@@ -235,7 +235,7 @@ module.exports = {
       compEntries = await Competency.find({});
       const compIds = compEntries.map((comp) => comp._id);
       for (let i = 0; i < 30; i++) {
-        let roleName = `${faker.company.catchPhraseAdjective()} ${faker.company.bsNoun()} ${faker.commerce.product()} ${faker.name.jobType()}`;
+        let roleName = faker.name.jobTitle();
         let competencies = demoHelpers.randomCompCourseGenerator(compIds, 1, 4);
         await Role.create({ roleName, competencies });
       }
