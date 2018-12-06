@@ -24,6 +24,7 @@ class CoursesHome extends Component {
     return (
       <div>
         <Grid>
+          {/*  insert another row here with courses needed to achieve req comps */}
           <Grid.Row columns={2}>
             <Grid.Column>
               <CoursesSearch />

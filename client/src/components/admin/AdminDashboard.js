@@ -59,7 +59,7 @@ class AdminDashboard extends Component {
         </Header>
 
         <Segment basic style={{ marginTop: '2em' }}>
-          <Card.Group itemsPerRow={1}>
+          {/* <Card.Group itemsPerRow={1}>
             <Card as={Link} to="/admin/dept-tools" raised>
               <Card.Content>
                 <Header as="h2">Unit</Header>
@@ -67,7 +67,7 @@ class AdminDashboard extends Component {
               <Card.Content description="Unit Views & Reports" />
               <Card.Content extra />
             </Card>
-          </Card.Group>
+          </Card.Group> */}
           <Card.Group itemsPerRow={2}>
             <Card as={Link} to="/admin/dept-tools" raised>
               <Card.Content>
