@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { Item, Header, Segment, Icon, List } from 'semantic-ui-react';
@@ -62,20 +62,26 @@ class UserReqComps extends Component {
             )}
 
             {compExist(comp, currentComps) ? (
-              ''
-            ) : (
-              <Item.Description
-                style={
-                  cType === 'Required' ? { color: 'red' } : { color: 'orange' }
-                }
-              >
-                You do not have this Competency or the required courses for this
-                Competency are out of date.
+              <Item.Description>
+                <List bulleted>{this.renderCompCoursesUser(comp)}</List>
               </Item.Description>
+            ) : (
+              <Fragment>
+                <Item.Description>
+                  <List bulleted>{this.renderCompCourses(comp)}</List>
+                </Item.Description>
+                <Item.Extra
+                  style={
+                    cType === 'Required'
+                      ? { color: 'red' }
+                      : { color: 'orange' }
+                  }
+                >
+                  You do not have this Competency or the required courses for
+                  this Competency are out of date.
+                </Item.Extra>
+              </Fragment>
             )}
-            <Item.Extra>
-              <List bulleted>{this.renderCompCourses(comp)}</List>
-            </Item.Extra>
           </Item.Content>
         </Item>
       );
@@ -83,6 +89,24 @@ class UserReqComps extends Component {
   }
 
   renderCompCourses(comp) {
+    console.log(comp);
+    return comp.courses.map((course) => {
+      return (
+        <List.Item key={course._id}>
+          {checkCourseHasExpireDate(course) ? (
+            <span>
+              {course.courseName} &nbsp; expires after {course.validity}{' '}
+              months&nbsp;
+            </span>
+          ) : (
+            <span>{course.courseName} &nbsp; does not expire </span>
+          )}
+        </List.Item>
+      );
+    });
+  }
+
+  renderCompCoursesUser(comp) {
     const { userCourses } = this.props;
     let ucs = getUserCoursesForComp(comp, userCourses);
     return ucs.map((uc) => {
