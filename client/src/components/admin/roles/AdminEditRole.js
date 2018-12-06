@@ -32,7 +32,7 @@ class AdminEditRole extends Component {
       let message = { ...this.state.message };
       message.header = `Edit ${role.roleName}`;
       this.setState({
-        cForR: role.competencies.map(comp => comp._id),
+        cForR: role.competencies.map((comp) => comp._id),
         message
       });
     }
@@ -62,7 +62,7 @@ class AdminEditRole extends Component {
     const { role, adminUpdateRole } = this.props;
     let upRole = { roleName: values.roleName, competencies: this.state.cForR };
 
-    adminUpdateRole(role._id, upRole).then(res => {
+    adminUpdateRole(role._id, upRole).then((res) => {
       let message = { ...this.state.message };
       if (res.status === 200) {
         message.header = 'Success!';
@@ -97,7 +97,7 @@ class AdminEditRole extends Component {
           negative={message.negative}
         />
         <Segment attached>
-          <Form onSubmit={handleSubmit(values => this.updateRole(values))}>
+          <Form onSubmit={handleSubmit((values) => this.updateRole(values))}>
             <Form.Group>
               <Field
                 component={semanticFormField}
@@ -136,7 +136,7 @@ const mapDispatchToProps = {
   adminUpdateRole
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     role: selectRole(state),
     comps: selectCompetenciesForDropDown(state),
