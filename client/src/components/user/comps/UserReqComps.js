@@ -89,7 +89,6 @@ class UserReqComps extends Component {
   }
 
   renderCompCourses(comp) {
-    console.log(comp);
     return comp.courses.map((course) => {
       return (
         <List.Item key={course._id}>

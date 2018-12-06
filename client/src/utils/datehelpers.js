@@ -2,7 +2,6 @@ import moment from 'moment';
 import _ from 'lodash';
 
 export const checkCourseHasExpireDate = (course) => {
-  console.log(course);
   if (
     course.validity === undefined ||
     course.validity === '' ||
