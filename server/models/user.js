@@ -76,7 +76,8 @@ const userSchema = new Schema({
       verified: { type: Boolean, default: false }
     }
   ],
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }]
+  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+  ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }]
 });
 
 userSchema.methods.validPassword = async (user, password) => {
