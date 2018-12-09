@@ -15,6 +15,10 @@ const ojtSchema = new Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  note: {
+    type: String,
+    trim: true
   }
 });
 
