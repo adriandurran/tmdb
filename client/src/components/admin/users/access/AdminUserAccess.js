@@ -24,13 +24,10 @@ class AdminUserAccess extends Component {
         </Header>
         <AdminUserMenu />
         <Grid celled centered style={{ marginTop: '0.5em' }} attached="bottom">
-          <Grid.Row>
+          <Grid.Row columns={3}>
             <Grid.Column>
               <AdminUserVerify />
             </Grid.Column>
-          </Grid.Row>
-          {/* {user.isSuperAdmin && ( */}
-          <Grid.Row columns={2}>
             <Grid.Column>
               <AdminUserAccessManage />
             </Grid.Column>
@@ -38,7 +35,6 @@ class AdminUserAccess extends Component {
               <AdminUsersAdmini />
             </Grid.Column>
           </Grid.Row>
-          {/* )} */}
         </Grid>
       </div>
     );
