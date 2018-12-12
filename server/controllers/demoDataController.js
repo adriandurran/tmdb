@@ -66,12 +66,24 @@ module.exports = {
     }
 
     try {
+      let depName = [];
       for (let i = 0; i < 8; i++) {
         let departmentName = faker.commerce.department();
-        let departmentCode = demoHelpers.shortName(departmentName, 2);
-
-        await Department.create({ departmentName, departmentCode });
+        // let departmentCode = demoHelpers.shortName(departmentName, 2);
+        depName.push(departmentName);
+        // await Department.create({ departmentName, departmentCode });
       }
+      // get rid of any duplicates
+      let newDepName = [...new Set(depName)];
+
+      // now loop over array to get shortname and add to db
+      for (let x in newDepName) {
+        await Department.create({
+          departmentName: newDepName[x],
+          departmentCode: demoHelpers.shortName(newDepName[x], 2)
+        });
+      }
+
       const newDepts = await Department.find({});
       res.status(200).send(newDepts);
     } catch (error) {
