@@ -1,5 +1,5 @@
 const faker = require('faker');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const demoHelpers = require('../utils/demoHelpers');
 const User = require('../models/user');
 const Department = require('../models/departments');
