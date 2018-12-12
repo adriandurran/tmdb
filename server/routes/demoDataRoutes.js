@@ -11,5 +11,6 @@ router.get('/courses', demoData.demoCourses);
 router.get('/comptypes', demoData.demoCompType);
 router.get('/comps', demoData.demoComps);
 router.get('/roles', demoData.demoRoles);
+router.get('/feedback', demoData.demoFeedback);
 
 module.exports = router;
