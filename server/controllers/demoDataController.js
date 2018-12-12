@@ -9,12 +9,25 @@ const Course = require('../models/course');
 const CourseLevel = require('../models/courseLevel');
 const CourseType = require('../models/courseType');
 const Role = require('../models/role');
+const FeedBack = require('../models/feedback');
 
 const compTypes = ['Desired', 'Required', 'Essential'];
 const courseTypes = ['Professional', 'Personal'];
 const courseLevels = ['Practioner', 'Foundation', 'Expert'];
 
 module.exports = {
+  demoFeedback: async (req, res) => {
+    try {
+      await FeedBack.collection.drop();
+    } catch (error) {
+      if (error.code === 26) {
+        console.log('namespace %s not found', Feedback.collection.name);
+      } else {
+        throw e;
+      }
+    }
+  },
+
   demoUsers: async (req, res) => {
     try {
       await User.deleteMany({});
