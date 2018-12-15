@@ -84,7 +84,7 @@ class AdminDashboard extends Component {
               <Card.Content extra />
             </Card>
           </Card.Group>
-          <Card.Group itemsPerRow={3}>
+          <Card.Group itemsPerRow={4}>
             <Card as={Link} to="/admin/role-tools" raised>
               <Card.Content>
                 <Header as="h2">Roles</Header>
@@ -104,6 +104,13 @@ class AdminDashboard extends Component {
                 <Header as="h2">Courses</Header>
               </Card.Content>
               <Card.Content description="Add & Manage & View Courses" />
+              <Card.Content extra />
+            </Card>
+            <Card as={Link} to="/admin/ojt-tools" raised>
+              <Card.Content>
+                <Header as="h2">On the Job Training</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage On the Job Training" />
               <Card.Content extra />
             </Card>
           </Card.Group>
