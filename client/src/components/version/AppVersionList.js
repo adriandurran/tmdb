@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
+import ReactMarkdown from 'react-markdown';
 
 import { Header, Item } from 'semantic-ui-react';
 
@@ -14,7 +15,7 @@ class AppVersionList extends Component {
 
   renderVersions() {
     const { versions } = this.props;
-    return versions.map(version => {
+    return versions.map((version) => {
       return (
         <Item key={version._id}>
           <Item.Content>
@@ -22,7 +23,9 @@ class AppVersionList extends Component {
             <Item.Meta>
               <Moment fromNow>{version.versionDate}</Moment>
             </Item.Meta>
-            <Item.Description>{version.versionNotes}</Item.Description>
+            <Item.Description>
+              <ReactMarkdown>{version.versionNotes}</ReactMarkdown>
+            </Item.Description>
           </Item.Content>
         </Item>
       );
@@ -41,7 +44,7 @@ class AppVersionList extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     versions: selectVersionsDateDesc(state)
   };

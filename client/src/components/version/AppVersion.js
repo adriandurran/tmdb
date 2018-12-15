@@ -20,19 +20,18 @@ class AppVersion extends Component {
         {!isEmpty(user) && user.isAdmin && <AdminApplicationToolsMenu />}
 
         <Grid centered attached="bottom" style={{ marginTop: '0.5em' }}>
+          {!isEmpty(user) && user.isAdmin && (
+            <Grid.Row>
+              <Grid.Column>
+                <AppVersionAdd />
+              </Grid.Column>
+            </Grid.Row>
+          )}
           <Grid.Row>
             <Grid.Column>
               <AppVersionList />
             </Grid.Column>
           </Grid.Row>
-          {!isEmpty(user) &&
-            user.isAdmin && (
-              <Grid.Row>
-                <Grid.Column>
-                  <AppVersionAdd />
-                </Grid.Column>
-              </Grid.Row>
-            )}
         </Grid>
       </div>
     );
