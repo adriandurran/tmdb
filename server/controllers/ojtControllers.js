@@ -6,8 +6,13 @@ module.exports = {
     const ojts = await OnJobTraining.find({});
     res.send(ojts);
   },
-  getOJTType: async (req, res) => {
+  getOJTTypes: async (req, res) => {
     const ojtTypes = await OJTType.find({});
     res.send(ojtTypes);
+  },
+
+  addOJTType: async (req, res) => {
+    const newOJTType = await OJTType.create(req.body);
+    res.send(newOJTType);
   }
 };

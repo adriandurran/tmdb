@@ -11,4 +11,4 @@ const ojtTypeSchema = new Schema({
 
 const OJTType = mongoose.model('OJTType', ojtTypeSchema);
 
-module.export = OJTType;
+module.exports = OJTType;
