@@ -24,6 +24,7 @@ import AppFeedbckManager from './components/feedback/AppFeedbackManager';
 import AdminApplicationTools from './components/admin/apptools/AdminApplicationTools';
 
 import AdminOJTTools from './components/admin/onjobtraining/AdminOJTTools';
+import AdminOJTManager from './components/admin/onjobtraining/AdminOJTManager';
 
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
@@ -246,6 +247,11 @@ class Routes extends Component {
                   user={user}
                   path="/admin/ojt-tools"
                   component={AdminOJTTools}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  path="/admin/ojt-manager"
+                  component={AdminOJTManager}
                 />
                 <PrivateAdminRoute
                   user={user}
