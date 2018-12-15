@@ -36,6 +36,7 @@ export const ADD_USER_COURSE = 'add_user_course';
 
 // ojt
 export const FETCH_OJTS = 'fetch_ojts';
+export const FETCH_OJT_TYPES = 'fetch_ojt_types';
 
 // competencies
 export const FETCH_COMPS = 'fetch_competencies';
