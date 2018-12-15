@@ -15,3 +15,5 @@ const AdminOJTMenu = () => {
     </Menu>
   );
 };
+
+export default AdminOJTMenu;

@@ -13,7 +13,7 @@ import courseLevelsReducer from './courses/course-levels';
 import courseTypesReducer from './courses/course-types';
 import { allUsersReducer, userSearchResultReducer } from './users/users';
 import { deptsReducer, deptReducer } from './dept/deptReducer';
-import { ojtsReducer } from './ojts/ojts';
+import { ojtsReducer, ojtTypesReducer } from './ojts/ojts';
 
 import { progressReducer } from './shared/sharedReducers';
 
@@ -34,6 +34,7 @@ const reducer = combineReducers({
   courseTypes: courseTypesReducer,
   courseLevels: courseLevelsReducer,
   ojts: ojtsReducer,
+  ojtTypes: ojtTypesReducer,
   depts: deptsReducer,
   dept: deptReducer,
   progress: progressReducer,

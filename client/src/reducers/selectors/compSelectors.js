@@ -4,15 +4,15 @@ import _ from 'lodash';
 import { selectRoles } from './roleSelectors';
 
 // competencies
-export const selectCompetencies = state => state.comps;
+export const selectCompetencies = (state) => state.comps;
 
 // competency
-export const selectCompetency = state => state.comp;
+export const selectCompetency = (state) => state.comp;
 
 export const selectCompetenciesForDropDown = createSelector(
   selectCompetencies,
-  comps => {
-    return comps.map(comp => {
+  (comps) => {
+    return comps.map((comp) => {
       // this is temp until a comp has a comptype
       let compy = '';
       if (!_.isEmpty(comp.compType)) {
@@ -27,12 +27,12 @@ export const selectCompetenciesForDropDown = createSelector(
   }
 );
 // get competency types
-export const selectCompetencyTypes = state => state.compTypes;
+export const selectCompetencyTypes = (state) => state.compTypes;
 
 export const selectCompetencyTypesForDropDown = createSelector(
   selectCompetencyTypes,
-  compTypes => {
-    return compTypes.map(type => {
+  (compTypes) => {
+    return compTypes.map((type) => {
       return {
         key: type._id,
         value: type._id,
@@ -48,6 +48,6 @@ export const selectRoleComps = createSelector(
   selectCompetencies,
   (roles, comps) => {
     const flatty = _.flatten(_.map(roles, 'compIds'));
-    return comps.filter(x => flatty.includes(x._id));
+    return comps.filter((x) => flatty.includes(x._id));
   }
 );
