@@ -23,6 +23,8 @@ import AppFeedback from './components/feedback/AppFeedback';
 import AppFeedbckManager from './components/feedback/AppFeedbackManager';
 import AdminApplicationTools from './components/admin/apptools/AdminApplicationTools';
 
+import AdminOJTTools from './components/admin/onjobtraining/AdminOJTTools';
+
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
 // User components
@@ -74,6 +76,11 @@ const AdminCourseView = lazy(() =>
 const AdminCourseTools = lazy(() =>
   import('./components/admin/courses/AdminCourseTools')
 );
+
+// ojts
+// const AdminOJTTools = lazy(() => {
+//   import('./components/admin/onjobtraining/AdminOJTTools');
+// });
 
 //comps
 const AdminCompManager = lazy(() =>
@@ -212,6 +219,7 @@ class Routes extends Component {
                   path="/admin/course-tools"
                   component={AdminCourseTools}
                 />
+
                 <PrivateAdminRoute
                   user={user}
                   exact
@@ -233,6 +241,11 @@ class Routes extends Component {
                   exact
                   path="/admin/course-manager/view/:id"
                   component={AdminCourseView}
+                />
+                <PrivateAdminRoute
+                  user={user}
+                  path="/admin/ojt-tools"
+                  component={AdminOJTTools}
                 />
                 <PrivateAdminRoute
                   user={user}
