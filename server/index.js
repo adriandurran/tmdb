@@ -18,6 +18,7 @@ const userRoutes = require('./routes/userRoutes');
 const deptRoutes = require('./routes/deptRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 const demoDataRoutes = require('./routes/demoDataRoutes');
+const ojtRoutes = require('./routes/ojtRoutes');
 
 // connect to mongo db
 mongoose
@@ -71,6 +72,7 @@ app.use(morgan('dev'));
 // routes
 app.use('/api/tmdb/auth', authRoutes);
 app.use('/api/tmdb/competencies', compRoutes);
+app.use('/api/tmdb/ojts', ojtRoutes);
 app.use('/api/tmdb/courses', courseRoutes);
 app.use('/api/tmdb/roles', roleRoutes);
 app.use('/api/tmdb/user', userRoutes);
