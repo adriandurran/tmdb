@@ -3,6 +3,7 @@ import { Grid, Header, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
+import AdminOJTTypesList from './AdminOJTTypesList';
 import semanticFormField from '../../shared/semanticFormField';
 import { addOJTType } from '../../../actions/ojt';
 
@@ -42,6 +43,11 @@ class AdminOJTTypes extends Component {
                   Submit
                 </Button>
               </Form>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={10}>
+              <AdminOJTTypesList />
             </Grid.Column>
           </Grid.Row>
         </Grid>
