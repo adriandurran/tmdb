@@ -13,6 +13,7 @@ import {
   fetchCourseLevels
 } from '../../actions/courses';
 import { fetchVersions, fetchFeedbackTypes } from '../../actions/extra';
+import { fetchOJTS } from '../../actions/ojt';
 
 class AdminDashboard extends Component {
   state = {
@@ -30,7 +31,8 @@ class AdminDashboard extends Component {
       fetchCourseTypes,
       fetchCourseLevels,
       fetchVersions,
-      fetchFeedbackTypes
+      fetchFeedbackTypes,
+      fetchOJTS
     } = this.props;
     try {
       fetchDepts();
@@ -41,6 +43,7 @@ class AdminDashboard extends Component {
       fetchCourses();
       fetchCourseTypes();
       fetchCourseLevels();
+      fetchOJTS();
       fetchVersions();
       fetchFeedbackTypes();
     } catch (error) {
@@ -144,7 +147,8 @@ const mapDispatchToProps = {
   fetchCourseTypes,
   fetchCourseLevels,
   fetchVersions,
-  fetchFeedbackTypes
+  fetchFeedbackTypes,
+  fetchOJTS
 };
 
 AdminDashboard = connect(
