@@ -31,6 +31,7 @@ import AdminOJTManager from './components/admin/onjobtraining/AdminOJTManager';
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
 import UserProfile from './components/user/profile/UserProfile';
+import AdminDashBoard from './components/admin/AdminDashboard';
 
 // User components
 // const UserProfile = lazy(() => import('./components/user/profile/UserProfile'));
@@ -39,7 +40,7 @@ const CompsHome = lazy(() => import('./components/user/CompsHome'));
 
 // Admin components
 // dashboard
-const AdminDashBoard = lazy(() => import('./components/admin/AdminDashboard'));
+// const AdminDashBoard = lazy(() => import('./components/admin/AdminDashboard'));
 
 // dept
 const AdminDeptView = lazy(() =>
