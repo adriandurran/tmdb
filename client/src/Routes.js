@@ -32,6 +32,7 @@ import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
 import UserProfile from './components/user/profile/UserProfile';
 import AdminDashBoard from './components/admin/AdminDashboard';
+import AdminDeptTools from './components/admin/departments/AdminDeptTools';
 
 // User components
 // const UserProfile = lazy(() => import('./components/user/profile/UserProfile'));
@@ -46,9 +47,9 @@ const CompsHome = lazy(() => import('./components/user/CompsHome'));
 const AdminDeptView = lazy(() =>
   import('./components/admin/departments/AdminDeptView')
 );
-const AdminDeptTools = lazy(() =>
-  import('./components/admin/departments/AdminDeptTools')
-);
+// const AdminDeptTools = lazy(() =>
+//   import('./components/admin/departments/AdminDeptTools')
+// );
 const AdminDeptManager = lazy(() =>
   import('./components/admin/departments/AdminDeptManager')
 );
