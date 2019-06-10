@@ -15,7 +15,7 @@ import ErrorBoundary from './ErrorBoundary';
 import Header from './components/Header';
 
 import Landing from './components/Landing';
-import LoginUser from './components/auth/login';
+// import LoginUser from './components/auth/login';
 import RegisterUser from './components/auth/register';
 import UserLanding from './components/user/UserLanding';
 
@@ -31,8 +31,14 @@ import AdminOJTManager from './components/admin/onjobtraining/AdminOJTManager';
 import { selectCurrentUser } from './reducers/selectors/userSelectors';
 
 import UserProfile from './components/user/profile/UserProfile';
-import AdminDashBoard from './components/admin/AdminDashboard';
+
+// Admin Dashboard
+// import AdminDashBoard from './components/admin/AdminDashboard';
 import AdminDeptTools from './components/admin/departments/AdminDeptTools';
+import AdminDeptView from './components/admin/departments/AdminDeptView';
+
+// test to see if lazy error is being caused by the user object
+const LoginUser = lazy(() => import('./components/auth/login'));
 
 // User components
 // const UserProfile = lazy(() => import('./components/user/profile/UserProfile'));
@@ -41,12 +47,12 @@ const CompsHome = lazy(() => import('./components/user/CompsHome'));
 
 // Admin components
 // dashboard
-// const AdminDashBoard = lazy(() => import('./components/admin/AdminDashboard'));
+const AdminDashBoard = lazy(() => import('./components/admin/AdminDashboard'));
 
 // dept
-const AdminDeptView = lazy(() =>
-  import('./components/admin/departments/AdminDeptView')
-);
+// const AdminDeptView = lazy(() =>
+//   import('./components/admin/departments/AdminDeptView')
+// );
 // const AdminDeptTools = lazy(() =>
 //   import('./components/admin/departments/AdminDeptTools')
 // );
@@ -212,8 +218,8 @@ class Routes extends Component {
                     path="/users/:id/competencies"
                     component={CompsHome}
                   />
-                  <PrivateAdminRoute
-                    user={user}
+                  <Route
+                    // user={user}
                     path="/admin/dashboard"
                     component={AdminDashBoard}
                   />
