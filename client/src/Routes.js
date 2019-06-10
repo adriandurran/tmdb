@@ -329,8 +329,8 @@ class Routes extends Component {
                     path="/admin/dept-manager"
                     component={AdminDeptManager}
                   />
-                  <PrivateAdminRoute
-                    user={user}
+                  <Route
+                    // user={user}
                     path="/admin/dept-views"
                     component={AdminDeptCards}
                   />
