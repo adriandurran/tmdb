@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
 import '../styles/styles.css';
 
-import Routes from '../Routes';
+import Layout from '../Layout';
 
 import { fetchUser } from '../actions/auth';
 
@@ -14,11 +14,7 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <Routes />
-      </div>
-    );
+    return <Layout />;
   }
 }
 
@@ -26,4 +22,7 @@ const mapDispatchToProps = {
   fetchUser
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);
