@@ -34,7 +34,8 @@ class LoginUser extends Component {
     loader.active = true;
     this.setState({ loader });
 
-    loginUser(values).then(result => {
+    loginUser(values).then((result) => {
+      const { data } = result;
       let message = { ...this.state.message };
       // loader
       loader.active = false;
@@ -48,7 +49,7 @@ class LoginUser extends Component {
         this.setState({ message });
         this.resetMessageState();
       } else {
-        history.push(`/users/${result.userId}`);
+        history.push(`/users/${data.userId}`);
       }
     });
   }
@@ -74,7 +75,7 @@ class LoginUser extends Component {
             </Header>
 
             <Segment attached>
-              <Form onSubmit={handleSubmit(values => this.userLogin(values))}>
+              <Form onSubmit={handleSubmit((values) => this.userLogin(values))}>
                 <Field
                   name="email"
                   type="email"
