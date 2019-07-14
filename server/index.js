@@ -22,17 +22,14 @@ const ojtRoutes = require('./routes/ojtRoutes');
 
 // connect to mongo db
 mongoose
-  .connect(
-    process.env.MONGODB_URI,
-    {
-      useNewUrlParser: true,
-      poolSize: 10,
-      useFindAndModify: false,
-      useCreateIndex: true,
-      reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-      reconnectInterval: 500 // Reconnect every 500ms
-    }
-  )
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    poolSize: 10,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+    reconnectInterval: 500 // Reconnect every 500ms
+  })
   .then(() => console.log('Database connection successful'))
   .catch((err) => console.log('Unable to connect to database', err));
 
