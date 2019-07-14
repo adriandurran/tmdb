@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const Course = require('./course');
-const CompetencyType = require('./competencyType');
+// const Course = require('./course');
+// const CompetencyType = require('./competencyType');
 
 const compSchema = new Schema({
   shortName: {
