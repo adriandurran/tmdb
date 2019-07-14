@@ -21,6 +21,7 @@ const demoDataRoutes = require('./routes/demoDataRoutes');
 const ojtRoutes = require('./routes/ojtRoutes');
 
 // connect to mongo db
+
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
