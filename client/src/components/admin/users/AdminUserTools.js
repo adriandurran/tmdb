@@ -20,7 +20,7 @@ class AdminUserTools extends Component {
   render() {
     const { allusers, allusersverify, allcoursesverify } = this.props;
     return (
-      <Card.Group itemsPerRow={3}>
+      <Card.Group itemsPerRow={4}>
         <Card as={Link} to="/admin/user-access-manager" raised>
           <Card.Content>
             <Header as="h5">User Access Manager</Header>
@@ -60,6 +60,25 @@ class AdminUserTools extends Component {
               </span>
             ) : (
               <span>No Courses need verification</span>
+            )}
+          </Card.Content>
+        </Card>
+        <Card as={Link} to="/admin/user-views" raised>
+          <Card.Content>
+            <Header as="h5">All User View</Header>
+          </Card.Content>
+          <Card.Content description="View all Users in a table" />
+          <Card.Content extra>
+            {allusers.length > 0 ? (
+              <span>
+                <Icon name="users" />
+                {allusers.length} Users loaded &nbsp;
+                <br />
+                <Icon name="user plus" color="red" />
+                {allusersverify.length} Users require verification
+              </span>
+            ) : (
+              <span>No Users in the system</span>
             )}
           </Card.Content>
         </Card>
