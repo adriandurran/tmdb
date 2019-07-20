@@ -36,13 +36,15 @@ export const selectAllUsersActive = createSelector(
 export const selectAllUsersForSearch = createSelector(
   selectAllUsersActive,
   (allusers) => {
-    return allusers.map((user) => {
+    const allUsersArray = allusers.map((user) => {
       return {
         title: `${user.firstName} ${user.lastName}`,
         description: user.username,
         key: user._id
       };
     });
+
+    return allUsersArray.sort((a, b) => a.title.localeCompare(b.title));
   }
 );
 
@@ -50,7 +52,7 @@ export const selectAllUsersForSearch = createSelector(
 export const selectAllUsersForSearchNoAdmins = createSelector(
   selectAllUsersActive,
   (allusers) => {
-    return allusers
+    const allUsersNoAdminArray = allusers
       .filter((user) => !user.isAdmin && !user.isSuperAdmin)
       .map((user) => {
         return {
@@ -59,6 +61,7 @@ export const selectAllUsersForSearchNoAdmins = createSelector(
           key: user._id
         };
       });
+    return allUsersNoAdminArray.sort((a, b) => a.title.localeCompare(b.title));
   }
 );
 
