@@ -84,6 +84,8 @@ const AdminUserAccess = lazy(() =>
 const AdminUserManager = lazy(() =>
   import('../components/admin/users/roles/AdminUserManager')
 );
+
+const AllUserView = lazy(() => import('../components/admin/users/AllUserView'));
 const AdminUserTools = lazy(() =>
   import('../components/admin/users/AdminUserTools')
 );
@@ -204,6 +206,11 @@ const AdminRoutes = () => {
         user={user}
         path="/admin/user-manager"
         component={LazyComponent(AdminUserManager)}
+      />
+      <PrivateAdminRoute
+        user={user}
+        path="/admin/user-views"
+        component={LazyComponent(AllUserView)}
       />
       <PrivateAdminRoute
         user={user}
