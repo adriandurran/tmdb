@@ -21,13 +21,15 @@ import { selectDept } from './deptSelectors';
 export const selectAllUsers = (state) => state.allusers;
 
 // get all users that require verification
-export const selectAllUsersVerify = createSelector(selectAllUsers, (allusers) =>
-  allusers.filter((user) => user.verified === false)
+export const selectAllUsersVerify = createSelector(
+  selectAllUsers,
+  (allusers) => allusers.filter((user) => user.verified === false)
 );
 
 // get all users that are verified
-export const selectAllUsersActive = createSelector(selectAllUsers, (allusers) =>
-  allusers.filter((user) => user.verified === true)
+export const selectAllUsersActive = createSelector(
+  selectAllUsers,
+  (allusers) => allusers.filter((user) => user.verified === true)
 );
 
 // get the users for the search that are active
@@ -61,8 +63,10 @@ export const selectAllUsersForSearchNoAdmins = createSelector(
 );
 
 // get all users that are admins && active
-export const selectAllUsersAdmins = createSelector(selectAllUsers, (allusers) =>
-  allusers.filter((user) => user.verified === true && user.isAdmin === true)
+export const selectAllUsersAdmins = createSelector(
+  selectAllUsers,
+  (allusers) =>
+    allusers.filter((user) => user.verified === true && user.isAdmin === true)
 );
 
 // COURSES
@@ -101,6 +105,17 @@ export const selectAdminUserRoleComps = createSelector(
       return null;
     }
     return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
+  }
+);
+
+// return the comps organised by role
+export const selectAdminUserRoleCompsOrg = createSelector(
+  selectAdminUserRoles,
+  (roles) => {
+    if (roles === undefined) {
+      return null;
+    }
+    return roles.map((role) => role.competencies);
   }
 );
 
