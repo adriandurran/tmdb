@@ -23,7 +23,12 @@ export const selectAllUsers = (state) => state.allusers;
 // get all users that require verification
 export const selectAllUsersVerify = createSelector(
   selectAllUsers,
-  (allusers) => allusers.filter((user) => user.verified === false)
+  (allusers) => {
+    const allUsersVerify = allusers.filter((user) => user.verified === false);
+    return allUsersVerify.sort((a, b) =>
+      a.firstName.localeCompare(b.firstName)
+    );
+  }
 );
 
 // get all users that are verified
