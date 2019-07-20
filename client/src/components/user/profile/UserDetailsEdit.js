@@ -55,7 +55,9 @@ class UserDetailsEdit extends Component {
         message.positive = true;
       } else {
         message.header = 'Ooops!';
-        message.content = `Something went wrong updating your profile. Error: ${res}`;
+        message.content = `Something went wrong updating your profile. Error: ${
+          res.data
+        }`;
         message.negative = true;
       }
       this.setState({ message });

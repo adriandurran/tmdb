@@ -5,6 +5,8 @@ import Moment from 'react-moment';
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
 
 import { selectAllUsersAdmins } from '../../../../reducers/selectors/adminSelectors';
+import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
+
 import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
 
 class AdminUsersAdmini extends Component {
@@ -17,11 +19,11 @@ class AdminUsersAdmini extends Component {
   };
 
   renderUserAdmins() {
-    const { admins } = this.props;
+    const { admins, currentUser } = this.props;
     return admins.map(user => {
       return (
         <Item key={user._id}>
-          <Item.Image size="tiny" src="http://lorempixel.com/400/400/people" />
+          <Item.Image size="tiny" src={user.imageUrl} />
           <Item.Content verticalAlign="middle">
             <Item.Header>
               {user.firstName} {user.lastName} &nbsp;
@@ -38,25 +40,21 @@ class AdminUsersAdmini extends Component {
             </Item.Meta>
             <Item.Extra>
               <Button
-                animated="vertical"
                 onClick={this.adminiUser}
                 value={user._id}
+                disabled={!currentUser.isSuperAdmin}
               >
-                <Button.Content hidden>Demote</Button.Content>
-                <Button.Content visible>
-                  <Icon name="ban" color="red" />
-                </Button.Content>
+                <Icon name="ban" color="red" />
+                Demote
               </Button>
               <Button
                 floated="right"
-                animated="vertical"
                 onClick={this.suspendUser}
                 value={user._id}
+                disabled={!currentUser.isSuperAdmin}
               >
-                <Button.Content hidden>Suspend</Button.Content>
-                <Button.Content visible>
-                  <Icon name="ban" color="red" />
-                </Button.Content>
+                <Icon name="ban" color="red" />
+                Suspend
               </Button>
             </Item.Extra>
           </Item.Content>
@@ -79,7 +77,8 @@ class AdminUsersAdmini extends Component {
 
 const mapStateToProps = state => {
   return {
-    admins: selectAllUsersAdmins(state)
+    admins: selectAllUsersAdmins(state),
+    currentUser: selectCurrentUser(state)
   };
 };
 

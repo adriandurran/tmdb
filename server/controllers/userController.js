@@ -6,9 +6,9 @@ const dataUri = require('datauri');
 const path = require('path');
 
 cloudinary.config({
-  cloud_name: keys.cloudinary.cloud_name,
-  api_key: keys.cloudinary.api_key,
-  api_secret: keys.cloudinary.api_secret
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 module.exports = {
@@ -205,6 +205,16 @@ module.exports = {
     }
   },
 
+  removeRegistration: async (req, res) => {
+    try {
+      const remReg = await User.deleteOne({ _id: req.params.id });
+      return res.status(200).send(remReg);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
   adminUser: async (req, res) => {
     const { admin } = req.body;
     try {
@@ -344,7 +354,6 @@ module.exports = {
         password
       } = req.body.data.newUser;
 
-      const joinDate = Date.now();
       let newUser = new User();
 
       let passwordHash = await newUser.generateHash(password);
@@ -354,11 +363,10 @@ module.exports = {
         userId,
         firstName,
         lastName,
-        passwordHash,
-        joinDate
+        passwordHash
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => res.status(400).send(err));
+        .then((user) => res.status(200).send(user))
+        .catch((err) => res.status(400).send(err));
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);
@@ -408,7 +416,10 @@ module.exports = {
   },
 
   logoutUser: (req, res) => {
-    req.logout();
+    req.logOut();
+
+    req.session = null;
+    res.clearCookie('tmdb', { path: '/' });
     res.redirect('/');
   },
 
@@ -433,13 +444,51 @@ module.exports = {
         userId,
         firstName,
         lastName,
+        verified,
+        isAdmin,
+        isSuperAdmin,
         passwordHash,
+        joinDate: Date.now()
+      })
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
+          console.log(err);
+          return res.status(400).send(err);
+        });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+  seedSuperAdminIT: async (req, res) => {
+    try {
+      const {
+        userId,
+        firstName,
+        lastName,
+        username,
+        password,
         verified,
         isAdmin,
         isSuperAdmin
+      } = keys.seedAdminIT;
+
+      let seedyA = new User();
+      let passwordHash = await seedyA.generateHash(password);
+
+      User.create({
+        username,
+        userId,
+        firstName,
+        lastName,
+        passwordHash,
+        verified,
+        isAdmin,
+        isSuperAdmin,
+        joinDate: Date.now()
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => {
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
           console.log(err);
           return res.status(400).send(err);
         });

@@ -12,13 +12,13 @@ import { compsUserCurrent } from './utils/compHelpers';
 import { selectCompetencies } from './compSelectors';
 
 // get the current user.....t
-export const selectCurrentUser = state => state.auth.user;
+export const selectCurrentUser = (state) => state.auth.user;
 
 // get the user roles for the current/logged in user
-export const selectUserRoles = state => state.auth.user.roles;
+export const selectUserRoles = (state) => state.auth.user.roles;
 
 // match up the courses to the user
-export const selectUserCourses = state => state.auth.user.courses;
+export const selectUserCourses = (state) => state.auth.user.courses;
 
 // get the user courses that are current
 // this one can be altered
@@ -31,7 +31,7 @@ export const selectUserCourses = state => state.auth.user.courses;
 // current active verified courses
 export const selectUserCoursesCurrent = createSelector(
   selectUserCourses,
-  usercourses => {
+  (usercourses) => {
     return coursesCurrentVerified(usercourses);
   }
 );
@@ -39,7 +39,7 @@ export const selectUserCoursesCurrent = createSelector(
 // courses that are expired
 export const selectUserCoursesExpired = createSelector(
   selectUserCourses,
-  usercourses => {
+  (usercourses) => {
     return coursesExpired(usercourses);
   }
 );
@@ -47,16 +47,19 @@ export const selectUserCoursesExpired = createSelector(
 // courses that are waiting verification
 export const selectUserCoursesVerify = createSelector(
   selectUserCourses,
-  usercourses => {
+  (usercourses) => {
     return coursesVerify(usercourses);
   }
 );
 
 // get unique competencies for a given role for a user
 // need to filter by required competencies
-export const selectUserRoleComps = createSelector(selectUserRoles, roles => {
-  return _.uniqBy(_.flatten(roles.map(role => role.competencies)), '_id');
-});
+export const selectUserRoleComps = createSelector(
+  selectUserRoles,
+  (roles) => {
+    return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
+  }
+);
 
 // compare users current courses to competencies to find what competencies he has
 export const selectUserCompetenciesCurrent = createSelector(

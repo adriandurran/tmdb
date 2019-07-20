@@ -18,6 +18,13 @@ import {
 } from '../../../actions/courses';
 
 class CourseBuilder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      noExpire: false
+    };
+  }
+
   componentDidMount() {
     const { fetchCourseLevels, fetchCourseTypes } = this.props;
     fetchCourseLevels();
@@ -36,11 +43,24 @@ class CourseBuilder extends Component {
     });
   };
 
-  submitNewCourse(values, dispatch) {
+  noExpire = (e, item) => {
+    this.setState({
+      noExpire: item.checked
+    });
+  };
+
+  submitNewCourse(values) {
     const { adminAddNewCourse } = this.props;
+
+    let courseValid = undefined;
+
+    if (!this.state.noExpire) {
+      courseValid = values.validity;
+    }
+
     let newCourse = {
       courseName: values.courseName,
-      validity: values.validity,
+      validity: courseValid,
       level: this.state.level,
       type: this.state.type
     };
@@ -60,7 +80,9 @@ class CourseBuilder extends Component {
           <Grid.Row>
             <Grid.Column>
               <Form
-                onSubmit={handleSubmit(values => this.submitNewCourse(values))}
+                onSubmit={handleSubmit((values) =>
+                  this.submitNewCourse(values)
+                )}
               >
                 <Form.Group inline widths="equal">
                   <Field
@@ -77,10 +99,14 @@ class CourseBuilder extends Component {
                     component={semanticFormField}
                     as={Form.Input}
                     type="number"
-                    placeholder="Course Validity"
+                    placeholder="Course Validity in months"
+                  />
+                  <Form.Checkbox
+                    label="No expiry date"
+                    onChange={this.noExpire}
                   />
                 </Form.Group>
-                <Form.Group inline widths="equal">
+                <Form.Group>
                   <Dropdown
                     selection
                     fluid
@@ -89,6 +115,7 @@ class CourseBuilder extends Component {
                     options={types}
                     placeholder="Select a Course Type"
                     onChange={this.handleTypeChange}
+                    style={{ marginRight: '10px' }}
                   />
                   <Dropdown
                     selection
@@ -119,7 +146,7 @@ class CourseBuilder extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     types: selectCourseTypesForDropDown(state),
     levels: selectCourseLevelsForDropDown(state)

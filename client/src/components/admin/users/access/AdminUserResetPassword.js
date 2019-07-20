@@ -3,7 +3,15 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { Header, Form, Button, Segment, Message } from 'semantic-ui-react';
+import {
+  Header,
+  Form,
+  Button,
+  Segment,
+  Message,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react';
 import semanticFormField from '../../../shared/semanticFormField';
 
 import { required } from '../../../../utils/validation';
@@ -15,6 +23,10 @@ class AdminUserResetPassword extends Component {
   state = {
     message: {
       visible: false
+    },
+
+    loader: {
+      active: false
     }
   };
 
@@ -29,26 +41,38 @@ class AdminUserResetPassword extends Component {
   resetUserPWD(newPwd) {
     const { user, resetUserPassword } = this.props;
     // reset here and log out?
-    resetUserPassword(user._id, newPwd).then(res => {
+    // loader
+    let loader = { ...this.state.loader };
+    loader.active = true;
+    this.setState({ loader });
+
+    resetUserPassword(user._id, newPwd).then((res) => {
       let message = { ...this.state.message };
       message.visible = true;
+      // loader
+      loader.active = false;
+      this.setState({
+        loader
+      });
       if (res.status === 200) {
         message.header = 'Success!';
-        message.content = `Your password has been changed`;
+        message.content = `The password has been changed`;
         message.positive = true;
       } else {
         message.header = 'Ooops!';
         message.content = `Something went wrong updating your password. Error: ${res}`;
         message.negative = true;
       }
-      this.setState({ message });
+      this.setState({
+        message
+      });
       this.resetMessageState();
     });
   }
 
   render() {
     const { user, handleSubmit, submitting, pristine } = this.props;
-    const { message } = this.state;
+    const { message, loader } = this.state;
     return (
       <div>
         <Segment attached style={{ marginTop: '1em' }}>
@@ -61,7 +85,7 @@ class AdminUserResetPassword extends Component {
               Reset Password
             </Header>
           )}
-          <Form onSubmit={handleSubmit(values => this.resetUserPWD(values))}>
+          <Form onSubmit={handleSubmit((values) => this.resetUserPWD(values))}>
             <Field
               name="password"
               type="password"
@@ -82,6 +106,11 @@ class AdminUserResetPassword extends Component {
               Change Password
             </Button>
           </Form>
+          <Dimmer inverted active={loader.active}>
+            <Loader indeterminate size="big">
+              Changing password please wait.....
+            </Loader>
+          </Dimmer>
         </Segment>
         <Message
           attached="bottom"
@@ -96,7 +125,7 @@ class AdminUserResetPassword extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectUserManage(state)
   };

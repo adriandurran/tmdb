@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Header, List, Button } from 'semantic-ui-react';
+import { List, Button, Image } from 'semantic-ui-react';
 import Moment from 'react-moment';
 
 import { adminVerifyUserCourse } from '../../../../actions/user';
 import { selectAllUsersCoursesVerify } from '../../../../reducers/selectors/adminSelectors';
+import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
 
 class AdminUserCoursesManager extends Component {
   verifyCourse = (e, { value }) => {
-    const { adminVerifyUserCourse } = this.props;
-    adminVerifyUserCourse(value.userId, value.userCourseId);
+    const { adminVerifyUserCourse, currUser } = this.props;
+    adminVerifyUserCourse(value.userId, value.userCourseId, currUser._id);
   };
 
   renderCourseList() {
@@ -25,6 +26,7 @@ class AdminUserCoursesManager extends Component {
               Verify
             </Button>
           </List.Content>
+          <Image avatar src={user.imageUrl} />
           <List.Content>
             <List.Header>
               {user.firstName} {user.lastName}
@@ -42,9 +44,6 @@ class AdminUserCoursesManager extends Component {
   render() {
     return (
       <div>
-        <Header as="h3" textAlign="center">
-          Courses awaiting Verification
-        </Header>
         <List verticalAlign="middle">{this.renderCourseList()}</List>
       </div>
     );
@@ -55,9 +54,10 @@ const mapDispatchToProps = {
   adminVerifyUserCourse
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    users: selectAllUsersCoursesVerify(state)
+    users: selectAllUsersCoursesVerify(state),
+    currUser: selectCurrentUser(state)
   };
 };
 

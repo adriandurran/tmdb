@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import {
@@ -12,9 +12,11 @@ import {
   Segment
 } from 'semantic-ui-react';
 
-import semanticFormField from '../../shared/semanticFormField';
-
-import { clearCourse, adminUpdateCourse } from '../../../actions/courses';
+import {
+  clearCourse,
+  adminUpdateCourse,
+  adminDeleteNewCourse
+} from '../../../actions/courses';
 
 import {
   selectCourseTypesForDropDown,
@@ -22,25 +24,50 @@ import {
   selectCourse
 } from '../../../reducers/selectors/courseSelectors';
 import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
+import {
+  selectUsersCourseHolders,
+  selectUsersCourseHoldersExpired
+} from '../../../reducers/selectors/adminSelectors';
 
 class AdminEditCourse extends Component {
-  state = {
-    level: '',
-    type: '',
-    message: {
-      visible: true
-    },
-    notes: ''
-  };
+  constructor(props) {
+    super();
+    this.state = {
+      level: '',
+      type: '',
+      noExpire: false,
+      courseName: '',
+      validity: '',
+      message: {
+        visible: true
+      },
+      notes: ''
+    };
+  }
 
   componentDidMount() {
     const { course } = this.props;
     if (!_.isEmpty(course)) {
       let message = { ...this.state.message };
       message.header = `Edit ${course.courseName}`;
+      if (
+        course.validity === undefined ||
+        course.validity === '' ||
+        course.validity === null
+      ) {
+        this.setState({
+          noExpire: true
+        });
+      } else {
+        this.setState({
+          noExpire: false,
+          validity: course.validity
+        });
+      }
       this.setState({
         level: course.level,
         type: course.type,
+        courseName: course.courseName,
         message
       });
     }
@@ -77,9 +104,37 @@ class AdminEditCourse extends Component {
     });
   };
 
-  updateCourse(values) {
+  handleValidChange = (e, item) => {
+    // console.log(item.value);
+    if (item.value) {
+      this.setState({
+        validity: item.value,
+        noExpire: false
+      });
+    }
+  };
+
+  handleCourseNameChange = (e, item) => {
+    this.setState({
+      courseName: item.value
+    });
+  };
+
+  noExpire = (e, item) => {
+    this.setState({
+      noExpire: item.checked
+    });
+    if (item.checked) {
+      this.setState({
+        validity: ''
+      });
+    }
+  };
+
+  updateCourse = (e) => {
+    e.preventDefault();
     const { course, adminUpdateCourse, user } = this.props;
-    const { level, type, notes } = this.state;
+    const { level, type, notes, noExpire, validity, courseName } = this.state;
 
     let allNotes = course.notes;
 
@@ -92,15 +147,23 @@ class AdminEditCourse extends Component {
       allNotes = [...allNotes, newNote];
     }
 
+    let courseValid = '';
+
+    if (!noExpire) {
+      courseValid = validity;
+    }
+
     let upCourse = {
-      courseName: values.courseName,
-      validity: values.validity,
+      courseName: courseName,
+      validity: courseValid,
       level,
       type,
       notes: allNotes
     };
 
-    adminUpdateCourse(course._id, upCourse).then(res => {
+    // console.log(upCourse);
+
+    adminUpdateCourse(course._id, upCourse).then((res) => {
       let message = { ...this.state.message };
       if (res.status === 200) {
         message.header = 'Success!';
@@ -117,10 +180,28 @@ class AdminEditCourse extends Component {
       });
       this.resetMessageState();
     });
-  }
+  };
+
+  deleteCourse = (e) => {
+    const { course, adminDeleteNewCourse, history } = this.props;
+    adminDeleteNewCourse(course._id).then((res) => {
+      if (res.status === 200) {
+        return history.push('/admin/course-manager');
+      }
+      let message = { ...this.state.message };
+      message.header = 'Ooops!';
+      message.content = `Something went wrong updating this Course. Error: ${res}`;
+      message.negative = true;
+      this.setState({
+        message,
+        notes: ''
+      });
+      this.resetMessageState();
+    });
+  };
 
   render() {
-    const { levels, types, handleSubmit, submitting } = this.props;
+    const { levels, types, courseHolder, courseHolderExpired } = this.props;
     const { message, notes } = this.state;
     return (
       <div>
@@ -136,46 +217,49 @@ class AdminEditCourse extends Component {
           negative={message.negative}
         />
         <Segment attached>
-          <Form onSubmit={handleSubmit(values => this.updateCourse(values))}>
+          <Form>
+            <Form.Input
+              disabled
+              fluid // component={semanticFormField}
+              // as={Form.Input}
+              type="text"
+              name="courseName"
+              placeholder="Course name"
+              value={this.state.courseName}
+            />
             <Form.Group inline widths="equal">
-              <Field
-                fluid
-                component={semanticFormField}
-                as={Form.Input}
-                type="text"
-                name="courseName"
-                placeholder="Course name"
-              />
-              <Field
+              <Form.Input
                 fluid
                 name="validity"
-                component={semanticFormField}
-                as={Form.Input}
                 type="number"
-                placeholder="Course Validity"
+                placeholder="Course Validity in months"
+                value={this.state.validity}
+                onChange={this.handleValidChange}
+              />
+              <Form.Checkbox
+                label="No expiry date"
+                onChange={this.noExpire}
+                checked={this.state.noExpire}
               />
             </Form.Group>
-            <Form.Group>
-              <Dropdown
-                selection
-                name="type"
-                options={types}
-                placeholder="Select a Course Type"
-                onChange={this.handleTypeChange}
-                style={{ marginRight: '1em' }}
-                value={this.state.type}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Dropdown
-                selection
-                name="level"
-                options={levels}
-                placeholder="Select a Course Level"
-                onChange={this.handleLevelChange}
-                value={this.state.level}
-              />
-            </Form.Group>
+            <Dropdown
+              selection
+              name="type"
+              options={types}
+              placeholder="Select a Course Type"
+              onChange={this.handleTypeChange}
+              style={{ marginRight: '1em', marginBottom: '1em' }}
+              value={this.state.type}
+            />
+            <Dropdown
+              selection
+              name="level"
+              options={levels}
+              placeholder="Select a Course Level"
+              onChange={this.handleLevelChange}
+              value={this.state.level}
+              style={{ marginRight: '1em', marginBottom: '1em' }}
+            />
             <Form.TextArea
               autoHeight
               onChange={this.handleNotesChange}
@@ -184,9 +268,26 @@ class AdminEditCourse extends Component {
               rows={3}
             />
             <Form.Group>
-              <Button fluid disabled={submitting} type="submit" size="medium">
+              <Button
+                fluid
+                type="submit"
+                size="medium"
+                onClick={this.updateCourse}
+              >
                 Update Course
               </Button>
+              {courseHolder.length === 0 &&
+                courseHolderExpired.length === 0 && (
+                  <Button
+                    negative
+                    fluid
+                    type="submit"
+                    size="medium"
+                    onClick={this.deleteCourse}
+                  >
+                    Delete Course
+                  </Button>
+                )}
             </Form.Group>
           </Form>
         </Segment>
@@ -197,27 +298,24 @@ class AdminEditCourse extends Component {
 
 const mapDispatchToProps = {
   clearCourse,
-  adminUpdateCourse
+  adminUpdateCourse,
+  adminDeleteNewCourse
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     levels: selectCourseLevelsForDropDown(state),
     types: selectCourseTypesForDropDown(state),
     course: selectCourse(state),
     user: selectCurrentUser(state),
-    initialValues: selectCourse(state)
+    courseHolder: selectUsersCourseHolders(state),
+    courseHolderExpired: selectUsersCourseHoldersExpired(state)
   };
 };
-
-AdminEditCourse = reduxForm({
-  form: 'editForm',
-  enableReinitialize: true
-})(AdminEditCourse);
 
 AdminEditCourse = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdminEditCourse);
 
-export default AdminEditCourse;
+export default withRouter(AdminEditCourse);

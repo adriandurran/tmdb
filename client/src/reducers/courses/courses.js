@@ -1,6 +1,7 @@
 import {
   FETCH_COURSES,
   ADD_NEW_COURSE,
+  DELETE_NEW_COURSE,
   FETCH_COURSE,
   CLEAR_COURSE
 } from '../../actions/types';
@@ -14,7 +15,8 @@ export const coursesReducer = (state = INITIAL_STATE_A, action) => {
       return action.payload;
     case ADD_NEW_COURSE:
       return [...state, action.payload];
-
+    case DELETE_NEW_COURSE:
+      return state.filter((course) => course._id !== action.payload);
     default:
       return state;
   }

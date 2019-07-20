@@ -16,14 +16,14 @@ class AdminDeptView extends Component {
     return (
       <div>
         <Header as="h2" textAlign="center">
-          Department View
+          {dept.departmentName}
         </Header>
         <Breadcrumb style={{ marginBottom: '2em' }}>
-          <Breadcrumb.Section link as={Link} to="/admin/dashboard">
-            Admin Dashboard
+          <Breadcrumb.Section link as={Link} to="/admin/dept-tools">
+            Department Tools
           </Breadcrumb.Section>
           <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link as={Link} to="/admin/department-manager">
+          <Breadcrumb.Section link as={Link} to="/admin/dept-manager">
             Department Manager
           </Breadcrumb.Section>
           <Breadcrumb.Divider icon="right arrow" />
@@ -48,7 +48,7 @@ class AdminDeptView extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     dept: selectDept(state)
   };

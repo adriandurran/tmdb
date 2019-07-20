@@ -3,7 +3,8 @@ import {
   ADMIN_USER_META,
   ADMIN_SEARCH_RESULT,
   ADMIN_CLEAR_SEARCH,
-  ADMIN_EDIT_USER_ROLE
+  ADMIN_EDIT_USER_ROLE,
+  ADMIN_REMOVE_REGISTRATION
 } from '../../actions/types';
 
 const INITIAL_STATE_A = [];
@@ -14,9 +15,12 @@ export const allUsersReducer = (state = INITIAL_STATE_A, action) => {
     case FETCH_ALL_USERS:
       return action.payload;
     case ADMIN_USER_META:
-      const origUsers = state.filter(users => users._id !== action.payload._id);
+      const origUsers = state.filter(
+        (users) => users._id !== action.payload._id
+      );
       return [...origUsers, action.payload];
-
+    case ADMIN_REMOVE_REGISTRATION:
+      return state.filter((users) => users._id !== action.payload);
     default:
       return state;
   }

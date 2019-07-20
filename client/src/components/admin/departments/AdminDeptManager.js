@@ -2,10 +2,9 @@ import React from 'react';
 
 import { Header, Grid } from 'semantic-ui-react';
 
-import AdminUserMenu from '../users/AdminUserMenu';
 import AdminDeptAdd from './AdminDeptAdd';
 import AdminDeptList from './AdminDeptList';
-import AdminUsersNoDeptTable from '../users/dept/AdminUsersNoDeptTable';
+import AdminDeptMenu from './AdminDeptMenu';
 
 const AdminDeptManager = () => {
   return (
@@ -13,7 +12,7 @@ const AdminDeptManager = () => {
       <Header as="h2" textAlign="center">
         Departments
       </Header>
-      <AdminUserMenu />
+      <AdminDeptMenu />
       <Grid celled centered attached="bottom" style={{ marginTop: '0.5em' }}>
         <Grid.Row columns={2}>
           <Grid.Column>
@@ -21,11 +20,6 @@ const AdminDeptManager = () => {
           </Grid.Column>
           <Grid.Column>
             <AdminDeptList />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>
-            <AdminUsersNoDeptTable />
           </Grid.Column>
         </Grid.Row>
       </Grid>
