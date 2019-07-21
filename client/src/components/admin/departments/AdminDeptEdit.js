@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
+import { withRouter } from 'react-router-dom';
 
 import { Header, Form, Button, Message, Segment } from 'semantic-ui-react';
 import semanticFormField from '../../shared/semanticFormField';
 import { required } from '../../../utils/validation';
 
-import { clearDept, adminUpdateDept } from '../../../actions/dept';
+import {
+  clearDept,
+  adminUpdateDept,
+  adminDeleteDept
+} from '../../../actions/dept';
 import { selectDept } from '../../../reducers/selectors/deptSelectors';
 
 class AdminDeptEdit extends Component {
@@ -20,7 +25,7 @@ class AdminDeptEdit extends Component {
   componentDidMount() {
     const { dept } = this.props;
 
-    if (!_.isEmpty(dept)) {
+    if (!isEmpty(dept)) {
       let message = { ...this.state.message };
       message.header = `Edit ${dept.departmentName}`;
       this.setState({
@@ -30,7 +35,10 @@ class AdminDeptEdit extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearDept();
+    const { dept } = this.props;
+    if (!isEmpty(dept)) {
+      this.props.clearDept();
+    }
   }
 
   resetMessageState() {
@@ -45,17 +53,36 @@ class AdminDeptEdit extends Component {
   updateDept(values) {
     const { adminUpdateDept, dept } = this.props;
 
-    adminUpdateDept(dept._id, values).then(res => {
+    adminUpdateDept(dept._id, values).then((res) => {
       let message = { ...this.state.message };
       if (res.status === 200) {
         message.header = 'Success!';
-        message.content = `${
-          res.data.deptartmentName
-        } was successfully updated`;
+        message.content = `${res.data.departmentName} was successfully updated`;
         message.positive = true;
       } else {
         message.header = 'Ooops!';
-        message.content = `Something went wrong updating this Course. Error: ${res}`;
+        message.content = `Something went wrong updating this Dept. Error: ${res}`;
+        message.negative = true;
+      }
+      this.setState({
+        message
+      });
+      this.resetMessageState();
+    });
+  }
+
+  deleteDept() {
+    const { dept, adminDeleteDept, history } = this.props;
+    adminDeleteDept(dept._id).then((res) => {
+      let message = { ...this.state.message };
+      if (res.status === 200) {
+        message.header = 'Success!';
+        message.content = `Successfully deleted`;
+        message.positive = true;
+        // history.push('/admin/dept-manager');
+      } else {
+        message.header = 'Ooops!';
+        message.content = `Something went wrong deleting this Dept. Error: ${res}`;
         message.negative = true;
       }
       this.setState({
@@ -69,7 +96,7 @@ class AdminDeptEdit extends Component {
     const { message } = this.state;
     const { submitting, handleSubmit, pristine } = this.props;
     return (
-      <div>
+      <>
         <Header as="h3" textAlign="center">
           Edit Department
         </Header>
@@ -82,7 +109,7 @@ class AdminDeptEdit extends Component {
           negative={message.negative}
         />
         <Segment attached>
-          <Form onSubmit={handleSubmit(values => this.updateDept(values))}>
+          <Form onSubmit={handleSubmit((values) => this.updateDept(values))}>
             <Form.Group widths="equal">
               <Field
                 name="departmentCode"
@@ -112,23 +139,27 @@ class AdminDeptEdit extends Component {
               >
                 Update Department
               </Button>
-              <Button
-                fluid
-                disabled={pristine || submitting}
-                loading={submitting}
-                size="large"
-              >
-                Reset
-              </Button>
             </Form.Group>
           </Form>
+          {this.props.users.length === 0 && (
+            <Form.Group inline>
+              <Button
+                fluid
+                negative
+                size="large"
+                onClick={() => this.deleteDept()}
+              >
+                Delete Department
+              </Button>
+            </Form.Group>
+          )}
         </Segment>
-      </div>
+      </>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     dept: selectDept(state),
     initialValues: selectDept(state)
@@ -137,7 +168,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   clearDept,
-  adminUpdateDept
+  adminUpdateDept,
+  adminDeleteDept
 };
 
 AdminDeptEdit = reduxForm({
@@ -150,4 +182,4 @@ AdminDeptEdit = connect(
   mapDispatchToProps
 )(AdminDeptEdit);
 
-export default AdminDeptEdit;
+export default withRouter(AdminDeptEdit);
