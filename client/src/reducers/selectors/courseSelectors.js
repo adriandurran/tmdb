@@ -40,7 +40,7 @@ export const selectCourseLevelsForDropDown = createSelector(
 export const selectCoursesForSearch = createSelector(
   selectCourses,
   (courses) => {
-    return courses
+    const coursesForSearch = courses
       .filter(
         (course) =>
           course.validity > 0 ||
@@ -65,13 +65,15 @@ export const selectCoursesForSearch = createSelector(
           }  ${validDetails}`
         };
       });
+
+    return coursesForSearch.sort((a, b) => a.title.localeCompare(b.title));
   }
 );
 
 export const selectCoursesForDropDown = createSelector(
   selectCourses,
   (courses) => {
-    return courses.map((course) => {
+    const coursesForDropDown = courses.map((course) => {
       let validDetails = '';
       let disFlag = false;
       if (course.validity >= 0) {
@@ -92,6 +94,7 @@ export const selectCoursesForDropDown = createSelector(
         disabled: disFlag
       };
     });
+    return coursesForDropDown.sort((a, b) => a.text.localeCompare(b.text));
   }
 );
 
