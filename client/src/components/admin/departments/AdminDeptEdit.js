@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { isEmpty } from 'lodash';
-import { withRouter } from 'react-router-dom';
 
 import { Header, Form, Button, Message, Segment } from 'semantic-ui-react';
 import semanticFormField from '../../shared/semanticFormField';
@@ -72,7 +71,7 @@ class AdminDeptEdit extends Component {
   }
 
   deleteDept() {
-    const { dept, adminDeleteDept, history } = this.props;
+    const { dept, adminDeleteDept } = this.props;
     adminDeleteDept(dept._id).then((res) => {
       let message = { ...this.state.message };
       if (res.status === 200) {
@@ -182,4 +181,4 @@ AdminDeptEdit = connect(
   mapDispatchToProps
 )(AdminDeptEdit);
 
-export default withRouter(AdminDeptEdit);
+export default AdminDeptEdit;
