@@ -1,5 +1,4 @@
 const User = require('../models/user');
-const UserHistory = require('../models/userHistory');
 const keys = require('../config/keys');
 const arrayHelp = require('../utils/arrayHelpers');
 const cloudinary = require('cloudinary');
@@ -12,15 +11,25 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const addUserHistoryObject = async (user) => {
+const addUserHistoryDept = async (user, dept) => {
+  // add the dept and date
+  console.log('dept', dept, 'user', user);
+  let testDep = { _dept: dept.department };
   try {
-    const newUserHistory = await new UserHistory({ _id: user });
-    console.log('history', newUserHistory);
+    await User.findByIdAndUpdate(
+      user,
+      { $set: { history: { depts: testDep } } },
+      { fields: { passwordHash: 0 }, new: true }
+    );
     return true;
   } catch (error) {
     console.log(error);
     return false;
   }
+};
+
+const addUserHistoryRole = async (user, role) => {
+  // add the role and date
 };
 
 module.exports = {
@@ -35,7 +44,9 @@ module.exports = {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
-      });
+      })
+      .populate('history');
+
     res.send(dbAllUsers);
   },
 
@@ -52,7 +63,9 @@ module.exports = {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
-      });
+      })
+      .populate('history');
+
     res.send(dbUser);
   },
 
@@ -80,7 +93,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
+
       return res.status(200).send(thisUser);
     } catch (error) {
       console.log(error);
@@ -111,7 +126,13 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
+
+      // add to the history
+      const addDeptHist = await addUserHistoryDept(req.params.id, req.body);
+      console.log('addDeptlist', addDeptHist);
+
       return res.send(userDept);
     } catch (error) {
       return res.status(418).send(error);
@@ -145,7 +166,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
+
       return res.status(200).send(newCourse);
     } catch (error) {
       console.log(error);
@@ -189,7 +212,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
+
       return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
@@ -211,9 +236,9 @@ module.exports = {
         }
       );
       // create a user history here
-      console.log('userId', req.params.id);
-      let testHist = await addUserHistoryObject(req.params.id);
-      console.log(testHist);
+      // console.log('userId', req.params.id);
+      // let testHist = await addUserHistoryObject(req.params.id);
+      // console.log(testHist);
 
       return res.status(200).send(veriUser);
     } catch (error) {
@@ -281,7 +306,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
+
       res.send(newProf);
     } catch (error) {
       console.log(error);
@@ -325,7 +352,8 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
 
       // return image user object
       res.send(imgUser);
@@ -356,7 +384,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
+
       res.send(currUser);
     }
   },
@@ -418,7 +448,8 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('history');
 
       // return image user object
       res.send(resetP);
