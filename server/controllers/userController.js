@@ -11,14 +11,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const addUserHistoryDept = async (user, dept) => {
+const addUserHistoryDept = async (user, dept, deptHistory) => {
   // add the dept and date
-  console.log('dept', dept, 'user', user);
-  let testDep = { _dept: dept.department };
+  const newDept = { _dept: dept.department, joinDate: Date.now() };
+
+  const histDept = [...deptHistory, newDept];
   try {
     await User.findByIdAndUpdate(
       user,
-      { $set: { history: { depts: testDep } } },
+      { $set: { deptHistory: histDept } },
       { fields: { passwordHash: 0 }, new: true }
     );
     return true;
@@ -28,8 +29,21 @@ const addUserHistoryDept = async (user, dept) => {
   }
 };
 
-const addUserHistoryRole = async (user, role) => {
-  // add the role and date
+const addUserHistoryRole = async (user, role, roleHistory) => {
+  // add the role and the date
+  const newRole = { _role: role, joinDate: Date.now() };
+  const histRole = [...roleHistory, newRole];
+  try {
+    await User.findByIdAndUpdate(
+      user,
+      { $set: { roleHistory: histRole } },
+      { fields: { passwordHash: 0 }, new: true }
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };
 
 module.exports = {
@@ -45,7 +59,8 @@ module.exports = {
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
       })
-      .populate('history');
+      .populate('deptHistory._dept')
+      .populate('roleHistory._role');
 
     res.send(dbAllUsers);
   },
@@ -64,7 +79,8 @@ module.exports = {
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
       })
-      .populate('history');
+      .populate('deptHistory._dept')
+      .populate('roleHistory._role');
 
     res.send(dbUser);
   },
@@ -94,7 +110,8 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       return res.status(200).send(thisUser);
     } catch (error) {
@@ -127,11 +144,11 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // add to the history
-      const addDeptHist = await addUserHistoryDept(req.params.id, req.body);
-      console.log('addDeptlist', addDeptHist);
+      await addUserHistoryDept(req.params.id, req.body, userDept.deptHistory);
 
       return res.send(userDept);
     } catch (error) {
@@ -167,7 +184,8 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       return res.status(200).send(newCourse);
     } catch (error) {
@@ -213,7 +231,13 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
+      if (action) {
+        await addUserHistoryRole(req.params.id, role, thisUser.roleHistory);
+        // if it is false we will need to do something about this.....
+      }
 
       return res.status(200).send(newRole);
     } catch (error) {
@@ -235,10 +259,6 @@ module.exports = {
           new: true
         }
       );
-      // create a user history here
-      // console.log('userId', req.params.id);
-      // let testHist = await addUserHistoryObject(req.params.id);
-      // console.log(testHist);
 
       return res.status(200).send(veriUser);
     } catch (error) {
@@ -307,7 +327,8 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       res.send(newProf);
     } catch (error) {
@@ -353,7 +374,8 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // return image user object
       res.send(imgUser);
@@ -385,7 +407,8 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       res.send(currUser);
     }
@@ -449,7 +472,8 @@ module.exports = {
             ]
           }
         })
-        .populate('history');
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // return image user object
       res.send(resetP);

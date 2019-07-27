@@ -78,26 +78,24 @@ const userSchema = new Schema({
   ],
   roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
   ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
-  history: {
-    depts: [
-      {
-        _dept: {
-          type: Schema.Types.ObjectId,
-          ref: 'Department'
-        },
-        joinDate: { type: Date, default: Date.now }
-      }
-    ],
-    roles: [
-      {
-        _role: {
-          type: Schema.Types.ObjectId,
-          ref: 'Role'
-        },
-        joinDate: { type: Date, default: Date.now }
-      }
-    ]
-  }
+  roleHistory: [
+    {
+      _role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
+      },
+      joinDate: { type: Date, default: Date.now }
+    }
+  ],
+  deptHistory: [
+    {
+      _dept: {
+        type: Schema.Types.ObjectId,
+        ref: 'Department'
+      },
+      joinDate: { type: Date, default: Date.now }
+    }
+  ]
 });
 
 userSchema.methods.validPassword = async (user, password) => {
