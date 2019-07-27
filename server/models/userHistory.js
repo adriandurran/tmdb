@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userHistorySchema = new Schema({
-  userID: {
+  userId: {
     type: String,
     required: true,
     unique: true,

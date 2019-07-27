@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const UserHistory = require('../models/userHistory');
 const keys = require('../config/keys');
 const arrayHelp = require('../utils/arrayHelpers');
 const cloudinary = require('cloudinary');
@@ -10,6 +11,17 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
+const addUserHistoryObject = async (user) => {
+  try {
+    const newUserHistory = await new UserHistory({ _id: user });
+    console.log('history', newUserHistory);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
 module.exports = {
   allUsers: async (req, res) => {
@@ -198,6 +210,11 @@ module.exports = {
           new: true
         }
       );
+      // create a user history here
+      console.log('userId', req.params.id);
+      let testHist = await addUserHistoryObject(req.params.id);
+      console.log(testHist);
+
       return res.status(200).send(veriUser);
     } catch (error) {
       console.log(error);
