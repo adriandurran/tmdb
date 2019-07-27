@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
-const Course = require('./course');
-const Role = require('./role');
-const Deptartment = require('./departments');
+// const Course = require('./course');
+// const Role = require('./role');
+// const Deptartment = require('./departments');
 
 const saltRounds = 12;
 
@@ -77,7 +77,8 @@ const userSchema = new Schema({
     }
   ],
   roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
-  ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }]
+  ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
+  history: { type: Schema.Types.ObjectId, ref: 'UserHistory' }
 });
 
 userSchema.methods.validPassword = async (user, password) => {

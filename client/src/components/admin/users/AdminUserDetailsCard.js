@@ -34,7 +34,7 @@ class AdminUserDetailsCard extends Component {
 
   render() {
     const { user } = this.props;
-    console.log(user);
+    // console.log(user);
     return (
       <div>
         {_.isEmpty(user) ? (
