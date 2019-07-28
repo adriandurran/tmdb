@@ -1,6 +1,9 @@
 import React from 'react';
-
+import { useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { Grid } from 'semantic-ui-react';
+
+import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
 
 import AdminUserDetailsCard from '../AdminUserDetailsCard';
 import AdminUserRoleManager from './AdminUserRoleManager';
@@ -10,50 +13,43 @@ import AdminUserAddDept from '../dept/AdminUserAddDept';
 import AdminUserResetPassword from '../access/AdminUserResetPassword';
 
 const AdminUserRCTools = () => {
+  const user = useSelector(selectUserManage);
+
   return (
-    <Grid celled>
-      <Grid.Row columns={3}>
-        <Grid.Column>
-          <AdminUserDetailsCard />
-        </Grid.Column>
+    <>
+      {!isEmpty(user) && (
+        <Grid celled>
+          <Grid.Row columns={3}>
+            <Grid.Column>
+              <AdminUserDetailsCard />
+            </Grid.Column>
 
-        <Grid.Column>
-          <AdminUserAddDept />
-        </Grid.Column>
+            <Grid.Column>
+              <AdminUserAddDept />
+            </Grid.Column>
 
-        <Grid.Column>
-          <AdminUserResetPassword />
-        </Grid.Column>
-      </Grid.Row>
-      {/* roles */}
-      <Grid.Row columns={2}>
-        <Grid.Column>
-          <AdminUserRoleManager />
-        </Grid.Column>
-        <Grid.Column>
-          <AdminUserComps />
-        </Grid.Column>
-      </Grid.Row>
-
-      {/* <Grid.Column>
-          <Header as="h3" textAlign="center">
-            Roles
-          </Header>
-          <AdminUserRoleManager />
-        </Grid.Column>
-        <Grid.Column>
-          <Header as="h3" textAlign="center">
-            Competencies
-          </Header>
-          <AdminUserComps />
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column>
-          <AdminUserCourseTable />
-        </Grid.Column> */}
-      {/* </Grid.Row> */}
-    </Grid>
+            <Grid.Column>
+              <AdminUserResetPassword />
+            </Grid.Column>
+          </Grid.Row>
+          {/* roles */}
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <AdminUserRoleManager />
+            </Grid.Column>
+            <Grid.Column>
+              <AdminUserComps />
+            </Grid.Column>
+          </Grid.Row>
+          {/* courses */}
+          <Grid.Row>
+            <Grid.Column>
+              <AdminUserCourseTable />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )}
+    </>
   );
 };
 

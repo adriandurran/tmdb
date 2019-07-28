@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { List, Header, Accordion, Icon } from 'semantic-ui-react';
 
@@ -31,33 +31,28 @@ class AdminUserComps extends Component {
   renderRoleReqComps() {
     const { activeIndex } = this.state;
     const { user } = this.props;
-    if (_.isEmpty(user)) {
-      return <List.Content description="No User Roles" />;
+    if (!isEmpty(user)) {
+      return user.roles.map((role, i) => {
+        return (
+          <>
+            <Accordion.Title
+              active={activeIndex === i}
+              index={i}
+              onClick={this.handleClick}
+              key={role._id}
+            >
+              <Icon name="dropdown" />
+              {role.roleName}
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === i} key={role._id + i}>
+              <List divided verticalAlign="middle">
+                {this.renderReqComps(role.competencies)}
+              </List>
+            </Accordion.Content>
+          </>
+        );
+      });
     }
-    if (user.roles.length === 0) {
-      return <List.Content description="No User Roles" />;
-    }
-
-    return user.roles.map((role, i) => {
-      return (
-        <>
-          <Accordion.Title
-            active={activeIndex === i}
-            index={i}
-            onClick={this.handleClick}
-            key={role._id}
-          >
-            <Icon name="dropdown" />
-            {role.roleName}
-          </Accordion.Title>
-          <Accordion.Content active={activeIndex === i} key={role._id + i}>
-            <List divided verticalAlign="middle">
-              {this.renderReqComps(role.competencies)}
-            </List>
-          </Accordion.Content>
-        </>
-      );
-    });
   }
 
   renderReqComps(comps) {
@@ -119,39 +114,42 @@ class AdminUserComps extends Component {
   // TODO ---- need to add in check on the courses to see if any expire within 3 months
   renderCurrentComps() {
     const { currentComps, user } = this.props;
-    if (_.isEmpty(user)) {
-      return <List.Content description="No User selected" />;
+    if (!isEmpty(user)) {
+      return currentComps.map((comp, i) => {
+        return (
+          <List.Item key={comp._id}>
+            <List.Content>
+              <List.Header>{comp.compName}</List.Header>
+              <List.Description>
+                {comp.courses.length} Courses required for Competency
+              </List.Description>
+            </List.Content>
+          </List.Item>
+        );
+      });
     }
-    if (currentComps.length === 0) {
-      return <List.Content description="No User Competencies" />;
-    }
-
-    return currentComps.map((comp, i) => {
-      return (
-        <List.Item key={comp._id}>
-          <List.Content>
-            <List.Header>{comp.compName}</List.Header>
-            <List.Description>
-              {comp.courses.length} Courses required for Competency
-            </List.Description>
-          </List.Content>
-        </List.Item>
-      );
-    });
   }
 
   render() {
+    const { user } = this.props;
     return (
       <>
-        <Accordion fluid styled>
-          {this.renderRoleReqComps()}
-        </Accordion>
-        <Header as="h4" textAlign="center">
-          Current Competencies
-        </Header>
-        <List divided verticalAlign="middle">
-          {this.renderCurrentComps()}
-        </List>
+        {!isEmpty(user) && (
+          <>
+            <Header as="h3" textAlign="center">
+              Competencies
+            </Header>
+            <Accordion fluid styled>
+              {this.renderRoleReqComps()}
+            </Accordion>
+            <Header as="h4" textAlign="center">
+              Current Competencies
+            </Header>
+            <List divided verticalAlign="middle">
+              {this.renderCurrentComps()}
+            </List>
+          </>
+        )}
       </>
     );
   }

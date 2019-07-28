@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { Header, Grid } from 'semantic-ui-react';
 
@@ -18,41 +18,39 @@ class AdminUserCourseTable extends Component {
 
   render() {
     const { user } = this.props;
-    if (_.isEmpty(user)) {
-      return (
-        <Header as="h3" textAlign="center">
-          No User loaded
-        </Header>
-      );
-    }
+
     return (
-      <div>
-        <Header as="h3" textAlign="center">
-          User Courses
-        </Header>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-              <AdminUserCoursesCurrent />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <AdminUserCoursesVerify />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <AdminUserCoursesExpired />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+      <>
+        {!isEmpty(user) && (
+          <>
+            <Header as="h3" textAlign="center">
+              User Courses
+            </Header>
+            <Grid celled>
+              <Grid.Row>
+                <Grid.Column>
+                  <AdminUserCoursesCurrent />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <AdminUserCoursesVerify />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <AdminUserCoursesExpired />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </>
+        )}
+      </>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectUserManage(state)
   };
