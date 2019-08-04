@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import {
   Header,
@@ -74,53 +74,54 @@ class AdminUserResetPassword extends Component {
     const { user, handleSubmit, submitting, pristine } = this.props;
     const { message, loader } = this.state;
     return (
-      <div>
-        <Segment attached style={{ marginTop: '1em' }}>
-          {_.isEmpty(user) ? (
-            <Header as="h3" textAlign="center">
-              No User Selected
-            </Header>
-          ) : (
-            <Header as="h3" textAlign="center">
-              Reset Password
-            </Header>
-          )}
-          <Form onSubmit={handleSubmit((values) => this.resetUserPWD(values))}>
-            <Field
-              name="password"
-              type="password"
-              iconPosition="left"
-              icon="lock"
-              placeholder="Enter new password"
-              component={semanticFormField}
-              as={Form.Input}
-              validate={required}
+      <>
+        {!isEmpty(user) && (
+          <>
+            <Segment attached style={{ marginTop: '1em' }}>
+              <Header as="h3" textAlign="center">
+                Reset Password
+              </Header>
+
+              <Form
+                onSubmit={handleSubmit((values) => this.resetUserPWD(values))}
+              >
+                <Field
+                  name="password"
+                  type="password"
+                  iconPosition="left"
+                  icon="lock"
+                  placeholder="Enter new password"
+                  component={semanticFormField}
+                  as={Form.Input}
+                  validate={required}
+                />
+                <Button
+                  fluid
+                  disabled={pristine || submitting}
+                  loading={submitting}
+                  type="submit"
+                  size="large"
+                >
+                  Change Password
+                </Button>
+              </Form>
+              <Dimmer inverted active={loader.active}>
+                <Loader indeterminate size="big">
+                  Changing password please wait.....
+                </Loader>
+              </Dimmer>
+            </Segment>
+            <Message
+              attached="bottom"
+              header={message.header}
+              content={message.content}
+              visible={message.visible}
+              positive={message.positive}
+              negative={message.negative}
             />
-            <Button
-              fluid
-              disabled={pristine || submitting}
-              loading={submitting}
-              type="submit"
-              size="large"
-            >
-              Change Password
-            </Button>
-          </Form>
-          <Dimmer inverted active={loader.active}>
-            <Loader indeterminate size="big">
-              Changing password please wait.....
-            </Loader>
-          </Dimmer>
-        </Segment>
-        <Message
-          attached="bottom"
-          header={message.header}
-          content={message.content}
-          visible={message.visible}
-          positive={message.positive}
-          negative={message.negative}
-        />
-      </div>
+          </>
+        )}
+      </>
     );
   }
 }

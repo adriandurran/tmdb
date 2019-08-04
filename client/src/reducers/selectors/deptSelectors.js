@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
 // all departments
-export const selectDepts = (state) => state.depts;
+export const selectDepts = (state) =>
+  state.depts.sort((a, b) => a.departmentName.localeCompare(b.departmentName));
 
 export const selectDeptsForDropDown = createSelector(
   selectDepts,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { Card, Dropdown, Button } from 'semantic-ui-react';
 
@@ -26,15 +26,11 @@ class AdminUserAddDept extends Component {
   render() {
     const { user, depts } = this.props;
     return (
-      <div>
-        {_.isEmpty(user) ? (
-          <Card centered style={{ marginTop: '1em' }}>
-            <Card.Content description="No user selected" />
-          </Card>
-        ) : (
+      <>
+        {!isEmpty(user) && (
           <Card centered style={{ marginTop: '1em' }}>
             <Card.Content>
-              {_.isEmpty(user.department) ? (
+              {isEmpty(user.department) ? (
                 <Card.Header textAlign="center">
                   No Department Assigned
                 </Card.Header>
@@ -55,7 +51,7 @@ class AdminUserAddDept extends Component {
                 <Button
                   fluid
                   onClick={this.assignDept}
-                  disabled={_.isEmpty(user)}
+                  disabled={isEmpty(user)}
                   size="medium"
                   style={{ marginTop: '1em' }}
                 >
@@ -65,14 +61,14 @@ class AdminUserAddDept extends Component {
             </Card.Content>
           </Card>
         )}
-      </div>
+      </>
     );
   }
 }
 
 const mapDispatchToProps = { adminAssignDept };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectUserManage(state),
     depts: selectDeptsForDropDown(state),

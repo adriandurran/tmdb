@@ -2,7 +2,8 @@ import {
   FETCH_DEPTS,
   ADMIN_ADD_DEPT,
   FETCH_DEPT,
-  CLEAR_DEPT
+  CLEAR_DEPT,
+  ADMIN_DELETE_DEPT
 } from '../../actions/types';
 
 const INITIAL_STATE_A = [];
@@ -14,7 +15,8 @@ export const deptsReducer = (state = INITIAL_STATE_A, action) => {
       return action.payload;
     case ADMIN_ADD_DEPT:
       return [...state, action.payload];
-
+    case ADMIN_DELETE_DEPT:
+      return state.filter((dept) => dept._id !== action.payload);
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { sortBy } from 'lodash';
 import Moment from 'react-moment';
 
 import { Table, Header } from 'semantic-ui-react';
@@ -32,13 +32,13 @@ class AdminUserCoursesCurrent extends Component {
     });
   }
 
-  handleSort = clickedColumn => () => {
+  handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state;
 
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        data: _.sortBy(data, [clickedColumn]),
+        data: sortBy(data, [clickedColumn]),
         direction: 'ascending'
       });
 
@@ -90,10 +90,10 @@ class AdminUserCoursesCurrent extends Component {
     const { column, direction } = this.state;
 
     return (
-      <div>
-        {courses.length > 0 ? (
-          <div>
-            <Header as="h3" textAlign="center">
+      <>
+        {courses.length > 0 && (
+          <>
+            <Header as="h4" textAlign="center">
               Current Courses
             </Header>
             <Table sortable celled fixed structured>
@@ -139,18 +139,14 @@ class AdminUserCoursesCurrent extends Component {
               </Table.Header>
               <Table.Body>{this.renderTableBody()}</Table.Body>
             </Table>
-          </div>
-        ) : (
-          <Header as="h3" textAlign="center">
-            No Current Courses
-          </Header>
+          </>
         )}
-      </div>
+      </>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     courses: selectUserManageCoursesCurrent(state)
   };

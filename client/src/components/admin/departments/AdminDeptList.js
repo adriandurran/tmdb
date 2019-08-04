@@ -1,21 +1,26 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { List, Header, Icon, Button } from 'semantic-ui-react';
 
 import { selectDepts } from '../../../reducers/selectors/deptSelectors';
-import { fetchDept } from '../../../actions/dept';
+import { fetchDeptNew } from '../../../actions/dept';
+import { FETCH_DEPT, CLEAR_DEPT } from '../../../actions/types';
 
-class AdminDeptList extends Component {
-  renderDeptList() {
-    const { depts } = this.props;
+const AdminDeptList = ({ history }) => {
+  const depts = useSelector(selectDepts);
+  const fetchTheDept = useDispatch();
+
+  const renderDeptList = () => {
+    // const { depts } = this.props;
 
     return depts.map((dept) => {
       return (
         <List.Item key={dept._id}>
           <List.Content floated="right">
-            <Button icon onClick={this.handleListClick} value={dept._id}>
+            <Button icon onClick={handleListClick} value={dept._id}>
               <Icon name="wrench" />
             </Button>
           </List.Content>
@@ -25,43 +30,25 @@ class AdminDeptList extends Component {
         </List.Item>
       );
     });
-  }
-
-  handleListClick = (e, { value }) => {
-    // I think  launch modal to edit....just a small form
-    const { fetchDept, history } = this.props;
-    fetchDept(value).then(() => {
-      history.push(`/admin/dept-manager/view/${value}`);
-    });
   };
 
-  render() {
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Department List
-        </Header>
-        <List divided verticalAlign="middle">
-          {this.renderDeptList()}
-        </List>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  fetchDept
-};
-
-const mapStateToProps = (state) => {
-  return {
-    depts: selectDepts(state)
+  const handleListClick = async (e, { value }) => {
+    fetchTheDept({ type: CLEAR_DEPT });
+    const result = await fetchDeptNew(value);
+    fetchTheDept({ type: FETCH_DEPT, payload: result.data });
+    history.push(`/admin/dept-manager/view/${value}`);
   };
-};
 
-AdminDeptList = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminDeptList);
+  return (
+    <div>
+      <Header as="h3" textAlign="center">
+        Department List
+      </Header>
+      <List divided verticalAlign="middle">
+        {renderDeptList()}
+      </List>
+    </div>
+  );
+};
 
 export default withRouter(AdminDeptList);

@@ -1,24 +1,35 @@
 import axios from 'axios';
 import { reset } from 'redux-form';
 
-import { FETCH_DEPTS, ADMIN_ADD_DEPT, FETCH_DEPT, CLEAR_DEPT } from './types';
+import {
+  FETCH_DEPTS,
+  ADMIN_ADD_DEPT,
+  FETCH_DEPT,
+  CLEAR_DEPT,
+  ADMIN_DELETE_DEPT
+} from './types';
 
-export const fetchDepts = () => async dispatch => {
+export const fetchDepts = () => async (dispatch) => {
   const res = await axios.get('/api/tmdb/dept');
   dispatch({ type: FETCH_DEPTS, payload: res.data });
 };
 
-export const fetchDept = id => async dispatch => {
+export const fetchDept = (id) => async (dispatch) => {
   dispatch(clearDept());
   const res = await axios.get(`/api/tmdb/dept/${id}`);
   dispatch({ type: FETCH_DEPT, payload: res.data });
 };
 
-export const clearDept = () => dispatch => {
+export const fetchDeptNew = async (id) => {
+  const res = await axios.get(`/api/tmdb/dept/${id}`);
+  return res;
+};
+
+export const clearDept = () => (dispatch) => {
   dispatch({ type: CLEAR_DEPT });
 };
 
-export const adminAddDept = dept => async dispatch => {
+export const adminAddDept = (dept) => async (dispatch) => {
   try {
     const newDept = await axios.post('/api/tmdb/dept', dept);
     // add new dept to reducers
@@ -31,7 +42,7 @@ export const adminAddDept = dept => async dispatch => {
   }
 };
 
-export const adminUpdateDept = (id, dept) => async dispatch => {
+export const adminUpdateDept = (id, dept) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/tmdb/dept/${id}`, dept);
     if (res.status === 200) {
@@ -39,6 +50,19 @@ export const adminUpdateDept = (id, dept) => async dispatch => {
       dispatch(fetchDepts());
     }
     return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const adminDeleteDept = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/tmdb/dept/${id}`);
+    if (res.status === 200) {
+      dispatch({ type: ADMIN_DELETE_DEPT, payload: id });
+      dispatch(clearDept());
+      return res;
+    }
   } catch (error) {
     console.log(error);
   }

@@ -5,6 +5,7 @@ services:
     build:
       context: ./server
     container_name: tmdb_server
+    restart: unless-stopped
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules/
@@ -20,5 +21,6 @@ services:
   tmdb_db:
     image: mongo:latest
     container_name: tmbd_db
+    restart: unless-stopped
     volumes:
       - ./docker/data/demo_db:/data/db

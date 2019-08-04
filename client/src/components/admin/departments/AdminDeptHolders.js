@@ -1,19 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import Moment from 'react-moment';
 
 import { Header, Item } from 'semantic-ui-react';
 
-import { selectUsersInDept } from '../../../reducers/selectors/adminSelectors';
-import { fetchAllUsers } from '../../../actions/user';
-
-class AdminDeptHolders extends Component {
-  componentDidMount() {
-    this.props.fetchAllUsers();
-  }
-
-  renderDeptHolders() {
-    const { users } = this.props;
+const AdminDeptHolders = ({ users }) => {
+  const renderDeptHolders = () => {
     return users.map((user) => {
       return (
         <Item key={user._id}>
@@ -30,33 +21,16 @@ class AdminDeptHolders extends Component {
         </Item>
       );
     });
-  }
-
-  render() {
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Users who are in this Department
-        </Header>
-        <Item.Group>{this.renderDeptHolders()}</Item.Group>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    users: selectUsersInDept(state)
   };
-};
 
-const mapDispatchToProps = {
-  fetchAllUsers
+  return (
+    <>
+      <Header as="h3" textAlign="center">
+        Users who are in this Department
+      </Header>
+      <Item.Group>{renderDeptHolders()}</Item.Group>
+    </>
+  );
 };
-
-AdminDeptHolders = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminDeptHolders);
 
 export default AdminDeptHolders;

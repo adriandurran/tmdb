@@ -54,6 +54,7 @@ export const FETCH_DEPTS = 'fetch_departments';
 export const FETCH_DEPT = 'fetch_dept';
 export const CLEAR_DEPT = 'clear_dept';
 export const ADMIN_ADD_DEPT = 'admin_add_dept';
+export const ADMIN_DELETE_DEPT = 'admin_delete_dept';
 
 // versions
 export const FETCH_VERSION = 'fetch_version';

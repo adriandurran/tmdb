@@ -11,6 +11,41 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const addUserHistoryDept = async (user, dept, deptHistory) => {
+  // add the dept and date
+  const newDept = { _dept: dept.department, joinDate: Date.now() };
+
+  const histDept = [...deptHistory, newDept];
+  try {
+    await User.findByIdAndUpdate(
+      user,
+      { $set: { deptHistory: histDept } },
+      { fields: { passwordHash: 0 }, new: true }
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const addUserHistoryRole = async (user, role, roleHistory) => {
+  // add the role and the date
+  const newRole = { _role: role, joinDate: Date.now() };
+  const histRole = [...roleHistory, newRole];
+  try {
+    await User.findByIdAndUpdate(
+      user,
+      { $set: { roleHistory: histRole } },
+      { fields: { passwordHash: 0 }, new: true }
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 module.exports = {
   allUsers: async (req, res) => {
     const dbAllUsers = await User.find({})
@@ -23,7 +58,10 @@ module.exports = {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
-      });
+      })
+      .populate('deptHistory._dept')
+      .populate('roleHistory._role');
+
     res.send(dbAllUsers);
   },
 
@@ -40,7 +78,10 @@ module.exports = {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
-      });
+      })
+      .populate('deptHistory._dept')
+      .populate('roleHistory._role');
+
     res.send(dbUser);
   },
 
@@ -68,7 +109,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       return res.status(200).send(thisUser);
     } catch (error) {
       console.log(error);
@@ -99,7 +143,13 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
+      // add to the history
+      await addUserHistoryDept(req.params.id, req.body, userDept.deptHistory);
+
       return res.send(userDept);
     } catch (error) {
       return res.status(418).send(error);
@@ -133,7 +183,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       return res.status(200).send(newCourse);
     } catch (error) {
       console.log(error);
@@ -177,7 +230,15 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
+      if (action) {
+        await addUserHistoryRole(req.params.id, role, thisUser.roleHistory);
+        // if it is false we will need to do something about this.....
+      }
+
       return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
@@ -198,6 +259,7 @@ module.exports = {
           new: true
         }
       );
+
       return res.status(200).send(veriUser);
     } catch (error) {
       console.log(error);
@@ -264,7 +326,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       res.send(newProf);
     } catch (error) {
       console.log(error);
@@ -308,7 +373,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // return image user object
       res.send(imgUser);
@@ -339,7 +406,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       res.send(currUser);
     }
   },
@@ -401,7 +471,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // return image user object
       res.send(resetP);
