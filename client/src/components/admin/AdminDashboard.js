@@ -1,53 +1,159 @@
-import React from 'react';
-import { Grid, Header, Icon } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Header, Icon, Card, Segment, Dimmer, Loader } from 'semantic-ui-react';
 
-import AdminCourseTools from './courses/AdminCourseTools';
-import AdminCompTools from './competencies/AdminCompTools';
-import AdminRoleTools from './roles/AdminRoleTools';
-import AdminUserTools from './users/AdminUserTools';
+import { fetchDepts } from '../../actions/dept';
+import { fetchAllUsers } from '../../actions/user';
+import { fetchRoles } from '../../actions/roles';
+import { fetchComps, fetchCompTypes } from '../../actions/comps';
+import {
+  fetchCourses,
+  fetchCourseTypes,
+  fetchCourseLevels
+} from '../../actions/courses';
+import { fetchVersions, fetchFeedbackTypes } from '../../actions/extra';
+import { fetchOJTS } from '../../actions/ojt';
 
-const AdminDashboard = props => {
-  return (
-    <div>
-      <Header as="h1" textAlign="center">
-        <Icon name="dashboard" />
-        Admin Dashboard
-      </Header>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">
-              Course Tools
-            </Header>
-            <AdminCourseTools />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={2}>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">
-              Competency Tools
-            </Header>
-            <AdminCompTools />
-          </Grid.Column>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">
-              Role Tools
-            </Header>
-            <AdminRoleTools />
-          </Grid.Column>
-        </Grid.Row>
+class AdminDashboard extends Component {
+  state = {
+    active: true
+  };
 
-        <Grid.Row>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">
-              User Tools
-            </Header>
-            <AdminUserTools />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
-  );
+  componentDidMount() {
+    const {
+      fetchDepts,
+      fetchAllUsers,
+      fetchRoles,
+      fetchComps,
+      fetchCompTypes,
+      fetchCourses,
+      fetchCourseTypes,
+      fetchCourseLevels,
+      fetchVersions,
+      fetchFeedbackTypes,
+      fetchOJTS
+    } = this.props;
+    try {
+      fetchDepts();
+      fetchAllUsers();
+      fetchRoles();
+      fetchComps();
+      fetchCompTypes();
+      fetchCourses();
+      fetchCourseTypes();
+      fetchCourseLevels();
+      fetchOJTS();
+      fetchVersions();
+      fetchFeedbackTypes();
+    } catch (error) {
+      return this.setState({ active: true });
+    }
+    this.setState({ active: false });
+  }
+
+  render() {
+    const { active } = this.state;
+    return (
+      <div>
+        <Header as="h1" textAlign="center">
+          <Icon name="dashboard" />
+          Admin Dashboard
+        </Header>
+
+        <Segment basic style={{ marginTop: '2em' }}>
+          {/* <Card.Group itemsPerRow={1}>
+            <Card as={Link} to="/admin/dept-tools" raised>
+              <Card.Content>
+                <Header as="h2">Unit</Header>
+              </Card.Content>
+              <Card.Content description="Unit Views & Reports" />
+              <Card.Content extra />
+            </Card>
+          </Card.Group> */}
+          <Card.Group itemsPerRow={2}>
+            <Card as={Link} to="/admin/dept-tools" raised>
+              <Card.Content>
+                <Header as="h2">Departments</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage & View Departments" />
+              <Card.Content extra />
+            </Card>
+            <Card as={Link} to="/admin/user-tools" raised>
+              <Card.Content>
+                <Header as="h2">Users</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage & View Users" />
+              <Card.Content extra />
+            </Card>
+          </Card.Group>
+          <Card.Group itemsPerRow={4}>
+            <Card as={Link} to="/admin/role-tools" raised>
+              <Card.Content>
+                <Header as="h2">Roles</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage & View Roles" />
+              <Card.Content extra />
+            </Card>
+            <Card as={Link} to="/admin/comp-tools" raised>
+              <Card.Content>
+                <Header as="h2">Competencies</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage & View Competencies" />
+              <Card.Content extra />
+            </Card>
+            <Card as={Link} to="/admin/course-tools" raised>
+              <Card.Content>
+                <Header as="h2">Courses</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage & View Courses" />
+              <Card.Content extra />
+            </Card>
+            <Card as={Link} to="/admin/ojt-tools" raised>
+              <Card.Content>
+                <Header as="h2">On the Job Training</Header>
+              </Card.Content>
+              <Card.Content description="Add & Manage On the Job Training" />
+              <Card.Content extra />
+            </Card>
+          </Card.Group>
+          <Card.Group itemsPerRow={1}>
+            <Card as={Link} to="/admin/app-tools" raised>
+              <Card.Content>
+                <Header as="h2">Application</Header>
+              </Card.Content>
+              <Card.Content description="Manage & View Application Settings" />
+              <Card.Content extra />
+            </Card>
+          </Card.Group>
+          <Dimmer inverted active={active}>
+            <Loader indeterminate size="huge">
+              Fetching data please wait.....
+            </Loader>
+          </Dimmer>
+        </Segment>
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = {
+  fetchDepts,
+  fetchAllUsers,
+  fetchRoles,
+  fetchComps,
+  fetchCompTypes,
+  fetchCourses,
+  fetchCourseTypes,
+  fetchCourseLevels,
+  fetchVersions,
+  fetchFeedbackTypes,
+  fetchOJTS
 };
+
+AdminDashboard = connect(
+  null,
+  mapDispatchToProps
+)(AdminDashboard);
 
 export default AdminDashboard;

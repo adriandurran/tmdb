@@ -38,5 +38,16 @@ module.exports = {
     } catch (error) {
       return res.status(418).send(error);
     }
+  },
+
+  deleteDept: async (req, res) => {
+    try {
+      const remDept = await Department.remove({ _id: req.params.id });
+      if (remDept.ok > 0) {
+        res.sendStatus(200);
+      }
+    } catch (error) {
+      return res.status(418).send(error);
+    }
   }
 };

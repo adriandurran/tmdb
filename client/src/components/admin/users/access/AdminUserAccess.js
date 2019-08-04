@@ -16,7 +16,7 @@ class AdminUserAccess extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    // const { user } = this.props;
     return (
       <div>
         <Header as="h2" textAlign="center">
@@ -24,21 +24,17 @@ class AdminUserAccess extends Component {
         </Header>
         <AdminUserMenu />
         <Grid celled centered style={{ marginTop: '0.5em' }} attached="bottom">
-          <Grid.Row>
+          <Grid.Row columns={3}>
             <Grid.Column>
               <AdminUserVerify />
             </Grid.Column>
+            <Grid.Column>
+              <AdminUserAccessManage />
+            </Grid.Column>
+            <Grid.Column>
+              <AdminUsersAdmini />
+            </Grid.Column>
           </Grid.Row>
-          {user.isSuperAdmin && (
-            <Grid.Row columns={2}>
-              <Grid.Column>
-                <AdminUserAccessManage />
-              </Grid.Column>
-              <Grid.Column>
-                <AdminUsersAdmini />
-              </Grid.Column>
-            </Grid.Row>
-          )}
         </Grid>
       </div>
     );
@@ -49,7 +45,7 @@ const mapDispatchToProps = {
   fetchAllUsers
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectCurrentUser(state)
   };

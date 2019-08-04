@@ -13,8 +13,12 @@ import courseLevelsReducer from './courses/course-levels';
 import courseTypesReducer from './courses/course-types';
 import { allUsersReducer, userSearchResultReducer } from './users/users';
 import { deptsReducer, deptReducer } from './dept/deptReducer';
+import { ojtsReducer, ojtTypesReducer } from './ojts/ojts';
 
 import { progressReducer } from './shared/sharedReducers';
+
+import { versionReducer, versionsReducer } from './extra/version';
+import { feebackTypeReducer, feedbackReducer } from './extra/feedback';
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -29,9 +33,15 @@ const reducer = combineReducers({
   course: courseReducer,
   courseTypes: courseTypesReducer,
   courseLevels: courseLevelsReducer,
+  ojts: ojtsReducer,
+  ojtTypes: ojtTypesReducer,
   depts: deptsReducer,
   dept: deptReducer,
   progress: progressReducer,
+  version: versionReducer,
+  versions: versionsReducer,
+  feedbackTypes: feebackTypeReducer,
+  feedback: feedbackReducer,
   form: reduxForm
 });
 

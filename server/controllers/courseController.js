@@ -53,10 +53,22 @@ module.exports = {
 
   addCourses: async (req, res) => {
     const newCourse = req.body;
-    const newCourseCreated = await Course.create(newCourse).populate(
-      'notes.noteBy'
-    );
-    res.send(newCourseCreated);
+    try {
+      const newCourseCreated = await Course.create(newCourse);
+      res.send(newCourseCreated);
+    } catch (error) {
+      res.send(error);
+    }
+  },
+
+  deleteCourse: async (req, res) => {
+    try {
+      const remCourse = await Course.deleteOne({ _id: req.params.id });
+      return res.status(200).send(remCourse);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
   },
 
   getCourse: async (req, res) => {

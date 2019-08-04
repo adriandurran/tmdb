@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { Header, Form, Button, Segment, Message } from 'semantic-ui-react';
+import {
+  Header,
+  Form,
+  Button,
+  Segment,
+  Message,
+  Dimmer,
+  Loader
+} from 'semantic-ui-react';
 import semanticFormField from '../../shared/semanticFormField';
 
 import { selectCurrentUser } from '../../../reducers/selectors/userSelectors';
@@ -13,6 +21,9 @@ class UserResetPassword extends Component {
   state = {
     message: {
       visible: true
+    },
+    loader: {
+      active: false
     }
   };
 
@@ -27,9 +38,18 @@ class UserResetPassword extends Component {
   resetPWD(newP) {
     const { user, resetUserPassword } = this.props;
     // reset here and log out?
-    resetUserPassword(user._id, newP).then(res => {
+    // loader
+    let loader = { ...this.state.loader };
+    loader.active = true;
+    this.setState({ loader });
+    resetUserPassword(user._id, newP).then((res) => {
       let message = { ...this.state.message };
       message.visible = true;
+      // loader
+      loader.active = false;
+      this.setState({
+        loader
+      });
       if (res.status === 200) {
         message.header = 'Success!';
         message.content = `Your password has been changed`;
@@ -46,7 +66,7 @@ class UserResetPassword extends Component {
 
   render() {
     const { handleSubmit, submitting, pristine } = this.props;
-    const { message } = this.state;
+    const { message, loader } = this.state;
 
     return (
       <div>
@@ -54,7 +74,7 @@ class UserResetPassword extends Component {
           <Header as="h3" textAlign="center">
             Reset Password
           </Header>
-          <Form onSubmit={handleSubmit(values => this.resetPWD(values))}>
+          <Form onSubmit={handleSubmit((values) => this.resetPWD(values))}>
             <Field
               name="password"
               type="password"
@@ -75,6 +95,11 @@ class UserResetPassword extends Component {
               Change Password
             </Button>
           </Form>
+          <Dimmer inverted active={loader.active}>
+            <Loader indeterminate size="big">
+              Changing password please wait.....
+            </Loader>
+          </Dimmer>
         </Segment>
         <Message
           attached="bottom"
@@ -89,7 +114,7 @@ class UserResetPassword extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: selectCurrentUser(state)
   };

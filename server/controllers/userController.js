@@ -6,10 +6,45 @@ const dataUri = require('datauri');
 const path = require('path');
 
 cloudinary.config({
-  cloud_name: keys.cloudinary.cloud_name,
-  api_key: keys.cloudinary.api_key,
-  api_secret: keys.cloudinary.api_secret
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
+const addUserHistoryDept = async (user, dept, deptHistory) => {
+  // add the dept and date
+  const newDept = { _dept: dept.department, joinDate: Date.now() };
+
+  const histDept = [...deptHistory, newDept];
+  try {
+    await User.findByIdAndUpdate(
+      user,
+      { $set: { deptHistory: histDept } },
+      { fields: { passwordHash: 0 }, new: true }
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const addUserHistoryRole = async (user, role, roleHistory) => {
+  // add the role and the date
+  const newRole = { _role: role, joinDate: Date.now() };
+  const histRole = [...roleHistory, newRole];
+  try {
+    await User.findByIdAndUpdate(
+      user,
+      { $set: { roleHistory: histRole } },
+      { fields: { passwordHash: 0 }, new: true }
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
 module.exports = {
   allUsers: async (req, res) => {
@@ -23,7 +58,10 @@ module.exports = {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
-      });
+      })
+      .populate('deptHistory._dept')
+      .populate('roleHistory._role');
+
     res.send(dbAllUsers);
   },
 
@@ -40,7 +78,10 @@ module.exports = {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
         }
-      });
+      })
+      .populate('deptHistory._dept')
+      .populate('roleHistory._role');
+
     res.send(dbUser);
   },
 
@@ -68,7 +109,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       return res.status(200).send(thisUser);
     } catch (error) {
       console.log(error);
@@ -99,7 +143,13 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
+      // add to the history
+      await addUserHistoryDept(req.params.id, req.body, userDept.deptHistory);
+
       return res.send(userDept);
     } catch (error) {
       return res.status(418).send(error);
@@ -133,7 +183,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       return res.status(200).send(newCourse);
     } catch (error) {
       console.log(error);
@@ -177,7 +230,15 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
+      if (action) {
+        await addUserHistoryRole(req.params.id, role, thisUser.roleHistory);
+        // if it is false we will need to do something about this.....
+      }
+
       return res.status(200).send(newRole);
     } catch (error) {
       console.log(error);
@@ -198,7 +259,18 @@ module.exports = {
           new: true
         }
       );
+
       return res.status(200).send(veriUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+
+  removeRegistration: async (req, res) => {
+    try {
+      const remReg = await User.deleteOne({ _id: req.params.id });
+      return res.status(200).send(remReg);
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);
@@ -254,7 +326,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       res.send(newProf);
     } catch (error) {
       console.log(error);
@@ -298,7 +373,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // return image user object
       res.send(imgUser);
@@ -329,7 +406,10 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
+
       res.send(currUser);
     }
   },
@@ -344,7 +424,6 @@ module.exports = {
         password
       } = req.body.data.newUser;
 
-      const joinDate = Date.now();
       let newUser = new User();
 
       let passwordHash = await newUser.generateHash(password);
@@ -354,11 +433,10 @@ module.exports = {
         userId,
         firstName,
         lastName,
-        passwordHash,
-        joinDate
+        passwordHash
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => res.status(400).send(err));
+        .then((user) => res.status(200).send(user))
+        .catch((err) => res.status(400).send(err));
     } catch (error) {
       console.log(error);
       return res.status(400).send(error);
@@ -393,7 +471,9 @@ module.exports = {
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       // return image user object
       res.send(resetP);
@@ -408,7 +488,10 @@ module.exports = {
   },
 
   logoutUser: (req, res) => {
-    req.logout();
+    req.logOut();
+
+    req.session = null;
+    res.clearCookie('tmdb', { path: '/' });
     res.redirect('/');
   },
 
@@ -433,13 +516,51 @@ module.exports = {
         userId,
         firstName,
         lastName,
+        verified,
+        isAdmin,
+        isSuperAdmin,
         passwordHash,
+        joinDate: Date.now()
+      })
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
+          console.log(err);
+          return res.status(400).send(err);
+        });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  },
+  seedSuperAdminIT: async (req, res) => {
+    try {
+      const {
+        userId,
+        firstName,
+        lastName,
+        username,
+        password,
         verified,
         isAdmin,
         isSuperAdmin
+      } = keys.seedAdminIT;
+
+      let seedyA = new User();
+      let passwordHash = await seedyA.generateHash(password);
+
+      User.create({
+        username,
+        userId,
+        firstName,
+        lastName,
+        passwordHash,
+        verified,
+        isAdmin,
+        isSuperAdmin,
+        joinDate: Date.now()
       })
-        .then(user => res.status(200).send(user))
-        .catch(err => {
+        .then((user) => res.status(200).send(user))
+        .catch((err) => {
           console.log(err);
           return res.status(400).send(err);
         });

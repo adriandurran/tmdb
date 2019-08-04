@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
-const Course = require('./course');
-const Role = require('./role');
-const Deptartment = require('./departments');
+// const Course = require('./course');
+// const Role = require('./role');
+// const Deptartment = require('./departments');
 
-const saltRounds = 10;
+const saltRounds = 12;
 
 const userSchema = new Schema({
   userId: {
@@ -50,12 +50,21 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
+  isManager: {
+    type: Boolean,
+    default: false
+  },
   joinDate: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   department: {
     type: Schema.Types.ObjectId,
     ref: 'Department'
+  },
+  lineReport: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   courses: [
     {
@@ -67,7 +76,26 @@ const userSchema = new Schema({
       verified: { type: Boolean, default: false }
     }
   ],
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }]
+  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+  ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
+  roleHistory: [
+    {
+      _role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
+      },
+      joinDate: { type: Date, default: Date.now }
+    }
+  ],
+  deptHistory: [
+    {
+      _dept: {
+        type: Schema.Types.ObjectId,
+        ref: 'Department'
+      },
+      joinDate: { type: Date, default: Date.now }
+    }
+  ]
 });
 
 userSchema.methods.validPassword = async (user, password) => {
@@ -75,7 +103,7 @@ userSchema.methods.validPassword = async (user, password) => {
   return res;
 };
 
-userSchema.methods.generateHash = async password => {
+userSchema.methods.generateHash = async (password) => {
   const hashy = await bcrypt.hash(password, saltRounds);
   return hashy;
 };

@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
+import { Grid } from 'semantic-ui-react';
 
-import { Grid, Header } from 'semantic-ui-react';
+import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
 
 import AdminUserDetailsCard from '../AdminUserDetailsCard';
 import AdminUserRoleManager from './AdminUserRoleManager';
@@ -9,51 +12,45 @@ import AdminUserCourseTable from '../courses/AdminUserCoursesTable';
 import AdminUserAddDept from '../dept/AdminUserAddDept';
 import AdminUserResetPassword from '../access/AdminUserResetPassword';
 
-class AdminUserRCTools extends Component {
-  render() {
-    return (
-      <div>
-        <Grid>
+const AdminUserRCTools = () => {
+  const user = useSelector(selectUserManage);
+
+  return (
+    <>
+      {!isEmpty(user) && (
+        <Grid celled>
           <Grid.Row columns={3}>
             <Grid.Column>
-              <Grid.Row>
-                <Grid.Column>
-                  <AdminUserDetailsCard />
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column>
-                  <AdminUserAddDept />
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column>
-                  <AdminUserResetPassword />
-                </Grid.Column>
-              </Grid.Row>
+              <AdminUserDetailsCard />
             </Grid.Column>
+
             <Grid.Column>
-              <Header as="h3" textAlign="center">
-                Roles
-              </Header>
+              <AdminUserAddDept />
+            </Grid.Column>
+
+            <Grid.Column>
+              <AdminUserResetPassword />
+            </Grid.Column>
+          </Grid.Row>
+          {/* roles */}
+          <Grid.Row columns={2}>
+            <Grid.Column>
               <AdminUserRoleManager />
             </Grid.Column>
             <Grid.Column>
-              <Header as="h3" textAlign="center">
-                Competencies
-              </Header>
               <AdminUserComps />
             </Grid.Column>
           </Grid.Row>
+          {/* courses */}
           <Grid.Row>
             <Grid.Column>
               <AdminUserCourseTable />
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </div>
-    );
-  }
-}
+      )}
+    </>
+  );
+};
 
 export default AdminUserRCTools;

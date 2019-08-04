@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import Moment from 'react-moment';
 
 import { Header, Item } from 'semantic-ui-react';
 
-import { selectUsersInDept } from '../../../reducers/selectors/adminSelectors';
-
-class AdminDeptHolders extends Component {
-  renderDeptHolders() {
-    const { users } = this.props;
-    return users.map(user => {
+const AdminDeptHolders = ({ users }) => {
+  const renderDeptHolders = () => {
+    return users.map((user) => {
       return (
         <Item key={user._id}>
-          <Item.Image size="small" src="http://lorempixel.com/400/400/people" />
+          <Item.Image size="tiny" circular src={user.imageUrl} />
           <Item.Content>
             <Item.Header>
               {user.firstName} {user.lastName}
@@ -25,26 +21,16 @@ class AdminDeptHolders extends Component {
         </Item>
       );
     });
-  }
-
-  render() {
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Users who are in this Department
-        </Header>
-        <Item.Group>{this.renderDeptHolders()}</Item.Group>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    users: selectUsersInDept(state)
   };
-};
 
-AdminDeptHolders = connect(mapStateToProps)(AdminDeptHolders);
+  return (
+    <>
+      <Header as="h3" textAlign="center">
+        Users who are in this Department
+      </Header>
+      <Item.Group>{renderDeptHolders()}</Item.Group>
+    </>
+  );
+};
 
 export default AdminDeptHolders;

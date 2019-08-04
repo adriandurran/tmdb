@@ -32,7 +32,7 @@ router.delete(
 router.get('/', requireLogin, courseController.getCourses);
 
 router.post('/', requireAdmin, courseController.addCourses);
-
+router.delete('/:id', requireAdmin, courseController.deleteCourse);
 router.get('/:id', requireLogin, courseController.getCourse);
 router.put('/:id', requireLogin, courseController.updateCourse);
 

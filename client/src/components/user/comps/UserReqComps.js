@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { Item, Header, Segment, Icon } from 'semantic-ui-react';
+import { Item, Header, Segment, Icon, List } from 'semantic-ui-react';
+
+import { fetchRoles } from '../../../actions/roles';
+import { fetchComps } from '../../../actions/comps';
+import { fetchCourses } from '../../../actions/courses';
 
 import {
   selectUserCompetenciesCurrent,
@@ -10,12 +14,23 @@ import {
 } from '../../../reducers/selectors/userSelectors';
 
 import { compExist, getUserCoursesForComp } from '../../../utils/arrayhelpers';
-import { expireDate } from '../../../utils/datehelpers';
+import {
+  expireDate,
+  checkCourseHasExpireDate,
+  expireMonths
+} from '../../../utils/datehelpers';
 
 class UserReqComps extends Component {
+  componentDidMount() {
+    const { fetchRoles, fetchComps, fetchCourses } = this.props;
+    fetchRoles();
+    fetchComps();
+    fetchCourses();
+  }
+
   renderReqComps() {
     const { reqComps, currentComps } = this.props;
-    return reqComps.map(comp => {
+    return reqComps.map((comp) => {
       let cType = 'Required';
       if (comp.compType) {
         cType = comp.compType.compType;
@@ -47,20 +62,26 @@ class UserReqComps extends Component {
             )}
 
             {compExist(comp, currentComps) ? (
-              ''
-            ) : (
-              <Item.Description
-                style={
-                  cType === 'Required' ? { color: 'red' } : { color: 'orange' }
-                }
-              >
-                You do not have this Competency or the required courses for this
-                Competency are out of date.
+              <Item.Description>
+                <List bulleted>{this.renderCompCoursesUser(comp)}</List>
               </Item.Description>
+            ) : (
+              <Fragment>
+                <Item.Description>
+                  <List bulleted>{this.renderCompCourses(comp)}</List>
+                </Item.Description>
+                <Item.Extra
+                  style={
+                    cType === 'Required'
+                      ? { color: 'red' }
+                      : { color: 'orange' }
+                  }
+                >
+                  You do not have this Competency or the required courses for
+                  this Competency are out of date.
+                </Item.Extra>
+              </Fragment>
             )}
-            <Item.Extra>
-              {comp.courses.length} Courses required for this Competency
-            </Item.Extra>
           </Item.Content>
         </Item>
       );
@@ -68,16 +89,48 @@ class UserReqComps extends Component {
   }
 
   renderCompCourses(comp) {
+    return comp.courses.map((course) => {
+      return (
+        <List.Item key={course._id}>
+          {checkCourseHasExpireDate(course) ? (
+            <span>
+              {course.courseName} &nbsp; expires after {course.validity}{' '}
+              months&nbsp;
+            </span>
+          ) : (
+            <span>{course.courseName} &nbsp; does not expire </span>
+          )}
+        </List.Item>
+      );
+    });
+  }
+
+  renderCompCoursesUser(comp) {
     const { userCourses } = this.props;
     let ucs = getUserCoursesForComp(comp, userCourses);
-    return ucs.map(uc => {
+    return ucs.map((uc) => {
       return (
-        <Item.Extra key={uc._id}>
-          {uc._course.courseName} &nbsp; expires &nbsp;
-          <Moment fromNow>
-            {expireDate(uc.passDate, uc._course.validity)}
-          </Moment>
-        </Item.Extra>
+        <List.Item
+          key={uc._id}
+          style={
+            expireMonths(uc.passDate, uc._course.validity) <= 3
+              ? {
+                  color: 'orange'
+                }
+              : { color: 'black' }
+          }
+        >
+          {checkCourseHasExpireDate(uc._course) ? (
+            <span>
+              {uc._course.courseName} &nbsp; expires &nbsp;
+              <Moment fromNow>
+                {expireDate(uc.passDate, uc._course.validity)}
+              </Moment>
+            </span>
+          ) : (
+            <span>{uc._course.courseName} &nbsp; does not expire </span>
+          )}
+        </List.Item>
       );
     });
   }
@@ -87,23 +140,33 @@ class UserReqComps extends Component {
       <div>
         <Segment padded>
           <Header as="h2" textAlign="center">
-            Competencies
+            Role Competencies
           </Header>
-          <Item.Group>{this.renderReqComps()}</Item.Group>
+          <Item.Group style={{ marginLeft: '1em' }}>
+            {this.renderReqComps()}
+          </Item.Group>
         </Segment>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     reqComps: selectUserRoleComps(state),
     currentComps: selectUserCompetenciesCurrent(state),
     userCourses: selectUserCoursesCurrent(state)
   };
 };
+const mapDispatchToProps = {
+  fetchRoles,
+  fetchComps,
+  fetchCourses
+};
 
-UserReqComps = connect(mapStateToProps)(UserReqComps);
+UserReqComps = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserReqComps);
 
 export default UserReqComps;
