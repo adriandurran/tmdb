@@ -8,6 +8,8 @@ const sslRedirect = require('heroku-ssl-redirect');
 
 const morgan = require('morgan');
 
+const adminSeeder = require('./utils/seedAdminData');
+
 require('./models/user');
 require('./services/passport');
 const authRoutes = require('./routes/authRoutes');
@@ -21,7 +23,6 @@ const demoDataRoutes = require('./routes/demoDataRoutes');
 const ojtRoutes = require('./routes/ojtRoutes');
 
 // connect to mongo db
-
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -33,6 +34,9 @@ mongoose
   })
   .then(() => console.log('Database connection successful'))
   .catch((err) => console.log('Unable to connect to database', err));
+
+// seed the admin data
+adminSeeder();
 
 const app = express();
 
