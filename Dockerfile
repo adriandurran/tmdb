@@ -10,7 +10,7 @@ RUN mkdir -p /usr/src/app/client
 COPY --from=build-deps /usr/src/app/build /usr/src/app/client
 COPY server/. /usr/src/app
 WORKDIR /usr/src/app
-RUN npm install
+RUN yarn install
 WORKDIR /usr/src/app
 EXPOSE 3050
 LABEL maintainer="adrian.durran100@mod.gov.uk"

@@ -10,6 +10,7 @@ module.exports = async () => {
   if (!ITAdmin) {
     try {
       await UserController.seedSuperAdminIT();
+      console.log('Super IT Admin has been seeded');
     } catch (error) {
       console.log('Unable to seed IT Admin', error);
     }
@@ -21,8 +22,7 @@ module.exports = async () => {
   if (!SuperAdmin) {
     try {
       await UserController.seedSuperAdmin();
-    } catch (error) {
-      console.log('Unable to seed Super Admin', error);
-    }
+      console.log('Super Admin has been seeded');
+    } catch (error) {}
   }
 };

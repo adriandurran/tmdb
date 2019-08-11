@@ -40,3 +40,46 @@ It will take the information from the `server.env` file.
 For user/employee photos the application is using [Cloudinary](https://cloudinary.com) to store and retrieve photos. This was just a simple use case but there is also code logic to save the photos to the database. If you continue to use Cloudinary you will need to create an account.
 
 ### Installation
+
+Either copy or clone the repo.
+You will need to have [Docker](https://docs.docker.com/install) (CE) running on your device.
+The `Dockerfile` in the root directory is used to build a Docker image.
+
+#### Client
+
+In a terminal window navigate to the `client` folder and do a `yarn install`. To start the client part of the application: `yarn start`.
+
+#### Server
+
+In a terminal window navigate to the `server` folder. Run `yarn install`.
+In a terminal window navigate to the root of the directory and type: `docker-compose up --build`.
+You will only need to use this command on first running of the application. For subsequent starts use `docker-compose up` & `docker-compose down` to start and stop the apppication. You can also use `docker-compose start`, `docker-compose stop`.
+
+You will need to create a file called `server.env` in the `server` folder (or change the `docker-compose.yml` to reflect your env file). **Ensure** that this file is part of your `.gitignore`.
+You will need the following environment variables in the `server.env` file. The values are of course up to you.
+
+```
+MONGODB_URI=mongodb://tmdb_db:27017/tmdb_db_demo
+COOKIE_KEY=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+SEEDADMIN_ID=
+SEEDADMIN_FN=
+SEEDADMIN_LN=Admin
+SEEDADMIN_UN=
+SEEDADMIN_VERIFIED=true
+SEEDADMIN_ISADMIN=true
+SEEDADMIN_ISSUPER=true
+SEEDADMIN_PWD=
+SEEDADMIN_IT_ID=
+SEEDADMIN_IT_FN=
+SEEDADMIN_IT_LN=
+SEEDADMIN_IT_UN=
+SEEDADMIN_IT_VERIFIED=true
+SEEDADMIN_IT_ISADMIN=true
+SEEDADMIN_IT_ISSUPER=true
+SEEDADMIN_IT_PWD=
+```
+
+The `MONGODB_URI` is for local Docker installs, you will need to change this value for cloud/internet installs.
