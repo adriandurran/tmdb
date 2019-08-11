@@ -34,8 +34,9 @@ In _development_ there is the possibility to install mock data and there are api
 
 There is a `server.env` file with environment variables (listed later). You will need to provide your own values for this.
 
-On first install you will need to _seed_ the database with 2 accounts (Super Admin & Super IT Admin). Both have the same rights with the exception that the IT Admin account can add version numbers etc...
+On first install the server will _seed_ the database with 2 accounts (Super Admin & Super IT Admin). Both have the same rights with the exception that the IT Admin account can add version numbers etc...
+It will take the information from the `server.env` file.
 
-> **It is extremely important that if you install this application on the internet you change the passwords for these accounts.**
+For user/employee photos the application is using [Cloudinary](https://cloudinary.com) to store and retrieve photos. This was just a simple use case but there is also code logic to save the photos to the database. If you continue to use Cloudinary you will need to create an account.
 
 ### Installation
