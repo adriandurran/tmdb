@@ -6,9 +6,9 @@
   "author": "adriandurran <adriandurran@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "server": "nodemon index.js",
-    "dev": "npm run server "
+    "dev": "yarn run server "
   },
   "devDependencies": {
     "faker": "^4.1.0",
