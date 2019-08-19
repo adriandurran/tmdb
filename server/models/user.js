@@ -76,7 +76,15 @@ const userSchema = new Schema({
       verified: { type: Boolean, default: false }
     }
   ],
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+  roles: [
+    {
+      _role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
+      },
+      joinDate: { type: Date }
+    }
+  ],
   ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
   roleHistory: [
     {

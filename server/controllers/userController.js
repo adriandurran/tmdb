@@ -53,7 +53,7 @@ module.exports = {
       .populate('department')
       .populate('courses._course')
       .populate({
-        path: 'roles',
+        path: 'roles._role',
         populate: {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
@@ -73,7 +73,7 @@ module.exports = {
       .populate('department')
       .populate('courses._course')
       .populate({
-        path: 'roles',
+        path: 'roles._role',
         populate: {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
@@ -81,6 +81,8 @@ module.exports = {
       })
       .populate('deptHistory._dept')
       .populate('roleHistory._role');
+
+    console.log('[dbUser]', dbUser);
 
     res.send(dbUser);
   },
@@ -99,7 +101,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -133,7 +135,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -158,6 +160,7 @@ module.exports = {
 
   addUserCourse: async (req, res) => {
     const { course } = req.body;
+    console.log('course', course);
     try {
       const thisUser = await User.findById(req.params.id);
       const courseSet = [...thisUser.courses, course];
@@ -173,7 +176,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -196,16 +199,19 @@ module.exports = {
 
   editUserRole: async (req, res) => {
     const { role, action } = req.body;
+    console.log('role', role, 'action', action);
     try {
       const thisUser = await User.findById(req.params.id);
       // get the array of roles from the user
-      const roleSet = thisUser.roles;
 
-      if (action) {
-        arrayHelp.addToArray(roleSet, role);
-      } else {
-        arrayHelp.removeFromArray(roleSet, role);
-      }
+      // if (!action) {
+      //   arrayHelp.removeFromArray(thisUser.roles, role);
+      //   // arrayHelp.addToArray(roleSet, role);
+      // }
+      // else {
+      //   arrayHelp.removeFromArray(roleSet, role);
+      // }
+      const roleSet = [...thisUser.roles, role];
 
       const newRole = await User.findByIdAndUpdate(
         req.params.id,
@@ -220,7 +226,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -461,7 +467,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [

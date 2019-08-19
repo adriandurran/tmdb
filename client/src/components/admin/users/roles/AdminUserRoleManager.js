@@ -22,7 +22,11 @@ class AdminUserRoleManager extends Component {
 
   addUserRole = (e, item) => {
     const { editUserRole, user } = this.props;
-    editUserRole(item.value, user._id, true);
+    const newRole = {
+      _role: item.value,
+      joinDate: Date.now()
+    };
+    editUserRole(newRole, user._id, true);
   };
 
   render() {

@@ -9,6 +9,10 @@ const roleSchema = new Schema({
     type: String,
     trim: true
   },
+  timeToSQEP: {
+    type: Number,
+    default: 0
+  },
   competencies: [{ type: Schema.Types.ObjectId, ref: 'Competency' }]
 });
 
