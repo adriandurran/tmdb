@@ -532,7 +532,7 @@ module.exports = {
       return res.status(400).send(error);
     }
   },
-  seedSuperAdminIT: async (req, res) => {
+  seedSuperAdminIT: async () => {
     try {
       const {
         userId,
@@ -548,7 +548,7 @@ module.exports = {
       let seedyA = new User();
       let passwordHash = await seedyA.generateHash(password);
 
-      User.create({
+      const adminITUser = await User.create({
         username,
         userId,
         firstName,
@@ -558,15 +558,10 @@ module.exports = {
         isAdmin,
         isSuperAdmin,
         joinDate: Date.now()
-      })
-        .then((user) => res.status(200).send(user))
-        .catch((err) => {
-          console.log(err);
-          return res.status(400).send(err);
-        });
+      });
+      return adminITUser;
     } catch (error) {
       console.log(error);
-      return res.status(400).send(error);
     }
   }
 };
