@@ -82,7 +82,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Role'
       },
-      joinDate: { type: Date }
+      joinDate: { type: Date, default: Date.now }
     }
   ],
   ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
@@ -92,7 +92,11 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Role'
       },
-      joinDate: { type: Date, default: Date.now }
+      moveDate: { type: Date, default: Date.now },
+      newRole: {
+        type: Boolean,
+        default: false
+      }
     }
   ],
   deptHistory: [

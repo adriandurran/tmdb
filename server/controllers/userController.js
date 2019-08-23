@@ -30,9 +30,7 @@ const addUserHistoryDept = async (user, dept, deptHistory) => {
 };
 
 const addUserHistoryRole = async (user, role, roleHistory) => {
-  // add the role and the date
-  const newRole = { _role: role, joinDate: Date.now() };
-  const histRole = [...roleHistory, newRole];
+  const histRole = [...roleHistory, role];
   try {
     await User.findByIdAndUpdate(
       user,
@@ -199,19 +197,17 @@ module.exports = {
 
   editUserRole: async (req, res) => {
     const { role, action } = req.body;
-    console.log('role', role, 'action', action);
     try {
       const thisUser = await User.findById(req.params.id);
       // get the array of roles from the user
-
-      // if (!action) {
-      //   arrayHelp.removeFromArray(thisUser.roles, role);
-      //   // arrayHelp.addToArray(roleSet, role);
-      // }
-      // else {
-      //   arrayHelp.removeFromArray(roleSet, role);
-      // }
-      const roleSet = [...thisUser.roles, role];
+      let roleSet;
+      if (!action) {
+        roleSet = thisUser.roles.filter(
+          (cRole) => cRole._role.toString() !== role.toString()
+        );
+      } else {
+        roleSet = [...thisUser.roles, role];
+      }
 
       const newRole = await User.findByIdAndUpdate(
         req.params.id,
@@ -240,10 +236,15 @@ module.exports = {
         .populate('deptHistory._dept')
         .populate('roleHistory._role');
 
+      let histRole;
+
       if (action) {
-        await addUserHistoryRole(req.params.id, role, thisUser.roleHistory);
-        // if it is false we will need to do something about this.....
+        histRole = { _role: role._role, newRole: true };
+      } else {
+        histRole = { _role: role };
       }
+
+      await addUserHistoryRole(req.params.id, histRole, thisUser.roleHistory);
 
       return res.status(200).send(newRole);
     } catch (error) {

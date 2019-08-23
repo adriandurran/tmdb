@@ -33,20 +33,21 @@ class AdminUserComps extends Component {
     const { user } = this.props;
     if (!isEmpty(user)) {
       return user.roles.map((role, i) => {
+        const { _id, competencies, roleName } = role._role;
         return (
           <>
             <Accordion.Title
               active={activeIndex === i}
               index={i}
               onClick={this.handleClick}
-              key={role._id}
+              key={_id}
             >
               <Icon name="dropdown" />
-              {role.roleName}
+              {roleName}
             </Accordion.Title>
-            <Accordion.Content active={activeIndex === i} key={role._id + i}>
+            <Accordion.Content active={activeIndex === i} key={_id + i}>
               <List divided verticalAlign="middle">
-                {this.renderReqComps(role.competencies)}
+                {this.renderReqComps(competencies)}
               </List>
             </Accordion.Content>
           </>

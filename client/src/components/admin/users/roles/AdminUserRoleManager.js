@@ -20,10 +20,10 @@ class AdminUserRoleManager extends Component {
     editUserRole(value, user._id, false);
   };
 
-  addUserRole = (e, item) => {
+  addUserRole = (e, { value }) => {
     const { editUserRole, user } = this.props;
     const newRole = {
-      _role: item.value,
+      _role: value,
       joinDate: Date.now()
     };
     editUserRole(newRole, user._id, true);
@@ -40,18 +40,16 @@ class AdminUserRoleManager extends Component {
             </Header>
             <List divided verticalAlign="middle">
               {user.roles.map((role) => {
+                console.log(role);
+                const { _id, roleName } = role._role;
                 return (
-                  <List.Item key={role._id}>
+                  <List.Item key={_id}>
                     <List.Content floated="right">
-                      <Button
-                        icon
-                        onClick={this.deleteUserRole}
-                        value={role._id}
-                      >
+                      <Button icon onClick={this.deleteUserRole} value={_id}>
                         <Icon name="delete" />
                       </Button>
                     </List.Content>
-                    <List.Content>{role.roleName}</List.Content>
+                    <List.Content>{roleName}</List.Content>
                   </List.Item>
                 );
               })}
