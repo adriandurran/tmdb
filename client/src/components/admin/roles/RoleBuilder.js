@@ -23,9 +23,11 @@ class RoleBuilder extends Component {
 
   submitNewRole(values) {
     const { adminAddNewRole } = this.props;
+    const { roleName, timeToSQEP } = values;
     let newRole = {
-      roleName: values.roleName,
-      competencies: this.state.cForR
+      roleName,
+      competencies: this.state.cForR,
+      timeToSQEP
     };
     adminAddNewRole(newRole);
   }
@@ -40,7 +42,9 @@ class RoleBuilder extends Component {
 
         <Grid centered>
           <Grid.Column>
-            <Form onSubmit={handleSubmit(values => this.submitNewRole(values))}>
+            <Form
+              onSubmit={handleSubmit((values) => this.submitNewRole(values))}
+            >
               <Form.Group>
                 <Field
                   component={semanticFormField}
@@ -59,6 +63,15 @@ class RoleBuilder extends Component {
                   options={comps}
                   placeholder="Select competencies"
                   onChange={this.handleSelectChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Field
+                  component={semanticFormField}
+                  as={Form.Input}
+                  type="number"
+                  name="timeToSQEP"
+                  placeholder="0"
                 />
               </Form.Group>
               <Form.Group>
@@ -84,7 +97,7 @@ const mapDispatchToProps = {
   adminAddNewRole
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     comps: selectCompetenciesForDropDown(state)
   };

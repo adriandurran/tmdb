@@ -120,6 +120,15 @@ class AdminEditRole extends Component {
               />
             </Form.Group>
             <Form.Group>
+              <Field
+                component={semanticFormField}
+                as={Form.Input}
+                type="number"
+                name="timeToSQEP"
+                placeholder="0"
+              />
+            </Form.Group>
+            <Form.Group>
               <Button fluid disabled={submitting} type="submit" size="medium">
                 Update Role
               </Button>
