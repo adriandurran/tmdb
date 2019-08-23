@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { format, parseISO, toDate } from 'date-fns';
 
 import { List, Icon, Button, Select, Header } from 'semantic-ui-react';
 
@@ -49,7 +50,11 @@ class AdminUserRoleManager extends Component {
                         <Icon name="delete" />
                       </Button>
                     </List.Content>
-                    <List.Content>{roleName}</List.Content>
+                    <List.Header>{roleName}</List.Header>
+                    <List.Description>
+                      Assigned on{' '}
+                      {format(parseISO(role.joinDate), 'dd MMM yyyy')}
+                    </List.Description>
                   </List.Item>
                 );
               })}

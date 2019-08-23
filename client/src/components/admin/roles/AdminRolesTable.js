@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { sortBy } from 'lodash';
 import React, { Component } from 'react';
 import { Table, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -32,13 +32,13 @@ class AdminRolesTable extends Component {
     });
   }
 
-  handleSort = clickedColumn => () => {
+  handleSort = (clickedColumn) => () => {
     const { column, data, direction } = this.state;
 
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        data: _.sortBy(data, [clickedColumn]),
+        data: sortBy(data, [clickedColumn]),
         direction: 'ascending'
       });
 
@@ -51,7 +51,7 @@ class AdminRolesTable extends Component {
     });
   };
 
-  rowClick = id => {
+  rowClick = (id) => {
     const { history, fetchRole } = this.props;
     fetchRole(id).then(() => {
       history.push(`/admin/role-manager/view/${id}`);
@@ -71,11 +71,12 @@ class AdminRolesTable extends Component {
 
   renderTableRows() {
     const { data } = this.state;
-    return data.map(role => {
+    return data.map((role) => {
       return (
         <Table.Row key={role._id} onClick={() => this.rowClick(role._id)}>
           <Table.Cell>{role.roleName}</Table.Cell>
           <Table.Cell>{this.renderTableCells(role)}</Table.Cell>
+          <Table.Cell textAlign="right">{role.timeToSQEP}</Table.Cell>
         </Table.Row>
       );
     });
@@ -104,6 +105,12 @@ class AdminRolesTable extends Component {
               >
                 Competencies
               </Table.HeaderCell>
+              <Table.HeaderCell
+                sorted={column === 'timeToSQEP' ? direction : null}
+                onClick={this.handleSort('timeToSQEP')}
+              >
+                Time to SQEP (months)
+              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>{this.renderTableRows()}</Table.Body>
@@ -118,7 +125,7 @@ const mapDispatchToProps = {
   fetchRole
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     roles: selectRoles(state)
   };
