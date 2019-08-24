@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Icon, Header, List } from 'semantic-ui-react';
-import { format, parseISO, addMonths, toDate } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { compExist } from '../../../../utils/arrayhelpers';
 import { calcTimeToSQEP } from '../../../../utils/datehelpers';
