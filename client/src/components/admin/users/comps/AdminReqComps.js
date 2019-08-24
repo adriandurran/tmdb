@@ -43,7 +43,7 @@ const AdminReqComps = ({ competencies }) => {
                 {comp.compName} - {compSt}
               </List.Header>
               <List.Description>
-                {comp.courses.length} Courses required for Competency
+                {comp.courses.length} courses required for this competency
               </List.Description>
               <List.List>
                 <AdminCompCourses courses={comp.courses} />
