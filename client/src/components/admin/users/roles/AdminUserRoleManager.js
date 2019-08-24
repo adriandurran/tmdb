@@ -18,7 +18,7 @@ const AdminUserRoleManager = () => {
 
   useEffect(() => {
     dispatch(fetchRoles());
-  }, []);
+  }, [dispatch]);
 
   const deleteUserRole = (e, { value }) => {
     dispatch(editUserRole(value, user._id, false));

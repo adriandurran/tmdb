@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { List, Accordion, Icon } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
 
@@ -21,22 +21,21 @@ const RoleReqComps = ({ user }) => {
           const { _id, competencies, roleName, timeToSQEP } = role._role;
           const { joinDate } = role;
           return (
-            <>
+            <Fragment key={_id}>
               <Accordion.Title
                 active={activeIndex === i}
                 index={i}
                 onClick={handleClick}
-                key={_id}
               >
                 <Icon name="dropdown" />
                 {roleName} {`(time to SQEP is ${timeToSQEP} months)`}
               </Accordion.Title>
-              <Accordion.Content active={activeIndex === i} key={_id + i}>
+              <Accordion.Content active={activeIndex === i}>
                 <List divided verticalAlign="middle">
                   <AdminReqComps competencies={competencies} />
                 </List>
               </Accordion.Content>
-            </>
+            </Fragment>
           );
         })}
     </>

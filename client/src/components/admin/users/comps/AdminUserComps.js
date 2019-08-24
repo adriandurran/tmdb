@@ -21,7 +21,7 @@ const AdminUserComps = () => {
 
   useEffect(() => {
     dispatch(fetchComps());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
