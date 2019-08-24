@@ -80,7 +80,7 @@ module.exports = {
       .populate('deptHistory._dept')
       .populate('roleHistory._role');
 
-    console.log('[dbUser]', dbUser);
+    // console.log('[dbUser]', dbUser);
 
     res.send(dbUser);
   },
