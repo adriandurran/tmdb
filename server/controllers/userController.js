@@ -158,7 +158,6 @@ module.exports = {
 
   addUserCourse: async (req, res) => {
     const { course } = req.body;
-    console.log('course', course);
     try {
       const thisUser = await User.findById(req.params.id);
       const courseSet = [...thisUser.courses, course];
