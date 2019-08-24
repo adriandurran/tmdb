@@ -57,7 +57,10 @@ export const selectUserCoursesVerify = createSelector(
 export const selectUserRoleComps = createSelector(
   selectUserRoles,
   (roles) => {
-    return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
+    return _.uniqBy(
+      _.flatten(roles.map((role) => role._role.competencies)),
+      '_id'
+    );
   }
 );
 

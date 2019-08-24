@@ -162,7 +162,6 @@ module.exports = {
     try {
       const thisUser = await User.findById(req.params.id);
       const courseSet = [...thisUser.courses, course];
-      // console.log(courseSet);
       const newCourse = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { courses: courseSet } },
@@ -323,7 +322,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -370,7 +369,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -403,7 +402,7 @@ module.exports = {
         .populate('department')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
