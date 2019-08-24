@@ -19,7 +19,6 @@ const RoleReqComps = ({ user }) => {
       {!isEmpty(user) &&
         user.roles.map((role, i) => {
           const { _id, competencies, roleName, timeToSQEP } = role._role;
-          const { joinDate } = role;
           return (
             <Fragment key={_id}>
               <Accordion.Title
