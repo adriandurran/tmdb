@@ -59,8 +59,14 @@ const userSchema = new Schema({
     default: Date.now
   },
   department: {
-    type: Schema.Types.ObjectId,
-    ref: 'Department'
+    dept: {
+      type: Schema.Types.ObjectId,
+      ref: 'Department'
+    },
+    joinDate: {
+      type: Date,
+      default: Date.now
+    }
   },
   lineReport: {
     type: Schema.Types.ObjectId,
@@ -105,7 +111,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Department'
       },
-      joinDate: { type: Date, default: Date.now }
+      moveDate: { type: Date, default: Date.now }
     }
   ]
 });

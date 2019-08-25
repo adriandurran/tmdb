@@ -21,7 +21,7 @@ passport.use(
     const newLog = new User();
     try {
       const existingUser = await User.findOne({ username })
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
           path: 'roles._role',
