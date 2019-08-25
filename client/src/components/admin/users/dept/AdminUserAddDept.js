@@ -25,24 +25,19 @@ const AdminUserAddDept = () => {
     dispatch(adminAssignDept(curr._id, user._id, dept));
   };
 
-  const {
-    joinDate,
-    dept: { departmentName }
-  } = user.department;
-
   return (
     <>
       {!isEmpty(user) && (
         <Card centered style={{ marginTop: '1em' }}>
           <Card.Content>
-            {isEmpty(user.department) ? (
+            {isEmpty(user.department) || isEmpty(user.department.dept) ? (
               <Card.Header textAlign="center">
                 No Department Assigned
               </Card.Header>
             ) : (
               <Card.Header textAlign="center">
-                {departmentName} joined on{' '}
-                {format(parseISO(joinDate), 'dd MMM yyyy')}
+                {user.department.dept.departmentName} joined on{' '}
+                {format(parseISO(user.department.joinDate), 'dd MMM yyyy')}
               </Card.Header>
             )}
             <Card.Description>
@@ -70,20 +65,5 @@ const AdminUserAddDept = () => {
     </>
   );
 };
-
-// const mapDispatchToProps = { adminAssignDept };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     user: selectUserManage(state),
-//     depts: selectDeptsForDropDown(state),
-//     curr: selectCurrentUser(state)
-//   };
-// };
-
-// AdminUserAddDept = connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(AdminUserAddDept);
 
 export default AdminUserAddDept;
