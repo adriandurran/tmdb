@@ -14,8 +14,6 @@ const AdminDeptList = ({ history }) => {
   const fetchTheDept = useDispatch();
 
   const renderDeptList = () => {
-    // const { depts } = this.props;
-
     return depts.map((dept) => {
       return (
         <List.Item key={dept._id}>

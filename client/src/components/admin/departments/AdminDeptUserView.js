@@ -19,16 +19,18 @@ class AdminDeptUserView extends Component {
   renderRoleColumns() {
     const { roles } = this.props;
     return roles.map((role) => {
-      return (
-        <Grid.Column key={role._id}>
-          <Header as="h5" textAlign="center">
-            {role.roleName}
-          </Header>
-          <Card.Group itemsPerRow={2} centered>
-            <AdminDeptRoleUsers roleId={role._id} />
-          </Card.Group>
-        </Grid.Column>
-      );
+      if (!isEmpty(role._role)) {
+        return (
+          <Grid.Column key={role._id}>
+            <Header as="h5" textAlign="center">
+              {role._role.roleName}
+            </Header>
+            <Card.Group itemsPerRow={2} centered>
+              <AdminDeptRoleUsers roleId={role._role._id} />
+            </Card.Group>
+          </Grid.Column>
+        );
+      }
     });
   }
 

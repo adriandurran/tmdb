@@ -243,14 +243,14 @@ export const selectUsersRoleHolders = createSelector(
 export const selectAllUsersActiveNoDept = createSelector(
   selectAllUsersActive,
   (users) => {
-    return users.filter((user) => _.isEmpty(user.department));
+    return users.filter((user) => _.isEmpty(user.department.dept));
   }
 );
 
 export const selectAllUsersActiveDept = createSelector(
   selectAllUsersActive,
   (users) => {
-    return users.filter((user) => !_.isEmpty(user.department));
+    return users.filter((user) => !_.isEmpty(user.department.dept));
   }
 );
 
@@ -258,7 +258,7 @@ export const selectUsersInDept = createSelector(
   selectAllUsersActiveDept,
   selectDept,
   (users, dept) => {
-    return users.filter((user) => user.department._id === dept._id);
+    return users.filter((user) => user.department.dept._id === dept._id);
   }
 );
 

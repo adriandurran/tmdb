@@ -3,8 +3,8 @@ import { uniq, map } from 'lodash';
 // return list of users for a given dept
 export const deptUsers = (users, deptId) => {
   return users
-    .filter((user) => user.department)
-    .filter((user) => user.department._id === deptId);
+    .filter((user) => user.department.dept)
+    .filter((user) => user.department.dept._id === deptId);
 };
 
 // return a distinct set of role ids for a dept of users
