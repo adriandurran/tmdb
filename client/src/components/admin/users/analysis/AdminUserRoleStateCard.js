@@ -12,6 +12,7 @@ import AdminReqComps from '../comps/AdminReqComps';
 const AdminUserRoleStateCard = ({ role }) => {
   const currentComps = useSelector(selectUserManageCompetenciesCurrent);
   const [isSQEP, setSQEP] = useState(false);
+
   const { roleName, timeToSQEP, competencies } = role._role;
 
   useEffect(() => {

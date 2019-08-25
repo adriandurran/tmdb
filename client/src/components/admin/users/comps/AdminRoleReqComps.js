@@ -18,6 +18,9 @@ const RoleReqComps = ({ user }) => {
     <>
       {!isEmpty(user) &&
         user.roles.map((role, i) => {
+          if (isEmpty(role._role)) {
+            return [];
+          }
           const { _id, competencies, roleName, timeToSQEP } = role._role;
           return (
             <Fragment key={_id}>

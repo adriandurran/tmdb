@@ -41,6 +41,9 @@ const AdminUserRoleManager = () => {
           </Header>
           <List divided verticalAlign="middle">
             {user.roles.map((role) => {
+              if (isEmpty(role._role)) {
+                return [];
+              }
               const { _id, roleName } = role._role;
               return (
                 <List.Item key={_id}>
