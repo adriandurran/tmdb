@@ -48,7 +48,7 @@ let AdminDeptEdit = ({
         setDeptManagers(dept.managers.map((manager) => manager._id));
       }
     }
-    return () => ((isSubscribed = false), dispatch(clearDept()));
+    return () => (isSubscribed = false);
   }, [dept]);
 
   const handleSelectChange = (e, item) => {
