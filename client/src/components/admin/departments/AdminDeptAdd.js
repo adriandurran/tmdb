@@ -17,7 +17,6 @@ let AdminDeptAdd = ({ handleSubmit, submitting, pristine }) => {
 
   const addNewDept = (values) => {
     const newDept = { ...values, managers: deptManagers };
-    console.log(newDept);
     dispatch(adminAddDept(newDept));
     // add messaging?
   };
