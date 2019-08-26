@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
-// const Course = require('./course');
-// const Role = require('./role');
-// const Deptartment = require('./departments');
-
 const saltRounds = 12;
 
 const userSchema = new Schema({
@@ -50,10 +46,7 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  isManager: {
-    type: Boolean,
-    default: false
-  },
+
   joinDate: {
     type: Date,
     default: Date.now
@@ -67,10 +60,6 @@ const userSchema = new Schema({
       type: Date,
       default: Date.now
     }
-  },
-  lineReport: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
   },
   courses: [
     {

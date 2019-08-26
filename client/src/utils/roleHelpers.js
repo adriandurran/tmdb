@@ -1,4 +1,4 @@
-import { includes, isEmpty } from 'lodash';
+import { includes } from 'lodash';
 
 // return a list of role users for a given role
 export const roleUsers = (users, roleId) => {
