@@ -77,6 +77,20 @@ export const selectAllUsersAdmins = createSelector(
     allusers.filter((user) => user.verified === true && user.isAdmin === true)
 );
 
+// same as above but for drop down purposes
+export const selectAllUsersAdminsForDropdown = createSelector(
+  selectAllUsersAdmins,
+  (admins) => {
+    return admins.map((admin) => {
+      return {
+        key: admin._id,
+        value: admin._id,
+        text: `${admin.firstName} ${admin.lastName}`
+      };
+    });
+  }
+);
+
 // COURSES
 
 // get courses awaiting verification from all users
@@ -112,7 +126,10 @@ export const selectAdminUserRoleComps = createSelector(
     if (roles === undefined) {
       return null;
     }
-    return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
+    return _.uniqBy(
+      _.flatten(roles.map((role) => role._role.competencies)),
+      '_id'
+    );
   }
 );
 

@@ -1,70 +1,80 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 
-import { Header, Form, Button } from 'semantic-ui-react';
+import { Header, Form, Button, Dropdown } from 'semantic-ui-react';
 
 import semanticFormField from '../../shared/semanticFormField';
 import { required } from '../../../utils/validation';
 
+import { selectAllUsersAdminsForDropdown } from '../../../reducers/selectors/adminSelectors';
 import { adminAddDept } from '../../../actions/dept';
 
-class AdminDeptAdd extends Component {
-  addNewDept(values) {
-    const { adminAddDept } = this.props;
-    adminAddDept(values);
+let AdminDeptAdd = ({ handleSubmit, submitting, pristine }) => {
+  const [deptManagers, setDeptManagers] = useState([]);
+  const dispatch = useDispatch();
+  const usersAdmin = useSelector(selectAllUsersAdminsForDropdown);
+
+  const addNewDept = (values) => {
+    const newDept = { ...values, managers: deptManagers };
+    console.log(newDept);
+    dispatch(adminAddDept(newDept));
     // add messaging?
-  }
+  };
 
-  render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+  const handleSelectChange = (e, item) => {
+    setDeptManagers(item.value);
+  };
 
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Add a Department
-        </Header>
-        <Form onSubmit={handleSubmit(values => this.addNewDept(values))}>
-          <Form.Group widths="equal">
-            <Field
-              name="departmentCode"
-              type="text"
-              placeholder="Add a Dept Identifier"
-              component={semanticFormField}
-              as={Form.Input}
-              validate={required}
-            />
+  return (
+    <div>
+      <Header as="h3" textAlign="center">
+        Add a Department
+      </Header>
+      <Form onSubmit={handleSubmit((values) => addNewDept(values))}>
+        <Form.Group widths="equal">
+          <Field
+            name="departmentCode"
+            type="text"
+            placeholder="Add a Dept Identifier"
+            component={semanticFormField}
+            as={Form.Input}
+            validate={required}
+          />
 
-            <Field
-              name="departmentName"
-              type="text"
-              placeholder="Add a Department Name"
-              component={semanticFormField}
-              as={Form.Input}
-              validate={required}
-            />
-          </Form.Group>
-          <Button
+          <Field
+            name="departmentName"
+            type="text"
+            placeholder="Add a Department Name"
+            component={semanticFormField}
+            as={Form.Input}
+            validate={required}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Dropdown
             fluid
-            disabled={pristine || submitting}
-            loading={submitting}
-            type="submit"
-            size="large"
-          >
-            Add Department
-          </Button>
-        </Form>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = { adminAddDept };
-
-AdminDeptAdd = connect(
-  null,
-  mapDispatchToProps
-)(AdminDeptAdd);
+            selection
+            multiple
+            name="departmentManagers"
+            options={usersAdmin}
+            placeholder="Select a Manager"
+            onChange={handleSelectChange}
+          />
+        </Form.Group>
+        <Button
+          fluid
+          disabled={pristine || submitting}
+          loading={submitting}
+          type="submit"
+          size="large"
+        >
+          Add Department
+        </Button>
+      </Form>
+    </div>
+  );
+};
 
 AdminDeptAdd = reduxForm({
   form: 'addDept',
