@@ -124,10 +124,9 @@ module.exports = {
     try {
       const { department } = req.body;
       const { dept } = department;
-      console.log('dept', dept);
       const userDept = await User.findByIdAndUpdate(
         req.params.id,
-        { $set: { department: { dept } } },
+        { $set: { department: { dept }, joinDate: Date.now() } },
         {
           fields: { passwordHash: 0 },
           new: true
