@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Header, Grid, Breadcrumb, Card } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
+import { Header, Grid, Card } from 'semantic-ui-react';
 
 import { noRoleUsers } from '../../../utils/roleHelpers';
 
@@ -12,64 +10,51 @@ import {
 } from '../../../reducers/selectors/adminSelectors';
 import { selectDept } from '../../../reducers/selectors/deptSelectors';
 
-import AdminDeptRoleUsers from './AdminDeptRoleUsers';
 import AdminDeptNoRoleUsers from './AdminDeptNoRoleUsers';
+import AdminDeptManagers from './AdminDeptManagers';
+import AdminDeptRoles from './AdminDeptRoles';
+import AdminDeptBreadCrumb from './AdminDeptBreadCrumb';
 
 const AdminDeptUserView = () => {
   const dept = useSelector(selectDept);
   const deptUsers = useSelector(selectUsersInDept);
   const roles = useSelector(selectUniqueRolesInDept);
 
-  const renderRoleColumns = () => {
-    return roles.map((role) => {
-      return (
-        <Grid.Row key={role._id}>
-          <Grid.Column>
-            <Header as="h5" textAlign="center">
-              {role.roleName}
-            </Header>
-            <Card.Group itemsPerRow={3} centered>
-              <AdminDeptRoleUsers roleId={role._id} />
-            </Card.Group>
-          </Grid.Column>
-        </Grid.Row>
-      );
-    });
-  };
-
   return (
     <>
       <Header as="h2" textAlign="center">
         {dept.departmentName}
       </Header>
-      <Breadcrumb style={{ marginBottom: '2em' }}>
-        <Breadcrumb.Section link as={Link} to="/admin/dept-tools">
-          Department Tools
-        </Breadcrumb.Section>
-        <Breadcrumb.Divider icon="right chevron" />
-        <Breadcrumb.Section link as={Link} to="/admin/dept-views">
-          Department Views
-        </Breadcrumb.Section>
-        <Breadcrumb.Divider icon="right arrow" />
-        <Breadcrumb.Section active>
-          {isEmpty(dept)
-            ? 'No Department found'
-            : `Details for ${dept.departmentName}`}
-        </Breadcrumb.Section>
-      </Breadcrumb>
+      <AdminDeptBreadCrumb dept={dept} />
+
+      {dept.managers.length > 0 ? (
+        <Grid centered>
+          <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
+            Managers
+          </Header>
+          <Grid.Row>
+            <AdminDeptManagers dept={dept} />
+          </Grid.Row>
+        </Grid>
+      ) : (
+        <Header as="h5" textAlign="center">
+          No managers for this department
+        </Header>
+      )}
 
       {deptUsers.length > 0 ? (
         <Grid centered>
           <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
             Roles
           </Header>
-          {roles.length > 0 && renderRoleColumns()}
+          {roles.length > 0 && <AdminDeptRoles roles={roles} />}
         </Grid>
       ) : (
         <Header as="h5" textAlign="center">
           No users in this department
         </Header>
       )}
+
       {noRoleUsers(deptUsers).length > 0 && (
         <Grid celled centered>
           <Grid.Column>
