@@ -17,7 +17,7 @@ const AdminDeptUserStatus = ({ dept }) => {
     }
     const deptRolers = deptRoles(departmentUsers);
     if (deptRolers.length > 0) {
-      setDepartmentRoles(deptRolers[0].length);
+      setDepartmentRoles(deptRolers.length);
     } else {
       setDepartmentRoles(0);
     }

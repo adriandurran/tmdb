@@ -22,20 +22,18 @@ const AdminDeptUserView = () => {
 
   const renderRoleColumns = () => {
     return roles.map((role) => {
-      // if (!isEmpty(role._role)) {
       return (
-        <Grid.Column key={role._id}>
-          <Header as="h5" textAlign="center">
-            {role._role.roleName}
-          </Header>
-          <Card.Group itemsPerRow={2} centered>
-            <AdminDeptRoleUsers roleId={role._role._id} />
-          </Card.Group>
-        </Grid.Column>
+        <Grid.Row key={role._id}>
+          <Grid.Column>
+            <Header as="h5" textAlign="center">
+              {role.roleName}
+            </Header>
+            <Card.Group itemsPerRow={3} centered>
+              <AdminDeptRoleUsers roleId={role._id} />
+            </Card.Group>
+          </Grid.Column>
+        </Grid.Row>
       );
-      // } else {
-      //   return <div />;
-      // }
     });
   };
 
@@ -59,14 +57,13 @@ const AdminDeptUserView = () => {
             : `Details for ${dept.departmentName}`}
         </Breadcrumb.Section>
       </Breadcrumb>
+
       {deptUsers.length > 0 ? (
         <Grid centered>
           <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
             Roles
           </Header>
-          {roles.length > 0 && (
-            <Grid.Row columns={roles.length}>{renderRoleColumns()}</Grid.Row>
-          )}
+          {roles.length > 0 && renderRoleColumns()}
         </Grid>
       ) : (
         <Header as="h5" textAlign="center">

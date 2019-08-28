@@ -12,7 +12,7 @@ import {
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 import { coursesUserVerify } from './utils/courseFilters';
 
-import { selectRole } from './roleSelectors';
+import { selectRole, selectRoles } from './roleSelectors';
 import { selectCompetencies, selectCompetency } from './compSelectors';
 import { selectCourse } from './courseSelectors';
 import { selectDept } from './deptSelectors';
@@ -279,9 +279,22 @@ export const selectUsersInDept = createSelector(
   }
 );
 
+// Had to change this because of the way roles are now tracked and assigned
 export const selectUniqueRolesInDept = createSelector(
   selectUsersInDept,
-  (users) => {
-    return _.uniqBy(_.flatten(users.map((user) => user.roles)), '_id');
+  selectRoles,
+  (users, roles) => {
+    const usersInDept = users.map((user) => user.roles);
+    const uniqRolesInDept = [
+      ...new Set(usersInDept.flat().map((role) => role._role._id))
+    ];
+    let uniqueRoles = [];
+    const uniqLength = uniqRolesInDept.length;
+    for (let i = 0; i < uniqLength; i++) {
+      const unoRole = roles.filter((role) => role._id === uniqRolesInDept[i]);
+      uniqueRoles.push(unoRole);
+    }
+
+    return uniqueRoles.flat();
   }
 );
