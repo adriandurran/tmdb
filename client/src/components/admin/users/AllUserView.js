@@ -37,7 +37,7 @@ const AllUserView = () => {
     return roles.map((role, index) => {
       return (
         <span key={index}>
-          {role.roleName}
+          {role._role.roleName}
           <br />
         </span>
       );
@@ -53,9 +53,9 @@ const AllUserView = () => {
           <Table.Cell>{user.lastName}</Table.Cell>
           <Table.Cell>{user.username}</Table.Cell>
           <Table.Cell>
-            {isEmpty(user.department)
+            {isEmpty(user.department.dept)
               ? `No Department Assigned`
-              : user.department.departmentName}
+              : user.department.dept.departmentName}
           </Table.Cell>
           <Table.Cell verticalAlign="top">
             {renderRoleCells(user.roles)}

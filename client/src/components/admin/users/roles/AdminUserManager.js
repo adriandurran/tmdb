@@ -1,5 +1,4 @@
 import React from 'react';
-// import { connect } from 'react-redux';
 import { Grid, Header } from 'semantic-ui-react';
 
 import AdminUserMenu from '../AdminUserMenu';
@@ -8,7 +7,7 @@ import AdminUserRCTools from './AdminUserRCTools';
 
 const AdminUserManager = () => {
   return (
-    <div>
+    <>
       <Header as="h2" textAlign="center">
         Manage User Roles &amp; Courses
       </Header>
@@ -25,7 +24,7 @@ const AdminUserManager = () => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </div>
+    </>
   );
 };
 

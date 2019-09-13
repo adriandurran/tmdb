@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { flatten } from 'lodash';
 
 export const compExist = (req, curs) => {
   // filter the users competencies to see if the required competency is there
@@ -22,5 +22,5 @@ export const getUserCoursesForComp = (comp, usercourses) => {
       arrUCourse.push(uCourse);
     }
   }
-  return _.flatten(arrUCourse);
+  return flatten(arrUCourse);
 };

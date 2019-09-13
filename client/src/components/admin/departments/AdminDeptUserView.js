@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Header, Grid, Breadcrumb, Card } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Header, Grid, Card } from 'semantic-ui-react';
 
 import { noRoleUsers } from '../../../utils/roleHelpers';
 
@@ -12,90 +10,65 @@ import {
 } from '../../../reducers/selectors/adminSelectors';
 import { selectDept } from '../../../reducers/selectors/deptSelectors';
 
-import AdminDeptRoleUsers from './AdminDeptRoleUsers';
 import AdminDeptNoRoleUsers from './AdminDeptNoRoleUsers';
+import AdminDeptManagers from './AdminDeptManagers';
+import AdminDeptRoles from './AdminDeptRoles';
+import AdminDeptBreadCrumb from './AdminDeptBreadCrumb';
 
-class AdminDeptUserView extends Component {
-  renderRoleColumns() {
-    const { roles } = this.props;
-    return roles.map((role) => {
-      return (
-        <Grid.Column key={role._id}>
-          <Header as="h5" textAlign="center">
-            {role.roleName}
+const AdminDeptUserView = () => {
+  const dept = useSelector(selectDept);
+  const deptUsers = useSelector(selectUsersInDept);
+  const roles = useSelector(selectUniqueRolesInDept);
+
+  return (
+    <>
+      <Header as="h2" textAlign="center">
+        {dept.departmentName}
+      </Header>
+      <AdminDeptBreadCrumb dept={dept} />
+
+      {dept.managers.length > 0 ? (
+        <Grid centered>
+          <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
+            Managers
           </Header>
-          <Card.Group itemsPerRow={2} centered>
-            <AdminDeptRoleUsers roleId={role._id} />
-          </Card.Group>
-        </Grid.Column>
-      );
-    });
-  }
-
-  render() {
-    const { dept, roles, deptUsers } = this.props;
-    // console.log(deptUsers);
-    return (
-      <div>
-        <Header as="h2" textAlign="center">
-          {dept.departmentName}
+          <Grid.Row>
+            <AdminDeptManagers dept={dept} />
+          </Grid.Row>
+        </Grid>
+      ) : (
+        <Header as="h5" textAlign="center">
+          No managers for this department
         </Header>
-        <Breadcrumb style={{ marginBottom: '2em' }}>
-          <Breadcrumb.Section link as={Link} to="/admin/dept-tools">
-            Department Tools
-          </Breadcrumb.Section>
-          <Breadcrumb.Divider icon="right chevron" />
-          <Breadcrumb.Section link as={Link} to="/admin/dept-views">
-            Department Views
-          </Breadcrumb.Section>
-          <Breadcrumb.Divider icon="right arrow" />
-          <Breadcrumb.Section active>
-            {isEmpty(dept)
-              ? 'No Department found'
-              : `Details for ${dept.departmentName}`}
-          </Breadcrumb.Section>
-        </Breadcrumb>
-        {deptUsers.length > 0 ? (
-          <Grid centered>
-            <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
-              Roles
-            </Header>
-            {roles.length > 0 && (
-              <Grid.Row columns={roles.length}>
-                {this.renderRoleColumns()}
-              </Grid.Row>
-            )}
-          </Grid>
-        ) : (
-          <Header as="h5" textAlign="center">
-            No users in this department
+      )}
+
+      {deptUsers.length > 0 ? (
+        <Grid centered>
+          <Header as="h3" textAlign="center" style={{ marginTop: '0.5em' }}>
+            Roles
           </Header>
-        )}
-        {noRoleUsers(deptUsers).length > 0 && (
-          <Grid celled centered>
-            <Grid.Column>
-              <Header as="h5" textAlign="center">
-                Users with no Roles
-              </Header>
-              <Card.Group itemsPerRow={4} centered>
-                <AdminDeptNoRoleUsers />
-              </Card.Group>
-            </Grid.Column>
-          </Grid>
-        )}
-      </div>
-    );
-  }
-}
+          {roles.length > 0 && <AdminDeptRoles roles={roles} />}
+        </Grid>
+      ) : (
+        <Header as="h5" textAlign="center">
+          No users in this department
+        </Header>
+      )}
 
-const mapStateToProps = (state) => {
-  return {
-    deptUsers: selectUsersInDept(state),
-    dept: selectDept(state),
-    roles: selectUniqueRolesInDept(state)
-  };
+      {noRoleUsers(deptUsers).length > 0 && (
+        <Grid celled centered>
+          <Grid.Column>
+            <Header as="h5" textAlign="center">
+              Users with no Roles
+            </Header>
+            <Card.Group itemsPerRow={4} centered>
+              <AdminDeptNoRoleUsers />
+            </Card.Group>
+          </Grid.Column>
+        </Grid>
+      )}
+    </>
+  );
 };
-
-AdminDeptUserView = connect(mapStateToProps)(AdminDeptUserView);
 
 export default AdminDeptUserView;
