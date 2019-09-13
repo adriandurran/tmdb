@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
-// const Course = require('./course');
-// const Role = require('./role');
-// const Deptartment = require('./departments');
-
 const saltRounds = 12;
 
 const userSchema = new Schema({
@@ -50,21 +46,20 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  isManager: {
-    type: Boolean,
-    default: false
-  },
+
   joinDate: {
     type: Date,
     default: Date.now
   },
   department: {
-    type: Schema.Types.ObjectId,
-    ref: 'Department'
-  },
-  lineReport: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    dept: {
+      type: Schema.Types.ObjectId,
+      ref: 'Department'
+    },
+    joinDate: {
+      type: Date,
+      default: Date.now
+    }
   },
   courses: [
     {
@@ -76,9 +71,7 @@ const userSchema = new Schema({
       verified: { type: Boolean, default: false }
     }
   ],
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
-  ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
-  roleHistory: [
+  roles: [
     {
       _role: {
         type: Schema.Types.ObjectId,
@@ -87,13 +80,27 @@ const userSchema = new Schema({
       joinDate: { type: Date, default: Date.now }
     }
   ],
+  ojtHours: [{ type: Schema.Types.ObjectId, ref: 'OnJobTraining' }],
+  roleHistory: [
+    {
+      _role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
+      },
+      moveDate: { type: Date, default: Date.now },
+      newRole: {
+        type: Boolean,
+        default: false
+      }
+    }
+  ],
   deptHistory: [
     {
       _dept: {
         type: Schema.Types.ObjectId,
         ref: 'Department'
       },
-      joinDate: { type: Date, default: Date.now }
+      moveDate: { type: Date, default: Date.now }
     }
   ]
 });

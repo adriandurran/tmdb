@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { parseISO, format } from 'date-fns';
 
 import { Card, Dropdown, Button } from 'semantic-ui-react';
 
@@ -9,76 +10,60 @@ import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelec
 import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors';
 import { adminAssignDept } from '../../../../actions/user';
 
-class AdminUserAddDept extends Component {
-  // hate this right up here
+const AdminUserAddDept = () => {
+  const dispatch = useDispatch();
+  const curr = useSelector(selectCurrentUser);
+  const user = useSelector(selectUserManage);
+  const depts = useSelector(selectDeptsForDropDown);
+  const [dept, setDept] = useState(null);
 
-  handleDepChange = (e, item) => {
-    this.setState({
-      department: item.value
-    });
+  const handleDepChange = (e, item) => {
+    setDept({ dept: item.value });
   };
 
-  assignDept = () => {
-    const { curr, user, adminAssignDept } = this.props;
-    adminAssignDept(curr._id, user._id, this.state.department);
+  const assignDept = () => {
+    dispatch(adminAssignDept(curr._id, user._id, dept));
   };
 
-  render() {
-    const { user, depts } = this.props;
-    return (
-      <>
-        {!isEmpty(user) && (
-          <Card centered style={{ marginTop: '1em' }}>
-            <Card.Content>
-              {isEmpty(user.department) ? (
-                <Card.Header textAlign="center">
-                  No Department Assigned
-                </Card.Header>
-              ) : (
-                <Card.Header textAlign="center">
-                  {user.department.departmentName}
-                </Card.Header>
-              )}
-              <Card.Description>
-                <Dropdown
-                  selection
-                  fluid
-                  name="department"
-                  options={depts}
-                  placeholder="Select a Department"
-                  onChange={this.handleDepChange}
-                />
-                <Button
-                  fluid
-                  onClick={this.assignDept}
-                  disabled={isEmpty(user)}
-                  size="medium"
-                  style={{ marginTop: '1em' }}
-                >
-                  Assign Department
-                </Button>
-              </Card.Description>
-            </Card.Content>
-          </Card>
-        )}
-      </>
-    );
-  }
-}
-
-const mapDispatchToProps = { adminAssignDept };
-
-const mapStateToProps = (state) => {
-  return {
-    user: selectUserManage(state),
-    depts: selectDeptsForDropDown(state),
-    curr: selectCurrentUser(state)
-  };
+  return (
+    <>
+      {!isEmpty(user) && (
+        <Card centered style={{ marginTop: '1em' }}>
+          <Card.Content>
+            {isEmpty(user.department) || isEmpty(user.department.dept) ? (
+              <Card.Header textAlign="center">
+                No Department Assigned
+              </Card.Header>
+            ) : (
+              <Card.Header textAlign="center">
+                {user.department.dept.departmentName} joined on{' '}
+                {format(parseISO(user.department.joinDate), 'dd MMM yyyy')}
+              </Card.Header>
+            )}
+            <Card.Description>
+              <Dropdown
+                selection
+                fluid
+                name="department"
+                options={depts}
+                placeholder="Select a Department"
+                onChange={handleDepChange}
+              />
+              <Button
+                fluid
+                onClick={assignDept}
+                disabled={isEmpty(user)}
+                size="medium"
+                style={{ marginTop: '1em' }}
+              >
+                Assign Department
+              </Button>
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      )}
+    </>
+  );
 };
-
-AdminUserAddDept = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminUserAddDept);
 
 export default AdminUserAddDept;

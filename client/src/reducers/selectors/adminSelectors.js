@@ -12,7 +12,7 @@ import {
 import { compsUserCurrent, compsHolderCheck } from './utils/compHelpers';
 import { coursesUserVerify } from './utils/courseFilters';
 
-import { selectRole } from './roleSelectors';
+import { selectRole, selectRoles } from './roleSelectors';
 import { selectCompetencies, selectCompetency } from './compSelectors';
 import { selectCourse } from './courseSelectors';
 import { selectDept } from './deptSelectors';
@@ -77,6 +77,20 @@ export const selectAllUsersAdmins = createSelector(
     allusers.filter((user) => user.verified === true && user.isAdmin === true)
 );
 
+// same as above but for drop down purposes
+export const selectAllUsersAdminsForDropdown = createSelector(
+  selectAllUsersAdmins,
+  (admins) => {
+    return admins.map((admin) => {
+      return {
+        key: admin._id,
+        value: admin._id,
+        text: `${admin.firstName} ${admin.lastName}`
+      };
+    });
+  }
+);
+
 // COURSES
 
 // get courses awaiting verification from all users
@@ -112,7 +126,10 @@ export const selectAdminUserRoleComps = createSelector(
     if (roles === undefined) {
       return null;
     }
-    return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
+    return _.uniqBy(
+      _.flatten(roles.map((role) => role._role.competencies)),
+      '_id'
+    );
   }
 );
 
@@ -243,14 +260,14 @@ export const selectUsersRoleHolders = createSelector(
 export const selectAllUsersActiveNoDept = createSelector(
   selectAllUsersActive,
   (users) => {
-    return users.filter((user) => _.isEmpty(user.department));
+    return users.filter((user) => _.isEmpty(user.department.dept));
   }
 );
 
 export const selectAllUsersActiveDept = createSelector(
   selectAllUsersActive,
   (users) => {
-    return users.filter((user) => !_.isEmpty(user.department));
+    return users.filter((user) => !_.isEmpty(user.department.dept));
   }
 );
 
@@ -258,13 +275,26 @@ export const selectUsersInDept = createSelector(
   selectAllUsersActiveDept,
   selectDept,
   (users, dept) => {
-    return users.filter((user) => user.department._id === dept._id);
+    return users.filter((user) => user.department.dept._id === dept._id);
   }
 );
 
+// Had to change this because of the way roles are now tracked and assigned
 export const selectUniqueRolesInDept = createSelector(
   selectUsersInDept,
-  (users) => {
-    return _.uniqBy(_.flatten(users.map((user) => user.roles)), '_id');
+  selectRoles,
+  (users, roles) => {
+    const usersInDept = users.map((user) => user.roles);
+    const uniqRolesInDept = [
+      ...new Set(usersInDept.flat().map((role) => role._role._id))
+    ];
+    let uniqueRoles = [];
+    const uniqLength = uniqRolesInDept.length;
+    for (let i = 0; i < uniqLength; i++) {
+      const unoRole = roles.filter((role) => role._id === uniqRolesInDept[i]);
+      uniqueRoles.push(unoRole);
+    }
+
+    return uniqueRoles.flat();
   }
 );

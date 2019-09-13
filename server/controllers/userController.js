@@ -13,7 +13,7 @@ cloudinary.config({
 
 const addUserHistoryDept = async (user, dept, deptHistory) => {
   // add the dept and date
-  const newDept = { _dept: dept.department, joinDate: Date.now() };
+  const newDept = { _dept: dept, moveDate: Date.now() };
 
   const histDept = [...deptHistory, newDept];
   try {
@@ -30,9 +30,7 @@ const addUserHistoryDept = async (user, dept, deptHistory) => {
 };
 
 const addUserHistoryRole = async (user, role, roleHistory) => {
-  // add the role and the date
-  const newRole = { _role: role, joinDate: Date.now() };
-  const histRole = [...roleHistory, newRole];
+  const histRole = [...roleHistory, role];
   try {
     await User.findByIdAndUpdate(
       user,
@@ -50,10 +48,10 @@ module.exports = {
   allUsers: async (req, res) => {
     const dbAllUsers = await User.find({})
       .select({ passwordHash: 0 })
-      .populate('department')
+      .populate('department.dept')
       .populate('courses._course')
       .populate({
-        path: 'roles',
+        path: 'roles._role',
         populate: {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
@@ -70,10 +68,10 @@ module.exports = {
       { _id: req.params.id },
       { passwordHash: 0 }
     )
-      .populate('department')
+      .populate('department.dept')
       .populate('courses._course')
       .populate({
-        path: 'roles',
+        path: 'roles._role',
         populate: {
           path: 'competencies',
           populate: [{ path: 'courses' }, { path: 'compType' }]
@@ -81,6 +79,8 @@ module.exports = {
       })
       .populate('deptHistory._dept')
       .populate('roleHistory._role');
+
+    // console.log('[dbUser]', dbUser);
 
     res.send(dbUser);
   },
@@ -96,10 +96,10 @@ module.exports = {
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -122,18 +122,20 @@ module.exports = {
 
   addUserDept: async (req, res) => {
     try {
+      const { department } = req.body;
+      const { dept } = department;
       const userDept = await User.findByIdAndUpdate(
         req.params.id,
-        { $set: req.body },
+        { $set: { department: { dept }, joinDate: Date.now() } },
         {
           fields: { passwordHash: 0 },
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -148,10 +150,12 @@ module.exports = {
         .populate('roleHistory._role');
 
       // add to the history
-      await addUserHistoryDept(req.params.id, req.body, userDept.deptHistory);
+
+      await addUserHistoryDept(req.params.id, dept, userDept.deptHistory);
 
       return res.send(userDept);
     } catch (error) {
+      console.log(error);
       return res.status(418).send(error);
     }
   },
@@ -161,7 +165,6 @@ module.exports = {
     try {
       const thisUser = await User.findById(req.params.id);
       const courseSet = [...thisUser.courses, course];
-      // console.log(courseSet);
       const newCourse = await User.findByIdAndUpdate(
         req.params.id,
         { $set: { courses: courseSet } },
@@ -170,10 +173,10 @@ module.exports = {
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -199,12 +202,13 @@ module.exports = {
     try {
       const thisUser = await User.findById(req.params.id);
       // get the array of roles from the user
-      const roleSet = thisUser.roles;
-
-      if (action) {
-        arrayHelp.addToArray(roleSet, role);
+      let roleSet;
+      if (!action) {
+        roleSet = thisUser.roles.filter(
+          (cRole) => cRole._role.toString() !== role.toString()
+        );
       } else {
-        arrayHelp.removeFromArray(roleSet, role);
+        roleSet = [...thisUser.roles, role];
       }
 
       const newRole = await User.findByIdAndUpdate(
@@ -217,10 +221,10 @@ module.exports = {
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -234,10 +238,15 @@ module.exports = {
         .populate('deptHistory._dept')
         .populate('roleHistory._role');
 
+      let histRole;
+
       if (action) {
-        await addUserHistoryRole(req.params.id, role, thisUser.roleHistory);
-        // if it is false we will need to do something about this.....
+        histRole = { _role: role._role, newRole: true };
+      } else {
+        histRole = { _role: role };
       }
+
+      await addUserHistoryRole(req.params.id, histRole, thisUser.roleHistory);
 
       return res.status(200).send(newRole);
     } catch (error) {
@@ -313,10 +322,10 @@ module.exports = {
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -360,10 +369,10 @@ module.exports = {
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -393,10 +402,10 @@ module.exports = {
         { _id: req.user._id },
         { passwordHash: 0 }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -458,10 +467,10 @@ module.exports = {
           new: true
         }
       )
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [

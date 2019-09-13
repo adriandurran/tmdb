@@ -12,7 +12,13 @@ const departmentSchema = new Schema({
     required: true,
     type: String,
     trim: true
-  }
+  },
+  managers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
 });
 
 const Department = mongoose.model('Department', departmentSchema);

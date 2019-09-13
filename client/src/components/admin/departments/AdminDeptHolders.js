@@ -15,7 +15,7 @@ const AdminDeptHolders = ({ users }) => {
             </Item.Header>
             <Item.Meta>{user.username}</Item.Meta>
             <Item.Extra>
-              Joined <Moment fromNow>{user.joinDate}</Moment>
+              Joined <Moment fromNow>{user.department.joinDate}</Moment>
             </Item.Extra>
           </Item.Content>
         </Item>
