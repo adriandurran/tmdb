@@ -9,6 +9,7 @@ import CompDashBoard from './CompDashBoard';
 import CourseDashBoard from './CourseDashBoard';
 import OJTDashBoard from './OJTDashBoard';
 import AppDashBoard from './AppDashBoard';
+import WizardDashBoard from './WizardDashBoard';
 
 const AdminDashboard = () => {
   return (
@@ -32,7 +33,8 @@ const AdminDashboard = () => {
           <CourseDashBoard />
           <OJTDashBoard />
         </Card.Group>
-        <Card.Group itemsPerRow={1}>
+        <Card.Group itemsPerRow={2}>
+          <WizardDashBoard />
           <AppDashBoard />
         </Card.Group>
       </Segment>
