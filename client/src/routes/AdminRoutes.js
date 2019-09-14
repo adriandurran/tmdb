@@ -97,6 +97,9 @@ const AdminOJTTools = lazy(() =>
 );
 
 // wizards - temp arrangement on layout
+const WizardManager = lazy(() =>
+  import('../components/admin/wizards/WizardManager')
+);
 const NewUserWizard = lazy(() =>
   import('../components/admin/wizards/user/NewUserWizard')
 );
@@ -247,6 +250,12 @@ const AdminRoutes = () => {
       <PrivateAdminRoute
         user={user}
         path="/admin/wizards"
+        exact
+        component={LazyComponent(WizardManager)}
+      />
+      <PrivateAdminRoute
+        user={user}
+        path="/admin/wizards/user"
         component={LazyComponent(NewUserWizard)}
       />
     </>
