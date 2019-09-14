@@ -3,7 +3,9 @@ import React, { lazy } from 'react';
 import { LazyComponent, PrivateAdminRoute } from './routeHelpers';
 
 //Dashboard
-const AdminDashBoard = lazy(() => import('../components/admin/AdminDashboard'));
+const AdminDashBoard = lazy(() =>
+  import('../components/admin/dashboard/AdminDashboard')
+);
 const AdminDeptView = lazy(() =>
   import('../components/admin/departments/AdminDeptView')
 );

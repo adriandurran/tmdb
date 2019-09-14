@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Header, Icon, Card, Segment, Dimmer, Loader } from 'semantic-ui-react';
 
-import { fetchDepts } from '../../actions/dept';
-import { fetchAllUsers } from '../../actions/user';
-import { fetchRoles } from '../../actions/roles';
-import { fetchComps, fetchCompTypes } from '../../actions/comps';
+import { fetchDepts } from '../../../actions/dept';
+import { fetchAllUsers } from '../../../actions/user';
+import { fetchRoles } from '../../../actions/roles';
+import { fetchComps, fetchCompTypes } from '../../../actions/comps';
 import {
   fetchCourses,
   fetchCourseTypes,
   fetchCourseLevels
-} from '../../actions/courses';
-import { fetchVersions, fetchFeedbackTypes } from '../../actions/extra';
-import { fetchOJTS } from '../../actions/ojt';
+} from '../../../actions/courses';
+import { fetchVersions, fetchFeedbackTypes } from '../../../actions/extra';
+import { fetchOJTS } from '../../../actions/ojt';
 
 class AdminDashboard extends Component {
   state = {
