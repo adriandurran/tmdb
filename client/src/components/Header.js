@@ -93,13 +93,7 @@ class Header extends Component {
               ? `Version ${version.versionNumber}`
               : 'No version information'}
           </Menu.Item>
-          <Menu.Item
-            header
-            as={Link}
-            to={authUser ? `/application/feedback` : '/'}
-          >
-            Feedback
-          </Menu.Item>
+
           <Menu.Menu position="right">
             {authUser.isAdmin && (
               <Menu.Item as={Link} to={`/admin/dashboard`}>

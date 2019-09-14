@@ -36,7 +36,7 @@ class LoginUser extends Component {
 
     loginUser(values).then((result) => {
       const { data } = result;
-      console.log(data);
+      // console.log(data);
       let message = { ...this.state.message };
       // loader
       loader.active = false;
