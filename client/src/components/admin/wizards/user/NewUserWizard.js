@@ -83,7 +83,7 @@ const NewUserWizard = () => {
         </Step>
       </Step.Group>
 
-      <Segment basic style={{ marginTop: '2rem' }}>
+      <Segment raised style={{ marginTop: '2rem' }}>
         <WizardForm onSubmit={onSubmit}>
           <WizardForm.Page>
             <label>First Name</label>
