@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  Header,
-  Segment,
-  Step,
-  Icon,
-  Input,
-  Label,
-  Form
-} from 'semantic-ui-react';
+import { Header, Segment, Step, Icon, Input, Select } from 'semantic-ui-react';
 import { Field } from 'react-final-form';
+import { useSelector, useDispatch } from 'react-redux';
 
 import WizardForm from '../WizardForm';
+import { selectRolesForDropDown } from '../../../../reducers/selectors/roleSelectors';
+import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelectors';
 
 const onSubmit = async (values) => {
   window.alert(JSON.stringify(values, 0, 2));
@@ -26,9 +21,20 @@ const Error = ({ name }) => (
   />
 );
 
+const SelectAdapter = ({ input, ...rest }) => (
+  <Select
+    {...input}
+    {...rest}
+    onChange={(e, { value }) => input.onChange(value)}
+  />
+);
+
 const required = (value) => (value ? undefined : 'Required');
 
 const NewUserWizard = () => {
+  const roles = useSelector(selectRolesForDropDown);
+  const depts = useSelector(selectDeptsForDropDown);
+
   return (
     <>
       <Header as="h1" textAlign="center">
@@ -38,26 +44,45 @@ const NewUserWizard = () => {
       <Step.Group ordered>
         <Step active>
           <Step.Content>
-            <Step.Title>Name & Email</Step.Title>
-            <Step.Description>
-              Enter first name last Name and email address
-            </Step.Description>
+            <Step.Title>Name</Step.Title>
+            <Step.Description>Enter name</Step.Description>
           </Step.Content>
         </Step>
 
         <Step>
           <Step.Content>
-            <Step.Title>Billing</Step.Title>
-            <Step.Description>Enter billing information</Step.Description>
+            <Step.Title>Email</Step.Title>
+            <Step.Description>Enter email address</Step.Description>
           </Step.Content>
         </Step>
 
         <Step>
           <Step.Content>
-            <Step.Title>Confirm Order</Step.Title>
+            <Step.Title>Employee Id</Step.Title>
+            <Step.Description>Enter employee Id</Step.Description>
+          </Step.Content>
+        </Step>
+
+        <Step>
+          <Step.Content>
+            <Step.Title>Password</Step.Title>
+            <Step.Description>Create password</Step.Description>
+          </Step.Content>
+        </Step>
+        <Step>
+          <Step.Content>
+            <Step.Title>Role</Step.Title>
+            <Step.Description>Select role</Step.Description>
+          </Step.Content>
+        </Step>
+        <Step>
+          <Step.Content>
+            <Step.Title>Department</Step.Title>
+            <Step.Description>Select department</Step.Description>
           </Step.Content>
         </Step>
       </Step.Group>
+
       <Segment basic style={{ marginTop: '2rem' }}>
         <WizardForm onSubmit={onSubmit}>
           <WizardForm.Page>
@@ -79,6 +104,44 @@ const NewUserWizard = () => {
               validate={required}
             />
             <Error name="lastName" />
+          </WizardForm.Page>
+          <WizardForm.Page>
+            <label htmlFor="email">Email</label>
+            <Field
+              name="email"
+              component={Input}
+              type="email"
+              placeholder="Email address"
+              validate={required}
+            />
+          </WizardForm.Page>
+          <WizardForm.Page>
+            <label htmlFor="userId">Employee Id</label>
+            <Field
+              name="userId"
+              component={Input}
+              type="text"
+              placeholder="Employee Number/Id"
+              validate={required}
+            />
+          </WizardForm.Page>
+          <WizardForm.Page>
+            <label htmlFor="password">Password</label>
+            <Field
+              name="password"
+              component={Input}
+              type="password"
+              placeholder="Password"
+              validate={required}
+            />
+          </WizardForm.Page>
+          <WizardForm.Page>
+            <label htmlFor="dept">Department</label>
+            <Field name="dept" component={SelectAdapter} options={depts} />
+          </WizardForm.Page>
+          <WizardForm.Page>
+            <label htmlFor="role">Role</label>
+            <Field name="role" component={SelectAdapter} options={roles} />
           </WizardForm.Page>
         </WizardForm>
       </Segment>
