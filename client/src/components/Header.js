@@ -88,7 +88,7 @@ class Header extends Component {
             as={Link}
             to={authUser ? `/application/version` : '/'}
           >
-            TMDB -{' '}
+            TAQM -{' '}
             {!isEmpty(version)
               ? `Version ${version.versionNumber}`
               : 'No version information'}
