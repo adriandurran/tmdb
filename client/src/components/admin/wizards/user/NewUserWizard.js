@@ -7,6 +7,8 @@ import WizardForm from './NewUserWizardForm';
 import { selectRolesForDropDown } from '../../../../reducers/selectors/roleSelectors';
 import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelectors';
 
+import styles from '../../../../styles/form.module.css';
+
 const onSubmit = async (values) => {
   window.alert(JSON.stringify(values, 0, 2));
 };
@@ -45,13 +47,14 @@ const NewUserWizard = () => {
       <Segment raised style={{ marginTop: '2rem' }}>
         <WizardForm onSubmit={onSubmit}>
           <WizardForm.Page>
-            <label>First Name</label>
+            <label className={styles.label}>First Name</label>
             <Field
               name="firstName"
               component={Input}
               type="text"
               placeholder="First Name"
               validate={required}
+              className={styles.field}
             />
             <Error name="firstName" />
             <label>Last Name</label>
