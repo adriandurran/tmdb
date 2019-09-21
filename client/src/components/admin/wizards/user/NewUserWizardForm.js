@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { Button } from 'semantic-ui-react';
 
+import NewUserSteps from './NewUserSteps';
+
 export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
@@ -41,6 +43,7 @@ export default class Wizard extends React.Component {
   };
 
   handleSubmit = (values) => {
+    console.log(values);
     const { children, onSubmit } = this.props;
     const { page } = this.state;
     const isLastPage = page === React.Children.count(children) - 1;
@@ -57,32 +60,35 @@ export default class Wizard extends React.Component {
     const activePage = React.Children.toArray(children)[page];
     const isLastPage = page === React.Children.count(children) - 1;
     return (
-      <Form
-        initialValues={values}
-        validate={this.validate}
-        onSubmit={this.handleSubmit}
-      >
-        {({ handleSubmit, submitting, values }) => (
-          <form onSubmit={handleSubmit}>
-            {activePage}
-            <div className="buttons">
-              {page > 0 && (
-                <Button type="button" onClick={this.previous}>
-                  « Previous
-                </Button>
-              )}
-              {!isLastPage && <Button type="submit">Next »</Button>}
-              {isLastPage && (
-                <Button type="submit" disabled={submitting}>
-                  Submit
-                </Button>
-              )}
-            </div>
+      <>
+        <NewUserSteps values={values} />
+        <Form
+          initialValues={values}
+          validate={this.validate}
+          onSubmit={this.handleSubmit}
+        >
+          {({ handleSubmit, submitting, values }) => (
+            <form onSubmit={handleSubmit}>
+              {activePage}
+              <div className="buttons">
+                {page > 0 && (
+                  <Button type="button" onClick={this.previous}>
+                    « Previous
+                  </Button>
+                )}
+                {!isLastPage && <Button type="submit">Next »</Button>}
+                {isLastPage && (
+                  <Button type="submit" disabled={submitting}>
+                    Submit
+                  </Button>
+                )}
+              </div>
 
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
-          </form>
-        )}
-      </Form>
+              <pre>{JSON.stringify(values, 0, 2)}</pre>
+            </form>
+          )}
+        </Form>
+      </>
     );
   }
 }

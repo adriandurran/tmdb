@@ -3,8 +3,7 @@ import { Header, Segment, Icon, Input, Select } from 'semantic-ui-react';
 import { Field } from 'react-final-form';
 import { useSelector, useDispatch } from 'react-redux';
 
-import WizardForm from '../WizardForm';
-import NewUserSteps from './NewUserSteps';
+import WizardForm from './NewUserWizardForm';
 import { selectRolesForDropDown } from '../../../../reducers/selectors/roleSelectors';
 import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelectors';
 
@@ -43,7 +42,6 @@ const NewUserWizard = () => {
         New User Wizard
       </Header>
 
-      <NewUserSteps />
       <Segment raised style={{ marginTop: '2rem' }}>
         <WizardForm onSubmit={onSubmit}>
           <WizardForm.Page>

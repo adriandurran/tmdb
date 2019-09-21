@@ -1,7 +1,7 @@
 import React from 'react';
 import { Step } from 'semantic-ui-react';
 
-const NewUserSteps = () => {
+const NewUserSteps = ({ values }) => {
   return (
     <Step.Group ordered>
       <Step active>
