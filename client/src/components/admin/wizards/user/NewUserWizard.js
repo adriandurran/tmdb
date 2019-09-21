@@ -9,9 +9,7 @@ import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelec
 
 import styles from '../../../../styles/form.module.css';
 
-const onSubmit = async (values) => {
-  window.alert(JSON.stringify(values, 0, 2));
-};
+import { adminAddNewUser } from '../../../../actions/user';
 
 const Error = ({ name }) => (
   <Field
@@ -36,6 +34,15 @@ const required = (value) => (value ? undefined : 'Required');
 const NewUserWizard = () => {
   const roles = useSelector(selectRolesForDropDown);
   const depts = useSelector(selectDeptsForDropDown);
+  const dispatch = useDispatch();
+
+  const onSubmit = async (values) => {
+    const result = await dispatch(adminAddNewUser(values));
+    console.log(result);
+    if (result.verified) {
+      // add a message the user has been added
+    }
+  };
 
   return (
     <>
@@ -68,9 +75,9 @@ const NewUserWizard = () => {
             <Error name="lastName" />
           </WizardForm.Page>
           <WizardForm.Page>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="username">Email</label>
             <Field
-              name="email"
+              name="username"
               component={Input}
               type="email"
               placeholder="Email address"

@@ -14,6 +14,22 @@ import {
   ADMIN_REMOVE_REGISTRATION
 } from './types';
 
+export const adminAddNewUser = (user) => async (dispatch) => {
+  try {
+    const res = await axios.put('/api/tmdb/user/admin/user/newuser', { user });
+    // if we get no errors
+    if (res.status === 200) {
+      dispatch(fetchAllUsers());
+    }
+    // fetch allusers
+    return res.data;
+  } catch (error) {
+    // return error to form
+    console.log(error);
+    return error;
+  }
+};
+
 export const addUserCourse = (user, course) => async (dispatch) => {
   const res = await axios.put(`/api/tmdb/user/${user}/course`, { course });
   dispatch({ type: FETCH_USER, payload: res.data });
