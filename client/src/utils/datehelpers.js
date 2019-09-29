@@ -1,5 +1,5 @@
 import moment from 'moment';
-import _ from 'lodash';
+import { flatten } from 'lodash';
 
 export const checkCourseHasExpireDate = (course) => {
   if (
@@ -16,6 +16,7 @@ export const checkCourseHasExpireDate = (course) => {
 export const checkCompExpireDate = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   let arrUCourse = [];
+  // eslint-disable-next-line
   for (let x in arrCompCoursesId) {
     let uCourse = usercourses.filter(
       (course) => course._course._id === arrCompCoursesId[x]
@@ -25,8 +26,8 @@ export const checkCompExpireDate = (comp, usercourses) => {
       arrUCourse.push(uCourse);
     }
   }
-  arrUCourse = _.flatten(arrUCourse);
-
+  arrUCourse = flatten(arrUCourse);
+  // eslint-disable-next-line
   for (let x in arrUCourse) {
     if (!checkCourseHasExpireDate(arrUCourse[x]._course)) {
       return false;
@@ -49,6 +50,7 @@ export const checkCompExpireDate = (comp, usercourses) => {
 export const checkCompExpireDate0 = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   let arrUCourse = [];
+  // eslint-disable-next-line
   for (let x in arrCompCoursesId) {
     let uCourse = usercourses.filter(
       (course) => course._course._id === arrCompCoursesId[x]
@@ -58,8 +60,8 @@ export const checkCompExpireDate0 = (comp, usercourses) => {
       arrUCourse.push(uCourse);
     }
   }
-  arrUCourse = _.flatten(arrUCourse);
-
+  arrUCourse = flatten(arrUCourse);
+  // eslint-disable-next-line
   for (let x in arrUCourse) {
     if (!checkCourseHasExpireDate(arrUCourse[x]._course)) {
       return false;
@@ -89,4 +91,9 @@ export const expireMonths = (date1, valid) => {
   }
   let expDate = moment(date1).add(valid, 'months');
   return expDate.diff(moment(Date.now()), 'months');
+};
+
+export const calcTimeToSQEP = (assDate, timeToSQEP) => {
+  const dateSQEP = moment(assDate).add(timeToSQEP, 'months');
+  return dateSQEP.diff(moment(Date.now()), 'months');
 };

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { flatten } from 'lodash';
 
 export const compExist = (req, curs) => {
   // filter the users competencies to see if the required competency is there
@@ -13,6 +13,7 @@ export const compExist = (req, curs) => {
 export const getUserCoursesForComp = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   let arrUCourse = [];
+  // eslint-disable-next-line
   for (let x in arrCompCoursesId) {
     let uCourse = usercourses.filter(
       (course) => course._course._id === arrCompCoursesId[x]
@@ -22,5 +23,5 @@ export const getUserCoursesForComp = (comp, usercourses) => {
       arrUCourse.push(uCourse);
     }
   }
-  return _.flatten(arrUCourse);
+  return flatten(arrUCourse);
 };

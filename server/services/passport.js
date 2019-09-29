@@ -9,7 +9,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findOne({ _id: id }, { passwordHash: 0 }).then(user => {
+  User.findOne({ _id: id }, { passwordHash: 0 }).then((user) => {
     done(null, user);
   });
 });
@@ -21,10 +21,10 @@ passport.use(
     const newLog = new User();
     try {
       const existingUser = await User.findOne({ username })
-        .populate('department')
+        .populate('department.dept')
         .populate('courses._course')
         .populate({
-          path: 'roles',
+          path: 'roles._role',
           populate: {
             path: 'competencies',
             populate: [
@@ -34,7 +34,9 @@ passport.use(
               { path: 'compType' }
             ]
           }
-        });
+        })
+        .populate('deptHistory._dept')
+        .populate('roleHistory._role');
 
       if (!existingUser) {
         console.log('no user found');

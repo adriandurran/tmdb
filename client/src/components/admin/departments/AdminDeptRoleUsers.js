@@ -22,6 +22,7 @@ class AdminDeptRoleUsers extends Component {
     const rUsers = roleUsers(deptUsers, roleId);
     this.setState({ rUsers });
     const roleComps = getRole(roles, roleId);
+    // eslint-disable-next-line
     for (let x in rUsers) {
       this.checkComps(rUsers[x].courses, roleComps[0]);
       this.checkCompExpire(rUsers[x].courses, roleComps[0]);
@@ -30,6 +31,7 @@ class AdminDeptRoleUsers extends Component {
 
   // bit rough and ready
   checkComps(courses, comps) {
+    // eslint-disable-next-line
     for (let x in comps.competencies) {
       if (!compsHolderCheck(courses, comps.competencies[x])) {
         this.setState({ hasComp: false });
@@ -39,6 +41,7 @@ class AdminDeptRoleUsers extends Component {
 
   // this looks at the course comps and if they expire in 0 months or less....
   checkCompExpire(courses, comps) {
+    // eslint-disable-next-line
     for (let x in comps.competencies) {
       if (checkCompExpireDate0(comps.competencies[x], courses)) {
         this.setState({ expire: true });

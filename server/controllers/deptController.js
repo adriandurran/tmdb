@@ -3,7 +3,7 @@ const Department = require('../models/departments');
 module.exports = {
   getDepts: async (req, res) => {
     try {
-      const dbDepts = await Department.find({});
+      const dbDepts = await Department.find({}).populate('managers');
       res.send(dbDepts);
     } catch (error) {
       return res.status(418).send(error);
@@ -12,7 +12,9 @@ module.exports = {
 
   getDept: async (req, res) => {
     try {
-      const dbDept = await Department.findById(req.params.id);
+      const dbDept = await Department.findById(req.params.id).populate(
+        'managers'
+      );
       res.send(dbDept);
     } catch (error) {
       return res.status(418).send(error);
@@ -22,8 +24,12 @@ module.exports = {
   addDept: async (req, res) => {
     try {
       const newDept = await Department.create(req.body);
-      res.send(newDept);
+      const popNewDept = await Department.findById(newDept._id).populate(
+        'managers'
+      );
+      res.send(popNewDept);
     } catch (error) {
+      console.log(error);
       return res.status(418).send(error);
     }
   },
@@ -33,7 +39,7 @@ module.exports = {
         req.params.id,
         { $set: req.body },
         { new: true }
-      );
+      ).populate('managers');
       res.send(upDept);
     } catch (error) {
       return res.status(418).send(error);

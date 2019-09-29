@@ -1,47 +1,42 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { selectUserRoles } from '../../reducers/selectors/userSelectors';
+import { isEmpty } from 'lodash';
 
 import { Item, Header, Segment } from 'semantic-ui-react';
 
-class UserRoles extends Component {
-  renderUserRoles() {
-    const { userRoles } = this.props;
+const UserRoles = () => {
+  const userRoles = useSelector(selectUserRoles);
 
-    return userRoles.map(role => {
+  const renderUserRoles = () => {
+    return userRoles.map((role, i) => {
+      if (isEmpty(role._role)) {
+        return <div key={i} />;
+      }
+      const { competencies, roleName } = role._role;
       return (
         <Item key={role._id}>
           <Item.Content>
-            <Item.Header>{role.roleName}</Item.Header>
+            <Item.Header>{roleName}</Item.Header>
             <Item.Extra>
-              {role.competencies.length} Competencies required for this Role
+              {competencies.length} competencies required for this Role
             </Item.Extra>
           </Item.Content>
         </Item>
       );
     });
-  }
-
-  render() {
-    return (
-      <div>
-        <Segment padded>
-          <Header as="h2" textAlign="center">
-            Roles
-          </Header>
-          <Item.Group>{this.renderUserRoles()}</Item.Group>
-        </Segment>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    userRoles: selectUserRoles(state)
   };
-};
 
-UserRoles = connect(mapStateToProps)(UserRoles);
+  return (
+    <div>
+      <Segment padded>
+        <Header as="h2" textAlign="center">
+          Roles
+        </Header>
+        <Item.Group>{renderUserRoles()}</Item.Group>
+      </Segment>
+    </div>
+  );
+};
 
 export default UserRoles;

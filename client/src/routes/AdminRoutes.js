@@ -3,7 +3,9 @@ import React, { lazy } from 'react';
 import { LazyComponent, PrivateAdminRoute } from './routeHelpers';
 
 //Dashboard
-const AdminDashBoard = lazy(() => import('../components/admin/AdminDashboard'));
+const AdminDashBoard = lazy(() =>
+  import('../components/admin/dashboard/AdminDashboard')
+);
 const AdminDeptView = lazy(() =>
   import('../components/admin/departments/AdminDeptView')
 );
@@ -90,12 +92,16 @@ const AdminUserTools = lazy(() =>
   import('../components/admin/users/AdminUserTools')
 );
 
-const AppFeedbackManager = lazy(() =>
-  import('../components/feedback/AppFeedbackManager')
-);
-
 const AdminOJTTools = lazy(() =>
   import('../components/admin/onjobtraining/AdminOJTTools')
+);
+
+// wizards - temp arrangement on layout
+const WizardManager = lazy(() =>
+  import('../components/admin/wizards/WizardManager')
+);
+const NewUserWizard = lazy(() =>
+  import('../components/admin/wizards/user/NewUserWizard')
 );
 
 const AdminRoutes = () => {
@@ -240,10 +246,17 @@ const AdminRoutes = () => {
         path="/admin/users-no-dept"
         component={LazyComponent(AdminUsersNoDeptTable)}
       />
+
       <PrivateAdminRoute
         user={user}
-        path="/application/feedback-manager"
-        component={LazyComponent(AppFeedbackManager)}
+        path="/admin/wizards"
+        exact
+        component={LazyComponent(WizardManager)}
+      />
+      <PrivateAdminRoute
+        user={user}
+        path="/admin/wizards/user"
+        component={LazyComponent(NewUserWizard)}
       />
     </>
   );

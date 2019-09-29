@@ -18,9 +18,9 @@ class AdminCTypeList extends Component {
 
   renderCompTypes() {
     const { types } = this.props;
-    return types.map(type => {
+    return types.map((type) => {
       return (
-        <List.Item key={type._id}>
+        <List.Item key={type._id} disabled={type.compType === 'Required'}>
           <List.Content floated="right">
             <Button icon onClick={this.handleClick} value={type._id}>
               <Icon name="delete" />
@@ -33,16 +33,16 @@ class AdminCTypeList extends Component {
   }
   render() {
     return (
-      <div>
+      <>
         <List divided verticalAlign="middle">
           {this.renderCompTypes()}
         </List>
-      </div>
+      </>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     types: selectCompetencyTypes(state)
   };

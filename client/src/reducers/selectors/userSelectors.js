@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import _ from 'lodash';
+import { uniqBy, flatten } from 'lodash';
 
 import {
   coursesCurrentVerified,
@@ -57,7 +57,14 @@ export const selectUserCoursesVerify = createSelector(
 export const selectUserRoleComps = createSelector(
   selectUserRoles,
   (roles) => {
-    return _.uniqBy(_.flatten(roles.map((role) => role.competencies)), '_id');
+    try {
+      return uniqBy(
+        flatten(roles.map((role) => role._role.competencies)),
+        '_id'
+      );
+    } catch (error) {
+      return [];
+    }
   }
 );
 

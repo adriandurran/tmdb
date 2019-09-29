@@ -1,55 +1,45 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Icon, Card } from 'semantic-ui-react';
 
 import { selectAllUsersActive } from '../../../reducers/selectors/adminSelectors';
 import { deptUsers, deptRoles } from '../../../utils/deptHelpers';
 
-class AdminDeptUserStatus extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      departmentUsers: [],
-      departmentRoles: []
-    };
-  }
+const AdminDeptUserStatus = ({ dept }) => {
+  const users = useSelector(selectAllUsersActive);
+  const [departmentUsers, setDepartmentUsers] = useState([]);
+  const [departmentRoles, setDepartmentRoles] = useState();
 
-  componentDidMount() {
-    const { dept, users } = this.props;
-    const departmentUsers = deptUsers(users, dept);
-    const departmentRoles = deptRoles(departmentUsers);
-    this.setState({
-      departmentUsers,
-      departmentRoles
-    });
-  }
+  useEffect(() => {
+    const deptUserState = deptUsers(users, dept);
+    if (deptUserState.length > 0) {
+      setDepartmentUsers(deptUserState);
+    }
+    const deptRolers = deptRoles(departmentUsers);
+    if (deptRolers.length > 0) {
+      setDepartmentRoles(deptRolers.length);
+    } else {
+      setDepartmentRoles(0);
+    }
+  }, [users, dept]);
 
-  render() {
-    const { departmentUsers, departmentRoles } = this.state;
-    return (
-      <Fragment>
-        <Card.Content extra>
-          <span>
-            <Icon name="users" />
-            &nbsp;
-            {departmentUsers.length}&nbsp; Users
-          </span>
-          <br />
-          <span>
-            <Icon name="users" />
-            &nbsp;
-            {departmentRoles.length}&nbsp; Roles
-          </span>
-        </Card.Content>
-      </Fragment>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    users: selectAllUsersActive(state)
-  };
+  return (
+    <>
+      <Card.Content extra>
+        <span>
+          <Icon name="users" />
+          &nbsp;
+          {departmentUsers.length}&nbsp; Users
+        </span>
+        <br />
+        <span>
+          <Icon name="users" />
+          &nbsp;
+          {departmentRoles}&nbsp; Roles
+        </span>
+      </Card.Content>
+    </>
+  );
 };
 
-export default connect(mapStateToProps)(AdminDeptUserStatus);
+export default AdminDeptUserStatus;

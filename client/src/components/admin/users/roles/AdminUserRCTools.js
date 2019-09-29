@@ -11,6 +11,7 @@ import AdminUserComps from '../comps/AdminUserComps';
 import AdminUserCourseTable from '../courses/AdminUserCoursesTable';
 import AdminUserAddDept from '../dept/AdminUserAddDept';
 import AdminUserResetPassword from '../access/AdminUserResetPassword';
+import AdminUserAnalysis from '../analysis/AdminUserAnalysis';
 
 const AdminUserRCTools = () => {
   const user = useSelector(selectUserManage);
@@ -39,6 +40,12 @@ const AdminUserRCTools = () => {
             </Grid.Column>
             <Grid.Column>
               <AdminUserComps />
+            </Grid.Column>
+          </Grid.Row>
+          {/* User analysis */}
+          <Grid.Row>
+            <Grid.Column>
+              <AdminUserAnalysis user={user} />
             </Grid.Column>
           </Grid.Row>
           {/* courses */}
