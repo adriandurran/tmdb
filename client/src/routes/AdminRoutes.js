@@ -247,7 +247,7 @@ const AdminRoutes = () => {
         component={LazyComponent(AdminUsersNoDeptTable)}
       />
 
-      <PrivateAdminRoute
+      {/* <PrivateAdminRoute
         user={user}
         path="/admin/wizards"
         exact
@@ -257,7 +257,7 @@ const AdminRoutes = () => {
         user={user}
         path="/admin/wizards/user"
         component={LazyComponent(NewUserWizard)}
-      />
+      /> */}
     </>
   );
 };
