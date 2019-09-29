@@ -48,4 +48,7 @@ router.put('/:id/course', requireLogin, userController.addUserCourse);
 // verify a user course
 router.put('/:id/verify-course', requireAdmin, userController.verifyUserCourse);
 
+// admin add a new user
+router.put('/admin/user/newuser', requireAdmin, userController.adminNewUser);
+
 module.exports = router;

@@ -77,6 +77,7 @@ export const coursesActiveUser = (users) => {
 // return the users courses awaiting verification
 export const coursesUserVerify = (user) => {
   const VeriList = [];
+  // eslint-disable-next-line
   for (let x in user.courses) {
     let tmpC = {};
     if (!user.courses[x].verified) {

@@ -16,6 +16,7 @@ export const checkCourseHasExpireDate = (course) => {
 export const checkCompExpireDate = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   let arrUCourse = [];
+  // eslint-disable-next-line
   for (let x in arrCompCoursesId) {
     let uCourse = usercourses.filter(
       (course) => course._course._id === arrCompCoursesId[x]
@@ -26,7 +27,7 @@ export const checkCompExpireDate = (comp, usercourses) => {
     }
   }
   arrUCourse = flatten(arrUCourse);
-
+  // eslint-disable-next-line
   for (let x in arrUCourse) {
     if (!checkCourseHasExpireDate(arrUCourse[x]._course)) {
       return false;
@@ -49,6 +50,7 @@ export const checkCompExpireDate = (comp, usercourses) => {
 export const checkCompExpireDate0 = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   let arrUCourse = [];
+  // eslint-disable-next-line
   for (let x in arrCompCoursesId) {
     let uCourse = usercourses.filter(
       (course) => course._course._id === arrCompCoursesId[x]
@@ -59,7 +61,7 @@ export const checkCompExpireDate0 = (comp, usercourses) => {
     }
   }
   arrUCourse = flatten(arrUCourse);
-
+  // eslint-disable-next-line
   for (let x in arrUCourse) {
     if (!checkCourseHasExpireDate(arrUCourse[x]._course)) {
       return false;
