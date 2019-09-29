@@ -4,7 +4,6 @@ import { LazyComponent, PrivateRoute } from './routeHelpers';
 
 const UserLanding = lazy(() => import('../components/user/UserLanding'));
 const AppVersion = lazy(() => import('../components/version/AppVersion'));
-const AppFeedback = lazy(() => import('../components/feedback/AppFeedback'));
 const UserProfile = lazy(() =>
   import('../components/user/profile/UserProfile')
 );
@@ -20,12 +19,7 @@ const UserRoutes = () => {
         path="/application/version"
         component={LazyComponent(AppVersion)}
       />
-      <PrivateRoute
-        // user={user}
-        exact
-        path="/application/feedback"
-        component={LazyComponent(AppFeedback)}
-      />
+
       <PrivateRoute
         // user={user}
         exact

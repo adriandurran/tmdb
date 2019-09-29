@@ -423,6 +423,42 @@ module.exports = {
     }
   },
 
+  adminNewUser: async (req, res) => {
+    // put code in here
+
+    const {
+      userId,
+      firstName,
+      lastName,
+      username,
+      password,
+      dept,
+      role
+    } = req.body.user;
+
+    try {
+      let adminNewUser = new User();
+
+      let passwordHash = await adminNewUser.generateHash(password);
+
+      const adminNew = await User.create({
+        userId,
+        username,
+        firstName,
+        lastName,
+        verified: true,
+        passwordHash,
+        department: { dept },
+        roles: [{ _role: role }]
+      });
+
+      return res.status(200).send(adminNew);
+    } catch (error) {
+      console.log('error', error);
+      return res.status(400).send(error);
+    }
+  },
+
   registerUser: async (req, res) => {
     try {
       const {

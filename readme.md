@@ -1,4 +1,4 @@
-# Training Management Application
+# Training & Qualifications Manager
 
 ### Application Overview
 

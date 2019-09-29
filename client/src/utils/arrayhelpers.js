@@ -13,6 +13,7 @@ export const compExist = (req, curs) => {
 export const getUserCoursesForComp = (comp, usercourses) => {
   let arrCompCoursesId = comp.courses.map((course) => course._id);
   let arrUCourse = [];
+  // eslint-disable-next-line
   for (let x in arrCompCoursesId) {
     let uCourse = usercourses.filter(
       (course) => course._course._id === arrCompCoursesId[x]
