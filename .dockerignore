@@ -1,11 +1,11 @@
 server/node_modules
 server/config/dev.js
-server/package-lock.json
+server/yarn.lock
 server/.gitignore
 
 client/node_modules
 client/.gitignore
-client/package-lock.json
+client/yarn.lock
 
 docker
 resources
@@ -14,5 +14,6 @@ server.env
 
 Dockerfile
 Dockerfile.dev
+Dockerfile.old
 .dockerignore
 docker-compose.yml
