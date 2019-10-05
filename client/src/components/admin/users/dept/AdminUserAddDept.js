@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { parseISO, format } from 'date-fns';
-
+import Moment from 'react-moment';
 import { Header, Card, Dropdown, Button } from 'semantic-ui-react';
 
 import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
@@ -64,8 +64,7 @@ const AdminUserAddDept = () => {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              Joined on{' '}
-              {format(parseISO(user.department.joinDate), 'dd MMM yyyy')}
+              Joined <Moment fromNow>{user.department.joinDate}</Moment>
             </Card.Content>
           </Card>
         </>
