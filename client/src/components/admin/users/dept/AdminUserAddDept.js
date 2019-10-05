@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { parseISO, format } from 'date-fns';
 
-import { Card, Dropdown, Button } from 'semantic-ui-react';
+import { Header, Card, Dropdown, Button } from 'semantic-ui-react';
 
 import { selectUserManage } from '../../../../reducers/selectors/adminSelectors';
 import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelectors';
@@ -28,39 +28,47 @@ const AdminUserAddDept = () => {
   return (
     <>
       {!isEmpty(user) && (
-        <Card centered style={{ marginTop: '1em' }}>
-          <Card.Content>
-            {isEmpty(user.department) || isEmpty(user.department.dept) ? (
-              <Card.Header textAlign="center">
-                No Department Assigned
-              </Card.Header>
-            ) : (
-              <Card.Header textAlign="center">
-                {user.department.dept.departmentName} joined on{' '}
-                {format(parseISO(user.department.joinDate), 'dd MMM yyyy')}
-              </Card.Header>
-            )}
-            <Card.Description>
-              <Dropdown
-                selection
-                fluid
-                name="department"
-                options={depts}
-                placeholder="Select a Department"
-                onChange={handleDepChange}
-              />
-              <Button
-                fluid
-                onClick={assignDept}
-                disabled={isEmpty(user)}
-                size="medium"
-                style={{ marginTop: '1em' }}
-              >
-                Assign Department
-              </Button>
-            </Card.Description>
-          </Card.Content>
-        </Card>
+        <>
+          <Header as="h3" textAlign="center">
+            Department
+          </Header>
+          <Card centered style={{ marginTop: '1em' }}>
+            <Card.Content>
+              {isEmpty(user.department) || isEmpty(user.department.dept) ? (
+                <Card.Header textAlign="center">
+                  No Department Assigned
+                </Card.Header>
+              ) : (
+                <Card.Header textAlign="center">
+                  {user.department.dept.departmentName}
+                </Card.Header>
+              )}
+              <Card.Description>
+                <Dropdown
+                  selection
+                  fluid
+                  name="department"
+                  options={depts}
+                  placeholder="Select a Department"
+                  onChange={handleDepChange}
+                />
+                <Button
+                  fluid
+                  onClick={assignDept}
+                  disabled={isEmpty(user)}
+                  size="medium"
+                  style={{ marginTop: '1em' }}
+                >
+                  Assign Department
+                </Button>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              Joined on{' '}
+              {format(parseISO(user.department.joinDate), 'dd MMM yyyy')}
+            </Card.Content>
+          </Card>
+        </>
       )}
     </>
   );

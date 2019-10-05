@@ -20,11 +20,11 @@ const AdminUserRCTools = () => {
       {!isEmpty(user) && (
         <Grid celled>
           <Grid.Row columns={2} centered divided>
-            <Grid.Column>
+            <Grid.Column verticalAlign="middle">
               <AdminUserAddDept />
             </Grid.Column>
 
-            <Grid.Column>
+            <Grid.Column verticalAlign="middle">
               <AdminUserDetails />
             </Grid.Column>
           </Grid.Row>
