@@ -88,7 +88,7 @@ class AdminUsersNoDeptTable extends Component {
     return (
       <div>
         <Header as="h2" textAlign="center">
-          Departments
+          Department Allocator
         </Header>
         <AdminDeptMenu />
         <Table sortable celled striped selectable>

@@ -8,7 +8,7 @@ const AppDashBoard = () => {
       <Card.Content>
         <Header as="h2">Application</Header>
       </Card.Content>
-      <Card.Content description="Manage & View Application Settings" />
+      <Card.Content description="Manage User Access & View Application Settings" />
       <Card.Content extra />
     </Card>
   );
