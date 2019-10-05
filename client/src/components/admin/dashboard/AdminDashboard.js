@@ -33,10 +33,10 @@ const AdminDashboard = () => {
           <CourseDashBoard />
           <OJTDashBoard />
         </Card.Group>
-        {/* <Card.Group itemsPerRow={2}>
+        <Card.Group itemsPerRow={2}>
           <WizardDashBoard />
           <AppDashBoard />
-        </Card.Group> */}
+        </Card.Group>
       </Segment>
     </>
   );
