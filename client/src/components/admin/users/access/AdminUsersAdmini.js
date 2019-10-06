@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'react-moment';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
@@ -9,18 +9,21 @@ import { selectCurrentUser } from '../../../../reducers/selectors/userSelectors'
 
 import { adminVerifyUser, adminAdminiUser } from '../../../../actions/user';
 
-class AdminUsersAdmini extends Component {
-  suspendUser = (e, { value }) => {
-    this.props.adminVerifyUser(value, false);
+const AdminUsersAdmini = () => {
+  const dispatch = useDispatch();
+  const admins = useSelector(selectAllUsersAdmins);
+  const currentUser = useSelector(selectCurrentUser);
+
+  const suspendUser = (e, { value }) => {
+    dispatch(adminVerifyUser(value, false));
   };
 
-  adminiUser = (e, { value }) => {
-    this.props.adminAdminiUser(value, false);
+  const adminiUser = (e, { value }) => {
+    dispatch(adminAdminiUser(value, false));
   };
 
-  renderUserAdmins() {
-    const { admins, currentUser } = this.props;
-    return admins.map(user => {
+  const renderUserAdmins = () => {
+    return admins.map((user) => {
       return (
         <Item key={user._id}>
           <Item.Image size="tiny" src={user.imageUrl} />
@@ -40,7 +43,7 @@ class AdminUsersAdmini extends Component {
             </Item.Meta>
             <Item.Extra>
               <Button
-                onClick={this.adminiUser}
+                onClick={(e, value) => adminiUser(e, value)}
                 value={user._id}
                 disabled={!currentUser.isSuperAdmin}
               >
@@ -49,7 +52,7 @@ class AdminUsersAdmini extends Component {
               </Button>
               <Button
                 floated="right"
-                onClick={this.suspendUser}
+                onClick={(e, value) => suspendUser(e, value)}
                 value={user._id}
                 disabled={!currentUser.isSuperAdmin}
               >
@@ -61,35 +64,16 @@ class AdminUsersAdmini extends Component {
         </Item>
       );
     });
-  }
-
-  render() {
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Managers
-        </Header>
-        <Item.Group divided>{this.renderUserAdmins()}</Item.Group>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    admins: selectAllUsersAdmins(state),
-    currentUser: selectCurrentUser(state)
   };
-};
 
-const mapDispatchToProps = {
-  adminAdminiUser,
-  adminVerifyUser
+  return (
+    <>
+      <Header as="h3" textAlign="center">
+        Managers
+      </Header>
+      <Item.Group divided>{renderUserAdmins()}</Item.Group>
+    </>
+  );
 };
-
-AdminUsersAdmini = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminUsersAdmini);
 
 export default AdminUsersAdmini;

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'react-moment';
 
 import { Item, Button, Header, Icon } from 'semantic-ui-react';
@@ -10,17 +10,19 @@ import {
   adminRemoveRegistration
 } from '../../../../actions/user';
 
-class AdminUserVerify extends Component {
-  verifiyUser = (e, { value }) => {
-    this.props.adminVerifyUser(value, true);
+const AdminUserVerify = () => {
+  const dispatch = useDispatch();
+  const verify = useSelector(selectAllUsersVerify);
+
+  const verifiyUser = (e, { value }) => {
+    dispatch(adminVerifyUser(value, true));
   };
 
-  removeRegistration = (e, { value }) => {
-    this.props.adminRemoveRegistration(value);
+  const removeRegistration = (e, { value }) => {
+    dispatch(adminRemoveRegistration(value));
   };
 
-  renderUserVerify() {
-    const { verify } = this.props;
+  const renderUserVerify = () => {
     return verify.map((user) => {
       return (
         <Item key={user._id}>
@@ -36,7 +38,7 @@ class AdminUserVerify extends Component {
             <Item.Extra>
               <Button
                 floated="right"
-                onClick={this.removeRegistration}
+                onClick={(e, value) => removeRegistration(e, value)}
                 value={user._id}
               >
                 <Icon name="user delete" color="red" />
@@ -44,7 +46,7 @@ class AdminUserVerify extends Component {
               </Button>
               <Button
                 floated="right"
-                onClick={this.verifiyUser}
+                onClick={(e, value) => verifiyUser(e, value)}
                 value={user._id}
               >
                 <Icon name="checkmark" color="green" />
@@ -55,33 +57,15 @@ class AdminUserVerify extends Component {
         </Item>
       );
     });
-  }
-  render() {
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Verify Users
-        </Header>
-        <Item.Group divided>{this.renderUserVerify()}</Item.Group>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    verify: selectAllUsersVerify(state)
   };
+  return (
+    <>
+      <Header as="h3" textAlign="center">
+        Verify Users
+      </Header>
+      <Item.Group divided>{renderUserVerify()}</Item.Group>
+    </>
+  );
 };
-
-const mapDispatchToProps = {
-  adminVerifyUser,
-  adminRemoveRegistration
-};
-
-AdminUserVerify = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminUserVerify);
 
 export default AdminUserVerify;
