@@ -10,7 +10,7 @@ const AdminDeptManager = () => {
   return (
     <div>
       <Header as="h2" textAlign="center">
-        Departments
+        Department Manager
       </Header>
       <AdminDeptMenu />
       <Grid celled centered attached="bottom" style={{ marginTop: '0.5em' }}>

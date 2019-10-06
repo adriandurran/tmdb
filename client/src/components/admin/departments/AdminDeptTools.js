@@ -19,12 +19,12 @@ const AdminDeptTools = () => {
   return (
     <>
       <Header as="h2" textAlign="center">
-        Department Tools
+        Departments
       </Header>
       <Card.Group itemsPerRow={3} style={{ marginTop: '2em' }}>
         <Card as={Link} to="/admin/dept-manager" raised>
           <Card.Content>
-            <Header as="h2">Departments</Header>
+            <Header as="h2">Department Manager</Header>
           </Card.Content>
           <Card.Content description="Add & Manage Departments" />
           <Card.Content extra>
@@ -43,7 +43,7 @@ const AdminDeptTools = () => {
           <Card.Content>
             <Header as="h2">Department Allocator</Header>
           </Card.Content>
-          <Card.Content description="Allocate Users to Departments" />
+          <Card.Content description="Users with no Department assigned" />
           <Card.Content extra>
             <Icon name="hand paper" />
             {noDepts.length}&nbsp;Orphaned users

@@ -12,13 +12,13 @@ const AdminManagerMenu = () => {
           as={Link}
           to="/admin/dashboard"
         />
-        <Menu.Item name="Course Manager" as={Link} to="/admin/course-manager" />
+        <Menu.Item name="Role Manager" as={Link} to="/admin/role-manager" />
         <Menu.Item
           name="Competency Manager"
           as={Link}
           to="/admin/comp-manager"
         />
-        <Menu.Item name="Role Manager" as={Link} to="/admin/role-manager" />
+        <Menu.Item name="Course Manager" as={Link} to="/admin/course-manager" />
       </Menu>
     </div>
   );

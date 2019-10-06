@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { format, parseISO } from 'date-fns';
@@ -16,9 +16,7 @@ const AdminUserRoleManager = () => {
   const user = useSelector(selectUserManage);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchRoles());
-  }, [dispatch]);
+  dispatch(fetchRoles());
 
   const deleteUserRole = (e, { value }) => {
     dispatch(editUserRole(value, user._id, false));
