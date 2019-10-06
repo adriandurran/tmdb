@@ -275,7 +275,10 @@ export const selectUsersInDept = createSelector(
   selectAllUsersActiveDept,
   selectDept,
   (users, dept) => {
-    return users.filter((user) => user.department.dept._id === dept._id);
+    const usersInDept = users.filter(
+      (user) => user.department.dept._id === dept._id
+    );
+    return usersInDept.sort((a, b) => a.firstName.localeCompare(b.firstName));
   }
 );
 
