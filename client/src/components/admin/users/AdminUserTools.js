@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Header, Card, Icon } from 'semantic-ui-react';
 
@@ -12,16 +12,21 @@ import {
   selectAllUsersVerify
 } from '../../../reducers/selectors/adminSelectors';
 
-class AdminUserTools extends Component {
-  componentDidMount() {
-    const { fetchAllUsers } = this.props;
-    fetchAllUsers();
-  }
-  render() {
-    const { allusers, allusersverify, allcoursesverify } = this.props;
-    return (
-      <Card.Group itemsPerRow={4}>
-        <Card as={Link} to="/admin/user-access-manager" raised>
+const AdminUserTools = () => {
+  const dispatch = useDispatch();
+  const allusers = useSelector(selectAllUsers);
+  const allusersverify = useSelector(selectAllUsersVerify);
+  const allcoursesverify = useSelector(selectAllUsersCoursesVerify);
+
+  dispatch(fetchAllUsers());
+
+  return (
+    <>
+      <Header as="h2" textAlign="center">
+        Users
+      </Header>
+      <Card.Group itemsPerRow={3} style={{ marginTop: '2em' }}>
+        {/* <Card as={Link} to="/admin/user-access-manager" raised>
           <Card.Content>
             <Header as="h5">User Access Manager</Header>
           </Card.Content>
@@ -39,12 +44,22 @@ class AdminUserTools extends Component {
               <span>No Users in the system</span>
             )}
           </Card.Content>
-        </Card>
+        </Card> */}
         <Card as={Link} to="/admin/user-manager" raised>
           <Card.Content>
             <Header as="h5">User Manager</Header>
           </Card.Content>
-          <Card.Content description="Manager User Roles &amp; Courses" />
+          <Card.Content description="User Manager" />
+          <Card.Content extra>
+            {allusers.length > 0 ? (
+              <span>
+                <Icon name="users" />
+                {allusers.length} Users loaded &nbsp;
+              </span>
+            ) : (
+              <span>No Users in the system</span>
+            )}
+          </Card.Content>
         </Card>
         <Card as={Link} to="/admin/user-courses-manager" raised>
           <Card.Content>
@@ -83,25 +98,8 @@ class AdminUserTools extends Component {
           </Card.Content>
         </Card>
       </Card.Group>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  fetchAllUsers
+    </>
+  );
 };
-
-const mapStateToProps = (state) => {
-  return {
-    allusers: selectAllUsers(state),
-    allusersverify: selectAllUsersVerify(state),
-    allcoursesverify: selectAllUsersCoursesVerify(state)
-  };
-};
-
-AdminUserTools = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminUserTools);
 
 export default AdminUserTools;

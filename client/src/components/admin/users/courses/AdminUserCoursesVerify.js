@@ -67,7 +67,7 @@ class AdminUserCoursesVerify extends Component {
       return (
         <Table.Row key={_id}>
           <Table.Cell>{_course.courseName}</Table.Cell>
-          <Table.Cell textAlign="right">{validText}</Table.Cell>
+          <Table.Cell>{validText}</Table.Cell>
           <Table.Cell>{_course.type}</Table.Cell>
           <Table.Cell>{_course.level}</Table.Cell>
           <Table.Cell>
@@ -85,7 +85,7 @@ class AdminUserCoursesVerify extends Component {
       <>
         {courses.length > 0 && (
           <>
-            <Header as="h4" textAlign="center">
+            <Header as="h3" textAlign="center">
               Courses waiting for Verification
             </Header>
             <Table sortable celled fixed structured>

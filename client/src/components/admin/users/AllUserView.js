@@ -4,6 +4,8 @@ import { Table, Header, Icon } from 'semantic-ui-react';
 import { sortBy, isEmpty } from 'lodash';
 import { selectAllUsers } from '../../../reducers/selectors/adminSelectors';
 
+import AdminUserMenu from './AdminUserMenu';
+
 const AllUserView = () => {
   const allUsers = useSelector(selectAllUsers);
   const [tableState, setTableState] = useState({
@@ -77,6 +79,7 @@ const AllUserView = () => {
       <Header as="h2" textAlign="center">
         All Users
       </Header>
+      <AdminUserMenu />
       <Table sortable celled striped>
         <Table.Header>
           <Table.Row>

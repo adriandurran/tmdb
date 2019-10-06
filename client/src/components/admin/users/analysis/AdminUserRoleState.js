@@ -9,7 +9,7 @@ const AdminUserRoleState = ({ user }) => {
       <Header as="h3" textAlign="center">
         Role Analysis
       </Header>
-      <Card.Group centered itemsPerRow={2}>
+      <Card.Group centered itemsPerRow={1}>
         {user.roles.map((role, i) => {
           if (isEmpty(role._role)) {
             return <div key={i} />;

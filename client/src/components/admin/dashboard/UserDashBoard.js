@@ -15,7 +15,7 @@ const UserDashBoard = () => {
       <Card.Content>
         <Header as="h2">Users</Header>
       </Card.Content>
-      <Card.Content description="Add & Manage & View Users" />
+      <Card.Content description="Manage & View Users" />
       <Card.Content extra />
     </Card>
   );
