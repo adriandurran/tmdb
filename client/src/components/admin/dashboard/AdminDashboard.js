@@ -7,7 +7,7 @@ import UserDashBoard from './UserDashBoard';
 import RoleDashBoard from './RoleDashBoard';
 import CompDashBoard from './CompDashBoard';
 import CourseDashBoard from './CourseDashBoard';
-import OJTDashBoard from './OJTDashBoard';
+// import OJTDashBoard from './OJTDashBoard';
 import AppDashBoard from './AppDashBoard';
 import WizardDashBoard from './WizardDashBoard';
 
