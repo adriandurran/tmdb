@@ -2,10 +2,40 @@ button {
   margin: 5px;
 }
 
-label {
+.selectLabel {
+  margin-left: 1rem;
+  width: 8rem;
+  vertical-align: middle;
+}
+
+.field {
+  margin: 0.5em;
+  flex: 1;
+  padding: 3px 5px;
+}
+
+.formField {
+  display: flex;
+  flex-flow: row nowrap;
+  line-height: 2em;
   margin: 5px;
 }
 
-field {
-  margin: 10px;
+.sformField {
+  display: flex;
+  flex-flow: row nowrap;
+  line-height: 2em;
+  margin: 5px;
+  align-items: flex-start;
+}
+
+.smallField {
+  align-self: auto;
+  margin: 0.5em;
+  padding: 3px 5px;
+}
+
+.buttons {
+  margin: 0.5em;
+  padding: 3px 5px;
 }

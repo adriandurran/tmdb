@@ -101,7 +101,7 @@ const WizardManager = lazy(() =>
   import('../components/admin/wizards/WizardManager')
 );
 const NewUserWizard = lazy(() =>
-  import('../components/admin/wizards/user/NewUserWizard')
+  import('../components/admin/wizards/user/NewUserForm')
 );
 
 const AdminRoutes = () => {
