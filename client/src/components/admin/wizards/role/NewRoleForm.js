@@ -5,7 +5,7 @@ import {
   Segment,
   Icon,
   Input,
-  Select,
+  Dropdown,
   Grid,
   Label,
   Button,
@@ -13,13 +13,11 @@ import {
 } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import NewUserSteps from './NewUserSteps';
+import NewRoleSteps from './NewRoleSteps';
 
-import { selectRolesForDropDown } from '../../../../reducers/selectors/roleSelectors';
-import { selectDeptsForDropDown } from '../../../../reducers/selectors/deptSelectors';
-
+import { selectCompetenciesForDropDown } from '../../../../reducers/selectors/compSelectors';
+import { adminAddNewRole } from '../../../../actions/roles';
 import styles from '../../../../styles/form.module.css';
-import { adminAddNewUser } from '../../../../actions/user';
 
 const Error = ({ name }) => (
   <Field
@@ -31,13 +29,25 @@ const Error = ({ name }) => (
   />
 );
 
-const SelectAdapter = ({ input, ...rest }) => (
-  <Select
-    {...input}
-    {...rest}
-    onChange={(e, { value }) => input.onChange(value)}
-  />
-);
+const DropdownAdapter = (props) => {
+  const { input, options } = props;
+  let { value, ...restProps } = props.input;
+  return (
+    <Dropdown
+      {...restProps}
+      value={value || []}
+      selection
+      multiple
+      fluid
+      options={options}
+      onChange={(e, data) => {
+        return data.value.length > 0
+          ? input.onChange(data.value)
+          : input.onChange('');
+      }}
+    />
+  );
+};
 
 const InputAdapter = ({ input, ...rest }) => (
   <Input
@@ -74,10 +84,9 @@ const Fields = ({
 
 const required = (value) => (value ? undefined : 'Required');
 
-const NewUserForm = () => {
-  const roles = useSelector(selectRolesForDropDown);
-  const depts = useSelector(selectDeptsForDropDown);
+const NewRoleForm = () => {
   const dispatch = useDispatch();
+  const comps = useSelector(selectCompetenciesForDropDown);
   const [message, setMessage] = useState({
     hidden: true,
     negative: false,
@@ -86,15 +95,20 @@ const NewUserForm = () => {
   });
 
   const onSubmit = async (values, form) => {
-    const result = await dispatch(adminAddNewUser(values));
-    const { firstName, lastName } = values;
-    if (result.verified) {
-      // add a message the user has been added
+    const { roleComps, timeToSQEP, roleName } = values;
+    let newRole = {
+      roleName,
+      competencies: roleComps,
+      timeToSQEP
+    };
+
+    const result = await dispatch(adminAddNewRole(newRole));
+    if (result) {
       setMessage({
         positive: true,
         hidden: false,
         negative: false,
-        text: `${firstName} ${lastName} successfully added`
+        text: `${roleName} successfully added`
       });
 
       setTimeout(() => {
@@ -113,7 +127,7 @@ const NewUserForm = () => {
     <>
       <Header as="h1" textAlign="center">
         <Icon name="wizard" />
-        New User Wizard
+        New Role Wizard
       </Header>
       <Segment raised style={{ marginTop: '2rem' }}>
         <Form
@@ -124,83 +138,50 @@ const NewUserForm = () => {
                 <Grid.Column width={10}>
                   <div className={styles.formField}>
                     <Field
-                      name="firstName"
+                      name="roleName"
                       component={InputAdapter}
                       type="text"
-                      placeholder="First Name"
+                      placeholder="Role Name"
                       validate={required}
                       className={styles.field}
                     />
-                    <Error name="firstName" />
+                    <Error name="roleName" />
+                  </div>
 
-                    <Field
-                      name="lastName"
-                      component={InputAdapter}
-                      type="text"
-                      placeholder="Last Name"
-                      validate={required}
-                      className={styles.field}
-                    />
-                    <Error name="lastName" />
-                  </div>
-                  <div className={styles.formField}>
-                    <Field
-                      name="username"
-                      component={InputAdapter}
-                      type="email"
-                      placeholder="Email address"
-                      validate={required}
-                      className={styles.field}
-                    />
-                  </div>
                   <div className={styles.sformField}>
                     <Field
-                      name="userId"
+                      name="timeToSQEP"
                       component={InputAdapter}
-                      type="text"
-                      placeholder="Employee Number/Id"
+                      type="number"
+                      placeholder="0"
                       validate={required}
                       className={styles.smallField}
-                    />
-                  </div>
-                  <div className={styles.sformField}>
-                    <Field
-                      name="password"
-                      component={InputAdapter}
-                      type="password"
-                      placeholder="Password"
-                      validate={required}
-                      className={styles.smallField}
-                    />
-                  </div>
-                  <div className={styles.formField}>
-                    <Field
-                      name="dept"
-                      component={SelectAdapter}
-                      options={depts}
-                      className={styles.field}
                     />
                     <Label
-                      htmlFor="dept"
+                      htmlFor="timeToSQEP"
                       className={styles.selectLabel}
                       pointing="left"
                     >
-                      Department
+                      Time to SQEP
                     </Label>
                   </div>
+
                   <div className={styles.formField}>
                     <Field
-                      name="role"
-                      component={SelectAdapter}
-                      options={roles}
+                      name="roleComps"
+                      selection
+                      multiple
+                      fluid
+                      component={DropdownAdapter}
+                      options={comps}
                       className={styles.field}
                     />
                     <Label
-                      htmlFor="role"
+                      htmlFor="roleComps"
                       className={styles.selectLabel}
                       pointing="left"
                     >
-                      Role
+                      Competencies
                     </Label>
                   </div>
                   <div className={styles.buttons}>
@@ -210,18 +191,8 @@ const NewUserForm = () => {
                   </div>
                 </Grid.Column>
                 <Grid.Column width={6}>
-                  <Fields
-                    names={[
-                      'firstName',
-                      'lastName',
-                      'username',
-                      'userId',
-                      'password',
-                      'dept',
-                      'role'
-                    ]}
-                  >
-                    {(fieldsState) => <NewUserSteps values={fieldsState} />}
+                  <Fields names={['roleName', 'timeToSQEP', 'roleComps']}>
+                    {(fieldsState) => <NewRoleSteps values={fieldsState} />}
                   </Fields>
                 </Grid.Column>
               </Grid>
@@ -241,4 +212,4 @@ const NewUserForm = () => {
   );
 };
 
-export default NewUserForm;
+export default NewRoleForm;

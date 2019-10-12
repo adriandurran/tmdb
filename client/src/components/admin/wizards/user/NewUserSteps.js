@@ -1,6 +1,5 @@
 import React from 'react';
 import { Step } from 'semantic-ui-react';
-import { isEmpty, has } from 'lodash';
 
 const NewUserSteps = ({ values }) => {
   const {
