@@ -14,6 +14,18 @@ button {
   padding: 3px 5px;
 }
 
+.field1 {
+  margin: 0.5em;
+  flex: 0;
+  padding: 3px 5px;
+  width: 1rem;
+}
+.field2 {
+  margin: 0.5em;
+  flex: auto;
+  padding: 3px 5px;
+}
+
 .formField {
   display: flex;
   flex-flow: row nowrap;

@@ -56,5 +56,17 @@ module.exports = {
     } catch (error) {
       res.sendStatus(418).send(error);
     }
+  },
+
+  deleteCompetency: async (req, res) => {
+    try {
+      const delComp = await Competency.remove({ _id: req.params.id });
+      if (delComp.ok > 0) {
+        res.sendStatus(200);
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(418).send(error);
+    }
   }
 };

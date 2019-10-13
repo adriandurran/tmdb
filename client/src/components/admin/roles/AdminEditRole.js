@@ -4,10 +4,8 @@ import { Form, Field } from 'react-final-form';
 import {
   Header,
   Segment,
-  Icon,
   Input,
   Dropdown,
-  Grid,
   Label,
   Button,
   Message
@@ -108,7 +106,6 @@ const AdminEditRole = () => {
           initialValues={{
             roleName: roleName,
             timeToSQEP,
-            timeToSQEP,
             roleComps: competencies.map((comp) => comp._id)
           }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
@@ -163,7 +160,7 @@ const AdminEditRole = () => {
               </div>
               <div className={styles.buttons}>
                 <Button type="submit" disabled={submitting || pristine}>
-                  Submit
+                  Update
                 </Button>
               </div>
             </form>

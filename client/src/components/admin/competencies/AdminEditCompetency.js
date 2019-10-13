@@ -1,198 +1,207 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
-import _ from 'lodash';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Field } from 'react-final-form';
+import {
+  Header,
+  Segment,
+  Input,
+  Dropdown,
+  Label,
+  Button,
+  Message,
+  Select
+} from 'semantic-ui-react';
+import styles from '../../../styles/form.module.css';
 
-import { Header, Form, Dropdown, Button, Message } from 'semantic-ui-react';
-
-import semanticFormField from '../../shared/semanticFormField';
-
-import { clearCompetency, adminUpdateComp } from '../../../actions/comps';
 import { selectCoursesForDropDown } from '../../../reducers/selectors/courseSelectors';
 import {
   selectCompetency,
   selectCompetencyTypesForDropDown
 } from '../../../reducers/selectors/compSelectors';
 
-class AdminEditCompetency extends Component {
-  state = {
-    cForC: [],
-    cForCType: '',
-    message: {
-      visible: true
+import { adminUpdateComp, adminDeleteCompetency } from '../../../actions/comps';
+
+const Error = ({ name }) => (
+  <Field
+    name={name}
+    subscribe={{ touched: true, error: true }}
+    render={({ meta: { touched, error } }) =>
+      touched && error ? <span>{error}</span> : null
     }
-  };
+  />
+);
 
-  componentDidMount() {
-    const { comp } = this.props;
-    if (_.isEmpty(comp)) {
-      this.setState({
-        cForC: []
-      });
-    } else {
-      let message = { ...this.state.message };
-      message.header = `Edit ${comp.compName}`;
-      this.setState({
-        cForC: comp.courses.map(course => course._id),
-        cForCType: !comp.compType ? '' : comp.compType._id,
-        message
-      });
-    }
-  }
+const SelectAdapter = ({ input, ...rest }) => (
+  <Select
+    {...input}
+    {...rest}
+    onChange={(e, { value }) => input.onChange(value)}
+  />
+);
 
-  componentWillUnmount() {
-    this.props.clearCompetency();
-  }
+const DropdownAdapter = (props) => {
+  const { input, options } = props;
+  let { value, ...restProps } = props.input;
+  return (
+    <Dropdown
+      {...restProps}
+      value={value || []}
+      selection
+      multiple
+      fluid
+      options={options}
+      onChange={(e, data) => {
+        return data.value.length > 0
+          ? input.onChange(data.value)
+          : input.onChange('');
+      }}
+    />
+  );
+};
 
-  handleSelectChange = (e, item) => {
-    this.setState({
-      cForC: item.value
-    });
-  };
+const InputAdapter = ({ input, ...rest }) => (
+  <Input
+    {...input}
+    {...rest}
+    onChange={(e, { value }) => input.onChange(value)}
+  />
+);
 
-  handleSelectCompChange = (e, item) => {
-    this.setState({
-      cForCType: item.value
-    });
-  };
+const required = (value) => (value ? undefined : 'Required');
 
-  resetMessageState() {
-    const { comp } = this.props;
-    let message = {};
-    message.header = `Edit ${comp.compName}`;
-    setTimeout(() => {
-      this.setState({ message });
-    }, 3000);
-  }
+const AdminEditCompetency = () => {
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState({
+    hidden: true,
+    negative: false,
+    positive: false,
+    text: ''
+  });
+  const comp = useSelector(selectCompetency);
+  const compTypes = useSelector(selectCompetencyTypesForDropDown);
+  const courses = useSelector(selectCoursesForDropDown);
 
-  updateCompetency(values) {
-    const { comp, adminUpdateComp } = this.props;
-    let upComp = {
-      compName: values.compName,
-      shortName: values.shortName.toUpperCase(),
-      courses: this.state.cForC,
-      compType: this.state.cForCType
+  const onSubmit = async (values) => {
+    const { compCourses, compName, compTypes, shortName } = values;
+    const upComp = {
+      compName,
+      shortName: shortName.toUpperCase(),
+      compType: compTypes,
+      courses: compCourses
     };
-    adminUpdateComp(comp._id, upComp).then(res => {
-      // need to think about this a little
-      // this is just temp i want to use redux for this
-      // with some redux middleware
-      let message = { ...this.state.message };
 
-      if (res.status === 200) {
-        message.header = 'Success!';
-        message.content = `${res.data.compName} was successfully updated`;
-        message.positive = true;
-      } else {
-        message.header = 'Ooops!';
-        message.content = `Something went wrong updating this Competency. Error: ${
-          res.data
-        }`;
-        message.negative = true;
-      }
-      this.setState({
-        message
+    const result = await dispatch(adminUpdateComp(comp._id, upComp));
+
+    if (result) {
+      setMessage({
+        positive: true,
+        hidden: false,
+        negative: false,
+        text: `${compName} successfully updated`
       });
-      this.resetMessageState();
-    });
-  }
-
-  render() {
-    const { courses, compTypes, handleSubmit, submitting } = this.props;
-    const { message } = this.state;
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Edit Competency
-        </Header>
-        <Message
-          attached
-          header={message.header}
-          content={message.content}
-          visible={message.visible}
-          positive={message.positive}
-          negative={message.negative}
-        />
-        <Form
-          onSubmit={handleSubmit(values => this.updateCompetency(values))}
-          className="attached fluid segment"
-        >
-          <Form.Group inline widths="equal">
-            <Field
-              fluid
-              component={semanticFormField}
-              as={Form.Input}
-              type="text"
-              name="shortName"
-              placeholder="Short name"
-            />
-            <Field
-              fluid
-              name="compName"
-              component={semanticFormField}
-              as={Form.Input}
-              type="text"
-              placeholder="Competency Name"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Dropdown
-              selection
-              name="compTypes"
-              options={compTypes}
-              placeholder="Select a Competency Type"
-              onChange={this.handleSelectCompChange}
-              value={this.state.cForCType}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Dropdown
-              fluid
-              selection
-              multiple
-              name="compCourses"
-              options={courses}
-              placeholder="Select a Course"
-              onChange={this.handleSelectChange}
-              value={this.state.cForC}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Button fluid disabled={submitting} type="submit" size="medium">
-              Update Competency
-            </Button>
-            {/* <Button fluid disabled={submitting} size="medium">
-              Reset
-            </Button> */}
-          </Form.Group>
-        </Form>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  clearCompetency,
-  adminUpdateComp
-};
-
-const mapStateToProps = state => {
-  return {
-    comp: selectCompetency(state),
-    courses: selectCoursesForDropDown(state),
-    compTypes: selectCompetencyTypesForDropDown(state),
-    initialValues: selectCompetency(state)
+      setTimeout(() => {
+        setMessage({
+          positive: false,
+          hidden: true,
+          negative: false,
+          text: ''
+        });
+      }, 1000);
+    }
   };
+
+  const { shortName, compName, compType } = comp;
+
+  return (
+    <>
+      <Header as="h3" textAlign="center">
+        Edit Competency
+      </Header>
+      <Segment attached>
+        <Form
+          onSubmit={onSubmit}
+          initialValues={{
+            shortName,
+            compName,
+            compTypes: compType._id,
+            compCourses: comp.courses.map((course) => course._id)
+          }}
+          render={({ handleSubmit, form, submitting, pristine, values }) => (
+            <form onSubmit={handleSubmit}>
+              <div className={styles.formField}>
+                <Field
+                  name="shortName"
+                  component={InputAdapter}
+                  type="text"
+                  placeholder="short name"
+                  validate={required}
+                  className={styles.field1}
+                />
+                <Error name="Short Name" />
+                <Field
+                  name="compName"
+                  component={InputAdapter}
+                  type="text"
+                  placeholder="Competency name"
+                  validate={required}
+                  className={styles.field2}
+                />
+                <Error name="Competency Name" />
+              </div>
+
+              <div className={styles.formField}>
+                <Field
+                  name="compTypes"
+                  component={SelectAdapter}
+                  options={compTypes}
+                  className={styles.field}
+                />
+                <Label
+                  htmlFor="compTypes"
+                  className={styles.selectLabel}
+                  pointing="left"
+                >
+                  Competency Types
+                </Label>
+              </div>
+
+              <div className={styles.formField}>
+                <Field
+                  name="compCourses"
+                  selection
+                  multiple
+                  fluid
+                  component={DropdownAdapter}
+                  options={courses}
+                  className={styles.field}
+                />
+                <Label
+                  htmlFor="roleComps"
+                  className={styles.selectLabel}
+                  pointing="left"
+                >
+                  Courses
+                </Label>
+              </div>
+              <div className={styles.buttons}>
+                <Button type="submit" disabled={submitting || pristine}>
+                  Update
+                </Button>
+              </div>
+            </form>
+          )}
+        />
+      </Segment>
+      <Message
+        attached="bottom"
+        hidden={message.hidden}
+        negative={message.negative}
+        positive={message.positive}
+      >
+        {message.text}
+      </Message>
+    </>
+  );
 };
-
-AdminEditCompetency = reduxForm({
-  form: 'editComp',
-  enableReinitialize: true
-})(AdminEditCompetency);
-
-AdminEditCompetency = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminEditCompetency);
 
 export default AdminEditCompetency;
