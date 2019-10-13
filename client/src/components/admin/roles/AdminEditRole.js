@@ -69,11 +69,13 @@ const AdminEditRole = () => {
 
   const onSubmit = async (values) => {
     const { roleComps, timeToSQEP, roleName } = values;
-    let upRole = {
+    const upRole = {
       roleName,
       competencies: roleComps,
       timeToSQEP
     };
+
+    console.log(upRole);
     const result = await dispatch(adminUpdateRole(role._id, upRole));
     if (result) {
       setMessage({

@@ -39,7 +39,7 @@ export const adminUpdateRole = (id, role) => async (dispatch) => {
       dispatch({ type: FETCH_ROLE, payload: res.data });
       dispatch(fetchRoles());
     }
-
+    console.log(res.data);
     return true;
   } catch (error) {
     console.log(error);

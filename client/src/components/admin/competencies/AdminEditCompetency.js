@@ -11,12 +11,15 @@ import {
   Message,
   Select
 } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+
 import styles from '../../../styles/form.module.css';
 
 import { selectCoursesForDropDown } from '../../../reducers/selectors/courseSelectors';
 import {
   selectCompetency,
-  selectCompetencyTypesForDropDown
+  selectCompetencyTypesForDropDown,
+  selectRolesWithComp
 } from '../../../reducers/selectors/compSelectors';
 
 import { adminUpdateComp, adminDeleteCompetency } from '../../../actions/comps';
@@ -69,7 +72,7 @@ const InputAdapter = ({ input, ...rest }) => (
 
 const required = (value) => (value ? undefined : 'Required');
 
-const AdminEditCompetency = () => {
+const AdminEditCompetency = ({ history }) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState({
     hidden: true,
@@ -80,6 +83,7 @@ const AdminEditCompetency = () => {
   const comp = useSelector(selectCompetency);
   const compTypes = useSelector(selectCompetencyTypesForDropDown);
   const courses = useSelector(selectCoursesForDropDown);
+  const rolesWithComp = useSelector(selectRolesWithComp);
 
   const onSubmit = async (values) => {
     const { compCourses, compName, compTypes, shortName } = values;
@@ -107,6 +111,29 @@ const AdminEditCompetency = () => {
           text: ''
         });
       }, 1000);
+    }
+  };
+
+  const deleteComp = async () => {
+    const result = await dispatch(adminDeleteCompetency(comp._id));
+    if (result) {
+      setMessage({
+        positive: true,
+        hidden: false,
+        negative: false,
+        text: `${compName} successfully deleted`
+      });
+      setTimeout(() => {
+        setMessage({
+          positive: false,
+          hidden: true,
+          negative: false,
+          text: ''
+        });
+      }, 1000);
+      setTimeout(() => {
+        history.push('/admin/comp-manager');
+      }, 2000);
     }
   };
 
@@ -191,6 +218,13 @@ const AdminEditCompetency = () => {
             </form>
           )}
         />
+        {rolesWithComp.length === 0 && (
+          <div className={styles.buttons}>
+            <Button color="red" onClick={deleteComp}>
+              Delete
+            </Button>
+          </div>
+        )}
       </Segment>
       <Message
         attached="bottom"
@@ -204,4 +238,4 @@ const AdminEditCompetency = () => {
   );
 };
 
-export default AdminEditCompetency;
+export default withRouter(AdminEditCompetency);
