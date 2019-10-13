@@ -101,7 +101,10 @@ const WizardManager = lazy(() =>
   import('../components/admin/wizards/WizardManager')
 );
 const NewUserWizard = lazy(() =>
-  import('../components/admin/wizards/user/NewUserWizard')
+  import('../components/admin/wizards/user/NewUserForm')
+);
+const NewRoleWizard = lazy(() =>
+  import('../components/admin/wizards/role/NewRoleForm')
 );
 
 const AdminRoutes = () => {
@@ -257,6 +260,11 @@ const AdminRoutes = () => {
         user={user}
         path="/admin/wizards/user"
         component={LazyComponent(NewUserWizard)}
+      />
+      <PrivateAdminRoute
+        user={user}
+        path="/admin/wizards/role"
+        component={LazyComponent(NewRoleWizard)}
       />
     </>
   );

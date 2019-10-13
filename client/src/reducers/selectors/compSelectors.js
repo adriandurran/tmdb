@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import _ from 'lodash';
+import _, { flatten, isEmpty } from 'lodash';
 
 import { selectRoles } from './roleSelectors';
 
@@ -15,7 +15,7 @@ export const selectCompetenciesForDropDown = createSelector(
     return comps.map((comp) => {
       // this is temp until a comp has a comptype
       let compy = '';
-      if (!_.isEmpty(comp.compType)) {
+      if (!isEmpty(comp.compType)) {
         compy = comp.compType.compType.toUpperCase();
       }
       return {
@@ -42,12 +42,23 @@ export const selectCompetencyTypesForDropDown = createSelector(
   }
 );
 
+// get roles which have the comp id
+export const selectRolesWithComp = createSelector(
+  selectRoles,
+  selectCompetency,
+  (roles, comp) => {
+    return roles.filter((role) =>
+      role.competencies.some((compr) => compr._id === comp._id)
+    );
+  }
+);
+
 // get competencies for roles
 export const selectRoleComps = createSelector(
   selectRoles,
   selectCompetencies,
   (roles, comps) => {
-    const flatty = _.flatten(_.map(roles, 'compIds'));
+    const flatty = flatten(_.map(roles, 'compIds'));
     return comps.filter((x) => flatty.includes(x._id));
   }
 );

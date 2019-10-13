@@ -14,5 +14,6 @@ router.delete('/type', requireAdmin, compController.deleteCompType);
 
 router.get('/:id', requireLogin, compController.getCompetency);
 router.put('/:id', requireAdmin, compController.updateCompetency);
+router.delete('/:id', requireAdmin, compController.deleteCompetency);
 
 module.exports = router;
