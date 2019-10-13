@@ -9,7 +9,7 @@ import {
   FETCH_COMPETENCY
 } from './types';
 
-export const adminAddNewComp = comp => async dispatch => {
+export const adminAddNewComp = (comp) => async (dispatch) => {
   const res = await axios.post('/api/tmdb/competencies', comp);
   if (res.status === 200) {
     dispatch(reset('compbuilder'));
@@ -19,30 +19,35 @@ export const adminAddNewComp = comp => async dispatch => {
   }
 };
 
-export const adminUpdateComp = (id, comp) => async dispatch => {
-  const res = await axios.put(`/api/tmdb/competencies/${id}`, comp);
-  if (res.status === 200) {
-    // add comp to comp reducer
-    dispatch({ type: FETCH_COMPETENCY, payload: res.data });
-    // fetch all the comps (in the background)
-    dispatch(fetchComps());
-    // send message?
+export const adminUpdateComp = (id, comp) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/tmdb/competencies/${id}`, comp);
+    if (res.status === 200) {
+      // add comp to comp reducer
+      dispatch({ type: FETCH_COMPETENCY, payload: res.data });
+      // fetch all the comps (in the background)
+      dispatch(fetchComps());
+      // send message?
+    }
+    // change nothing but send message if it has failed
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
-  // change nothing but send message if it has failed
-  return res;
 };
 
-export const fetchComps = () => async dispatch => {
+export const fetchComps = () => async (dispatch) => {
   const res = await axios.get('/api/tmdb/competencies');
   dispatch({ type: FETCH_COMPS, payload: res.data });
 };
 
-export const fetchCompTypes = () => async dispatch => {
+export const fetchCompTypes = () => async (dispatch) => {
   const res = await axios.get('/api/tmdb/competencies/type');
   dispatch({ type: FETCH_COMP_TYPES, payload: res.data });
 };
 
-export const adminAddCompType = comptype => async dispatch => {
+export const adminAddCompType = (comptype) => async (dispatch) => {
   console.log(comptype);
   const res = await axios.post('/api/tmdb/competencies/type', comptype);
   if (res.status === 200) {
@@ -53,7 +58,7 @@ export const adminAddCompType = comptype => async dispatch => {
   }
 };
 
-export const adminDeleteCompType = id => async dispatch => {
+export const adminDeleteCompType = (id) => async (dispatch) => {
   const res = await axios.delete('/api/tmdb/competencies/type', {
     params: { id }
   });
@@ -64,11 +69,25 @@ export const adminDeleteCompType = id => async dispatch => {
   }
 };
 
-export const clearCompetency = () => dispatch => {
+export const adminDeleteCompetency = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/tmdb/competencies/${id}`);
+    if (res.status === 200) {
+      // update redux here or just fetch all the competencies.....
+      dispatch(fetchComps());
+      return true;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const clearCompetency = () => (dispatch) => {
   dispatch({ type: CLEAR_COMPETENCY });
 };
 
-export const fetchCompetency = id => async dispatch => {
+export const fetchCompetency = (id) => async (dispatch) => {
   // clear the competency
   dispatch(clearCompetency());
   // add the competency
