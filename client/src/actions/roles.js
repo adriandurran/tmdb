@@ -33,11 +33,16 @@ export const adminAddNewRole = (role) => async (dispatch) => {
 };
 
 export const adminUpdateRole = (id, role) => async (dispatch) => {
-  const res = await axios.put(`/api/tmdb/roles/${id}`, role);
-  if (res.status === 200) {
-    dispatch({ type: FETCH_ROLE, payload: res.data });
-    dispatch(fetchRoles());
-  }
+  try {
+    const res = await axios.put(`/api/tmdb/roles/${id}`, role);
+    if (res.status === 200) {
+      dispatch({ type: FETCH_ROLE, payload: res.data });
+      dispatch(fetchRoles());
+    }
 
-  return res;
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };

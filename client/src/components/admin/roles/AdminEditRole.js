@@ -1,166 +1,185 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
-import _ from 'lodash';
-
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Field } from 'react-final-form';
 import {
   Header,
-  Form,
+  Segment,
+  Icon,
+  Input,
   Dropdown,
+  Grid,
+  Label,
   Button,
-  Message,
-  Segment
+  Message
 } from 'semantic-ui-react';
 
-import { clearRole, adminUpdateRole } from '../../../actions/roles';
+import { adminUpdateRole } from '../../../actions/roles';
 import { selectRole } from '../../../reducers/selectors/roleSelectors';
 import { selectCompetenciesForDropDown } from '../../../reducers/selectors/compSelectors';
+import styles from '../../../styles/form.module.css';
 
-import semanticFormField from '../../shared/semanticFormField';
+const Error = ({ name }) => (
+  <Field
+    name={name}
+    subscribe={{ touched: true, error: true }}
+    render={({ meta: { touched, error } }) =>
+      touched && error ? <span>{error}</span> : null
+    }
+  />
+);
 
-class AdminEditRole extends Component {
-  state = {
-    cForR: [],
-    message: {
-      visible: true
+const DropdownAdapter = (props) => {
+  const { input, options } = props;
+  let { value, ...restProps } = props.input;
+  return (
+    <Dropdown
+      {...restProps}
+      value={value || []}
+      selection
+      multiple
+      fluid
+      options={options}
+      onChange={(e, data) => {
+        return data.value.length > 0
+          ? input.onChange(data.value)
+          : input.onChange('');
+      }}
+    />
+  );
+};
+
+const InputAdapter = ({ input, ...rest }) => (
+  <Input
+    {...input}
+    {...rest}
+    onChange={(e, { value }) => input.onChange(value)}
+  />
+);
+
+const required = (value) => (value ? undefined : 'Required');
+
+const AdminEditRole = () => {
+  const dispatch = useDispatch();
+  const role = useSelector(selectRole);
+  const comps = useSelector(selectCompetenciesForDropDown);
+  const [message, setMessage] = useState({
+    hidden: true,
+    negative: false,
+    positive: false,
+    text: ''
+  });
+
+  const onSubmit = async (values) => {
+    const { roleComps, timeToSQEP, roleName } = values;
+    let upRole = {
+      roleName,
+      competencies: roleComps,
+      timeToSQEP
+    };
+    const result = await dispatch(adminUpdateRole(role._id, upRole));
+    if (result) {
+      setMessage({
+        positive: true,
+        hidden: false,
+        negative: false,
+        text: `${roleName} successfully updated`
+      });
+      setTimeout(() => {
+        setMessage({
+          positive: false,
+          hidden: true,
+          negative: false,
+          text: ''
+        });
+      }, 1000);
     }
   };
 
-  componentDidMount() {
-    const { role } = this.props;
-    if (!_.isEmpty(role)) {
-      let message = { ...this.state.message };
-      message.header = `Edit ${role.roleName}`;
-      this.setState({
-        cForR: role.competencies.map((comp) => comp._id),
-        message
-      });
-    }
-  }
+  const { roleName, timeToSQEP, competencies } = role;
 
-  componentWillUnmount() {
-    this.props.clearRole();
-  }
+  return (
+    <>
+      <Header as="h3" textAlign="center">
+        Edit Role
+      </Header>
+      <Segment attached>
+        <Form
+          onSubmit={onSubmit}
+          initialValues={{
+            roleName: roleName,
+            timeToSQEP,
+            timeToSQEP,
+            roleComps: competencies.map((comp) => comp._id)
+          }}
+          render={({ handleSubmit, form, submitting, pristine, values }) => (
+            <form onSubmit={handleSubmit}>
+              <div className={styles.formField}>
+                <Field
+                  name="roleName"
+                  component={InputAdapter}
+                  type="text"
+                  placeholder="Role Name"
+                  validate={required}
+                  className={styles.field}
+                />
+                <Error name="roleName" />
+              </div>
 
-  handleSelectChange = (e, item) => {
-    this.setState({
-      cForR: item.value
-    });
-  };
+              <div className={styles.sformField}>
+                <Field
+                  name="timeToSQEP"
+                  component={InputAdapter}
+                  type="number"
+                  placeholder="0"
+                  validate={required}
+                  className={styles.smallField}
+                />
+                <Label
+                  htmlFor="timeToSQEP"
+                  className={styles.selectLabel}
+                  pointing="left"
+                >
+                  Time to SQEP
+                </Label>
+              </div>
 
-  resetMessageState() {
-    const { role } = this.props;
-    let message = {};
-    message.header = `Edit ${role.roleName}`;
-    setTimeout(() => {
-      this.setState({ message });
-    }, 3000);
-  }
-
-  updateRole(values) {
-    //   update role
-    const { role, adminUpdateRole } = this.props;
-    let upRole = { roleName: values.roleName, competencies: this.state.cForR };
-
-    adminUpdateRole(role._id, upRole).then((res) => {
-      let message = { ...this.state.message };
-      if (res.status === 200) {
-        message.header = 'Success!';
-        message.content = `${res.data.roleName} was successfully updated`;
-        message.positive = true;
-      } else {
-        message.header = 'Ooops!';
-        message.content = `Something went wrong updating this Course. Error: ${res}`;
-        message.negative = true;
-      }
-      this.setState({
-        message
-      });
-      this.resetMessageState();
-    });
-  }
-
-  render() {
-    const { message, cForR } = this.state;
-    const { comps, submitting, handleSubmit } = this.props;
-    return (
-      <div>
-        <Header as="h3" textAlign="center">
-          Edit Role
-        </Header>
-        <Message
-          attached="top"
-          header={message.header}
-          content={message.content}
-          visible={message.visible}
-          positive={message.positive}
-          negative={message.negative}
+              <div className={styles.formField}>
+                <Field
+                  name="roleComps"
+                  selection
+                  multiple
+                  fluid
+                  component={DropdownAdapter}
+                  options={comps}
+                  className={styles.field}
+                />
+                <Label
+                  htmlFor="roleComps"
+                  className={styles.selectLabel}
+                  pointing="left"
+                >
+                  Competencies
+                </Label>
+              </div>
+              <div className={styles.buttons}>
+                <Button type="submit" disabled={submitting || pristine}>
+                  Submit
+                </Button>
+              </div>
+            </form>
+          )}
         />
-        <Segment attached>
-          <Form onSubmit={handleSubmit((values) => this.updateRole(values))}>
-            <Form.Group>
-              <Field
-                component={semanticFormField}
-                as={Form.Input}
-                type="text"
-                name="roleName"
-                placeholder="Role name"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Dropdown
-                fluid
-                selection
-                multiple
-                name="roleComps"
-                options={comps}
-                placeholder="Select competencies"
-                onChange={this.handleSelectChange}
-                value={cForR}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Field
-                component={semanticFormField}
-                as={Form.Input}
-                type="number"
-                name="timeToSQEP"
-                placeholder="0"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Button fluid disabled={submitting} type="submit" size="medium">
-                Update Role
-              </Button>
-            </Form.Group>
-          </Form>
-        </Segment>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  clearRole,
-  adminUpdateRole
+      </Segment>
+      <Message
+        attached="bottom"
+        hidden={message.hidden}
+        negative={message.negative}
+        positive={message.positive}
+      >
+        {message.text}
+      </Message>
+    </>
+  );
 };
-
-const mapStateToProps = (state) => {
-  return {
-    role: selectRole(state),
-    comps: selectCompetenciesForDropDown(state),
-    initialValues: selectRole(state)
-  };
-};
-
-AdminEditRole = reduxForm({
-  form: 'editRole',
-  enableReinitialize: true
-})(AdminEditRole);
-
-AdminEditRole = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminEditRole);
 
 export default AdminEditRole;

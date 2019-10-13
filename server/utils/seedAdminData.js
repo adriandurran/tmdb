@@ -6,18 +6,6 @@ module.exports = async () => {
 
   // IT Admin
   const ITAdmin = await User.find({ username: process.env.SEEDADMIN_IT_UN });
-  // if (ITAdmin) {
-  //   try {
-  //     const noRoles = await User.findByIdAndUpdate(
-  //       ITAdmin[0]._id,
-  //       { $set: { roles: [], department: {} } },
-  //       { fields: { passwordHash: 0 }, new: true }
-  //     );
-  //     console.log('noRoles', noRoles);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   if (!ITAdmin) {
     try {
