@@ -4,7 +4,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const helmet = require('helmet');
-const sslRedirect = require('heroku-ssl-redirect');
+// const sslRedirect = require('heroku-ssl-redirect');
 
 const morgan = require('morgan');
 
@@ -30,7 +30,8 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true,
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-    reconnectInterval: 500 // Reconnect every 500ms
+    reconnectInterval: 500, // Reconnect every 500ms
+    useUnifiedTopology: true
   })
   .then(() => console.log('Database connection successful'))
   .catch((err) => console.log('Unable to connect to database', err));
@@ -67,7 +68,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(sslRedirect(['production']));
+// app.use(sslRedirect(['production']));
 
 app.use(morgan('dev'));
 

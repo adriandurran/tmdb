@@ -7,13 +7,15 @@ client/node_modules
 client/.gitignore
 client/yarn.lock
 
+proxy/Dockerfile
+proxy/config
+
 docker
 resources
 .gitignore
 server.env
 
 Dockerfile
-Dockerfile.dev
-Dockerfile.old
 .dockerignore
 docker-compose.yml
+

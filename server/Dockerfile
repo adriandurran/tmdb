@@ -1,5 +1,5 @@
 FROM node:latest
-LABEL maintainer="adrian.durran@digital.cabinet-office.gov.uk"
+LABEL maintainer="adrian.durran100mod.gov.uk"
 RUN yarn global add nodemon
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
