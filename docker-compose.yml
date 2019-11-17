@@ -28,7 +28,7 @@ services:
       WAIT_HOSTS: tmdb_db:27017
 
   tmdb_proxy:
-    build: ./proxy
+    image: adrianrdurran/tmdb-proxy:dev
     links:
       - tmdb_server
     ports:
