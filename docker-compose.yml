@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 
 services:
   tmdb_db:
@@ -26,10 +26,10 @@ services:
       - tmdb_db
     environment:
       WAIT_HOSTS: tmdb_db:27017
-
   tmdb_proxy:
-    image: adrianrdurran/tmdb-proxy:dev
+    image: adrianrdurran/tmdb-proxy:latest
     links:
       - tmdb_server
     ports:
-      - 8080:8080
+      - 80:80
+      - 443:443
