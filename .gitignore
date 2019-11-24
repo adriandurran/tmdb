@@ -2,5 +2,9 @@ docker/data/db
 docker/data/demo_db
 docker/data/.DS_Store
 docker/.DS_Store
+
+proxy/config/server.crt
+proxy/config/server.csr
+proxy/config/server.key
 .DS_Store
 
