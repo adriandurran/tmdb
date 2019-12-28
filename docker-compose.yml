@@ -1,18 +1,18 @@
 version: "3.5"
 
 services:
-  tmdb_db:
+  tmdb-db:
     image: mongo:4.0
-    container_name: tmbd_db
+    container_name: tmbd-db
     restart: unless-stopped
     volumes:
       - ./docker/data/demo_db:/data/db
 
-  tmdb_server:
+  tmdb-server:
     image: adrianrdurran/tmdb-staging:dev
     # build:
     #   context: ./server
-    container_name: tmdb_server
+    container_name: tmdb-server
     restart: unless-stopped
     # volumes:
     #   - ./server:/usr/src/app
@@ -25,11 +25,11 @@ services:
     depends_on:
       - tmdb_db
     environment:
-      WAIT_HOSTS: tmdb_db:27017
-  tmdb_proxy:
+      WAIT_HOSTS: tmdb-db:27017
+  tmdb-proxy:
     image: adrianrdurran/tmdb-proxy:latest
     links:
-      - tmdb_server
+      - tmdb-server
     ports:
       - 80:80
       - 443:443

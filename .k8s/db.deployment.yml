@@ -1,0 +1,80 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: local-tmdb-storage
+provisioner: kubernetes.io/no-provisioner
+# The reclaim policy applies to the persistent volumes not the storage class itself.
+# pvs and pvcs that are created using that storage class will inherit the reclaim policy set here.
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tmdb-pv
+spec:
+  capacity:
+    storage: 5Gi
+  # volumeMode block feature gate enabled by default with 1.13+
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  # StorageClass has a reclaim policy default so it'll be "inherited" by the PV
+  # persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-tmdb-storage
+  local:
+    path: Users/adriandurran/dev/raf/tmdb/docker/data/db
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - docker-desktop
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tmdb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-tmdb-storage
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: tmdb-db
+  name: tmdb-db
+spec:
+  serviceName: tmdb-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmdb-db
+  template:
+    metadata:
+      labels:
+        app: tmdb-db
+    spec:
+      volumes:
+        - name: tmdb-volume
+          persistentVolumeClaim:
+            claimName: tmdb-pvc
+      containers:
+        - name: tmdb-db
+          image: mongo:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: tmdb-volume
+              mountPath: /data/db
