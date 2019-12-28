@@ -71,7 +71,7 @@ spec:
             claimName: tmdb-pvc
       containers:
         - name: tmdb-db
-          image: mongo:latest
+          image: mongo:4.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 27017

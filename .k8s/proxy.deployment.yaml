@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tmdb-proxy
+  name: tmdb-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmdb-proxy
+  template:
+    metadata:
+      labels:
+        app: tmdb-proxy
+    spec:
+      containers:
+        - image: adrianrdurran/tmdb-proxy:latest
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          resources: {}

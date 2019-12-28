@@ -23,7 +23,7 @@ services:
     ports:
       - 3050:3050
     depends_on:
-      - tmdb_db
+      - tmdb-db
     environment:
       WAIT_HOSTS: tmdb-db:27017
   tmdb-proxy:
