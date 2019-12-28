@@ -6,6 +6,7 @@ metadata:
   name: node-env
 data:
   NODE_ENV: production
+  MONGODB_URI: mongodb://tmdb-db:27017/tmdb-db-demo
 
 ---
 apiVersion: apps/v1
@@ -30,6 +31,11 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: NODE_ENV
+                  name: node-env
+            - name: MONGODB_URI
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGODB_URI
                   name: node-env
           image: adrianrdurran/tmdb-staging:dev
           imagePullPolicy: IfNotPresent
