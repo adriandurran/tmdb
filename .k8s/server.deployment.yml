@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: node-env
+  name: node-env
+data:
+  NODE_ENV: production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tmdb-server
+  name: tmdb-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmdb-server
+  template:
+    metadata:
+      labels:
+        app: tmdb-server
+    spec:
+      containers:
+        - env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  key: NODE_ENV
+                  name: node-env
+          image: adrianrdurran/tmdb-staging:dev
+          imagePullPolicy: IfNotPresent
+          name: tmdb-server
+          ports:
+            - containerPort: 3050
+          resources: {}
