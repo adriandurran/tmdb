@@ -1,22 +1,24 @@
-version: "3.5"
+version: "3.7"
 
 services:
   tmdb-db:
-    image: mongo:4.0
+    image: mongo:latest
     container_name: tmbd-db
     restart: unless-stopped
     volumes:
-      - ./docker/data/demo_db:/data/db
+      - ./docker/data/db:/data/db
 
   tmdb-server:
-    image: adrianrdurran/tmdb-staging:dev
-    # build:
-    #   context: ./server
+    # the image is for testing on a vm...
+    # and also for k8s
+    # image: adrianrdurran/tmdb-staging:dev
+    build:
+      context: ./server
     container_name: tmdb-server
     restart: unless-stopped
-    # volumes:
-    #   - ./server:/usr/src/app
-    #   - /usr/src/app/node_modules/
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules/
 
     env_file:
       - ./server/server.env
@@ -26,10 +28,12 @@ services:
       - tmdb-db
     environment:
       WAIT_HOSTS: tmdb-db:27017
-  tmdb-proxy:
-    image: adrianrdurran/tmdb-proxy:latest
-    links:
-      - tmdb-server
-    ports:
-      - 80:80
-      - 443:443
+  # this is for test purposes on a vm will also use similar for
+  # k8s nginx LoadBalancer
+  # tmdb-proxy:
+  #   image: adrianrdurran/tmdb-proxy:latest
+  #   links:
+  #     - tmdb-server
+  #   ports:
+  #     - 80:80
+  #     - 443:443

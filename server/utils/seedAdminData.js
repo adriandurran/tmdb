@@ -6,8 +6,8 @@ module.exports = async () => {
 
   // IT Admin
   const ITAdmin = await User.find({ username: process.env.SEEDADMIN_IT_UN });
-
-  if (!ITAdmin) {
+  console.log('IT admin account', ITAdmin);
+  if (ITAdmin.length === 0) {
     try {
       await UserController.seedSuperAdminIT();
       console.log('Super IT Admin has been seeded');
@@ -19,7 +19,7 @@ module.exports = async () => {
   // Super Admin
   const SuperAdmin = await User.find({ username: process.env.SEEDADMIN_UN });
 
-  if (!SuperAdmin) {
+  if (SuperAdmin.length === 0) {
     try {
       await UserController.seedSuperAdmin();
       console.log('Super Admin has been seeded');
