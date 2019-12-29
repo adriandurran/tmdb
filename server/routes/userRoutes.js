@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const path = require('path');
 
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage });
-const upload = multer({ dest: './public/images/' });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/images/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.user._id + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
 
 const requireLogin = require('../middlewares/requireLogin');
 const requireAdmin = require('../middlewares/requireAdmin');

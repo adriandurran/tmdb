@@ -1,6 +1,7 @@
 docker/data/db
 docker/data/demo_db
 docker/data/.DS_Store
+docker/data/images
 docker/.DS_Store
 
 proxy/config/server.crt
