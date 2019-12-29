@@ -350,20 +350,21 @@ module.exports = {
   // production this will need an seperate file store
   // but this would depend on the eventual location of the app
   addUserProfileImage: async (req, res) => {
-    let dUri = new dataUri();
+    // let dUri = new dataUri();
     try {
-      dUri.format(
-        path.extname(req.file.originalname).toString(),
-        req.file.buffer
-      );
+      console.log(req.file);
+      //   dUri.format(
+      //     path.extname(req.file.originalname).toString(),
+      //     req.file.buffer
+      //   );
 
-      const cloudRes = await cloudinary.v2.uploader.upload(dUri.content, {
-        folder: 'tmdb'
-      });
-      // update user with image url
+      //   const cloudRes = await cloudinary.v2.uploader.upload(dUri.content, {
+      //     folder: 'tmdb'
+      //   });
+      //   // update user with image url
       const imgUser = await User.findByIdAndUpdate(
         req.params.id,
-        { $set: { imageUrl: cloudRes.secure_url } },
+        { $set: { imageUrl: req.file.path } },
         {
           fields: { passwordHash: 0 },
           new: true

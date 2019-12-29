@@ -19,6 +19,7 @@ services:
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules/
+      - ./docker/data/images:/usr/src/app/public/images
 
     env_file:
       - ./server/server.env

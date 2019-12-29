@@ -82,9 +82,10 @@ app.use('/api/tmdb/extra', feedbackRoutes);
 
 app.use(express.static('client'));
 const path = require('path');
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
-});
+app.use(express.static(path.join(__dirname, 'public')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'client', 'index.html'));
+// });
 
 const PORT = process.env.PORT || 3050;
 
