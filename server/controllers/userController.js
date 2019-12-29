@@ -349,10 +349,11 @@ module.exports = {
   // but this would depend on the eventual location of the app
   addUserProfileImage: async (req, res) => {
     try {
-      //   // update user with image url
+      const imageUrl = `/images/${req.file.filename}`;
+      // update user with image url
       const imgUser = await User.findByIdAndUpdate(
         req.params.id,
-        { $set: { imageUrl: req.file.path } },
+        { $set: { imageUrl } },
         {
           fields: { passwordHash: 0 },
           new: true

@@ -29,7 +29,11 @@ class Header extends Component {
       const trigger = (
         <Menu.Item header>
           {imageUrl ? (
-            <Image avatar src={imageUrl} style={{ marginRight: '10px' }} />
+            <Image
+              avatar
+              src={`${process.env.REACT_APP_DEV_IMAGE_URL}${imageUrl}`}
+              style={{ marginRight: '10px' }}
+            />
           ) : (
             <Icon name="user circle" style={{ marginRight: '10px' }} />
           )}
@@ -139,7 +143,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Header));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
